@@ -1,0 +1,39 @@
+{
+  "name": "@next-devtools/monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@8.10.2",
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "Xinyao",
+    "email": "hi@xinyao.me"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "up": "taze major -Ir",
+    "lint": "eslint . --fix",
+    "prepare": "husky install",
+    "release": "release-it",
+    "build": "turbo build --force",
+    "dev": "turbo dev",
+    "dev:app": "turbo dev:app",
+    "dev:pages": "turbo dev:pages"
+  },
+  "devDependencies": {
+    "@chenyueban/eslint-config": "^3.0.10",
+    "@chenyueban/tsconfig": "^3.0.10",
+    "@commitlint/cli": "^18.4.1",
+    "@commitlint/config-conventional": "^18.4.0",
+    "@release-it/bumper": "^6.0.1",
+    "@release-it/conventional-changelog": "^8.0.0",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.53.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.1.0",
+    "release-it": "^17.0.0",
+    "taze": "^0.12.0",
+    "tsup": "^7.2.0"
+  }
+}

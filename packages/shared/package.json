@@ -1,0 +1,42 @@
+{
+  "name": "@next-devtools/shared",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/xinyao27/next-devtools",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xinyao27/next-devtools.git",
+    "directory": "packages/shared"
+  },
+  "author": {
+    "name": "Xinyao",
+    "email": "hi@xinyao.me"
+  },
+  "files": [
+    "*.cjs",
+    "*.d.ts",
+    "*.mjs",
+    "dist"
+  ],
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    },
+    "./*": "./*"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "pnpm build"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.37",
+    "next": "^14.0.2",
+    "react": "^18.2.0",
+    "react-docgen": "^7.0.0"
+  }
+}

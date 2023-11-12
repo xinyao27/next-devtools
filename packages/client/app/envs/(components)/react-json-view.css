@@ -1,0 +1,8 @@
+.react-json-view {
+  @apply !bg-transparent text-xs;
+}
+
+.react-json-view .variable-value {
+  @apply whitespace-pre-wrap break-normal;
+  overflow-wrap: anywhere;
+}

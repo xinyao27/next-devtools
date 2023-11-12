@@ -1,0 +1,6 @@
+{
+  "*.{js?(x),ts?(x),vue,html,md,json,yml}": [
+    "eslint --fix",
+    "git add"
+  ]
+}
