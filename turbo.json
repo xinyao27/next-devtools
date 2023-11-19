@@ -22,6 +22,20 @@
     "dev:pages": {
       "cache": false,
       "persistent": true
+    },
+    "docs": {
+      "cache": false,
+      "persistent": true
+    },
+    "docs:build": {
+      "cache": false,
+      "dependsOn": [
+        "^docs:build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**"
+      ]
     }
   }
 }
