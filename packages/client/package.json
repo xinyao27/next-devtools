@@ -12,6 +12,9 @@
     "name": "Xinyao",
     "email": "hi@xinyao.me"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@microlink/react-json-view": "^1.23.0",
     "@next-devtools/shared": "workspace:*",
