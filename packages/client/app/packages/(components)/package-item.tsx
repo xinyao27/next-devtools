@@ -54,7 +54,7 @@ export default function PackageItem({ data }: Props) {
                 <Link
                   aria-label="Star on GitHub"
                   className={cn(buttonVariants({ size: 'sm', variant: 'secondary' }), 'px-3 w-full')}
-                  href={packageInfo.repository?.url ?? ''}
+                  href={packageInfo?.repository?.url ?? ''}
                   target="_blank"
                 >
                   <i className="i-ri-star-line mr-2 h-4 w-4" />
@@ -69,15 +69,15 @@ export default function PackageItem({ data }: Props) {
           {
             isLoading
               ? <Skeleton className="w-full h-4" />
-              : packageInfo.homepage
+              : packageInfo?.homepage
                 ? (
                   <Link
                     className="text-sm text-muted-foreground flex items-center truncate hover:underline"
-                    href={packageInfo.homepage}
+                    href={packageInfo?.homepage}
                     target="_blank"
                   >
                     <i className="i-ri-link mr-2 h-4 w-4" />
-                    {packageInfo.homepage}
+                    {packageInfo?.homepage}
                   </Link>
                   )
                 : null
@@ -85,15 +85,15 @@ export default function PackageItem({ data }: Props) {
           {
             isLoading
               ? <Skeleton className="w-full h-4" />
-              : packageInfo.repository?.url
+              : packageInfo?.repository?.url
                 ? (
                   <Link
                     className="text-sm text-muted-foreground flex items-center truncate hover:underline"
-                    href={packageInfo.repository?.url}
+                    href={packageInfo?.repository?.url}
                     target="_blank"
                   >
                     <i className="i-ri-github-fill mr-2 h-4 w-4" />
-                    {packageInfo.repository?.url}
+                    {packageInfo?.repository?.url}
                   </Link>
                   )
                 : null
@@ -101,11 +101,11 @@ export default function PackageItem({ data }: Props) {
           {
             isLoading
               ? <Skeleton className="w-full h-4" />
-              : packageInfo.license
+              : packageInfo?.license
                 ? (
                   <div className="flex items-center text-sm text-muted-foreground">
                     <i className="i-ri-scales-3-line mr-2 h-4 w-4" />
-                    {packageInfo.license.name || packageInfo.license}
+                    {packageInfo?.license.name || packageInfo?.license}
                   </div>
                   )
                 : null
@@ -113,11 +113,11 @@ export default function PackageItem({ data }: Props) {
           {
             isLoading
               ? <Skeleton className="w-full h-4" />
-              : packageInfo.language
+              : packageInfo?.language
                 ? (
                   <div className="flex items-center text-sm text-muted-foreground">
                     <i className="i-ri-circle-line mr-2 h-4 w-4 fill-sky-400 text-sky-400" />
-                    {packageInfo.language}
+                    {packageInfo?.language}
                   </div>
                   )
                 : null

@@ -19,10 +19,10 @@
     "dist"
   ],
   "main": "./dist/index.cjs",
-  "types": "./dist/index.d.ts",
+  "types": "./src/index.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./src/index.ts",
       "require": "./dist/index.cjs",
       "import": "./dist/index.js"
     },
@@ -34,9 +34,9 @@
     "prepublishOnly": "pnpm build"
   },
   "devDependencies": {
-    "@types/react": "^18.2.37",
-    "next": "^14.0.2",
+    "@types/react": "^18.2.46",
+    "next": "^14.0.4",
     "react": "^18.2.0",
-    "react-docgen": "^7.0.0"
+    "react-docgen": "^7.0.1"
   }
 }

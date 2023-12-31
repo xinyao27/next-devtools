@@ -73,7 +73,8 @@ module.exports = {
     },
   },
   plugins: [
-    require('tailwindcss-animate'), iconsPlugin({
+    require('tailwindcss-animate'),
+    iconsPlugin({
     // Select the icon collections you want to use
     // You can also ignore this option to automatically discover all icon collections you have installed
       collections: getIconCollections(['ri']),

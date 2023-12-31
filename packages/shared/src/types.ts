@@ -13,7 +13,7 @@ export interface Asset {
 
 export interface Component extends Asset {
   description?: string
-  displayName: string
+  displayName?: string
 }
 
 export interface Route {

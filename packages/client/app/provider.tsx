@@ -10,6 +10,7 @@ import { Toaster } from '@/components/ui/toaster'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { navBarStore } from '@/store'
 import { cn } from '@/lib/utils'
+import Initial from './initial'
 
 interface Props {
   children: React.ReactNode
@@ -32,6 +33,7 @@ export default function Provider({ children }: Props) {
           }}
         >
           <Toaster />
+          <Initial />
           <main
             className={cn(
               'grid grid-cols-[50px_1fr] md:grid-cols-[180px_1fr] h-full overflow-hidden bg-neutral-50 dark:bg-neutral-900',

@@ -44,23 +44,23 @@
   },
   "dependencies": {
     "@next-devtools/shared": "workspace:*",
-    "@next/env": "^14.0.2",
-    "@trpc/client": "^10.43.3",
-    "@trpc/server": "^10.43.3",
+    "@next/env": "^14.0.4",
+    "@trpc/client": "^10.45.0",
+    "@trpc/server": "^10.45.0",
     "consola": "^3.2.3",
     "dotenv": "^16.3.1",
     "execa": "^8.0.1",
     "fast-glob": "^3.3.2",
     "get-port-please": "^3.1.1",
     "react-dev-inspector": "^2.0.0",
-    "react-docgen": "^7.0.0",
-    "ws": "^8.14.2",
+    "react-docgen": "^7.0.1",
+    "ws": "^8.16.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/react": "^18.2.37",
-    "@types/ws": "^8.5.9",
-    "next": "^14.0.2",
+    "@types/react": "^18.2.46",
+    "@types/ws": "^8.5.10",
+    "next": "^14.0.4",
     "webpack": "^5.89.0"
   }
 }
