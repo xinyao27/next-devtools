@@ -36,6 +36,7 @@ export function withNextDevtools(nextConfig: NextConfig): NextConfig {
       context,
     ) => {
       if (!context.isServer) return config
+      if (!context.dev) return config
 
       const runtime = context.isServer ? (context.nextRuntime === 'edge' ? 'edge' : 'node') : 'browser'
       config.plugins.push(new Plugin({ ...context, runtime, nextConfig }))
