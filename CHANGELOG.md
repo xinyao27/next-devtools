@@ -1,5 +1,7 @@
 
 
+## [0.1.2-beta.0](https://github.com/xinyao27/next-devtools/compare/v0.1.1...v0.1.2-beta.0) (2024-01-01)
+
 ## [0.1.1](https://github.com/xinyao27/next-devtools/compare/v0.1.0...v0.1.1) (2024-01-01)
 
 
