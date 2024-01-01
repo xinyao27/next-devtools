@@ -11,6 +11,16 @@ You can refer to these two projects to use Next DevTools.
 - [app-router](./playgrounds/app-router/)
 - [pages-router](./playgrounds/pages-router/)
 
+You can create a Next.js project using Next DevTools with the following.
+
+```bash
+# app-router
+npx create-next-app@latest nextjs-devtools-app-router --use-npm --example "https://github.com/xinyao27/next-devtools/tree/main/playgrounds/app-router"
+
+# pages-router
+npx create-next-app@latest nextjs-devtools-pages-router --use-npm --example "https://github.com/xinyao27/next-devtools/tree/main/playgrounds/pages-router"
+```
+
 ### Installation
 
 Inside your Next project directory, run the following:
