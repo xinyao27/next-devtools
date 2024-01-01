@@ -34,8 +34,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch",
-    "prepublishOnly": "pnpm build"
+    "dev": "tsup --watch"
   },
   "devDependencies": {
     "@types/react": "^18.2.46",
