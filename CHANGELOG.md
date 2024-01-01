@@ -1,5 +1,12 @@
 
 
+## [0.1.2-beta.1](https://github.com/xinyao27/next-devtools/compare/v0.1.2-beta.0...v0.1.2-beta.1) (2024-01-01)
+
+
+### Bug Fixes
+
+* fix DEV error ([f73f4e4](https://github.com/xinyao27/next-devtools/commit/f73f4e4b3d879ade81bedfa04cb9f58b2692616a))
+
 ## [0.1.2-beta.0](https://github.com/xinyao27/next-devtools/compare/v0.1.1...v0.1.2-beta.0) (2024-01-01)
 
 ## [0.1.1](https://github.com/xinyao27/next-devtools/compare/v0.1.0...v0.1.1) (2024-01-01)
