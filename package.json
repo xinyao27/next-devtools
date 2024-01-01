@@ -18,7 +18,7 @@
     "release:major": "release-it major",
     "release:minor": "release-it minor",
     "release:patch": "release-it patch",
-    "prepublish": "pnpm run build",
+    "postrelease": "pnpm run build",
     "build": "turbo build --force",
     "dev": "turbo dev",
     "dev:app": "turbo dev:app",
