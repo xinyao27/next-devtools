@@ -3,6 +3,9 @@
     "tagName": "v${version}",
     "commitMessage": "chore: release ${version}"
   },
+  "npm": {
+    "publish": true
+  },
   "plugins": {
     "@release-it/conventional-changelog": {
       "preset": "angular",
