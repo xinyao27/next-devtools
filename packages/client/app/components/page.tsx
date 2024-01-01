@@ -8,7 +8,10 @@ import AllComponents from './(components)/all-components'
 
 export default function Page() {
   const { data } = useSWR('getComponents', () => rpcClient.getComponents.query())
-  const { element, filteredData } = useSearchElement(data, (item, searchText) => item?.displayName?.toLowerCase().includes(searchText.toLowerCase()))
+  const { element, filteredData } = useSearchElement(data, (item, searchText) => {
+    if (!item || !item.displayName) return false
+    return item.displayName.toLowerCase().includes(searchText.toLowerCase())
+  })
 
   return (
     <div>

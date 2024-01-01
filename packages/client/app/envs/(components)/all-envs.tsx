@@ -3,9 +3,11 @@
 import React from 'react'
 import { useTheme } from 'next-themes'
 import { type Env } from '@next-devtools/shared'
-import ReactJson from '@microlink/react-json-view'
+import dynamic from 'next/dynamic'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import './react-json-view.css'
+
+const ReactJson = dynamic(() => import('@microlink/react-json-view'))
 
 interface Props {
   data?: Env

@@ -34,7 +34,7 @@ export default defineConfig({
 
   dts: true,
 
-  clean: true,
+  clean: false,
 
   injectStyle: true,
 
@@ -46,7 +46,10 @@ export default defineConfig({
   ],
 
   esbuildOptions: (options) => {
-    options.define = { 'process.env.VERSION': JSON.stringify(pkg.version) }
+    options.define = {
+      'process.env.VERSION': JSON.stringify(pkg.version),
+      'process.env.DEV': JSON.stringify(process.env.DEV),
+    }
     options.banner = { js: '"use client";' }
   },
 

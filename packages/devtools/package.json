@@ -38,8 +38,9 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "prebuild": "rimraf dist",
+    "build": "cross-env DEV=false tsup",
+    "dev": "cross-env DEV=true tsup --watch",
     "prepublishOnly": "pnpm build"
   },
   "peerDependencies": {

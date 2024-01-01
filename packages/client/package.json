@@ -1,6 +1,7 @@
 {
   "name": "@next-devtools/client",
   "version": "0.1.0",
+  "private": true,
   "license": "MIT",
   "homepage": "https://github.com/xinyao27/next-devtools",
   "repository": {
@@ -12,8 +13,9 @@
     "name": "Xinyao",
     "email": "hi@xinyao.me"
   },
-  "publishConfig": {
-    "access": "public"
+  "scripts": {
+    "build": "next build",
+    "postbuild": "sh ./postbuild.sh"
   },
   "dependencies": {
     "@microlink/react-json-view": "^1.23.0",
