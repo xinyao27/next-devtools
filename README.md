@@ -4,16 +4,23 @@
 
 Using Next DevTools in your Next project.
 
+## Examples
+
+You can refer to these two projects to use Next DevTools.
+
+- [app-router](./playgrounds/app-router/)
+- [pages-router](./playgrounds/pages-router/)
+
 ### Installation
 
 Inside your Next project directory, run the following:
 
 ```bash
-npm i @next-devtools/client @next-devtools/core
+npm i @next-devtools/core
 
 // or
 
-pnpm add @next-devtools/client @next-devtools/core
+pnpm add @next-devtools/core
 ```
 
 ### `next.config`
