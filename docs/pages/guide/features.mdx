@@ -1,79 +1,35 @@
-import { Tabs, Tab } from 'nextra-theme-docs'
-import Steps from '@/components/steps';
+import Image from 'next/image'
 
 # Features
 
-Discover all the features the Next Devtools can offer.
+Discover all the features of the NextDevTools
 
-## Installation
+## Routes
 
-Inside your Next project directory, run the following:
+Shows your current routes and provide a quick way to navigate to them.
 
-<Tabs items={['pnpm', 'npm', 'yarn']}>
-  <Tab>
-    ```bash
-    pnpm add @next-devtools/core
-    ```
-  </Tab>
-  <Tab>
-    ```bash
-    npm i @next-devtools/core
-    ```
-  </Tab>
-  <Tab>
-    ```bash
-    yarn add @next-devtools/core
-    ```
-  </Tab>
-</Tabs>
+<Image className="mt-4 rounded-lg shadow-lg" src="/images/routes.png" alt="routes" width={600} height={400} />
 
-<Steps>
+## Components
 
-### `next.config`
+Shows your components and provide a quick way to navigate to them.
 
-You need to add the following configuration in the `next.config` file.
+<Image className="mt-4 rounded-lg shadow-lg" src="/images/components.png" alt="components" width={600} height={400} />
 
-```js
-const { withNextDevtools } = require('@next-devtools/core/plugin')
+## Assets
 
-module.exports = withNextDevtools({
-  // Other Next.js configuration ...
-})
-```
+Shows all your static assets and their information. You can also preview them.
 
-### `NextDevtoolsProvider`
+<Image className="mt-4 rounded-lg shadow-lg" src="/images/assets.png" alt="assets" width={600} height={400} />
 
-<Tabs items={['App Router', 'Pages Router']}>
-  <Tab>
-    You need to add the `NextDevtoolsProvider` component in the `app/layout` file.
+## Packages
 
-    ```tsx
-    import { NextDevtoolsProvider } from '@next-devtools/core'
+Shows all your packages and their information.
 
-    export default function RootLayout({ children }) {
-      return (
-        <html>
-          <body>
-            <NextDevtoolsProvider>
-              {children}
-            </NextDevtoolsProvider>
-          </body>
-        </html>
-      )
-    }
-    ```
-  </Tab>
-  <Tab>
-    You need to add the `NextDevtoolsProvider` component in the `pages/_app` file.
+<Image className="mt-4 rounded-lg shadow-lg" src="/images/packages.png" alt="packages" width={600} height={400} />
 
-    ```tsx
-    import { NextDevtoolsProvider } from '@next-devtools/core'
+## Envs
 
-    export default function App({ Component, pageProps }) {
-      return <NextDevtoolsProvider><Component {...pageProps} /></NextDevtoolsProvider>
-    }
-    ```
-  </Tab>
-</Tabs>
+Shows all your environment variables.
 
-</Steps>
+<Image className="mt-4 rounded-lg shadow-lg" src="/images/envs.png" alt="envs" width={600} height={400} />

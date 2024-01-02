@@ -10,42 +10,42 @@ export const projects = [
     title: 'Developer experience',
     description:
     'Enhance your DX even further, and adding an extra layer of enjoyment to the development journey!',
-    link: '',
+    link: '/',
   },
   {
     icon: <i className="w-8 h-8 i-ri-node-tree" />,
     title: 'Routes',
     description:
     'Shows your current routes and provide a quick way to navigate to them.',
-    link: '',
+    link: '/guide/features#routes',
   },
   {
     icon: <i className="w-8 h-8 i-ri-box-1-line" />,
     title: 'Components',
     description:
     'Shows your components and provide a quick way to navigate to them.',
-    link: '',
+    link: '/guide/features#components',
   },
   {
     icon: <i className="w-8 h-8 i-ri-gallery-line" />,
     title: 'Assets',
     description:
     'Shows all your static assets and their information. You can also preview them.',
-    link: '',
+    link: '/guide/features#assets',
   },
   {
     icon: <i className="w-8 h-8 i-ri-box-3-line" />,
     title: 'Packages',
     description:
     'Shows all your packages and their information.',
-    link: '',
+    link: '/guide/features#packages',
   },
   {
     icon: <i className="w-8 h-8 i-ri-shapes-line" />,
     title: 'Environment Variables',
     description:
       'Shows all your environment variables.',
-    link: '',
+    link: '/guide/features#envs',
   },
 ]
 

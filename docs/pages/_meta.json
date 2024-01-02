@@ -9,10 +9,12 @@
   },
   "guide": {
     "title": "Guide",
-    "type": "page"
+    "type": "page",
+    "href": "/guide/getting-started"
   },
-  "about": {
-    "title": "About",
-    "type": "page"
+  "features": {
+    "title": "Features",
+    "type": "page",
+    "href": "/guide/features"
   }
 }
