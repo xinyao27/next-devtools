@@ -7,15 +7,12 @@
       "layout": "raw"
     }
   },
-  "guide": "Guide",
+  "guide": {
+    "title": "Guide",
+    "type": "page"
+  },
   "about": {
     "title": "About",
     "type": "page"
-  },
-  "contact": {
-    "title": "Contact ↗",
-    "type": "page",
-    "href": "https://twitter.com/xinyao27",
-    "newWindow": true
   }
 }

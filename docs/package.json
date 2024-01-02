@@ -15,11 +15,13 @@
     "nextra": "latest",
     "nextra-theme-docs": "latest",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "tailwind-merge": "^2.2.0"
   },
   "devDependencies": {
     "@egoist/tailwindcss-icons": "^1.7.1",
     "@iconify-json/ri": "^1.1.18",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/node": "18.11.10",
     "@types/react": "^18.2.46",
     "autoprefixer": "^10.4.16",

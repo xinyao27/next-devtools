@@ -1,12 +1,35 @@
 import React from 'react'
-import { type DocsThemeConfig } from 'nextra-theme-docs'
+import { type DocsThemeConfig, Link } from 'nextra-theme-docs'
+import Logo from './components/logo'
 
 const config: DocsThemeConfig = {
-  logo: <span>NextDevtools</span>,
+  logo: <Logo className="text-white w-36" />,
   project: { link: 'https://github.com/xinyao27/next-devtools' },
-  chat: { link: 'https://discord.com' },
+  chat: { icon: <i className="block w-6 h-6 i-ri-twitter-x-fill" />, link: 'https://x.com/xinyao27' },
   docsRepositoryBase: 'https://github.com/xinyao27/next-devtools/blob/main/docs',
-  footer: { text: 'Next Devtools Docs' },
+  footer: {
+    component: () => (
+      <div className="border-t border-neutral-200/10">
+        <div className="container flex justify-between py-16 mx-auto">
+          <Link href="/">
+            <Logo className="text-white w-36" />
+          </Link>
+          <div className="opacity-50">
+            Published under{' '}
+            <a
+              className="underline"
+              href="https://github.com/xinyao27/next-devtools"
+              target="_blank"
+            >
+              MIT License
+            </a>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  nextThemes: { defaultTheme: 'dark' },
+  themeSwitch: { component: null },
 }
 
 export default config
