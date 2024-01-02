@@ -1,5 +1,17 @@
 # Next Devtools
 
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![License][license-src]][license-href]
+
+<p>
+Enhance Next developer experience
+</p>
+
+<p>
+  <a href="https://next-devtools.vercel.app/">📚 Documentation</a>
+</p>
+
 ## Getting Started
 
 Using Next DevTools in your Next project.
@@ -79,6 +91,19 @@ export default function App({ Component, pageProps }) {
 }
 ```
 
+## Contribution Guide
+
+Please refer to the [Contribution Guide](https://next-devtools.vercel.app/guide/contributing).
+
 ## License
 
 [MIT](./LICENSE)
+
+<!-- Badges -->
+
+[npm-version-src]: https://img.shields.io/npm/v/@next-devtools/core/latest.svg?style=flat&colorA=111111&colorB=ffffff
+[npm-version-href]: https://npmjs.com/package/@next-devtools/core
+[npm-downloads-src]: https://img.shields.io/npm/dt/@next-devtools/core.svg?style=flat&colorA=111111&colorB=ffffff
+[npm-downloads-href]: https://npmjs.com/package/@next-devtools/core
+[license-src]: https://img.shields.io/npm/l/@next-devtools/core.svg?style=flat&colorA=111111&colorB=ffffff
+[license-href]: https://npmjs.com/package/@next-devtools/core
