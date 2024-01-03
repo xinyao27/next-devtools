@@ -1,5 +1,6 @@
 import React from 'react'
 import { type DocsThemeConfig, Link } from 'nextra-theme-docs'
+import { useRouter } from 'next/router'
 import Logo from './components/logo'
 
 const config: DocsThemeConfig = {
@@ -30,6 +31,13 @@ const config: DocsThemeConfig = {
   },
   nextThemes: { defaultTheme: 'dark' },
   themeSwitch: { component: null },
+  useNextSeoProps: () => {
+    const { asPath } = useRouter()
+    if (asPath !== '/') {
+      return { titleTemplate: '%s - NextDevtools' }
+    }
+    return {}
+  },
 }
 
 export default config
