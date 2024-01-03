@@ -165,9 +165,6 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.0.7
         version: 1.0.7(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/client':
-        specifier: ^10.45.0
-        version: 10.45.0(@trpc/server@10.45.0)
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -241,9 +238,6 @@ importers:
       '@next/env':
         specifier: ^14.0.4
         version: 14.0.4
-      '@trpc/client':
-        specifier: ^10.45.0
-        version: 10.45.0(@trpc/server@10.45.0)
       '@trpc/server':
         specifier: ^10.45.0
         version: 10.45.0
@@ -292,6 +286,10 @@ importers:
         version: 5.89.0(esbuild@0.19.11)
 
   packages/shared:
+    dependencies:
+      '@trpc/client':
+        specifier: ^10.45.0
+        version: 10.45.0(@trpc/server@10.45.0)
     devDependencies:
       '@types/react':
         specifier: ^18.2.46
