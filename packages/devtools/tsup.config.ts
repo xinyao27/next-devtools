@@ -48,6 +48,7 @@ export default defineConfig({
   esbuildOptions: (options) => {
     options.define = {
       'process.env.VERSION': JSON.stringify(pkg.version),
+      'process.env.PACKAGE_NAME': JSON.stringify(pkg.name),
       'process.env.DEV': JSON.stringify(process.env.DEV === 'true'),
     }
     options.banner = { js: '"use client";' }

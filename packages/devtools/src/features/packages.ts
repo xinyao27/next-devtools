@@ -15,8 +15,10 @@ export async function getPackages(options: WebpackOptionsNormalized) {
       continue
     }
     for (const name in dep) {
-      const version = dep[name]
-      packages.push({ name, version, type })
+      if (name !== process.env.PACKAGE_NAME) {
+        const version = dep[name]
+        packages.push({ name, version, type })
+      }
     }
   }
 
