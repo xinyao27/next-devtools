@@ -3,11 +3,12 @@
 import React from 'react'
 import useSWR from 'swr'
 import useSearchElement from '@/hooks/use-search-element'
-import { rpcClient } from '../client'
+import { useRPCClient } from '../client'
 import AllComponents from './(components)/all-components'
 
 export default function Page() {
-  const { data } = useSWR('getComponents', () => rpcClient.getComponents.query())
+  const rpcClient = useRPCClient()
+  const { data } = useSWR('getComponents', () => rpcClient.current.getComponents.query())
   const { element, filteredData } = useSearchElement(data, (item, searchText) => {
     if (!item || !item.displayName) return false
     return item.displayName.toLowerCase().includes(searchText.toLowerCase())

@@ -1,26 +1,27 @@
 import React from 'react'
-import { rpcClient } from '@/app/client'
+import { useRPCClient } from '@/app/client'
 
 interface Props {
   value: string
   children?: React.ReactNode
 }
 export default function OpenInVscode({ value, children }: Props) {
+  const rpcClient = useRPCClient()
   const handleOpenInVscode = React.useCallback((path: string) => {
-    rpcClient.openInVscode.mutate({ path })
+    rpcClient.current.openInVscode.mutate({ path })
   }, [])
 
   return (
     <div
-      className="group hover:underline flex items-center gap-2 cursor-pointer transition"
+      className="flex items-center gap-2 transition cursor-pointer group hover:underline"
     >
       {children}
       <button
-        className="hidden group-hover:flex items-center opacity-50 hover:opacity-100 hover:text-primary transition"
+        className="items-center hidden transition opacity-50 group-hover:flex hover:opacity-100 hover:text-primary"
         title="Open in vscode"
         onClick={() => handleOpenInVscode(value)}
       >
-        <i className="i-ri-share-box-line w-4 h-4" />
+        <i className="w-4 h-4 i-ri-share-box-line" />
       </button>
     </div>
   )

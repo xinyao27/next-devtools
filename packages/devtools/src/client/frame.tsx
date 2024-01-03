@@ -1,10 +1,9 @@
 'use client'
 
-import React from 'react'
+import React, { useRef } from 'react'
 import { Inspector } from 'react-dev-inspector'
-import { LOCAL_CLIENT_PORT, NextLogo } from '@next-devtools/shared'
+import { LOCAL_CLIENT_PORT, NextLogo, createRPCClient } from '@next-devtools/shared'
 import { MessageProvider } from './message-provider'
-import { rpcClient } from './rpc'
 import './styles.css'
 
 function Separator() {
@@ -14,6 +13,7 @@ function Separator() {
 }
 
 export function Frame() {
+  const rpcClient = useRef(createRPCClient())
   const iframeRef = React.useRef<HTMLIFrameElement>(null)
   const [show, setShow] = React.useState(false)
   const [inspectorActive, setInspectorActive] = React.useState(false)
@@ -31,7 +31,7 @@ export function Frame() {
         active={inspectorActive}
         onActiveChange={setInspectorActive}
         onInspectElement={({ codeInfo }) => {
-          rpcClient.openInVscode.mutate({
+          rpcClient.current.openInVscode.mutate({
             path: codeInfo.absolutePath || codeInfo.relativePath || '',
             line: codeInfo.lineNumber,
             column: codeInfo.columnNumber,
@@ -76,7 +76,7 @@ export function Frame() {
           <iframe
             ref={iframeRef}
             id="next-devtools-iframe"
-            src={`http://localhost:${LOCAL_CLIENT_PORT}`}
+            src="/__next_devtools__/client"
           />
         </div>
       </div>

@@ -2,11 +2,12 @@
 
 import React from 'react'
 import useSWR from 'swr'
-import { rpcClient } from '../client'
+import { useRPCClient } from '../client'
 import AllEnvs from './(components)/all-envs'
 
 export default function Page() {
-  const { data } = useSWR('getEnvs', () => rpcClient.getEnvs.query())
+  const rpcClient = useRPCClient()
+  const { data } = useSWR('getEnvs', () => rpcClient.current.getEnvs.query())
 
   return (
     <div>

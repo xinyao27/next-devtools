@@ -1,10 +1,11 @@
 import React from 'react'
 import useSWR from 'swr'
 import { Input } from '@/components/ui/input'
-import { messageClient } from '@/app/client'
+import { useMessageClient } from '@/app/client'
 
 export default function CurrentRoute() {
-  const { data, mutate } = useSWR('getRoute', () => messageClient.getRoute())
+  const messageClient = useMessageClient()
+  const { data, mutate } = useSWR('getRoute', () => messageClient.current.getRoute())
   const [currentRoute, setCurrentRoute] = React.useState(data || '')
   React.useEffect(() => {
     if (data) {
@@ -30,14 +31,14 @@ export default function CurrentRoute() {
         onChange={e => setCurrentRoute(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
-            messageClient.pushRoute(currentRoute)
+            messageClient.current.pushRoute(currentRoute)
             setTimeout(() => {
               mutate()
             }, 300)
           }
         }}
       />
-      <div className="opacity-50 text-sm">Edit path above to navigate</div>
+      <div className="text-sm opacity-50">Edit path above to navigate</div>
     </div>
   )
 }

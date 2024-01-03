@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import React from 'react'
 
 interface Props {
   className?: string
@@ -6,7 +6,7 @@ interface Props {
   theme?: 'light' | 'dark'
 }
 export function NextLogo({ className, mode = 'full', theme = 'dark' }: Props) {
-  const fill = useMemo(() => theme === 'dark' ? '#fff' : '#000', [theme])
+  const fill = React.useMemo(() => theme === 'dark' ? '#fff' : '#000', [theme])
 
   if (mode === 'small') {
     return (

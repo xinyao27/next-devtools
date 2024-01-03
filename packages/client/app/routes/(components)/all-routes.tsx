@@ -9,7 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import { messageClient } from '@/app/client'
+import { useMessageClient } from '@/app/client'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import Line from '@/components/line'
@@ -19,7 +19,8 @@ interface Props {
   data?: Route[]
 }
 export default function AllRoutes({ data }: Props) {
-  const { data: currentRoute, mutate } = useSWR('getRoute', () => messageClient.getRoute())
+  const messageClient = useMessageClient()
+  const { data: currentRoute, mutate } = useSWR('getRoute', () => messageClient.current.getRoute())
 
   return (
     <Accordion
@@ -30,7 +31,7 @@ export default function AllRoutes({ data }: Props) {
       <AccordionItem value="all-routes">
         <AccordionTrigger>
           <div className="flex items-center gap-2">
-            <i className="i-ri-node-tree w-6 h-6" />
+            <i className="w-6 h-6 i-ri-node-tree" />
             <div className="text-left">
               <div>All Routes</div>
               <div className="opacity-50">{data?.length} routes registered in your application</div>
@@ -54,7 +55,7 @@ export default function AllRoutes({ data }: Props) {
                         className={cn('opacity-50 hover:opacity-75 transition', { '!opacity-100': active })}
                         title={`Navigate to ${route.route}`}
                         onClick={() => {
-                          messageClient.pushRoute(route.route)
+                          messageClient.current.pushRoute(route.route)
                           setTimeout(() => {
                             mutate()
                           }, 300)

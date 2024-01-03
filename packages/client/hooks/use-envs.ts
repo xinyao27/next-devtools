@@ -1,8 +1,9 @@
 'use client'
 
 import useSWR from 'swr'
-import { rpcClient } from '@/app/client'
+import { useRPCClient } from '@/app/client'
 
 export default function useEnvs() {
-  return useSWR('getEnvs', () => rpcClient.getEnvs.query())
+  const rpcClient = useRPCClient()
+  return useSWR('getEnvs', () => rpcClient.current.getEnvs.query())
 }

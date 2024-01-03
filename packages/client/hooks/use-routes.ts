@@ -1,8 +1,9 @@
 'use client'
 
 import useSWR from 'swr'
-import { rpcClient } from '@/app/client'
+import { useRPCClient } from '@/app/client'
 
 export default function useRoutes() {
-  return useSWR('getRoutes', () => rpcClient.getRoutes.query())
+  const rpcClient = useRPCClient()
+  return useSWR('getRoutes', () => rpcClient.current.getRoutes.query())
 }

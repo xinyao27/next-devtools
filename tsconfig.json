@@ -1,7 +1,3 @@
 {
-  "extends": "@chenyueban/tsconfig",
-  "compilerOptions": {
-    "declaration": false,
-    "declarationMap": false,
-  },
+  "extends": "@chenyueban/tsconfig"
 }

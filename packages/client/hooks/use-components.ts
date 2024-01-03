@@ -1,8 +1,9 @@
 'use client'
 
 import useSWR from 'swr'
-import { rpcClient } from '@/app/client'
+import { useRPCClient } from '@/app/client'
 
 export default function useComponents() {
-  return useSWR('getComponents', () => rpcClient.getComponents.query())
+  const rpcClient = useRPCClient()
+  return useSWR('getComponents', () => rpcClient.current.getComponents.query())
 }

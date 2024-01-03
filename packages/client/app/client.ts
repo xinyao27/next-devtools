@@ -1,6 +1,13 @@
 import { createFrameMessageClient, createRPCClient } from '@next-devtools/shared'
 import { type FrameMessageHandler } from '@next-devtools/shared'
+import { useRef } from 'react'
 
-export const rpcClient = createRPCClient()
+export function useRPCClient() {
+  const client = useRef(createRPCClient())
+  return client
+}
 
-export const messageClient = createFrameMessageClient<FrameMessageHandler>()
+export function useMessageClient() {
+  const client = useRef(createFrameMessageClient<FrameMessageHandler>())
+  return client
+}
