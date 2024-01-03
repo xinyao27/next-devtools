@@ -3,6 +3,7 @@ import { basename, dirname, join } from 'node:path'
 import fg from 'fast-glob'
 import { type WebpackOptionsNormalized } from 'webpack'
 import { type Asset, type AssetType } from '@next-devtools/shared'
+import mine from 'mime-types'
 
 function guessType(path: string): AssetType {
   if (/\.(a?png|jpe?g|jxl|gif|svg|webp|avif|ico|bmp|tiff?)$/i.test(path)) {
@@ -58,4 +59,10 @@ export async function getStaticAssets(options: WebpackOptionsNormalized): Promis
     }
   }))
   return result
+}
+
+export async function getStaticAssetInfo(path: string) {
+  const data = await fs.readFile(path, { encoding: 'base64' })
+  const base64 = `data:${mine.lookup(path)};base64,${data}`
+  return base64
 }

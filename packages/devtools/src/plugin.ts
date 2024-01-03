@@ -2,7 +2,7 @@ import { type Compiler } from 'webpack'
 import { type NextConfig } from 'next/dist/server/config-shared'
 import consola from 'consola'
 import { colors } from 'consola/utils'
-import { type Context } from '@next-devtools/shared'
+import { type Context, LOCAL_CLIENT_PORT } from '@next-devtools/shared'
 
 export class Plugin {
   context: Context
@@ -42,6 +42,27 @@ export function withNextDevtools(nextConfig: NextConfig): NextConfig {
       config.plugins.push(new Plugin({ ...context, runtime, nextConfig }))
 
       return config
+    },
+
+    rewrites: async () => {
+      const obj = {
+        source: '/__next_devtools__/client/:path*',
+        destination: `http://localhost:${LOCAL_CLIENT_PORT}/__next_devtools__/client/:path*`,
+      }
+      const nextRewrites = await nextConfig.rewrites?.()
+      if (Array.isArray(nextRewrites)) {
+        return [
+          ...nextRewrites,
+          obj,
+        ]
+      }
+      else if (nextRewrites instanceof Object) {
+        return {
+          ...nextRewrites,
+          fallback: [...nextRewrites.fallback || [], obj],
+        }
+      }
+      return [obj]
     },
   }
   return Object.assign({}, nextConfig, nextDevtoolsConfig)

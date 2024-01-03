@@ -177,9 +177,6 @@ importers:
       date-fns:
         specifier: ^3.0.6
         version: 3.0.6
-      mime-types:
-        specifier: ^2.1.35
-        version: 2.1.35
       next-themes:
         specifier: ^0.2.1
         version: 0.2.1(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
@@ -208,9 +205,6 @@ importers:
       '@iconify-json/ri':
         specifier: ^1.1.18
         version: 1.1.18
-      '@types/mime-types':
-        specifier: ^2.1.4
-        version: 2.1.4
       '@types/react':
         specifier: ^18.2.46
         version: 18.2.46
@@ -256,6 +250,9 @@ importers:
       get-port-please:
         specifier: ^3.1.1
         version: 3.1.1
+      mime-types:
+        specifier: ^2.1.35
+        version: 2.1.35
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -272,6 +269,9 @@ importers:
         specifier: ^3.22.4
         version: 3.22.4
     devDependencies:
+      '@types/mime-types':
+        specifier: ^2.1.4
+        version: 2.1.4
       '@types/react':
         specifier: ^18.2.46
         version: 18.2.46
