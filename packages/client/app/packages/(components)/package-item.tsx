@@ -19,7 +19,7 @@ interface Props {
 export default function PackageItem({ data }: Props) {
   const rpcClient = useRPCClient()
   const npmBase = 'https://www.npmjs.com/package/'
-  const { data: packageInfo, isLoading } = useSWR(`getPackageInfo/${data.name}`, data ? () => rpcClient.current.getPackageInfo.query(data.name) : null)
+  const { data: packageInfo, isLoading } = useSWR(`getPackageInfo/${data.name}`, data ? () => rpcClient.current?.getPackageInfo.query(data.name) : null)
 
   return (
     <Card className="overflow-hidden">

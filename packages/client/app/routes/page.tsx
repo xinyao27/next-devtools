@@ -9,7 +9,7 @@ import CurrentRoute from './(components)/current-route'
 
 export default function Page() {
   const rpcClient = useRPCClient()
-  const { data, isLoading } = useSWR('getRoutes', () => rpcClient.current.getRoutes.query())
+  const { data, isLoading } = useSWR('getRoutes', () => rpcClient.current?.getRoutes.query())
 
   return (
     <div>

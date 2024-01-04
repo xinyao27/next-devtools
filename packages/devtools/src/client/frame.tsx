@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useRef } from 'react'
+import React, { memo, useRef } from 'react'
 import { Inspector } from 'react-dev-inspector'
-import { LOCAL_CLIENT_PORT, NextLogo, createRPCClient } from '@next-devtools/shared'
+import { NextLogo, createRPCClient } from '@next-devtools/shared'
 import { MessageProvider } from './message-provider'
 import './styles.css'
 
@@ -12,7 +12,7 @@ function Separator() {
   )
 }
 
-export function Frame() {
+function Frame() {
   const rpcClient = useRef(createRPCClient())
   const iframeRef = React.useRef<HTMLIFrameElement>(null)
   const [show, setShow] = React.useState(false)
@@ -26,12 +26,14 @@ export function Frame() {
   }, [show])
 
   return (
-    <MessageProvider iframeRef={iframeRef}>
+    <MessageProvider
+      iframeRef={iframeRef}
+    >
       <Inspector
         active={inspectorActive}
         onActiveChange={setInspectorActive}
         onInspectElement={({ codeInfo }) => {
-          rpcClient.current.openInVscode.mutate({
+          rpcClient.current?.openInVscode.mutate({
             path: codeInfo.absolutePath || codeInfo.relativePath || '',
             line: codeInfo.lineNumber,
             column: codeInfo.columnNumber,
@@ -83,3 +85,4 @@ export function Frame() {
     </MessageProvider>
   )
 }
+export default memo(Frame)

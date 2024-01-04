@@ -8,7 +8,7 @@ interface Props {
 export default function OpenInVscode({ value, children }: Props) {
   const rpcClient = useRPCClient()
   const handleOpenInVscode = React.useCallback((path: string) => {
-    rpcClient.current.openInVscode.mutate({ path })
+    rpcClient.current?.openInVscode.mutate({ path })
   }, [])
 
   return (

@@ -8,7 +8,7 @@ import AllAssets from './(components)/all-assets'
 
 export default function Page() {
   const rpcClient = useRPCClient()
-  const { data } = useSWR('getStaticAssets', () => rpcClient.current.getStaticAssets.query())
+  const { data } = useSWR('getStaticAssets', () => rpcClient.current?.getStaticAssets.query())
   const { element, filteredData } = useSearchElement(data, (item, searchText) => item?.file?.toLowerCase().includes(searchText.toLowerCase()))
 
   return (

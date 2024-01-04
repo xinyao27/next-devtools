@@ -25,7 +25,7 @@ interface AssetProps {
 }
 function AssetComponent({ data }: AssetProps) {
   const rpcClient = useRPCClient()
-  const { data: assetInfo, isLoading } = useSWR(`getStaticAssetInfo/${data.filePath}`, data ? () => rpcClient.current.getStaticAssetInfo.query(data.filePath) : null)
+  const { data: assetInfo, isLoading } = useSWR(`getStaticAssetInfo/${data.filePath}`, data ? () => rpcClient.current?.getStaticAssetInfo.query(data.filePath) : null)
   const previewElement = useMemo(() => isLoading
     ? <Skeleton style={{ width: 32, height: 32 }} />
     : (
