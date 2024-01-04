@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import './react-json-view.css'
 
-const ReactJson = dynamic(() => import('@microlink/react-json-view'))
+const ReactJson = dynamic(() => import('@microlink/react-json-view'), { ssr: false })
 
 interface Props {
   data?: Env
@@ -23,7 +23,7 @@ export default function AllEnvs({ data }: Props) {
       <AccordionItem value="public-envs">
         <AccordionTrigger>
           <div className="flex items-center gap-2">
-            <i className="i-ri-file-3-line w-6 h-6" />
+            <i className="w-6 h-6 i-ri-file-3-line" />
             <div className="text-left">
               <div>Public Runtime Environments</div>
             </div>
@@ -49,7 +49,7 @@ export default function AllEnvs({ data }: Props) {
       <AccordionItem value="private-envs">
         <AccordionTrigger>
           <div className="flex items-center gap-2">
-            <i className="i-ri-file-shield-2-line w-6 h-6" />
+            <i className="w-6 h-6 i-ri-file-shield-2-line" />
             <div className="text-left">
               <div>Private Runtime Environments</div>
               <div className="opacity-50">These values are not exposed to the client. Readonly in the DevTools.</div>

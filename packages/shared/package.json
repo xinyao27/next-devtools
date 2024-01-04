@@ -25,11 +25,12 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "dev": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs",
       "import": "./dist/index.js"
     },
-    "./*": "./*"
+    "./package.json": "./package.json"
   },
   "sideEffects": false,
   "publishConfig": {

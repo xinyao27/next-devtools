@@ -1,7 +1,7 @@
 import { type WebpackOptionsNormalized } from 'webpack'
 import dotenv from 'dotenv'
 import { type Env } from '@next-devtools/shared'
-import env from '@next/env'
+import { loadEnvConfig } from '@next/env'
 import { type Context } from '../server/router'
 
 /**
@@ -17,7 +17,7 @@ export async function getEnvs(options: WebpackOptionsNormalized, context: Contex
     privateEnv: {},
     loadedEnvFiles: [],
   }
-  const nextEnvConfig = env.loadEnvConfig(root, context.dev)
+  const nextEnvConfig = loadEnvConfig(root, context.dev)
   Object.keys(nextEnvConfig.combinedEnv).forEach((key) => {
     const value = nextEnvConfig.combinedEnv[key]
     if (typeof value === 'string') {

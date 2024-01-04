@@ -1,1 +1,1 @@
-export * from './provider/provider'
+export { NextDevtoolsProvider } from './provider/provider'
