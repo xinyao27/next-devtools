@@ -16,5 +16,5 @@ export function NextDevtoolsProvider({ children }: NextDevtoolsProviderProps) {
     )
   }
 
-  return children
+  return <>{children}</>
 }
