@@ -1,5 +1,13 @@
 
 
+## [0.1.3-beta.1](https://github.com/xinyao27/next-devtools/compare/v0.1.3-beta.0...v0.1.3-beta.1) (2024-01-04)
+
+
+### Bug Fixes
+
+* adjust export to resolve ts import error ([2368fb0](https://github.com/xinyao27/next-devtools/commit/2368fb03b037f629ec16e300ec0054ca5f350921))
+* **package.json:** correct release script executed during pre-release stage to `prepatch`  so that it respects conventional versioning specification ([fd4c852](https://github.com/xinyao27/next-devtools/commit/fd4c85238fa2832d237c425937840837a1617a29))
+
 ## [0.1.3-beta.0](https://github.com/xinyao27/next-devtools/compare/v0.1.2...v0.1.3-beta.0) (2024-01-03)
 
 
