@@ -8,13 +8,16 @@
     }
   },
   "guide": {
-    "title": "Guide",
+    "title": "Documentation",
     "type": "page",
     "href": "/guide/getting-started"
   },
-  "features": {
-    "title": "Features",
+  "playground": {
+    "title": "Playground",
     "type": "page",
-    "href": "/guide/features"
+    "href": "/playground",
+    "theme": {
+      "layout": "raw"
+    }
   }
 }
