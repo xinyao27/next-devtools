@@ -2,7 +2,8 @@ import { type Compiler } from 'webpack'
 import { type NextConfig } from 'next/dist/server/config-shared'
 import consola from 'consola'
 import { colors } from 'consola/utils'
-import { type Context, LOCAL_CLIENT_PORT } from '@next-devtools/shared'
+import { LOCAL_CLIENT_PORT } from '@next-devtools/shared'
+import { type Context } from './server/router'
 
 export class Plugin {
   context: Context

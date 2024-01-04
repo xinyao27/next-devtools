@@ -11,7 +11,7 @@ import {
 import { buttonVariants } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
-import { useRPCClient } from '@/app/client'
+import { useRPCClient } from '@/lib/client'
 
 interface Props {
   data: Package

@@ -30,7 +30,7 @@ const __dirname = dirnamePathShimImport(__filename);
 }
 
 export default defineConfig({
-  entry: ['./src/index.ts', './src/plugin.ts'],
+  entry: ['./src/index.ts', './src/plugin.ts', './src/types.ts'],
 
   dts: true,
 

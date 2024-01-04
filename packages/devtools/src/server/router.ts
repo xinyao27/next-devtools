@@ -1,13 +1,18 @@
 import { initTRPC } from '@trpc/server'
 import { z } from 'zod'
 import { type WebpackOptionsNormalized } from 'webpack'
-import { type Context } from '@next-devtools/shared'
+import { type NextConfig, type WebpackConfigContext } from 'next/dist/server/config-shared'
 import { getStaticAssetInfo, getStaticAssets } from '../features/assets'
 import { getComponents } from '../features/components'
 import { getEnvs } from '../features/envs'
 import { getPackageInfo, getPackages } from '../features/packages'
 import { getRoutes } from '../features/routes'
 import { openInVscode } from '../features/vscode'
+
+export interface Context extends WebpackConfigContext {
+  runtime: 'node' | 'edge' | 'browser'
+  nextConfig: NextConfig
+}
 
 const t = initTRPC.context<() => { options: WebpackOptionsNormalized; context: Context }>().create()
 

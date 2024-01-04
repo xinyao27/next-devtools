@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRPCClient } from '@/app/client'
+import { useRPCClient } from '@/lib/client'
 
 interface Props {
   value: string

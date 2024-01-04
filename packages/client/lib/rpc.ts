@@ -1,7 +1,7 @@
 import { createTRPCProxyClient, createWSClient, wsLink } from '@trpc/client'
 import { type CreateTRPCProxyClient } from '@trpc/client'
-import { type AppRouter } from '../../devtools/src/server/router'
-import { RPC_SERVER_PORT } from '.'
+import { RPC_SERVER_PORT } from '@next-devtools/shared'
+import { type AppRouter } from '@next-devtools/core/types'
 
 export interface RPCClient extends CreateTRPCProxyClient<AppRouter> {}
 export function createRPCClient(ip?: string): RPCClient | null {

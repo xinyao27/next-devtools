@@ -1,7 +1,8 @@
 import { type WebpackOptionsNormalized } from 'webpack'
 import dotenv from 'dotenv'
-import { type Context, type Env } from '@next-devtools/shared'
+import { type Env } from '@next-devtools/shared'
 import env from '@next/env'
+import { type Context } from '../server/router'
 
 /**
  * Get all envs including .env, .env.local, .env.[mode], .env.[mode].local and next.config.js -> env

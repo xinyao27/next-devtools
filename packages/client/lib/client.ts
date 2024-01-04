@@ -1,8 +1,8 @@
 'use client'
 
-import { createFrameMessageClient, createRPCClient } from '@next-devtools/shared'
-import { type FrameMessageHandler } from '@next-devtools/shared'
 import { useRef } from 'react'
+import { type FrameMessageHandler, createFrameMessageClient } from '@next-devtools/shared'
+import { createRPCClient } from '@/lib/rpc'
 
 export function useRPCClient() {
   const client = useRef(createRPCClient())

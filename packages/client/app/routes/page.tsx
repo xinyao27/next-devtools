@@ -3,7 +3,7 @@
 import React from 'react'
 import useSWR from 'swr'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useRPCClient } from '../client'
+import { useRPCClient } from '@/lib/client'
 import AllRoutes from './(components)/all-routes'
 import CurrentRoute from './(components)/current-route'
 

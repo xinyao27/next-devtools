@@ -16,6 +16,7 @@
   "files": [
     "*.cjs",
     "*.d.ts",
+    "*.js",
     "*.mjs",
     "dist"
   ],
@@ -28,9 +29,12 @@
       "import": "./dist/index.js"
     },
     "./plugin": {
-      "types": "./dist/plugin.d.ts",
+      "types": "./plugin.d.ts",
       "require": "./dist/plugin.cjs",
       "import": "./dist/plugin.js"
+    },
+    "./types": {
+      "types": "./types.d.ts"
     },
     "./*": "./*"
   },
@@ -48,6 +52,7 @@
   "dependencies": {
     "@next-devtools/shared": "workspace:*",
     "@next/env": "^14.0.4",
+    "@trpc/client": "^10.45.0",
     "@trpc/server": "^10.45.0",
     "consola": "^3.2.3",
     "dotenv": "^16.3.1",

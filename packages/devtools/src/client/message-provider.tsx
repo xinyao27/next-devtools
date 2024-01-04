@@ -1,9 +1,9 @@
 'use client'
 
 import React from 'react'
+import { usePathname, useRouter } from 'next/navigation'
 import { createFrameMessageHandler } from '@next-devtools/shared'
 import { type FrameMessageHandler } from '@next-devtools/shared'
-import { usePathname, useRouter } from 'next/navigation'
 
 interface Props {
   children: React.ReactNode

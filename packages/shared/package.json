@@ -16,19 +16,22 @@
   "files": [
     "*.cjs",
     "*.d.ts",
+    "*.js",
     "*.mjs",
     "dist"
   ],
   "main": "./dist/index.cjs",
-  "types": "./src/index.ts",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs",
       "import": "./dist/index.js"
     },
     "./*": "./*"
   },
+  "sideEffects": false,
   "publishConfig": {
     "access": "public"
   },
@@ -38,9 +41,6 @@
   },
   "peerDependencies": {
     "react": "^18.2.0"
-  },
-  "dependencies": {
-    "@trpc/client": "^10.45.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.46",

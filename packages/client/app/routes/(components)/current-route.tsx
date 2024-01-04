@@ -1,7 +1,7 @@
 import React from 'react'
 import useSWR from 'swr'
 import { Input } from '@/components/ui/input'
-import { useMessageClient } from '@/app/client'
+import { useMessageClient } from '@/lib/client'
 
 export default function CurrentRoute() {
   const messageClient = useMessageClient()

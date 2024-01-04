@@ -2,7 +2,7 @@
 
 import React from 'react'
 import useSWR from 'swr'
-import { useRPCClient } from '../client'
+import { useRPCClient } from '@/lib/client'
 import AllEnvs from './(components)/all-envs'
 
 export default function Page() {

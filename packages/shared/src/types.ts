@@ -1,5 +1,3 @@
-import { type NextConfig, type WebpackConfigContext } from 'next/dist/server/config-shared'
-
 export type AssetType = 'image' | 'font' | 'video' | 'audio' | 'text' | 'json' | 'other' | 'component'
 
 export interface Asset {
@@ -35,5 +33,3 @@ export interface Env {
     contents: Record<string, string>
   }[]
 }
-
-export type Context = WebpackConfigContext & { runtime: 'node' | 'edge' | 'browser'; nextConfig: NextConfig }

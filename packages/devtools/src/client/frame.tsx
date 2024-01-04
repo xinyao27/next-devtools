@@ -2,9 +2,24 @@
 
 import React, { memo, useRef } from 'react'
 import { Inspector } from 'react-dev-inspector'
-import { NextLogo, createRPCClient } from '@next-devtools/shared'
+import { NextLogo, RPC_SERVER_PORT } from '@next-devtools/shared'
+import { createTRPCProxyClient, createWSClient, wsLink } from '@trpc/client'
+import { type CreateTRPCProxyClient } from '@trpc/client'
+import { type AppRouter } from '../server/router'
 import { MessageProvider } from './message-provider'
 import './styles.css'
+
+interface RPCClient extends CreateTRPCProxyClient<AppRouter> {}
+function createRPCClient(ip?: string): RPCClient | null {
+  if (typeof window != 'undefined') {
+    const _ip = window.location.hostname
+    // create persistent WebSocket connection
+    const wsClient = createWSClient({ url: `ws://${ip || _ip}:${RPC_SERVER_PORT}` })
+    // configure TRPCClient to use WebSockets transport
+    return createTRPCProxyClient<AppRouter>({ links: [wsLink({ client: wsClient })] })
+  }
+  return null
+}
 
 function Separator() {
   return (

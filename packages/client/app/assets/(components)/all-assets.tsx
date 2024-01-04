@@ -17,7 +17,7 @@ import { Separator } from '@/components/ui/separator'
 import OpenInVscode from '@/components/open-in-vscode'
 import CopyToClipboard from '@/components/copy-to-clipboard'
 import { formatBytes } from '@/lib/utils'
-import { useRPCClient } from '@/app/client'
+import { useRPCClient } from '@/lib/client'
 import { Skeleton } from '@/components/ui/skeleton'
 
 interface AssetProps {

@@ -3,7 +3,7 @@
 import React from 'react'
 import useSWR from 'swr'
 import useSearchElement from '@/hooks/use-search-element'
-import { useRPCClient } from '../client'
+import { useRPCClient } from '@/lib/client'
 import AllAssets from './(components)/all-assets'
 
 export default function Page() {

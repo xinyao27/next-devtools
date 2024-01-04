@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs'
 import { join, parse, sep } from 'node:path'
 import fg from 'fast-glob'
-import { type Context } from '@next-devtools/shared'
+import { type Context } from '../server/router'
 
 interface Opts {
   pageExtensions: string[]
