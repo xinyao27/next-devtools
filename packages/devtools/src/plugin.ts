@@ -3,7 +3,10 @@ import { type NextConfig } from 'next/dist/server/config-shared'
 import consola from 'consola'
 import { colors } from 'consola/utils'
 import { LOCAL_CLIENT_PORT } from '@next-devtools/shared'
+import { ip } from 'address'
 import { type Context } from './server/router'
+import { createLocalService } from './server/local'
+import { createRPCServer } from './server/rpc'
 
 export class Plugin {
   context: Context
@@ -16,12 +19,10 @@ export class Plugin {
     compiler.hooks.emit.tap('NextDevtoolsPlugin', () => {
       if (!this.running && this.context.dev && this.context.runtime === 'node' && typeof window === 'undefined') {
         const options = compiler.options
-        import('./server/local').then(({ createLocalService }) => {
-          createLocalService()
-        })
-        import('./server/rpc').then(({ createRPCServer }) => {
-          createRPCServer(options, this.context)
-        })
+
+        createLocalService()
+        createRPCServer(options, this.context)
+
         consola.log(colors.gray(`  ▲ Next Devtools ${process.env.VERSION}`))
         consola.log('')
         this.running = true
@@ -48,7 +49,7 @@ export function withNextDevtools(nextConfig: NextConfig): NextConfig {
     rewrites: async () => {
       const obj = {
         source: '/__next_devtools__/client/:path*',
-        destination: `http://localhost:${LOCAL_CLIENT_PORT}/__next_devtools__/client/:path*`,
+        destination: `http://${ip('lo')}:${LOCAL_CLIENT_PORT}/__next_devtools__/client/:path*`,
       }
       const nextRewrites = await nextConfig.rewrites?.()
       if (Array.isArray(nextRewrites)) {

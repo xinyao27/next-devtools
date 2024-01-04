@@ -38,6 +38,9 @@ importers:
       cz-conventional-changelog:
         specifier: ^3.3.0
         version: 3.3.0(typescript@5.3.3)
+      esbuild-plugin-file-path-extensions:
+        specifier: ^2.0.0
+        version: 2.0.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -247,6 +250,9 @@ importers:
       '@trpc/server':
         specifier: ^10.45.0
         version: 10.45.0
+      address:
+        specifier: ^2.0.1
+        version: 2.0.1
       consola:
         specifier: ^3.2.3
         version: 3.2.3
@@ -3452,6 +3458,11 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: false
 
+  /address@2.0.1:
+    resolution: {integrity: sha512-Fd3nPUe+kPZ0P70sGkV8dAUchT3pQCyTPQO5xW9580oqVBPJe2PtWtK7KGnQBvgTrloWAOvOoX8DksyuIWssvQ==}
+    engines: {node: '>= 16.0.0'}
+    dev: false
+
   /agent-base@7.1.0:
     resolution: {integrity: sha512-o/zjMZRhJxny7OyEF+Op8X+efiELC7k7yOjMzgfzVqOzXqkBkWI79YoTdOtsuWd5BWhAGAuOY/Xa6xpiaWXiNg==}
     engines: {node: '>= 14'}
@@ -5381,6 +5392,11 @@ packages:
       is-callable: 1.2.7
       is-date-object: 1.0.5
       is-symbol: 1.0.4
+    dev: true
+
+  /esbuild-plugin-file-path-extensions@2.0.0:
+    resolution: {integrity: sha512-VzVJhuegxLeg8VhsHmxRXtz1Kxf3QMQb1xIuKWivGHoOmZdU6O6xJ5iHhfCDyR+Vs+JE5GrvSpCsZ3GvaqlkUA==}
+    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
     dev: true
 
   /esbuild@0.19.11:

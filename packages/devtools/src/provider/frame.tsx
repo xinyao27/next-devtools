@@ -7,7 +7,6 @@ import { createTRPCProxyClient, createWSClient, wsLink } from '@trpc/client'
 import { type CreateTRPCProxyClient } from '@trpc/client'
 import { type AppRouter } from '../server/router'
 import { MessageProvider } from './message-provider'
-import './styles.css'
 
 interface RPCClient extends CreateTRPCProxyClient<AppRouter> {}
 function createRPCClient(ip?: string): RPCClient | null {
@@ -56,12 +55,65 @@ function Frame() {
         }}
       />
 
-      <div id="next-devtools-container">
-        <div id="next-devtools-anchor">
-          <div id="next-devtools-panel">
+      <div
+        id="next-devtools-container"
+        style={{
+          'position': 'fixed',
+          'width': 0,
+          'zIndex': 2147483645,
+          // @ts-expect-error noop
+          '--next-devtools-widget-bg': '#fafafa',
+          '--next-devtools-widget-border': '#efefef',
+          '--next-devtools-widget-shadow': 'rgb(0 0 0 / 10%)',
+        }}
+      >
+        <div
+          id="next-devtools-anchor"
+          style={{
+            width: 0,
+            zIndex: 2147483645,
+            position: 'fixed',
+            left: '50%',
+            bottom: 8,
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <div
+            id="next-devtools-panel"
+            style={{
+              padding: '0 6px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'var(--next-devtools-widget-bg)',
+              boxShadow: '0 2px 15px -3px var(--next-devtools-widget-shadow), 0 4px 6px -4px var(--next-devtools-widget-shadow)',
+              border: '1px solid var(--next-devtools-widget-border)',
+              borderRadius: '100px',
+              backdropFilter: 'blur(10px)',
+              userSelect: 'none',
+              touchAction: 'none',
+            }}
+          >
             <button
-              style={{ marginLeft: 6, marginRight: 6 }}
               title="Toggle Next Devtools"
+              style={{
+                marginLeft: 6,
+                marginRight: 6,
+                background: 'none',
+                cursor: 'pointer',
+                borderRadius: '100%',
+                borderWidth: 0,
+                width: 30,
+                height: 30,
+                color: '#000',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                opacity: 0.8,
+                transition: 'opacity 0.2s ease-in-out',
+              }}
               onClick={handleToggle}
             >
               <NextLogo
@@ -74,6 +126,20 @@ function Frame() {
 
             <button
               title="Toggle Component Inspector"
+              style={{
+                background: 'none',
+                cursor: 'pointer',
+                borderRadius: '100%',
+                borderWidth: 0,
+                width: 30,
+                height: 30,
+                color: '#000',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                opacity: 0.8,
+                transition: 'opacity 0.2s ease-in-out',
+              }}
               onClick={handleToggleInspectorActive}
             >
               <svg
@@ -88,12 +154,30 @@ function Frame() {
         </div>
         <div
           id="next-devtools-frame"
-          style={{ display: show ? 'block' : 'none' }}
+          style={{
+            display: show ? 'block' : 'none',
+            position: 'fixed',
+            zIndex: -1,
+            pointerEvents: 'auto',
+            width: 'min(80vw, 100vw - 48px)',
+            height: 'min(60vh, 100vh - 48px)',
+            transform: 'translateX(-50%)',
+            left: '50%',
+            bottom: 24,
+          }}
         >
           <iframe
             ref={iframeRef}
             id="next-devtools-iframe"
             src="/__next_devtools__/client"
+            style={{
+              width: '100%',
+              height: '100%',
+              boxShadow: '0 2px 15px -3px var(--next-devtools-widget-shadow), 0 4px 6px -4px var(--next-devtools-widget-shadow)',
+              border: 'none',
+              borderRadius: '10px',
+              pointerEvents: 'auto',
+            }}
           />
         </div>
       </div>

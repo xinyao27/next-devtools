@@ -1,5 +1,6 @@
 import { defineConfig } from 'tsup'
 import { type Options } from 'tsup'
+import { esbuildPluginFilePathExtensions } from 'esbuild-plugin-file-path-extensions'
 import pkg from './package.json'
 
 // https://stackoverflow.com/a/51399781
@@ -30,21 +31,15 @@ const __dirname = dirnamePathShimImport(__filename);
 }
 
 export default defineConfig({
-  entry: ['./src/index.ts', './src/plugin.ts', './src/types.ts'],
-
-  dts: true,
-
-  clean: false,
-
-  injectStyle: true,
-
+  entry: ['src/**/*.ts', 'src/**/*.tsx'],
   format: ['cjs', 'esm'],
-
+  target: ['es2020', 'node16'],
+  dts: true,
+  clean: true,
   external: [
     'next',
     'react',
   ],
-
   esbuildOptions: (options) => {
     options.define = {
       'process.env.VERSION': JSON.stringify(pkg.version),
@@ -53,6 +48,5 @@ export default defineConfig({
     }
     options.banner = { js: '"use client";' }
   },
-
-  esbuildPlugins: [CjsShimPlugin],
+  esbuildPlugins: [CjsShimPlugin, esbuildPluginFilePathExtensions({ cjsExtension: 'js', esmExtension: 'mjs' })],
 })

@@ -19,24 +19,26 @@
     "*.mjs",
     "dist"
   ],
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.mts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
+      "dev": "./src/index.ts",
+      "types": "./dist/index.d.mts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
     },
     "./plugin": {
+      "dev": "./src/plugin.ts",
       "types": "./plugin.d.ts",
-      "require": "./dist/plugin.cjs",
-      "import": "./dist/plugin.js"
+      "require": "./dist/plugin.js",
+      "import": "./dist/plugin.mjs"
     },
     "./types": {
       "types": "./types.d.ts"
     },
-    "./*": "./*"
+    "./package.json": "./package.json"
   },
   "publishConfig": {
     "access": "public"
@@ -54,6 +56,7 @@
     "@next/env": "^14.0.4",
     "@trpc/client": "^10.45.0",
     "@trpc/server": "^10.45.0",
+    "address": "^2.0.1",
     "consola": "^3.2.3",
     "dotenv": "^16.3.1",
     "execa": "^8.0.1",
