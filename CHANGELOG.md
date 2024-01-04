@@ -1,5 +1,12 @@
 
 
+## [0.1.3-beta.2](https://github.com/xinyao27/next-devtools/compare/v0.1.3-beta.1...v0.1.3-beta.2) (2024-01-04)
+
+
+### Bug Fixes
+
+* **package.json:** add module field pointing to the ES modules output file to allow importing directly from source files in modern environments ([f46e32e](https://github.com/xinyao27/next-devtools/commit/f46e32ee8e513ee40e708e309824b01c8493d293))
+
 ## [0.1.3-beta.1](https://github.com/xinyao27/next-devtools/compare/v0.1.3-beta.0...v0.1.3-beta.1) (2024-01-04)
 
 
