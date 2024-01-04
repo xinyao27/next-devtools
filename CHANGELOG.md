@@ -1,5 +1,12 @@
 
 
+## [0.1.3-beta.3](https://github.com/xinyao27/next-devtools/compare/v0.1.3-beta.2...v0.1.3-beta.3) (2024-01-04)
+
+
+### Bug Fixes
+
+* fix the exception caused by suffix name when importing after packaging ([0c9b222](https://github.com/xinyao27/next-devtools/commit/0c9b222016730dc704d6382d49b31f09de22d95b)), closes [#9](https://github.com/xinyao27/next-devtools/issues/9)
+
 ## [0.1.3-beta.2](https://github.com/xinyao27/next-devtools/compare/v0.1.3-beta.1...v0.1.3-beta.2) (2024-01-04)
 
 
