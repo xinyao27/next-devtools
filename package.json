@@ -15,6 +15,7 @@
     "lint": "eslint . --fix",
     "prepare": "husky install",
     "release": "release-it",
+    "preRelease": "release-it --preReleaseId=beta --npm.tag=beta",
     "release:major": "release-it major",
     "release:minor": "release-it minor",
     "release:patch": "release-it patch",
