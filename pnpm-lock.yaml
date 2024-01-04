@@ -140,7 +140,7 @@ importers:
         version: 1.23.0(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)
       '@next-devtools/core':
         specifier: workspace:*
-        version: link:../devtools
+        version: link:../core
       '@next-devtools/shared':
         specifier: workspace:*
         version: link:../shared
@@ -236,7 +236,7 @@ importers:
         specifier: ^3.4.0
         version: 3.4.0
 
-  packages/devtools:
+  packages/core:
     dependencies:
       '@next-devtools/shared':
         specifier: workspace:*
@@ -322,7 +322,7 @@ importers:
     dependencies:
       '@next-devtools/core':
         specifier: workspace:*
-        version: link:../../packages/devtools
+        version: link:../../packages/core
       next:
         specifier: ^14.0.4
         version: 14.0.4(react-dom@18.2.0)(react@18.2.0)(sass@1.69.6)
@@ -337,7 +337,7 @@ importers:
     dependencies:
       '@next-devtools/core':
         specifier: workspace:*
-        version: link:../../packages/devtools
+        version: link:../../packages/core
       next:
         specifier: ^14.0.4
         version: 14.0.4(react-dom@18.2.0)(react@18.2.0)(sass@1.69.6)
@@ -3121,12 +3121,6 @@ packages:
 
   /@types/node@18.11.10:
     resolution: {integrity: sha512-juG3RWMBOqcOuXC643OAdSA525V44cVgGV6dUDuiFtss+8Fk5x1hI93Rsld43VeJVIeqlP9I7Fn9/qaVqoEAuQ==}
-    dev: true
-
-  /@types/node@20.10.6:
-    resolution: {integrity: sha512-Vac8H+NlRNNlAmDfGUP7b5h/KA+AtWIzuXy0E6OyP8f1tCLYAtPvKRRDJjAPqhpCb0t6U2j7/xqAuLEebW2kiw==}
-    dependencies:
-      undici-types: 5.26.5
 
   /@types/normalize-package-data@2.4.2:
     resolution: {integrity: sha512-lqa4UEhhv/2sjjIQgjX8B+RBjj47eo0mzGasklVJ78UKGQY1r0VpB9XHDaZZO9qzEFDdy4MrXLuEaSmPrPSe/A==}
@@ -3172,7 +3166,7 @@ packages:
   /@types/ws@8.5.10:
     resolution: {integrity: sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==}
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 18.11.10
     dev: true
 
   /@typescript-eslint/eslint-plugin@6.7.5(@typescript-eslint/parser@6.7.5)(eslint@8.56.0)(typescript@5.3.3):
@@ -7531,7 +7525,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 18.11.10
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -12006,9 +12000,6 @@ packages:
       jiti: 1.20.0
       mlly: 1.4.2
     dev: true
-
-  /undici-types@5.26.5:
-    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
   /unicorn-magic@0.1.0:
     resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
