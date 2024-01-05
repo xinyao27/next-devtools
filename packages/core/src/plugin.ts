@@ -47,11 +47,13 @@ export function withNextDevtools(nextConfig: NextConfig): NextConfig {
     },
 
     rewrites: async () => {
+      const nextRewrites = await nextConfig.rewrites?.()
+      if (process.env.NODE_ENV === 'production') return nextRewrites || []
+
       const obj = {
         source: '/__next_devtools__/client/:path*',
         destination: `http://${ip('lo')}:${LOCAL_CLIENT_PORT}/__next_devtools__/client/:path*`,
       }
-      const nextRewrites = await nextConfig.rewrites?.()
       if (Array.isArray(nextRewrites)) {
         return [
           ...nextRewrites,
