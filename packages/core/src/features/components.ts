@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises'
+import { existsSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import fg from 'fast-glob'
 import { type WebpackOptionsNormalized } from 'webpack'
@@ -11,7 +12,9 @@ export async function getComponents(options: WebpackOptionsNormalized) {
     return cache
   }
   const root = options.context!
-  const componentPath = join(root, '/components')
+  const isSrcDirectory = existsSync(join(root, '/src'))
+  const codeRoot = isSrcDirectory ? join(root, '/src') : root
+  const componentPath = join(codeRoot, '/components')
   const files = await fg(['**/*.(tsx|js|jsx)'], {
     cwd: componentPath,
     onlyFiles: true,

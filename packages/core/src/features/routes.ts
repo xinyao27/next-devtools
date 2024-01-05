@@ -74,9 +74,11 @@ export function getPageRoutes(files: string[], opts: Opts) {
 
 export async function getRoutes(context: Context) {
   const root = context.dir
-  const isApp = existsSync(join(root, '/app'))
-  const isPages = existsSync(join(root, '/pages'))
-  const routePath = join(root, isApp ? '/app' : isPages ? '/pages' : '/app')
+  const isSrcDirectory = existsSync(join(root, '/src'))
+  const codeRoot = isSrcDirectory ? join(root, '/src') : root
+  const isApp = existsSync(join(codeRoot, '/app'))
+  const isPages = existsSync(join(codeRoot, '/pages'))
+  const routePath = join(codeRoot, isApp ? '/app' : isPages ? '/pages' : '/app')
   const pageExtensions = ['tsx', 'ts', 'jsx', 'js']
   const files = await fg(['**/*.(tsx|js|jsx)'], {
     cwd: routePath,
