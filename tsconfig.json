@@ -1,3 +1,3 @@
 {
-  "extends": "@chenyueban/tsconfig"
+  "extends": "@xystack/style-guide/typescript"
 }

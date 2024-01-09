@@ -57,20 +57,11 @@ export default function SideBar() {
 
   function handleToggleSideBar() {
     if (isMobile) {
-      if (navBarStore.collapsed !== undefined) {
-        navBarStore.collapsed = !navBarStore.collapsed
-      }
-      else {
-        navBarStore.collapsed = false
-      }
-    }
-    else {
-      if (navBarStore.collapsed !== undefined) {
-        navBarStore.collapsed = !navBarStore.collapsed
-      }
-      else {
-        navBarStore.collapsed = true
-      }
+      if (navBarStore.collapsed !== undefined) navBarStore.collapsed = !navBarStore.collapsed
+      else navBarStore.collapsed = false
+    } else {
+      if (navBarStore.collapsed !== undefined) navBarStore.collapsed = !navBarStore.collapsed
+      else navBarStore.collapsed = true
     }
   }
 
@@ -84,64 +75,54 @@ export default function SideBar() {
     >
       <div className="p-2 space-y-2 flex flex-col h-full">
         <section className="flex flex-col gap-1 flex-1">
-          {
-            menuItems.map(item => (
-              <Tooltip key={item.value}>
-                <TooltipTrigger asChild>
-                  <Link
-                    href={item.link}
+          {menuItems.map((item) => (
+            <Tooltip key={item.value}>
+              <TooltipTrigger asChild>
+                <Link
+                  href={item.link}
+                  className={cn(
+                    buttonVariants({ variant: 'ghost', size: 'sm' }),
+                    'space-x-2 justify-center md:justify-start opacity-50 transition px-0 md:px-3',
+                    {
+                      'text-primary opacity-100 bg-accent': pathname.startsWith(item.link),
+                      '!justify-center !px-0': navBarSnap.collapsed === true,
+                      '!justify-start !px-3': navBarSnap.collapsed === false,
+                    },
+                  )}
+                >
+                  <i className={cn(item.icon, 'w-5 h-5')} />
+                  <span
                     className={cn(
-                      buttonVariants({ variant: 'ghost', size: 'sm' }),
-                      'space-x-2 justify-center md:justify-start opacity-50 transition px-0 md:px-3',
-                      {
-                        'text-primary opacity-100 bg-accent': pathname.startsWith(item.link),
-                        '!justify-center !px-0': navBarSnap.collapsed === true,
-                        '!justify-start !px-3': navBarSnap.collapsed === false,
-                      },
+                      'hidden md:inline-block',
+                      { '!hidden': navBarSnap.collapsed === true },
+                      { '!inline-block': navBarSnap.collapsed === false },
                     )}
                   >
-                    <i className={cn(item.icon, 'w-5 h-5')} />
-                    <span
-                      className={cn(
-                        'hidden md:inline-block',
-                        { '!hidden': navBarSnap.collapsed === true },
-                        { '!inline-block': navBarSnap.collapsed === false },
-                      )}
-                    >
-                      {item.label}
-                    </span>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent
-                  asChild
-                  side="right"
+                    {item.label}
+                  </span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent asChild side="right">
+                <p
+                  className={cn('md:hidden', {
+                    '!hidden': navBarSnap.collapsed === true,
+                    '!inline': navBarSnap.collapsed === false,
+                  })}
                 >
-                  <p
-                    className={cn(
-                      'md:hidden',
-                      {
-                        '!hidden': navBarSnap.collapsed === true,
-                        '!inline': navBarSnap.collapsed === false,
-                      },
-                    )}
-                  >{item.label}
-                  </p>
-                </TooltipContent>
-              </Tooltip>
-            ))
-        }
+                  {item.label}
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          ))}
         </section>
 
         <Separator />
 
         <section
-          className={cn(
-            'px-1.5 flex flex-col-reverse md:flex-row justify-between items-center gap-1',
-            {
-              '!flex-col-reverse': navBarSnap.collapsed === true,
-              '!flex-row': navBarSnap.collapsed === false,
-            },
-          )}
+          className={cn('px-1.5 flex flex-col-reverse md:flex-row justify-between items-center gap-1', {
+            '!flex-col-reverse': navBarSnap.collapsed === true,
+            '!flex-row': navBarSnap.collapsed === false,
+          })}
         >
           <Button
             className="opacity-50 hover:opacity-100 transition"
@@ -150,13 +131,10 @@ export default function SideBar() {
             onClick={handleToggleSideBar}
           >
             <i
-              className={cn(
-                'i-ri-side-bar-line md:i-ri-side-bar-fill !h-5 !w-5',
-                {
-                  '!i-ri-side-bar-line': navBarSnap.collapsed === true,
-                  '!i-ri-side-bar-fill': navBarSnap.collapsed === false,
-                },
-              )}
+              className={cn('i-ri-side-bar-line md:i-ri-side-bar-fill !h-5 !w-5', {
+                '!i-ri-side-bar-line': navBarSnap.collapsed === true,
+                '!i-ri-side-bar-fill': navBarSnap.collapsed === false,
+              })}
             />
             <span className="sr-only">Toggle sidebar</span>
           </Button>

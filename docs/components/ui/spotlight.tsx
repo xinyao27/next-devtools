@@ -6,7 +6,7 @@ interface SpotlightProps {
   fill?: string
 }
 
-const Spotlight = ({ className, fill }: SpotlightProps) => {
+function Spotlight({ className, fill }: SpotlightProps) {
   return (
     <svg
       fill="none"
@@ -38,20 +38,9 @@ const Spotlight = ({ className, fill }: SpotlightProps) => {
           x="0.860352"
           y="0.838989"
         >
-          <feFlood
-            floodOpacity="0"
-            result="BackgroundImageFix"
-          />
-          <feBlend
-            in="SourceGraphic"
-            in2="BackgroundImageFix"
-            mode="normal"
-            result="shape"
-          />
-          <feGaussianBlur
-            result="effect1_foregroundBlur_1065_8"
-            stdDeviation="151"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feBlend in="SourceGraphic" in2="BackgroundImageFix" mode="normal" result="shape" />
+          <feGaussianBlur result="effect1_foregroundBlur_1065_8" stdDeviation="151" />
         </filter>
       </defs>
     </svg>

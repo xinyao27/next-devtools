@@ -4,9 +4,9 @@ import React, { memo, useRef } from 'react'
 import { Inspector } from 'react-dev-inspector'
 import { NextLogo, RPC_SERVER_PORT } from '@next-devtools/shared'
 import { createTRPCProxyClient, createWSClient, wsLink } from '@trpc/client'
-import { type CreateTRPCProxyClient } from '@trpc/client'
-import { type AppRouter } from '../server/router'
 import { MessageProvider } from './message-provider'
+import type { CreateTRPCProxyClient } from '@trpc/client'
+import type { AppRouter } from '../server/router'
 
 interface RPCClient extends CreateTRPCProxyClient<AppRouter> {}
 function createRPCClient(ip?: string): RPCClient | null {
@@ -21,9 +21,7 @@ function createRPCClient(ip?: string): RPCClient | null {
 }
 
 function Separator() {
-  return (
-    <div style={{ width: 1, height: 10, borderLeft: '1px solid rgba(136, 136, 136, 0.2)', margin: '0 6px' }} />
-  )
+  return <div style={{ width: 1, height: 10, borderLeft: '1px solid rgba(136, 136, 136, 0.2)', margin: '0 6px' }} />
 }
 
 function Frame() {
@@ -32,17 +30,15 @@ function Frame() {
   const [show, setShow] = React.useState(false)
   const [inspectorActive, setInspectorActive] = React.useState(false)
   const handleToggle = React.useCallback(() => {
-    setShow(s => !s)
+    setShow((s) => !s)
   }, [])
   const handleToggleInspectorActive = React.useCallback(() => {
     if (show === true) setShow(false)
-    setInspectorActive(s => !s)
+    setInspectorActive((s) => !s)
   }, [show])
 
   return (
-    <MessageProvider
-      iframeRef={iframeRef}
-    >
+    <MessageProvider iframeRef={iframeRef}>
       <Inspector
         active={inspectorActive}
         onActiveChange={setInspectorActive}
@@ -58,9 +54,9 @@ function Frame() {
       <div
         id="next-devtools-container"
         style={{
-          'position': 'fixed',
-          'width': 0,
-          'zIndex': 2147483645,
+          position: 'fixed',
+          width: 0,
+          zIndex: 2147483645,
           // @ts-expect-error noop
           '--next-devtools-widget-bg': '#fafafa',
           '--next-devtools-widget-border': '#efefef',
@@ -88,7 +84,8 @@ function Frame() {
               justifyContent: 'center',
               alignItems: 'center',
               backgroundColor: 'var(--next-devtools-widget-bg)',
-              boxShadow: '0 2px 15px -3px var(--next-devtools-widget-shadow), 0 4px 6px -4px var(--next-devtools-widget-shadow)',
+              boxShadow:
+                '0 2px 15px -3px var(--next-devtools-widget-shadow), 0 4px 6px -4px var(--next-devtools-widget-shadow)',
               border: '1px solid var(--next-devtools-widget-border)',
               borderRadius: '100px',
               backdropFilter: 'blur(10px)',
@@ -116,10 +113,7 @@ function Frame() {
               }}
               onClick={handleToggle}
             >
-              <NextLogo
-                mode="small"
-                theme="light"
-              />
+              <NextLogo mode="small" theme="light" />
             </button>
 
             <Separator />
@@ -173,7 +167,8 @@ function Frame() {
             style={{
               width: '100%',
               height: '100%',
-              boxShadow: '0 2px 15px -3px var(--next-devtools-widget-shadow), 0 4px 6px -4px var(--next-devtools-widget-shadow)',
+              boxShadow:
+                '0 2px 15px -3px var(--next-devtools-widget-shadow), 0 4px 6px -4px var(--next-devtools-widget-shadow)',
               border: 'none',
               borderRadius: '10px',
               pointerEvents: 'auto',

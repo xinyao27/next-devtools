@@ -17,11 +17,7 @@ const config: DocsThemeConfig = {
           </Link>
           <div className="opacity-50">
             Published under{' '}
-            <a
-              className="underline"
-              href="https://github.com/xinyao27/next-devtools"
-              target="_blank"
-            >
+            <a className="underline" href="https://github.com/xinyao27/next-devtools" rel="noreferrer" target="_blank">
               MIT License
             </a>
           </div>
@@ -33,9 +29,8 @@ const config: DocsThemeConfig = {
   themeSwitch: { component: null },
   useNextSeoProps: () => {
     const { asPath } = useRouter()
-    if (asPath !== '/') {
-      return { titleTemplate: '%s - NextDevtools' }
-    }
+    if (asPath !== '/') return { titleTemplate: '%s - NextDevtools' }
+
     return {}
   },
 }

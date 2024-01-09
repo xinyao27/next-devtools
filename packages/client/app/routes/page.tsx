@@ -14,35 +14,33 @@ export default function Page() {
   return (
     <div>
       <CurrentRoute />
-      {
-        isLoading
-          ? (
-            <div>
-              <div className="flex items-center p-4 space-x-4">
-                <Skeleton className="w-12 h-12 rounded-full" />
-                <div className="space-y-2">
-                  <Skeleton className="h-4 w-[450px]" />
-                  <Skeleton className="h-4 w-[400px]" />
-                </div>
-              </div>
-              <div className="flex items-center p-4 space-x-4">
-                <Skeleton className="w-12 h-12 rounded-full" />
-                <div className="space-y-2">
-                  <Skeleton className="h-4 w-[450px]" />
-                  <Skeleton className="h-4 w-[400px]" />
-                </div>
-              </div>
-              <div className="flex items-center p-4 space-x-4">
-                <Skeleton className="w-12 h-12 rounded-full" />
-                <div className="space-y-2">
-                  <Skeleton className="h-4 w-[450px]" />
-                  <Skeleton className="h-4 w-[400px]" />
-                </div>
-              </div>
+      {isLoading ? (
+        <div>
+          <div className="flex items-center p-4 space-x-4">
+            <Skeleton className="w-12 h-12 rounded-full" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-[450px]" />
+              <Skeleton className="h-4 w-[400px]" />
             </div>
-            )
-          : <AllRoutes data={data?.routes} />
-      }
+          </div>
+          <div className="flex items-center p-4 space-x-4">
+            <Skeleton className="w-12 h-12 rounded-full" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-[450px]" />
+              <Skeleton className="h-4 w-[400px]" />
+            </div>
+          </div>
+          <div className="flex items-center p-4 space-x-4">
+            <Skeleton className="w-12 h-12 rounded-full" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-[450px]" />
+              <Skeleton className="h-4 w-[400px]" />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <AllRoutes data={data?.routes} />
+      )}
     </div>
   )
 }

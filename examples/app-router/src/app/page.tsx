@@ -16,27 +16,13 @@ export default function Home() {
             target="_blank"
           >
             By{' '}
-            <Image
-              priority
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              height={24}
-              src="/vercel.svg"
-              width={100}
-            />
+            <Image priority alt="Vercel Logo" className={styles.vercelLogo} height={24} src="/vercel.svg" width={100} />
           </a>
         </div>
       </div>
 
       <div className={styles.center}>
-        <Image
-          priority
-          alt="Next.js Logo"
-          className={styles.logo}
-          height={37}
-          src="/next.svg"
-          width={180}
-        />
+        <Image priority alt="Next.js Logo" className={styles.logo} height={37} src="/next.svg" width={180} />
       </div>
 
       <div className={styles.grid}>
@@ -85,9 +71,7 @@ export default function Home() {
           <h2>
             Deploy <span>-&gt;</span>
           </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
+          <p>Instantly deploy your Next.js site to a shareable URL with Vercel.</p>
         </a>
       </div>
     </main>

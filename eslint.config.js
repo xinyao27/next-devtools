@@ -1,3 +1,3 @@
-import { all } from '@chenyueban/eslint-config'
+import { all } from '@xystack/style-guide/eslint'
 
 export default all

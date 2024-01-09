@@ -9,8 +9,5 @@ export default defineConfig({
 
   format: ['cjs', 'esm'],
 
-  external: [
-    'next',
-    'react',
-  ],
+  external: ['next', 'react'],
 })

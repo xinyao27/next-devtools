@@ -1,8 +1,8 @@
 import cn from 'clsx'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { type ReactNode } from 'react'
 import styles from './styles.module.css'
+import type { ReactNode } from 'react'
 
 interface Props {
   large?: boolean
@@ -13,16 +13,7 @@ interface Props {
   index: number
   children: ReactNode
 }
-export function Feature({
-  large,
-  centered,
-  children,
-  lightOnly,
-  className,
-  href,
-  index,
-  ...props
-}: Props) {
+export function Feature({ large, centered, children, lightOnly, className, href, index, ...props }: Props) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -39,17 +30,11 @@ export function Feature({
       {...props}
     >
       {children}
-      {href
-        ? (
-          <Link
-            className={styles.link}
-            href={href}
-            target="_blank"
-          >
-            <i className="i-ri-arrow-right-s-line h-4 w-4" />
-          </Link>
-          )
-        : null}
+      {href ? (
+        <Link className={styles.link} href={href} target="_blank">
+          <i className="i-ri-arrow-right-s-line h-4 w-4" />
+        </Link>
+      ) : null}
     </motion.div>
   )
 }

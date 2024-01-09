@@ -3,12 +3,7 @@ const { iconsPlugin, getIconCollections } = require('@egoist/tailwindcss-icons')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-  ],
+  content: ['./pages/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './app/**/*.{ts,tsx}', './src/**/*.{ts,tsx}'],
   theme: {
     container: {
       center: true,
@@ -75,8 +70,8 @@ module.exports = {
   plugins: [
     require('tailwindcss-animate'),
     iconsPlugin({
-    // Select the icon collections you want to use
-    // You can also ignore this option to automatically discover all icon collections you have installed
+      // Select the icon collections you want to use
+      // You can also ignore this option to automatically discover all icon collections you have installed
       collections: getIconCollections(['ri']),
     }),
   ],

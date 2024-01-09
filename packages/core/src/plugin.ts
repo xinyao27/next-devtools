@@ -1,12 +1,12 @@
-import { type Compiler } from 'webpack'
-import { type NextConfig } from 'next/dist/server/config-shared'
 import consola from 'consola'
 import { colors } from 'consola/utils'
 import { LOCAL_CLIENT_PORT } from '@next-devtools/shared'
 import { ip } from 'address'
-import { type Context } from './server/router'
 import { createLocalService } from './server/local'
 import { createRPCServer } from './server/rpc'
+import type { Context } from './server/router'
+import type { NextConfig } from 'next/dist/server/config-shared'
+import type { Compiler } from 'webpack'
 
 export class Plugin {
   context: Context
@@ -33,10 +33,7 @@ export class Plugin {
 
 export function withNextDevtools(nextConfig: NextConfig): NextConfig {
   const nextDevtoolsConfig: NextConfig = {
-    webpack: (
-      config,
-      context,
-    ) => {
+    webpack: (config, context) => {
       if (!context.isServer) return config
       if (!context.dev) return config
 
@@ -55,15 +52,11 @@ export function withNextDevtools(nextConfig: NextConfig): NextConfig {
         destination: `http://${ip('lo')}:${LOCAL_CLIENT_PORT}/__next_devtools__/client/:path*`,
       }
       if (Array.isArray(nextRewrites)) {
-        return [
-          ...nextRewrites,
-          obj,
-        ]
-      }
-      else if (nextRewrites instanceof Object) {
+        return [...nextRewrites, obj]
+      } else if (nextRewrites instanceof Object) {
         return {
           ...nextRewrites,
-          fallback: [...nextRewrites.fallback || [], obj],
+          fallback: [...(nextRewrites.fallback || []), obj],
         }
       }
       return [obj]

@@ -1,11 +1,12 @@
 import { defineConfig } from 'tsup'
-import { type Options } from 'tsup'
 import { esbuildPluginFilePathExtensions } from 'esbuild-plugin-file-path-extensions'
 import pkg from './package.json'
+import type { Options } from 'tsup'
 
 // https://stackoverflow.com/a/51399781
-type ArrayElement<ArrayType extends readonly unknown[]> =
-    ArrayType extends readonly (infer ElementType)[] ? ElementType : never
+type ArrayElement<ArrayType extends readonly unknown[]> = ArrayType extends readonly (infer ElementType)[]
+  ? ElementType
+  : never
 
 type EsbuildPlugin = ArrayElement<NonNullable<Options['esbuildPlugins']>>
 
@@ -14,7 +15,8 @@ const CjsShimPlugin: EsbuildPlugin = {
   setup(build) {
     if (build.initialOptions.format !== 'esm') return
     build.onEnd((result) => {
-      const filesNeedingShims = result.outputFiles?.filter(file => file.text.match(/__dirname|__filename/) !== null) || []
+      const filesNeedingShims =
+        result.outputFiles?.filter((file) => file.text.match(/__dirname|__filename/) !== null) || []
 
       filesNeedingShims.forEach((file) => {
         const dirnameShim = `import { fileURLToPath as fileURLToPathShimImport } from "node:url";
@@ -36,10 +38,7 @@ export default defineConfig({
   target: ['es2020', 'node16'],
   dts: true,
   clean: true,
-  external: [
-    'next',
-    'react',
-  ],
+  external: ['next', 'react'],
   esbuildOptions: (options) => {
     options.define = {
       'process.env.VERSION': JSON.stringify(pkg.version),

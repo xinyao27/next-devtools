@@ -18,13 +18,7 @@ export default function Page() {
     <div>
       {element}
 
-      {
-        filteredData.length > 0 && (
-          <AllComponents
-            data={filteredData}
-          />
-        )
-      }
+      {filteredData.length > 0 && <AllComponents data={filteredData} />}
     </div>
   )
 }

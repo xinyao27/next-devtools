@@ -1,20 +1,16 @@
-/* eslint-disable react/no-array-index-key */
 'use client'
 import React, { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 
-export const Header = ({ translate, titleComponent }: any) => {
+export function Header({ translate, titleComponent }: any) {
   return (
-    <motion.div
-      className="max-w-5xl mx-auto text-center div"
-      style={{ translateY: translate }}
-    >
+    <motion.div className="max-w-5xl mx-auto text-center div" style={{ translateY: translate }}>
       {titleComponent}
     </motion.div>
   )
 }
 
-export const Card = ({
+export function Card({
   rotate,
   scale,
   translate,
@@ -24,7 +20,7 @@ export const Card = ({
   scale: any
   translate: any
   content: React.ReactNode
-}) => {
+}) {
   return (
     <motion.div
       className="-mt-2 mx-auto w-full rounded-[30px] max-w-5xl"
@@ -47,10 +43,13 @@ export const Card = ({
   )
 }
 
-export const ContainerScroll = ({ titleComponent, content }: {
+export function ContainerScroll({
+  titleComponent,
+  content,
+}: {
   titleComponent: string | React.ReactNode
   content: React.ReactNode
-}) => {
+}) {
   const containerRef = useRef<any>(null)
   const { scrollYProgress } = useScroll({ target: containerRef })
   const [isMobile, setIsMobile] = React.useState(false)
@@ -79,20 +78,9 @@ export const ContainerScroll = ({ titleComponent, content }: {
       ref={containerRef}
       className="h-[90vh] sm:h-[120vh] flex items-start sm:items-center justify-center relative p-20"
     >
-      <div
-        className="relative w-full h-full"
-        style={{ perspective: '1000px' }}
-      >
-        <Header
-          titleComponent={titleComponent}
-          translate={translate}
-        />
-        <Card
-          content={content}
-          rotate={rotate}
-          scale={scale}
-          translate={translate}
-        />
+      <div className="relative w-full h-full" style={{ perspective: '1000px' }}>
+        <Header titleComponent={titleComponent} translate={translate} />
+        <Card content={content} rotate={rotate} scale={scale} translate={translate} />
       </div>
     </div>
   )

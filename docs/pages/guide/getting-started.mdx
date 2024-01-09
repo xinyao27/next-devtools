@@ -1,5 +1,5 @@
 import { Tabs, Tab } from 'nextra-theme-docs'
-import Steps from '@/components/steps';
+import Steps from '@/components/steps'
 
 # Getting Started
 
@@ -10,21 +10,9 @@ Using Next DevTools in your Next project.
 Inside your Next project directory, run the following:
 
 <Tabs items={['pnpm', 'npm', 'yarn']}>
-  <Tab>
-    ```bash
-    pnpm add @next-devtools/core
-    ```
-  </Tab>
-  <Tab>
-    ```bash
-    npm i @next-devtools/core
-    ```
-  </Tab>
-  <Tab>
-    ```bash
-    yarn add @next-devtools/core
-    ```
-  </Tab>
+  <Tab>```bash pnpm add @next-devtools/core ```</Tab>
+  <Tab>```bash npm i @next-devtools/core ```</Tab>
+  <Tab>```bash yarn add @next-devtools/core ```</Tab>
 </Tabs>
 
 <Steps>
@@ -62,6 +50,7 @@ module.exports = withNextDevtools({
       )
     }
     ```
+
   </Tab>
   <Tab>
     You need to add the `NextDevtoolsProvider` component in the `pages/_app` file.
@@ -73,6 +62,7 @@ module.exports = withNextDevtools({
       return <NextDevtoolsProvider><Component {...pageProps} /></NextDevtoolsProvider>
     }
     ```
+
   </Tab>
 </Tabs>
 

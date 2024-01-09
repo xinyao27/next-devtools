@@ -3,14 +3,8 @@
   "pipeline": {
     "build": {
       "cache": false,
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        ".next/**",
-        "!.next/cache/**",
-        "dist/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
     "dev": {
       "cache": false,
@@ -30,13 +24,8 @@
     },
     "docs:build": {
       "cache": false,
-      "dependsOn": [
-        "^docs:build"
-      ],
-      "outputs": [
-        ".next/**",
-        "!.next/cache/**"
-      ]
+      "dependsOn": ["^docs:build"],
+      "outputs": [".next/**", "!.next/cache/**"]
     }
   }
 }

@@ -73,7 +73,8 @@
   body {
     @apply bg-background text-foreground;
   }
-  html, body {
+  html,
+  body {
     @apply w-full h-full;
   }
 }

@@ -1,5 +1,12 @@
 import React from 'react'
-import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command'
 
 export default function CommandMenu() {
   const [open, setOpen] = React.useState(false)
@@ -8,7 +15,7 @@ export default function CommandMenu() {
     const down = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
-        setOpen(open => !open)
+        setOpen((open) => !open)
       }
     }
     document.addEventListener('keydown', down)
@@ -16,10 +23,7 @@ export default function CommandMenu() {
   }, [])
 
   return (
-    <CommandDialog
-      open={open}
-      onOpenChange={setOpen}
-    >
+    <CommandDialog open={open} onOpenChange={setOpen}>
       <CommandInput placeholder="Type a command or search..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>

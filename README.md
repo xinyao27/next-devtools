@@ -70,9 +70,7 @@ export default function RootLayout({ children }) {
   return (
     <html>
       <body>
-        <NextDevtoolsProvider>
-          {children}
-        </NextDevtoolsProvider>
+        <NextDevtoolsProvider>{children}</NextDevtoolsProvider>
       </body>
     </html>
   )
@@ -87,7 +85,11 @@ You need to add the `NextDevtoolsProvider` component in the `pages/_app` file.
 import { NextDevtoolsProvider } from '@next-devtools/core'
 
 export default function App({ Component, pageProps }) {
-  return <NextDevtoolsProvider><Component {...pageProps} /></NextDevtoolsProvider>
+  return (
+    <NextDevtoolsProvider>
+      <Component {...pageProps} />
+    </NextDevtoolsProvider>
+  )
 }
 ```
 

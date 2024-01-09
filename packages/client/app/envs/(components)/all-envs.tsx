@@ -2,9 +2,9 @@
 
 import React from 'react'
 import { useTheme } from 'next-themes'
-import { type Env } from '@next-devtools/shared'
 import dynamic from 'next/dynamic'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import type { Env } from '@next-devtools/shared'
 import './react-json-view.css'
 
 const ReactJson = dynamic(() => import('@microlink/react-json-view'), { ssr: false })
@@ -16,10 +16,7 @@ export default function AllEnvs({ data }: Props) {
   const { theme } = useTheme()
 
   return (
-    <Accordion
-      defaultValue={['public-envs']}
-      type="multiple"
-    >
+    <Accordion defaultValue={['public-envs']} type="multiple">
       <AccordionItem value="public-envs">
         <AccordionTrigger>
           <div className="flex items-center gap-2">
@@ -31,17 +28,13 @@ export default function AllEnvs({ data }: Props) {
         </AccordionTrigger>
         <AccordionContent>
           <div className="py-4">
-            {
-              data?.publicEnv
-                ? (
-                  <ReactJson
-                    name={false}
-                    src={data.publicEnv}
-                    theme={theme === 'dark' ? 'grayscale' : 'grayscale:inverted'}
-                  />
-                  )
-                : null
-              }
+            {data?.publicEnv ? (
+              <ReactJson
+                name={false}
+                src={data.publicEnv}
+                theme={theme === 'dark' ? 'grayscale' : 'grayscale:inverted'}
+              />
+            ) : null}
           </div>
         </AccordionContent>
       </AccordionItem>
@@ -58,17 +51,13 @@ export default function AllEnvs({ data }: Props) {
         </AccordionTrigger>
         <AccordionContent className="overflow-hidden">
           <div className="py-4 overflow-hidden">
-            {
-              data?.privateEnv
-                ? (
-                  <ReactJson
-                    name={false}
-                    src={data.privateEnv}
-                    theme={theme === 'dark' ? 'grayscale' : 'grayscale:inverted'}
-                  />
-                  )
-                : null
-              }
+            {data?.privateEnv ? (
+              <ReactJson
+                name={false}
+                src={data.privateEnv}
+                theme={theme === 'dark' ? 'grayscale' : 'grayscale:inverted'}
+              />
+            ) : null}
           </div>
         </AccordionContent>
       </AccordionItem>

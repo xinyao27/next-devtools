@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
-import { type WebpackOptionsNormalized } from 'webpack'
-import { type Package } from '@next-devtools/shared'
+import type { WebpackOptionsNormalized } from 'webpack'
+import type { Package } from '@next-devtools/shared'
 
 export async function getPackages(options: WebpackOptionsNormalized) {
   const root = options.context!
@@ -11,9 +11,8 @@ export async function getPackages(options: WebpackOptionsNormalized) {
 
   for (const type of ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies']) {
     const dep = data[type]
-    if (!dep) {
-      continue
-    }
+    if (!dep) continue
+
     for (const name in dep) {
       if (name !== process.env.PACKAGE_NAME) {
         const version = dep[name]
@@ -31,9 +30,7 @@ export async function getPackageInfo(name: string) {
   const npmUrl = `${npmRegistryUrl}/${name}`
   const npmResponse = await fetch(npmUrl, { cache: 'force-cache' })
   const npmData = await npmResponse.json()
-  if (npmData.repository?.url.startsWith('git+')) {
-    npmData.repository.url = npmData.repository.url.slice(4)
-  }
+  if (npmData.repository?.url.startsWith('git+')) npmData.repository.url = npmData.repository.url.slice(4)
 
   // Get GitHub data
   const githubUrl = npmData.repository?.url

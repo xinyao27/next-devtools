@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google'
-import { type ReactNode } from 'react'
-import { type AppProps } from 'next/app'
 import Analytics from '@/components/analytics'
+import type { ReactNode } from 'react'
+import type { AppProps } from 'next/app'
 import 'nextra-theme-docs/style.css'
 import './styles.css'
 

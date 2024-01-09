@@ -4,7 +4,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/utils/cn'
 
-export const BackgroundBeams = ({ className }: { className?: string }) => {
+export function BackgroundBeams({ className }: { className?: string }) {
   const paths = [
     'M-380 -189C-380 -189 -312 216 152 343C616 470 684 875 684 875',
     'M-373 -197C-373 -197 -305 208 159 335C623 462 691 867 691 867',
@@ -110,20 +110,10 @@ export const BackgroundBeams = ({ className }: { className?: string }) => {
                 delay: Math.random() * 10,
               }}
             >
-              <stop
-                stopColor="#18CCFC"
-                stopOpacity="0"
-              />
+              <stop stopColor="#18CCFC" stopOpacity="0" />
               <stop stopColor="#18CCFC" />
-              <stop
-                offset="32.5%"
-                stopColor="#6344F5"
-              />
-              <stop
-                offset="100%"
-                stopColor="#AE48FF"
-                stopOpacity="0"
-              />
+              <stop offset="32.5%" stopColor="#6344F5" />
+              <stop offset="100%" stopColor="#AE48FF" stopOpacity="0" />
             </motion.linearGradient>
           ))}
 
@@ -135,19 +125,9 @@ export const BackgroundBeams = ({ className }: { className?: string }) => {
             id="paint0_radial_242_278"
             r="1"
           >
-            <stop
-              offset="0.0666667"
-              stopColor="var(--neutral-300)"
-            />
-            <stop
-              offset="0.243243"
-              stopColor="var(--neutral-300)"
-            />
-            <stop
-              offset="0.43594"
-              stopColor="white"
-              stopOpacity="0"
-            />
+            <stop offset="0.0666667" stopColor="var(--neutral-300)" />
+            <stop offset="0.243243" stopColor="var(--neutral-300)" />
+            <stop offset="0.43594" stopColor="white" stopOpacity="0" />
           </radialGradient>
         </defs>
       </svg>

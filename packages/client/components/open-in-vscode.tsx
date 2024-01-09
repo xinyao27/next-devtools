@@ -12,9 +12,7 @@ export default function OpenInVscode({ value, children }: Props) {
   }, [])
 
   return (
-    <div
-      className="flex items-center gap-2 transition cursor-pointer group hover:underline"
-    >
+    <div className="flex items-center gap-2 transition cursor-pointer group hover:underline">
       {children}
       <button
         className="items-center hidden transition opacity-50 group-hover:flex hover:opacity-100 hover:text-primary"

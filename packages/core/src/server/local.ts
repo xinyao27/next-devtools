@@ -11,8 +11,7 @@ export async function createLocalService() {
       stdio: 'inherit',
       env: { PORT },
     })
-  }
-  else {
+  } else {
     execa('node', ['server.js'], {
       cwd: clientDir,
       stdio: 'inherit',
