@@ -1,5 +1,20 @@
 
 
+# [0.2.0](https://github.com/xinyao27/next-devtools/compare/v0.1.3...v0.2.0) (2024-01-11)
+
+
+### Bug Fixes
+
+* **core:** fix the issue of incompatibility with the src directory when querying routes ([10f3021](https://github.com/xinyao27/next-devtools/commit/10f3021537739a64eb0c35f6ebd10a2b431c2c6f)), closes [#12](https://github.com/xinyao27/next-devtools/issues/12)
+* **plugin.ts:** check if NODE_ENV is in production before returning rewrites to ([371624a](https://github.com/xinyao27/next-devtools/commit/371624a2700cacebf537faab31598a1e18922950))
+* **provider.tsx:** wrap return statement children with fragment to ensure code conformity to JSX standards ([df3007c](https://github.com/xinyao27/next-devtools/commit/df3007cd6dc7e9aea1ab7e0c332244fa58b98297))
+
+
+### Features
+
+* add overview tab ([5a6c3d8](https://github.com/xinyao27/next-devtools/commit/5a6c3d879a137187439065e3b8db74a1277d503b))
+* **packages:** add NpmVersionCheck component to display information about package version ([10b7f0a](https://github.com/xinyao27/next-devtools/commit/10b7f0aa93c8fadad09f83764bd4b6dead80820e))
+
 ## [0.1.3](https://github.com/xinyao27/next-devtools/compare/v0.1.3-beta.3...v0.1.3) (2024-01-04)
 
 ## [0.1.3-beta.3](https://github.com/xinyao27/next-devtools/compare/v0.1.3-beta.2...v0.1.3-beta.3) (2024-01-04)
