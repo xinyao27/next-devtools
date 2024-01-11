@@ -10,6 +10,7 @@ Enhance Next developer experience
 
 <p>
   <a href="https://next-devtools.vercel.app/">📚 Documentation</a>
+  <a href="https://stackblitz.com/edit/stackblitz-next-devtools?embed=1&file=app%2Fpage.tsx&theme=dark">⚡️ Try it on StackBlitz</a>
 </p>
 
 ## Getting Started
