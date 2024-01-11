@@ -3,4 +3,5 @@ export const LOCAL_CLIENT_PORT = '12883'
 
 export * from './types'
 export * from './next-logo'
+export * from './react-logo'
 export * from './frame-message'

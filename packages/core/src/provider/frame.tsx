@@ -8,8 +8,7 @@ import { MessageProvider } from './message-provider'
 import type { CreateTRPCProxyClient } from '@trpc/client'
 import type { AppRouter } from '../server/router'
 
-interface RPCClient extends CreateTRPCProxyClient<AppRouter> {}
-function createRPCClient(ip?: string): RPCClient | null {
+function createRPCClient(ip?: string): CreateTRPCProxyClient<AppRouter> | null {
   if (typeof window != 'undefined') {
     const _ip = window.location.hostname
     // create persistent WebSocket connection

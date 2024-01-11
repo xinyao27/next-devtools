@@ -3,8 +3,7 @@ import { RPC_SERVER_PORT } from '@next-devtools/shared'
 import type { CreateTRPCProxyClient } from '@trpc/client'
 import type { AppRouter } from '@next-devtools/core/types'
 
-export interface RPCClient extends CreateTRPCProxyClient<AppRouter> {}
-export function createRPCClient(ip?: string): RPCClient | null {
+export function createRPCClient(ip?: string): CreateTRPCProxyClient<AppRouter> | null {
   if (typeof window != 'undefined') {
     const _ip = window.location.hostname
     // create persistent WebSocket connection

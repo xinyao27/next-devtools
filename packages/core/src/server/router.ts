@@ -3,9 +3,10 @@ import { z } from 'zod'
 import { getStaticAssetInfo, getStaticAssets } from '../features/assets'
 import { getComponents } from '../features/components'
 import { getEnvs } from '../features/envs'
-import { getPackageInfo, getPackages } from '../features/packages'
+import { checkPackageVersion, getPackageInfo, getPackages } from '../features/packages'
 import { getRoutes } from '../features/routes'
 import { openInVscode } from '../features/vscode'
+import { getOverviewData } from '../features/overview'
 import type { NextConfig, WebpackConfigContext } from 'next/dist/server/config-shared'
 import type { WebpackOptionsNormalized } from 'webpack'
 
@@ -17,6 +18,11 @@ export interface Context extends WebpackConfigContext {
 const t = initTRPC.context<() => { options: WebpackOptionsNormalized; context: Context }>().create()
 
 export const appRouter = t.router({
+  getOverviewData: t.procedure.query(async (opts) => {
+    const options = opts.ctx.options
+    const context = opts.ctx.context
+    return await getOverviewData(options, context)
+  }),
   getStaticAssets: t.procedure.query(async (opts) => {
     const options = opts.ctx.options
     return await getStaticAssets(options)
@@ -42,6 +48,18 @@ export const appRouter = t.router({
     const name = opts.input
     return await getPackageInfo(name)
   }),
+  checkPackageVersion: t.procedure
+    .input(
+      z.object({
+        name: z.string(),
+        current: z.string().optional(),
+      }),
+    )
+    .query(async (opts) => {
+      const options = opts.ctx.options
+      const input = opts.input
+      return await checkPackageVersion(options, input.name, input.current)
+    }),
   getRoutes: t.procedure.query(async (opts) => {
     const context = opts.ctx.context
     return await getRoutes(context)

@@ -12,12 +12,12 @@ import { navBarStore } from '@/store'
 import { ThemeToggle } from './theme-toggle'
 
 const menuItems = [
-  // {
-  //   value: 'overview',
-  //   label: 'Overview',
-  //   link: '/overview',
-  //   icon: 'i-ri-information-line',
-  // },
+  {
+    value: 'overview',
+    label: 'Overview',
+    link: '/overview',
+    icon: 'i-ri-information-line',
+  },
   {
     value: 'routes',
     label: 'Routes',

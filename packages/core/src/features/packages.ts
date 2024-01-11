@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
+import semver from 'semver'
 import type { WebpackOptionsNormalized } from 'webpack'
 import type { Package } from '@next-devtools/shared'
 
@@ -24,7 +25,7 @@ export async function getPackages(options: WebpackOptionsNormalized) {
   return packages
 }
 
-export async function getPackageInfo(name: string) {
+export async function getPackageInfo(name: string, github = true) {
   // Get NPM data
   const npmRegistryUrl = 'https://registry.npmjs.org'
   const npmUrl = `${npmRegistryUrl}/${name}`
@@ -32,13 +33,39 @@ export async function getPackageInfo(name: string) {
   const npmData = await npmResponse.json()
   if (npmData.repository?.url.startsWith('git+')) npmData.repository.url = npmData.repository.url.slice(4)
 
-  // Get GitHub data
-  const githubUrl = npmData.repository?.url
-  const githubUser = githubUrl?.split('/')[3]
-  const githubRepo = githubUrl?.split('/')[4]?.split('.git')[0]
-  const githubApiUrl = `https://api.github.com/repos/${githubUser}/${githubRepo}`
-  const githubResponse = await fetch(githubApiUrl, { cache: 'force-cache' })
-  const githubData = await githubResponse.json()
+  if (github) {
+    // Get GitHub data
+    const githubUrl = npmData.repository?.url
+    const githubUser = githubUrl?.split('/')[3]
+    const githubRepo = githubUrl?.split('/')[4]?.split('.git')[0]
+    const githubApiUrl = `https://api.github.com/repos/${githubUser}/${githubRepo}`
+    const githubResponse = await fetch(githubApiUrl, { cache: 'force-cache' })
+    const githubData = await githubResponse.json()
 
-  return { ...npmData, ...githubData }
+    return { ...npmData, ...githubData }
+  }
+
+  return npmData
+}
+
+export async function checkPackageVersion(options: WebpackOptionsNormalized, name: string, current?: string) {
+  if (!current) {
+    const pkg = (await getPackages(options)).find((v) => v.name === name)
+    if (!pkg) return
+    current = pkg.version
+  }
+
+  if (!current) return
+
+  const npmData = await getPackageInfo(name)
+  const latest = npmData['dist-tags'].latest
+  const isOutdated = latest !== current && semver.gt(latest, current)
+
+  return {
+    name,
+    current,
+    latest,
+    isOutdated,
+    npmData,
+  }
 }
