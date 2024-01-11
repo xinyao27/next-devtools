@@ -93,6 +93,10 @@ export default function App({ Component, pageProps }) {
 }
 ```
 
+## Inspired by NuxtDevtools
+
+[Nuxt DevTools](https://github.com/nuxt/devtools) is a set of visual tools that help you to know your app better.
+
 ## Contribution Guide
 
 Please refer to the [Contribution Guide](https://next-devtools.vercel.app/guide/contributing).
