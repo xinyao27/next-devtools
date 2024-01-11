@@ -5,6 +5,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 import { useRPCClient } from '@/lib/client'
+import NpmVersionCheck from '@/components/npm-version-check'
 import type { Package } from '@next-devtools/shared'
 
 interface Props {
@@ -53,6 +54,14 @@ export default function PackageItem({ data }: Props) {
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
+          <Link
+            className="flex items-center text-sm truncate text-muted-foreground hover:underline"
+            href={npmBase + data.name}
+            target="_blank"
+          >
+            <i className="w-4 h-4 mr-2 i-ri-npmjs-line" />
+            <NpmVersionCheck packageName={data.name} showVersionPrefix={false} version={data.version} />
+          </Link>
           {isLoading ? (
             <Skeleton className="w-full h-4" />
           ) : packageInfo?.homepage ? (

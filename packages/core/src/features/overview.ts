@@ -1,12 +1,9 @@
+import { removeVersionPrefix } from '@next-devtools/shared'
 import { getRoutes } from './routes'
 import { getComponents } from './components'
 import { getPackages } from './packages'
 import type { WebpackOptionsNormalized } from 'webpack'
 import type { Context } from '../server/router'
-
-function removeVersionPrefix(version: string) {
-  return version.replace(/^[<=>^~]*\s*/, '')
-}
 
 export async function getOverviewData(options: WebpackOptionsNormalized, context: Context) {
   const version = process.env.VERSION
