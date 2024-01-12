@@ -16,7 +16,7 @@ export default function Page() {
   const { data } = useSWR('getOverviewData', () => rpcClient.current?.getOverviewData.query())
 
   return (
-    <div className="p-4 h-[calc(100vh-16px)] dark:bg-grid-small-white/[0.3] bg-grid-small-black/[0.1]">
+    <div className="p-4 h-full dark:bg-grid-small-white/[0.3] bg-grid-small-black/[0.1]">
       <section className="w-full flex justify-center items-center flex-col space-y-2 mt-12">
         <h1 className="text-4xl flex gap-2 font-bold">Next DevTools</h1>
         <div className="opacity-50">

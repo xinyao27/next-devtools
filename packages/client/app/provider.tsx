@@ -6,8 +6,7 @@ import { useSnapshot } from 'valtio'
 import { ThemeProvider } from '@/components/theme-provider'
 import SideBar from '@/components/side-bar'
 import { TooltipProvider } from '@/components/ui/tooltip'
-import { Toaster } from '@/components/ui/toaster'
-import { ScrollArea } from '@/components/ui/scroll-area'
+import { Toaster } from '@/components/ui/sonner'
 import { navBarStore } from '@/store'
 import { cn } from '@/lib/utils'
 import Initial from './initial'
@@ -31,7 +30,7 @@ export default function Provider({ children }: Props) {
           <Initial />
           <main
             className={cn(
-              'grid grid-cols-[50px_1fr] md:grid-cols-[180px_1fr] h-full overflow-hidden bg-neutral-50 dark:bg-neutral-900',
+              'grid grid-cols-[50px_1fr] md:grid-cols-[180px_1fr] h-screen overflow-hidden bg-neutral-50 dark:bg-neutral-900',
               {
                 '!grid-cols-[50px_1fr]': nabBarSnap.collapsed === true,
                 '!grid-cols-[180px_1fr]': nabBarSnap.collapsed === false,
@@ -39,9 +38,9 @@ export default function Provider({ children }: Props) {
             )}
           >
             <SideBar />
-            <div className="h-full p-2 pl-0">
-              <div className="h-full rounded-lg shadow-md dark:shadow-[0_0_10px_1px] dark:shadow-accent bg-white dark:bg-black">
-                <ScrollArea className="h-full max-h-[calc(100vh-16px)]">{children}</ScrollArea>
+            <div className="h-screen p-2 pl-0">
+              <div className="h-full rounded-lg shadow-md dark:shadow-[0_0_10px_1px] dark:shadow-accent bg-white dark:bg-black overflow-hidden">
+                <div className="h-full overflow-x-hidden overflow-y-auto">{children}</div>
               </div>
             </div>
           </main>

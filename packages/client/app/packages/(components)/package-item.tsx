@@ -54,14 +54,15 @@ export default function PackageItem({ data }: Props) {
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
-          <Link
-            className="flex items-center text-sm truncate text-muted-foreground hover:underline"
-            href={npmBase + data.name}
-            target="_blank"
-          >
-            <i className="w-4 h-4 mr-2 i-ri-npmjs-line" />
-            <NpmVersionCheck packageName={data.name} showVersionPrefix={false} version={data.version} />
-          </Link>
+          <div className="flex items-center text-sm truncate text-muted-foreground">
+            <i className="w-4 h-4 mr-2 i-ri-box-3-line" />
+            <NpmVersionCheck
+              options={{ dev: data.type === 'devDependencies' }}
+              packageName={data.name}
+              showVersionPrefix={false}
+              version={data.version}
+            />
+          </div>
           {isLoading ? (
             <Skeleton className="w-full h-4" />
           ) : packageInfo?.homepage ? (

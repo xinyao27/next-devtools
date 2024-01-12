@@ -1,3 +1,4 @@
+import { EventEmitter } from 'node:events'
 import consola from 'consola'
 import { colors } from 'consola/utils'
 import { LOCAL_CLIENT_PORT } from '@next-devtools/shared'
@@ -20,6 +21,8 @@ export class Plugin {
       if (!this.running && this.context.dev && this.context.runtime === 'node' && typeof window === 'undefined') {
         const options = compiler.options
 
+        const __NEXT_DEVTOOLS_EE__ = new EventEmitter()
+        globalThis.__NEXT_DEVTOOLS_EE__ = __NEXT_DEVTOOLS_EE__
         createLocalService()
         createRPCServer(options, this.context)
 

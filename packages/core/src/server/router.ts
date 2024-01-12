@@ -7,6 +7,8 @@ import { checkPackageVersion, getPackageInfo, getPackages } from '../features/pa
 import { getRoutes } from '../features/routes'
 import { openInVscode } from '../features/vscode'
 import { getOverviewData } from '../features/overview'
+import { executeCommand, getTerminal, getTerminals, onTerminalWrite, runTerminalAction } from '../features/terminal'
+import { runNpmCommand } from '../features/npm'
 import type { NextConfig, WebpackConfigContext } from 'next/dist/server/config-shared'
 import type { WebpackOptionsNormalized } from 'webpack'
 
@@ -60,6 +62,19 @@ export const appRouter = t.router({
       const input = opts.input
       return await checkPackageVersion(options, input.name, input.current)
     }),
+  updatePackageVersion: t.procedure
+    .input(
+      z.object({
+        name: z.string(),
+        options: z.any().optional(),
+      }),
+    )
+    .mutation(async (opts) => {
+      const context = opts.ctx.context
+      const input = opts.input
+
+      return await runNpmCommand('update', input.name, { cwd: context.dir, ...input.options })
+    }),
   getRoutes: t.procedure.query(async (opts) => {
     const context = opts.ctx.context
     return await getRoutes(context)
@@ -75,6 +90,53 @@ export const appRouter = t.router({
     .mutation(async (opts) => {
       const input = opts.input
       return openInVscode(input)
+    }),
+  getTerminals: t.procedure.query(getTerminals),
+  getTerminal: t.procedure.input(z.string()).query((opts) => {
+    const id = opts.input
+    return getTerminal(id)
+  }),
+  runTerminalAction: t.procedure
+    .input(
+      z.object({
+        id: z.string(),
+        action: z.union([z.literal('restart'), z.literal('clear'), z.literal('terminate')]),
+      }),
+    )
+    .mutation((opts) => {
+      const input = opts.input
+      return runTerminalAction(input.id, input.action)
+    }),
+  onTerminalWrite: t.procedure.subscription(onTerminalWrite),
+  executeCommand: t.procedure
+    .input(
+      z.object({
+        command: z.string(),
+        args: z.array(z.string()).optional(),
+        options: z.any().optional(),
+
+        id: z.string(),
+        name: z.string(),
+        description: z.string().optional(),
+        icon: z.string(),
+      }),
+    )
+    .mutation(async (opts) => {
+      const context = opts.ctx.context
+      const input = opts.input
+      return await executeCommand(
+        {
+          command: input.command,
+          args: input.args,
+          options: { cwd: context.dir, ...input.options },
+        },
+        {
+          id: input.id,
+          name: input.name,
+          description: input.description,
+          icon: input.icon,
+        },
+      )
     }),
 })
 
