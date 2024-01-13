@@ -54,6 +54,12 @@ const menuItems = [
     link: '/terminal',
     icon: 'i-ri-terminal-box-line',
   },
+  {
+    value: 'bundle-analyzer',
+    label: 'Bundle Analyzer',
+    link: '/bundle-analyzer',
+    icon: 'i-ri-pie-chart-box-line',
+  },
 ]
 
 export default function SideBar() {

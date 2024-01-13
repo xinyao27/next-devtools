@@ -81,7 +81,7 @@ export async function onTerminalWrite() {
 interface ExecuteCommandOptions {
   command: string
   args?: string[]
-  options?: Options
+  options?: Options & { onExit?: (code: number) => void }
 }
 export async function executeCommand(execaOptions: ExecuteCommandOptions, terminalOptions: TerminalBase) {
   const { execa } = await import('execa')
@@ -111,6 +111,7 @@ export async function executeCommand(execaOptions: ExecuteCommandOptions, termin
     })
     childProcess?.on('exit', (code) => {
       if (!restarting) {
+        execaOptions.options?.onExit?.(code || 0)
         __NEXT_DEVTOOLS_EE__.emit('terminal:write', { id, data: `\n> process terminalated with ${code}\n` })
         __NEXT_DEVTOOLS_EE__.emit('terminal:exit', { id, code: code || 0 })
       }
@@ -125,7 +126,7 @@ export async function executeCommand(execaOptions: ExecuteCommandOptions, termin
 
   function restart() {
     restarting = true
-    __process.kill()
+    __process.kill('SIGTERM', { forceKillAfterTimeout: 1000 })
 
     clear()
 
@@ -143,7 +144,7 @@ export async function executeCommand(execaOptions: ExecuteCommandOptions, termin
 
   function terminate() {
     restarting = false
-    __process?.kill()
+    __process?.kill('SIGTERM', { forceKillAfterTimeout: 1000 })
     __NEXT_DEVTOOLS_EE__.emit('terminal:remove', { id })
   }
 

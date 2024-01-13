@@ -1,36 +1,49 @@
-import { getPort } from 'get-port-please'
-import { LOCAL_CLIENT_PORT } from '@next-devtools/shared'
 import { clientDir } from '../dirs'
 import { executeCommand, setupTerminal } from '../features/terminal'
+import { setupService } from '../features/service'
 
-export async function createLocalService() {
+export async function createLocalService(port: string) {
   setupTerminal()
+  setupService()
 
   const terminalOptions = { id: 'devtools:local-service', name: 'Local Service', icon: 'i-ri-service-line' }
-  const PORT = (await getPort({ port: Number(LOCAL_CLIENT_PORT) })).toString()
+
+  let __process: any
   if (process.env.DEV) {
-    executeCommand(
+    __process = await executeCommand(
       {
         command: 'npx',
         args: ['next', 'dev'],
         options: {
           cwd: clientDir,
-          env: { PORT },
+          env: { PORT: port },
         },
       },
       terminalOptions,
     )
   } else {
-    executeCommand(
+    __process = await executeCommand(
       {
         command: 'node',
         args: ['server.js'],
         options: {
           cwd: clientDir,
-          env: { PORT },
+          env: { PORT: port },
         },
       },
       terminalOptions,
     )
   }
+
+  async function handleTerminate() {
+    __process.terminate()
+    const fkill = (await import('fkill')).default
+    await fkill(port, { force: true, silent: true })
+  }
+  process.on('SIGTERM', () => {
+    handleTerminate()
+  })
+  __NEXT_DEVTOOLS_EE__.on('project:restart', () => {
+    handleTerminate()
+  })
 }

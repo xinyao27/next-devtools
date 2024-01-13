@@ -9,10 +9,13 @@ import { openInVscode } from '../features/vscode'
 import { getOverviewData } from '../features/overview'
 import { executeCommand, getTerminal, getTerminals, onTerminalWrite, runTerminalAction } from '../features/terminal'
 import { runNpmCommand } from '../features/npm'
+import { restartProject } from '../features/service'
 import type { NextConfig, WebpackConfigContext } from 'next/dist/server/config-shared'
 import type { WebpackOptionsNormalized } from 'webpack'
 
 export interface Context extends WebpackConfigContext {
+  localClientPort: string
+  staticServerPort: string
   runtime: 'node' | 'edge' | 'browser'
   nextConfig: NextConfig
 }
@@ -138,6 +141,34 @@ export const appRouter = t.router({
         },
       )
     }),
+  getRootPath: t.procedure.query(async (opts) => {
+    const context = opts.ctx.context
+    return context.dir
+  }),
+  restartProject: t.procedure.mutation(restartProject),
+  runAnalyzeBuild: t.procedure.mutation(async (opts) => {
+    const context = opts.ctx.context
+    await executeCommand(
+      {
+        command: 'npx',
+        args: [`next`, `build`],
+        options: {
+          env: {
+            ANALYZE: 'true',
+          },
+          cwd: context.dir,
+          onExit: () => {
+            restartProject()
+          },
+        },
+      },
+      {
+        id: `devtools:build`,
+        name: `next build`,
+        icon: 'i-ri-pie-chart-box-line',
+      },
+    )
+  }),
 })
 
 export type AppRouter = typeof appRouter

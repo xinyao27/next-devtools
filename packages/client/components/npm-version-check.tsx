@@ -30,7 +30,7 @@ export default function NpmVersionCheck({
       toast(`Package ${packageName} is updating...`, {
         description: 'You can jump to the terminal page to check the update progress.',
         action: {
-          label: 'Terminal',
+          label: 'Navigate',
           onClick: () => router.push('/terminal'),
         },
       })

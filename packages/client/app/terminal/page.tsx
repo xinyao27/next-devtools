@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
+import dynamic from 'next/dynamic'
 import { useRPCClient } from '@/lib/client'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import TerminalView from './(components)/terminal-view'
+
+const TerminalView = dynamic(() => import('./(components)/terminal-view'), { ssr: false })
 
 export default function Page() {
   const rpcClient = useRPCClient()
@@ -40,7 +42,7 @@ export default function Page() {
         {data?.map((terminal) => (
           <button
             className={cn('border-r flex gap-2 items-center bg-secondary px-3 py-2 transition-colors', {
-              'bg-white text-black dark:bg-muted dark:text-white': terminal.id === currentId,
+              'bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white': terminal.id === currentId,
             })}
             onClick={() => {
               setCurrentId(terminal.id)
