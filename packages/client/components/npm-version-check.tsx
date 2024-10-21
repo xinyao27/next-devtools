@@ -28,7 +28,7 @@ export default function NpmVersionCheck({
           {version || data?.current}
         </code>
       ) : null}
-      {data?.latest ? <Badge variant="secondary">{data.isOutdated ? 'updates availabel' : 'latest'}</Badge> : null}
+      {data?.latest ? <Badge variant="secondary">{data.isOutdated ? 'updates available' : 'latest'}</Badge> : null}
     </span>
   )
 }
