@@ -2,3 +2,27 @@ packages:
   - packages/*
   - playgrounds/*
   - docs
+catalog:
+  '@xystack/style-guide': ^0.2.4
+  eslint: ^9.15.0
+  prettier: ^3.3.3
+  autoprefixer: ^10.4.16
+  postcss: ^8.4.33
+  tailwindcss: ^3.4.14
+  tailwind-merge: ^2.2.0
+  '@egoist/tailwindcss-icons': ^1.7.2
+  '@iconify-json/ri': ^1.1.18
+  typescript: ^5.6.3
+  '@types/node': ^20.10.7
+  framer-motion: ^10.17.9
+  clsx: ^2.1.0
+catalogs:
+  react:
+    '@types/react': ^18.3.12
+    '@types/react-dom': ^18.3.1
+    react: ^18
+    react-dom: ^18
+  next14:
+    next: ^14.2.18
+  next15:
+    next: ^15.0.3

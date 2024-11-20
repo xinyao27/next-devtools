@@ -35,15 +35,10 @@ export async function createLocalService(port: string) {
     )
   }
 
-  async function handleTerminate() {
-    __process.terminate()
-    const fkill = (await import('fkill')).default
-    await fkill(port, { force: true, silent: true })
-  }
   process.on('SIGTERM', () => {
-    handleTerminate()
+    __process.terminate()
   })
   __NEXT_DEVTOOLS_EE__.on('project:restart', () => {
-    handleTerminate()
+    __process.terminate()
   })
 }

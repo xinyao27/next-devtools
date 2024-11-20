@@ -1,5 +1,5 @@
 import { observable } from '@trpc/server/observable'
-import type { Options } from 'execa'
+import type { Options, Subprocess } from 'execa'
 
 export interface TerminalBase {
   id: string
@@ -83,7 +83,15 @@ interface ExecuteCommandOptions {
   args?: string[]
   options?: Options & { onExit?: (code: number) => void }
 }
-export async function executeCommand(execaOptions: ExecuteCommandOptions, terminalOptions: TerminalBase) {
+export async function executeCommand(
+  execaOptions: ExecuteCommandOptions,
+  terminalOptions: TerminalBase,
+): Promise<{
+  getProcess: () => Subprocess
+  terminate: () => void
+  restart: () => void
+  clear: () => void
+}> {
   const { execa } = await import('execa')
   let restarting = false
   const id = terminalOptions.id
@@ -126,7 +134,7 @@ export async function executeCommand(execaOptions: ExecuteCommandOptions, termin
 
   function restart() {
     restarting = true
-    __process.kill('SIGTERM', { forceKillAfterTimeout: 1000 })
+    __process.kill('SIGTERM')
 
     clear()
 
@@ -144,7 +152,7 @@ export async function executeCommand(execaOptions: ExecuteCommandOptions, termin
 
   function terminate() {
     restarting = false
-    __process?.kill('SIGTERM', { forceKillAfterTimeout: 1000 })
+    __process?.kill('SIGTERM')
     __NEXT_DEVTOOLS_EE__.emit('terminal:remove', { id })
   }
 
