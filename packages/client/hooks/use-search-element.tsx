@@ -20,15 +20,15 @@ export default function useSearchElement<T>(data: T[] | undefined, compare: (ite
 
   const element = useMemo(() => {
     return (
-      <div className="p-4 space-y-1 border-b">
+      <div className="space-y-1 border-b p-4">
         <Input
           placeholder="Search..."
-          prefix={<i className="i-ri-search-line w-4 h-4 text-muted-foreground" />}
+          prefix={<i className="i-ri-search-line text-muted-foreground h-4 w-4" />}
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
 
-        <div className="opacity-50 text-sm">
+        <div className="text-sm opacity-50">
           {searchText ? <span>{filteredData.length} matched · </span> : null}
           <span>{data?.length} items in total</span>
         </div>
