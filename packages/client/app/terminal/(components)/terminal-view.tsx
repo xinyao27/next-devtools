@@ -30,14 +30,14 @@ export default function TerminalView(props: TerminalViewProps) {
     fitAddonRef.current.fit()
 
     if (props.id) {
-      rpcClient.current?.getTerminal.query(props.id).then((terminal) => {
+      rpcClient?.getTerminal.query(props.id).then((terminal) => {
         if (terminal?.buffer) {
           termRef.current?.write(terminal.buffer)
         }
       })
     }
 
-    const s = rpcClient.current?.onTerminalWrite.subscribe(undefined, {
+    const s = rpcClient?.onTerminalWrite.subscribe(undefined, {
       onData: ({ id, data }) => {
         if (id === props.id) {
           termRef.current?.write(data)
@@ -56,7 +56,7 @@ export default function TerminalView(props: TerminalViewProps) {
 
   function handleClear() {
     if (!props.id) return
-    rpcClient.current?.runTerminalAction.mutate({
+    rpcClient?.runTerminalAction.mutate({
       id: props.id,
       action: 'clear',
     })
@@ -64,14 +64,14 @@ export default function TerminalView(props: TerminalViewProps) {
   }
   function handleRestart() {
     if (!props.id) return
-    rpcClient.current?.runTerminalAction.mutate({
+    rpcClient?.runTerminalAction.mutate({
       id: props.id,
       action: 'restart',
     })
   }
   function handleTerminate() {
     if (!props.id) return
-    rpcClient.current?.runTerminalAction.mutate({
+    rpcClient?.runTerminalAction.mutate({
       id: props.id,
       action: 'terminate',
     })

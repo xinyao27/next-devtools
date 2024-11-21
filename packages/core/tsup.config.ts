@@ -25,8 +25,11 @@ const __filename = fileURLToPathShimImport(import.meta.url);
 const __dirname = dirnamePathShimImport(__filename);
 `
 
-        const shimBuffer = Buffer.from(dirnameShim)
-        file.contents = Buffer.concat([shimBuffer, file.contents])
+        const shimBuffer = new TextEncoder().encode(dirnameShim)
+        const newContents = new Uint8Array(shimBuffer.length + file.contents.length)
+        newContents.set(shimBuffer)
+        newContents.set(file.contents, shimBuffer.length)
+        file.contents = newContents
       })
     })
   },
@@ -37,7 +40,7 @@ export default defineConfig({
   format: ['cjs', 'esm'],
   target: ['es2020', 'node16'],
   dts: true,
-  clean: true,
+  clean: false,
   external: ['next', 'react'],
   esbuildOptions: (options) => {
     options.define = {

@@ -5,5 +5,5 @@ import { useRPCClient } from '@/lib/client'
 
 export default function useComponents() {
   const rpcClient = useRPCClient()
-  return useSWR('getComponents', () => rpcClient.current?.getComponents.query())
+  return useSWR('getComponents', () => rpcClient?.getComponents.query())
 }

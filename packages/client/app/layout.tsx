@@ -7,7 +7,7 @@ interface Props {
 }
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="en">
+    <html suppressHydrationWarning lang="en">
       <body>
         <Provider>{children}</Provider>
       </body>

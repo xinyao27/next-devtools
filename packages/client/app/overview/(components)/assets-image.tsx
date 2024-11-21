@@ -11,7 +11,7 @@ export default function AssetsImage({ data }: AssetProps) {
   const rpcClient = useRPCClient()
   const { data: assetInfo, isLoading } = useSWR(
     `getStaticAssetInfo/${data.filePath}`,
-    data ? () => rpcClient.current?.getStaticAssetInfo.query(data.filePath) : null,
+    data ? () => rpcClient?.getStaticAssetInfo.query(data.filePath) : null,
   )
 
   return isLoading ? (

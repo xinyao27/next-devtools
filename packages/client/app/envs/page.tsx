@@ -7,7 +7,7 @@ import AllEnvs from './(components)/all-envs'
 
 export default function Page() {
   const rpcClient = useRPCClient()
-  const { data } = useSWR('getEnvs', () => rpcClient.current?.getEnvs.query())
+  const { data } = useSWR('getEnvs', () => rpcClient?.getEnvs.query())
 
   return (
     <div>

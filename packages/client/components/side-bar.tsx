@@ -80,13 +80,13 @@ export default function SideBar() {
   return (
     <nav
       className={cn(
-        'w-[50px] md:w-[180px] h-full overflow-x-hidden overflow-y-auto transition-all',
+        'h-full w-[50px] overflow-y-auto overflow-x-hidden transition-all md:w-[180px]',
         { '!w-[50px]': navBarSnap.collapsed === true },
         { '!w-[180px]': navBarSnap.collapsed === false },
       )}
     >
-      <div className="p-2 space-y-2 flex flex-col h-full">
-        <section className="flex flex-col gap-1 flex-1">
+      <div className="flex h-full flex-col space-y-2 p-2">
+        <section className="flex flex-1 flex-col gap-1">
           {menuItems.map((item) => (
             <Tooltip key={item.value}>
               <TooltipTrigger asChild>
@@ -94,15 +94,15 @@ export default function SideBar() {
                   href={item.link}
                   className={cn(
                     buttonVariants({ variant: 'ghost', size: 'sm' }),
-                    'space-x-2 justify-center md:justify-start opacity-50 transition px-0 md:px-3',
+                    'justify-center space-x-2 px-0 opacity-50 transition md:justify-start md:px-3',
                     {
-                      'text-primary opacity-100 bg-accent': pathname.startsWith(item.link),
+                      'text-primary bg-accent opacity-100': pathname.startsWith(item.link),
                       '!justify-center !px-0': navBarSnap.collapsed === true,
                       '!justify-start !px-3': navBarSnap.collapsed === false,
                     },
                   )}
                 >
-                  <i className={cn(item.icon, 'w-5 h-5')} />
+                  <i className={cn(item.icon, 'h-5 w-5')} />
                   <span
                     className={cn(
                       'hidden md:inline-block',
@@ -114,15 +114,14 @@ export default function SideBar() {
                   </span>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent asChild side="right">
-                <p
-                  className={cn('md:hidden', {
-                    '!hidden': navBarSnap.collapsed === true,
-                    '!inline': navBarSnap.collapsed === false,
-                  })}
-                >
-                  {item.label}
-                </p>
+              <TooltipContent
+                side="right"
+                className={cn('md:hidden', {
+                  '!hidden': navBarSnap.collapsed === false,
+                  '!inline-block': navBarSnap.collapsed === true,
+                })}
+              >
+                <div>{item.label}</div>
               </TooltipContent>
             </Tooltip>
           ))}
@@ -131,13 +130,13 @@ export default function SideBar() {
         <Separator />
 
         <section
-          className={cn('px-1.5 flex flex-col-reverse md:flex-row justify-between items-center gap-1', {
+          className={cn('flex flex-col-reverse items-center justify-between gap-1 px-1.5 md:flex-row', {
             '!flex-col-reverse': navBarSnap.collapsed === true,
             '!flex-row': navBarSnap.collapsed === false,
           })}
         >
           <Button
-            className="opacity-50 hover:opacity-100 transition"
+            className="opacity-50 transition hover:opacity-100"
             size="icon"
             variant="ghost"
             onClick={handleToggleSideBar}

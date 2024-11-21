@@ -9,9 +9,12 @@ export interface Asset {
   mtime: number
 }
 
-export interface Component extends Asset {
+export interface Documentation {
   description?: string
   displayName?: string
+}
+export interface Component extends Asset {
+  documentations: Documentation[]
 }
 
 export interface Route {

@@ -8,10 +8,9 @@ import AllPackages from './(components)/all-packages'
 
 export default function Page() {
   const rpcClient = useRPCClient()
-  const { data } = useSWR('getPackages', () => rpcClient.current?.getPackages.query())
-  const { element, filteredData } = useSearchElement(
-    data,
-    (item, searchText) => item?.name?.toLowerCase().includes(searchText.toLowerCase()),
+  const { data } = useSWR('getPackages', () => rpcClient?.getPackages.query())
+  const { element, filteredData } = useSearchElement(data, (item, searchText) =>
+    item?.name?.toLowerCase().includes(searchText.toLowerCase()),
   )
 
   return (

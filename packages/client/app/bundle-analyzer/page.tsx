@@ -22,21 +22,21 @@ import { Separator } from '@/components/ui/separator'
 export default function Page() {
   const router = useRouter()
   const rpcClient = useRPCClient()
-  const { data: rootPath } = useSWR('getRootPath', () => rpcClient.current?.getRootPath.query())
+  const { data: rootPath } = useSWR('getRootPath', () => rpcClient?.getRootPath.query())
   const [selectedTab, setSelectedTab] = useState('client')
   const analyzeDir = useMemo(() => {
     return rootPath ? `/__next_devtools__/static/analyze/${selectedTab}.html` : ''
   }, [rootPath, selectedTab])
 
   async function handleBuild() {
-    await rpcClient.current?.runAnalyzeBuild.mutate()
+    await rpcClient?.runAnalyzeBuild.mutate()
     router.push('/terminal')
   }
 
   return (
     <div className="h-full">
       <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel className="p-4 space-y-4" defaultSize={20}>
+        <ResizablePanel className="space-y-4 p-4" defaultSize={20}>
           <Sheet>
             <SheetTrigger asChild>
               <Button className="w-full" variant="secondary">
@@ -56,11 +56,11 @@ export default function Page() {
                 </SheetDescription>
               </SheetHeader>
 
-              <div className="space-y-2 mt-4">
+              <div className="mt-4 space-y-2">
                 <CodeBlock>ANALYZE=true npx next build</CodeBlock>
               </div>
 
-              <SheetFooter className="mt-8 space-x-0 gap-2">
+              <SheetFooter className="mt-8 gap-2 space-x-0">
                 <SheetClose asChild>
                   <Button variant="outline">Cancel</Button>
                 </SheetClose>
@@ -89,7 +89,7 @@ export default function Page() {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel className="dark:bg-grid-small-white/[0.3] bg-grid-small-black/[0.1]" defaultSize={80}>
-          <iframe className="w-full h-full border-none" src={analyzeDir} />
+          <iframe className="h-full w-full border-none" src={analyzeDir} />
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>

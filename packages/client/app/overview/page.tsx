@@ -21,15 +21,15 @@ import type { BentoCardProps } from '@/components/magic/bento-grid'
 export default function Page() {
   const rpcClient = useRPCClient()
   const { theme } = useTheme()
-  const { data } = useSWR('getOverviewData', () => rpcClient.current?.getOverviewData.query())
+  const { data } = useSWR('getOverviewData', () => rpcClient?.getOverviewData.query())
 
   const features = useMemo<BentoCardProps[]>(() => {
     return [
       {
         name: 'Next',
-        className: 'col-span-5',
+        className: 'md:col-span-5',
         background: (
-          <Globe className="absolute left-28 top-0 mx-auto h-[500px] w-[500px] transition-all duration-300 [mask-image:linear-gradient(to_top,transparent_30%,#000_100%)] group-hover:scale-105 sm:left-40" />
+          <Globe className="md:left-30 absolute top-0 mx-auto h-[500px] w-[500px] transition-all duration-300 [mask-image:linear-gradient(to_top,transparent_30%,#000_100%)] group-hover:scale-105 sm:left-10" />
         ),
         Icon: <NextLogo className="h-6" theme={theme as 'dark' | 'light'} />,
         description: <NpmVersionCheck packageName="next" version={data?.nextVersion} />,
@@ -38,7 +38,7 @@ export default function Page() {
       },
       {
         name: 'React',
-        className: 'col-span-4',
+        className: 'md:col-span-4',
         background: <Meteors />,
         Icon: <ReactLogo className="w-8" />,
         description: <NpmVersionCheck packageName="react" version={data?.reactVersion} />,
@@ -47,7 +47,7 @@ export default function Page() {
       },
       {
         name: 'Routes',
-        className: 'col-span-3',
+        className: 'md:col-span-3',
         background: <RetroGrid className="absolute -top-12 h-[200px]" />,
         Icon: <i className="i-ri-node-tree text-3xl" />,
         description: <span>{data?.routes.length} routes</span>,
@@ -56,14 +56,14 @@ export default function Page() {
       },
       {
         name: 'Components',
-        className: 'col-span-4',
+        className: 'md:col-span-4',
         background: (
-          <Marquee pauseOnHover className="[--duration:10s]">
+          <Marquee pauseOnHover>
             {data?.components.map((component) => (
               <MarqueeItem key={component.filePath}>
                 <div className="flex items-center gap-1">
                   <i className={cn(component.type === 'component' ? 'i-ri-box-1-line' : 'i-ri-gallery-line')} />
-                  {component.displayName}
+                  {component.file}
                 </div>
 
                 <div>
@@ -80,12 +80,13 @@ export default function Page() {
       },
       {
         name: 'Assets',
-        className: 'col-span-4',
+        className: 'md:col-span-4',
         background: (
-          <div className="absolute top-0 flex h-[300px] w-full items-center justify-center overflow-hidden">
+          <div className="absolute -right-10 -top-20 flex h-[300px] w-full items-center justify-center overflow-hidden [mask-image:linear-gradient(to_top,transparent_30%,#000_100%)]">
             {/* Inner Circles */}
             {data?.assets.slice(0, data.assets.length / 2).map((asset, index) => (
               <OrbitingCircles
+                key={asset.filePath}
                 className="size-[30px] border-none bg-transparent"
                 delay={index * 10}
                 duration={20}
@@ -97,6 +98,7 @@ export default function Page() {
             {/* Outer Circles */}
             {data?.assets.slice(data.assets.length / 2).map((asset, index) => (
               <OrbitingCircles
+                key={asset.filePath}
                 reverse
                 className="size-[30px] border-none bg-transparent"
                 delay={index * 10}
@@ -115,11 +117,11 @@ export default function Page() {
       },
       {
         name: 'Packages',
-        className: 'col-span-4',
+        className: 'md:col-span-4',
         background: (
-          <Marquee pauseOnHover reverse className="[--duration:10s]">
+          <Marquee pauseOnHover reverse>
             {data?.packages.map((pkg) => (
-              <MarqueeItem key={pkg.name}>
+              <MarqueeItem key={`${pkg.name}@${pkg.version}-${pkg.type}`}>
                 <div className="flex items-center gap-1">
                   <i className="i-ri-box-3-line" />
                   {pkg.name}
@@ -150,7 +152,7 @@ export default function Page() {
       </section>
 
       <section className="mt-12">
-        <BentoGrid>
+        <BentoGrid className="grid-cols-1 sm:grid-cols-2 md:grid-cols-12">
           {features.map((feature) => (
             <BentoCard key={feature.name} {...feature} />
           ))}

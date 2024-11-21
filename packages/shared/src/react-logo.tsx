@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 
 interface Props {
@@ -9,6 +11,7 @@ export function ReactLogo({ className, theme = 'dark' }: Props) {
 
   return (
     <svg
+      suppressHydrationWarning
       className={className}
       fill={fill}
       height="100%"

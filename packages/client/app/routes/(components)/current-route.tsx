@@ -5,14 +5,14 @@ import { useMessageClient } from '@/lib/client'
 
 export default function CurrentRoute() {
   const messageClient = useMessageClient()
-  const { data, mutate } = useSWR('getRoute', () => messageClient.current.getRoute())
+  const { data, mutate } = useSWR('getRoute', () => messageClient.getRoute())
   const [currentRoute, setCurrentRoute] = React.useState(data || '')
   React.useEffect(() => {
     if (data) setCurrentRoute(data)
   }, [data])
 
   return (
-    <div className="p-4 space-y-1 border-b">
+    <div className="space-y-1 border-b p-4">
       <div>
         {data === currentRoute ? (
           <span className="opacity-50">Current Route</span>
@@ -27,7 +27,7 @@ export default function CurrentRoute() {
         onChange={(e) => setCurrentRoute(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
-            messageClient.current.pushRoute(currentRoute)
+            messageClient.pushRoute(currentRoute)
             setTimeout(() => {
               mutate()
             }, 300)

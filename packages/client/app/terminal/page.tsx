@@ -11,7 +11,7 @@ const TerminalView = dynamic(() => import('./(components)/terminal-view'), { ssr
 
 export default function Page() {
   const rpcClient = useRPCClient()
-  const { data, mutate, isLoading } = useSWR('getTerminals', () => rpcClient.current?.getTerminals.query())
+  const { data, mutate, isLoading } = useSWR('getTerminals', () => rpcClient?.getTerminals.query())
   const [currentId, setCurrentId] = useState<string>()
   useEffect(() => {
     if (data && data.length > 0 && !currentId) {
@@ -58,7 +58,7 @@ export default function Page() {
               size="icon"
               variant="ghost"
               onClick={() => {
-                rpcClient.current?.runTerminalAction.mutate({ id: terminal.id, action: 'terminate' })
+                rpcClient?.runTerminalAction.mutate({ id: terminal.id, action: 'terminate' })
                 mutate()
               }}
             >

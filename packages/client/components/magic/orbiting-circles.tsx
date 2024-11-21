@@ -21,15 +21,15 @@ export function OrbitingCircles({
 }: OrbitingCirclesProps) {
   return (
     <>
-      {path ? (
+      {/* {path ? (
         <svg
           className="pointer-events-none absolute inset-0 size-full"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <circle className="stroke-black/2 dark:stroke-white/2 stroke-1" cx="50%" cy="50%" fill="none" r={radius} />
+          <circle className="stroke-black/5 stroke-1 dark:stroke-white/5" cx="50%" cy="50%" fill="none" r={radius} />
         </svg>
-      ) : null}
+      ) : null} */}
 
       <div
         className={cn(
