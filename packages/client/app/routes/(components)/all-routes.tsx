@@ -36,7 +36,7 @@ export default function AllRoutes({ data }: Props) {
               return (
                 <Line key={route.path}>
                   <div className="w-16">{active ? <Badge variant="secondary">active</Badge> : null}</div>
-                  <OpenInVscode value={route.path}>
+                  <OpenInVscode disableLine value={route.path}>
                     <button
                       className={cn('opacity-50 transition hover:opacity-75', { '!opacity-100': active })}
                       title={`Navigate to ${route.route}`}

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { memo, useRef } from 'react'
+import React from 'react'
 import { Inspector } from 'react-dev-inspector'
 import { NextLogo, RPC_SERVER_PORT } from '@next-devtools/shared'
 import { createTRPCProxyClient, createWSClient, wsLink } from '@trpc/client'
@@ -25,7 +25,7 @@ function Separator() {
 }
 
 function Frame() {
-  const rpcClient = useRef(createRPCClient())
+  const rpcClient = React.useRef(createRPCClient())
   const iframeRef = React.useRef<HTMLIFrameElement>(null)
   const [show, setShow] = React.useState(false)
   const [inspectorActive, setInspectorActive] = React.useState(false)
@@ -178,4 +178,4 @@ function Frame() {
     </MessageProvider>
   )
 }
-export default memo(Frame)
+export default React.memo(Frame)

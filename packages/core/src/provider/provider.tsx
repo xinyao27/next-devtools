@@ -1,6 +1,6 @@
 'use client'
 
-import React, { Suspense } from 'react'
+import React from 'react'
 import Frame from './frame'
 
 interface NextDevtoolsProviderProps {
@@ -9,10 +9,10 @@ interface NextDevtoolsProviderProps {
 export function NextDevtoolsProvider({ children }: NextDevtoolsProviderProps) {
   if (process.env.NODE_ENV === 'development') {
     return (
-      <Suspense>
+      <React.Suspense>
         <Frame />
         {children}
-      </Suspense>
+      </React.Suspense>
     )
   }
 
