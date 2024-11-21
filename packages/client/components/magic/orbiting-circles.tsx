@@ -17,7 +17,7 @@ export function OrbitingCircles({
   duration = 20,
   delay = 10,
   radius = 50,
-  path = true,
+  // path = true,
 }: OrbitingCirclesProps) {
   return (
     <>

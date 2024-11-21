@@ -14,15 +14,14 @@ export default function OpenInVscode({ value, children, className }: Props) {
   }, [])
 
   return (
-    <div className={cn('group flex cursor-pointer items-center gap-2 transition hover:underline', className)}>
+    <button
+      className={cn('group flex cursor-pointer items-center gap-2 transition hover:underline', className)}
+      onClick={() => handleOpenInVscode(value)}
+    >
       {children}
-      <button
-        className="hover:text-primary hidden items-center opacity-50 transition hover:opacity-100 group-hover:flex"
-        title="Open in vscode"
-        onClick={() => handleOpenInVscode(value)}
-      >
+      <div className="group-hover:text-primary hidden items-center transition group-hover:flex" title="Open in vscode">
         <i className="i-ri-share-box-line h-4 w-4" />
-      </button>
-    </div>
+      </div>
+    </button>
   )
 }

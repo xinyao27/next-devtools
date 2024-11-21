@@ -15,7 +15,7 @@ export default function AllComponents({ data }: Props) {
       {data?.map((component) => {
         const key = component.publicPath || component.filePath || component.file
         return (
-          <AccordionItem value={key}>
+          <AccordionItem key={key} value={key}>
             <AccordionTrigger className="py-2">
               <div className="flex flex-1 items-center gap-2">
                 <div className="flex-1 truncate text-left [direction:rtl]">{key}</div>
