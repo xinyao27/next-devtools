@@ -19,6 +19,10 @@
       "cache": false,
       "persistent": true
     },
+    "dev:next15": {
+      "cache": false,
+      "persistent": true
+    },
     "docs": {
       "cache": false,
       "persistent": true

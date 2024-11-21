@@ -21,9 +21,10 @@
     "release:patch": "release-it patch",
     "publish": "pnpm run build && pnpm -r publish",
     "build": "turbo run build --force",
-    "dev": "turbo run dev dev:app",
+    "dev": "turbo run dev dev:next15",
     "dev:devtools": "turbo run dev",
     "dev:app": "turbo run dev:app",
+    "dev:next15": "turbo run dev:next15",
     "dev:pages": "turbo run dev:pages",
     "docs": "turbo run docs",
     "docs:build": "turbo run docs:build"

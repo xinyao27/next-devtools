@@ -1,0 +1,24 @@
+{
+  "name": "next-15",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev:next15": "next dev -p 3003"
+  },
+  "dependencies": {
+    "next": "catalog:next15",
+    "react": "catalog:react19",
+    "react-dom": "catalog:react19"
+  },
+  "devDependencies": {
+    "@next-devtools/core": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:react19",
+    "@types/react-dom": "catalog:react19",
+    "nanoid": "5.0.4",
+    "next": "catalog:next15",
+    "postcss": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
+  }
+}

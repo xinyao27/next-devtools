@@ -8,7 +8,7 @@ import { createLocalService } from './server/local'
 import { createRPCServer } from './server/rpc'
 import { createStaticServer } from './server/static'
 import type { Context } from './server/router'
-import type { NextConfig } from 'next/dist/server/config-shared'
+import type { NextConfig } from 'next'
 import type { Compiler } from 'webpack'
 
 export class Plugin {

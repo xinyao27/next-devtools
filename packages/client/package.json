@@ -43,7 +43,7 @@
     "framer-motion": "catalog:",
     "mini-svg-data-uri": "^1.4.4",
     "next-themes": "^0.4.3",
-    "react": "catalog:react",
+    "react": "catalog:react19",
     "react-resizable-panels": "^2.1.7",
     "react-spring": "^9.7.4",
     "react-use": "^17.5.1",
@@ -58,9 +58,9 @@
   "devDependencies": {
     "@egoist/tailwindcss-icons": "catalog:",
     "@iconify-json/ri": "catalog:",
-    "@types/react": "catalog:react",
+    "@types/react": "catalog:react19",
     "autoprefixer": "catalog:",
-    "next": "catalog:next14",
+    "next": "catalog:next15",
     "postcss": "catalog:",
     "tailwindcss": "catalog:"
   }

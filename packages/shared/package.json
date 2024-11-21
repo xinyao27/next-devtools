@@ -44,9 +44,9 @@
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "catalog:react",
-    "next": "catalog:next14",
-    "react": "catalog:react",
+    "@types/react": "catalog:react19",
+    "next": "catalog:next15",
+    "react": "catalog:react19",
     "react-docgen": "^7.1.0"
   }
 }
