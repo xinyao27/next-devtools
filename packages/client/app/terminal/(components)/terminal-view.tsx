@@ -80,8 +80,8 @@ export default function TerminalView(props: TerminalViewProps) {
 
   return (
     <>
-      <div ref={containerRef} className="w-full h-full overflow-hidden bg-black" />
-      <div className="border-t p-2 space-x-1">
+      <div ref={containerRef} className="h-full w-full overflow-hidden bg-black p-2" />
+      <div className="space-x-1 border-t p-2">
         <Button size="icon" title="Clear" variant="ghost" onClick={handleClear}>
           <i className="i-ri-delete-bin-line" />
         </Button>

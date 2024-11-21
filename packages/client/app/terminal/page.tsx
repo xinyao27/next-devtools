@@ -43,7 +43,7 @@ export default function Page() {
           <div
             key={terminal.id}
             role="button"
-            className={cn('bg-secondary flex items-center gap-2 border-r px-3 py-2 transition-colors', {
+            className={cn('bg-secondary flex items-center gap-2 border-r px-3 py-1 transition-colors', {
               'bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white': terminal.id === currentId,
             })}
             onClick={() => {

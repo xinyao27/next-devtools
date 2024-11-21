@@ -15,7 +15,7 @@ interface Props {
   children: React.ReactNode
 }
 export default function Provider({ children }: Props) {
-  const nabBarSnap = useSnapshot(navBarStore)
+  const navBarSnap = useSnapshot(navBarStore)
 
   return (
     <ThemeProvider disableTransitionOnChange enableSystem attribute="class" defaultTheme="system">
@@ -32,8 +32,8 @@ export default function Provider({ children }: Props) {
             className={cn(
               'grid h-screen grid-cols-[50px_1fr] overflow-hidden bg-neutral-50/80 backdrop-blur-md md:grid-cols-[180px_1fr] dark:bg-neutral-900/80',
               {
-                '!grid-cols-[50px_1fr]': nabBarSnap.collapsed === true,
-                '!grid-cols-[180px_1fr]': nabBarSnap.collapsed === false,
+                '!grid-cols-[50px_1fr]': navBarSnap.collapsed === true,
+                '!grid-cols-[180px_1fr]': navBarSnap.collapsed === false,
               },
             )}
           >
