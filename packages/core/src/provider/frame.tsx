@@ -11,8 +11,9 @@ import type { AppRouter } from '../server/router'
 function createRPCClient(ip?: string): CreateTRPCProxyClient<AppRouter> | null {
   if (typeof window != 'undefined') {
     const _ip = window.location.hostname
+    const _protocol = window.location.protocol === 'https:' ? 'wss' : 'ws'
     // create persistent WebSocket connection
-    const wsClient = createWSClient({ url: `ws://${ip || _ip}:${RPC_SERVER_PORT}` })
+    const wsClient = createWSClient({ url: `${_protocol}://${ip || _ip}:${RPC_SERVER_PORT}` })
     // configure TRPCClient to use WebSockets transport
     return createTRPCProxyClient<AppRouter>({ links: [wsLink({ client: wsClient })] })
   }
