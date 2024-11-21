@@ -23,25 +23,27 @@ export default function Page() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
+      <div className="flex h-full w-full items-center justify-center">
         <i className="i-ri-loader-2-line animate-spin text-2xl" />
       </div>
     )
   }
   if (!data?.length) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
+      <div className="flex h-full w-full items-center justify-center">
         <em className="opacity-50">No terminal attached</em>
       </div>
     )
   }
 
   return (
-    <div className="h-full overflow-hidden grid grid-rows-[max-content_1fr_max-content]">
+    <div className="grid h-full grid-rows-[max-content_1fr_max-content] overflow-hidden">
       <div className="flex items-center border-b">
         {data?.map((terminal) => (
-          <button
-            className={cn('border-r flex gap-2 items-center bg-secondary px-3 py-2 transition-colors', {
+          <div
+            key={terminal.id}
+            role="button"
+            className={cn('bg-secondary flex items-center gap-2 border-r px-3 py-2 transition-colors', {
               'bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white': terminal.id === currentId,
             })}
             onClick={() => {
@@ -62,7 +64,7 @@ export default function Page() {
             >
               <i className="i-ri-close-line text-lg" />
             </Button>
-          </button>
+          </div>
         ))}
       </div>
 

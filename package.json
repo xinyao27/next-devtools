@@ -20,13 +20,13 @@
     "release:minor": "release-it minor",
     "release:patch": "release-it patch",
     "publish": "pnpm run build && pnpm -r publish",
-    "build": "turbo build --force",
-    "dev": "npm-run-all --parallel dev:devtools dev:app",
-    "dev:devtools": "turbo dev",
-    "dev:app": "turbo dev:app",
-    "dev:pages": "turbo dev:pages",
-    "docs": "turbo docs",
-    "docs:build": "turbo docs:build"
+    "build": "turbo run build --force",
+    "dev": "turbo run dev dev:app",
+    "dev:devtools": "turbo run dev",
+    "dev:app": "turbo run dev:app",
+    "dev:pages": "turbo run dev:pages",
+    "docs": "turbo run docs",
+    "docs:build": "turbo run docs:build"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",

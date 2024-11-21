@@ -16,9 +16,9 @@ export default function Page() {
   const { data } = useSWR('getOverviewData', () => rpcClient.current?.getOverviewData.query())
 
   return (
-    <div className="p-4 h-full dark:bg-grid-small-white/[0.3] bg-grid-small-black/[0.1]">
-      <section className="w-full flex justify-center items-center flex-col space-y-2 mt-12">
-        <h1 className="text-4xl flex gap-2 font-bold">Next DevTools</h1>
+    <div className="dark:bg-grid-small-white/[0.3] bg-grid-small-black/[0.1] h-full p-4">
+      <section className="mt-12 flex w-full flex-col items-center justify-center space-y-2">
+        <h1 className="flex gap-2 text-4xl font-bold">Next DevTools</h1>
         <div className="opacity-50">
           Next Devtools <NpmVersionCheck packageName="@next-devtools/core" version={data?.version} />
         </div>
@@ -53,22 +53,22 @@ export default function Page() {
         />
       </section>
 
-      <section className="flex justify-center space-x-4">
+      <section className="flex flex-col justify-center space-x-4 md:flex-row">
         <Link href="https://github.com/xinyao27/next-devtools" target="_black">
-          <Button className="font-normal" variant="ghost">
-            <i className="w-4 h-4 mr-2 i-ri-star-line" />
+          <Button className="w-full font-normal" variant="ghost">
+            <i className="i-ri-star-line mr-2 h-4 w-4" />
             Star on Github
           </Button>
         </Link>
         <Link href="https://github.com/xinyao27/next-devtools/discussions/15" target="_black">
-          <Button className="font-normal" variant="ghost">
-            <i className="w-4 h-4 mr-2 i-ri-lightbulb-flash-line" />
+          <Button className="w-full font-normal" variant="ghost">
+            <i className="i-ri-lightbulb-flash-line mr-2 h-4 w-4" />
             Ideas & Suggestions
           </Button>
         </Link>
         <Link href="https://github.com/xinyao27/next-devtools/issues/new/choose" target="_black">
-          <Button className="font-normal" variant="ghost">
-            <i className="w-4 h-4 mr-2 i-ri-bug-line" />
+          <Button className="w-full font-normal" variant="ghost">
+            <i className="i-ri-bug-line mr-2 h-4 w-4" />
             Bug Reports
           </Button>
         </Link>

@@ -38,15 +38,15 @@ export default function PackageItem({ data }: Props) {
         </div>
         <div>
           {isLoading ? (
-            <Skeleton className="w-full h-8" />
+            <Skeleton className="h-8 w-full" />
           ) : (
             <Link
               aria-label="Star on GitHub"
-              className={cn(buttonVariants({ size: 'sm', variant: 'secondary' }), 'px-3 w-full')}
+              className={cn(buttonVariants({ size: 'sm', variant: 'secondary' }), 'w-full px-3')}
               href={packageInfo?.repository?.url ?? ''}
               target="_blank"
             >
-              <i className="w-4 h-4 mr-2 i-ri-star-line" />
+              <i className="i-ri-star-line mr-2 h-4 w-4" />
               Star
             </Link>
           )}
@@ -54,8 +54,8 @@ export default function PackageItem({ data }: Props) {
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
-          <div className="flex items-center text-sm truncate text-muted-foreground">
-            <i className="w-4 h-4 mr-2 i-ri-box-3-line" />
+          <div className="text-muted-foreground flex items-center truncate text-sm">
+            <i className="i-ri-box-3-line mr-2 h-4 w-4 flex-none" />
             <NpmVersionCheck
               options={{ dev: data.type === 'devDependencies' }}
               packageName={data.name}
@@ -64,42 +64,42 @@ export default function PackageItem({ data }: Props) {
             />
           </div>
           {isLoading ? (
-            <Skeleton className="w-full h-4" />
+            <Skeleton className="h-4 w-full" />
           ) : packageInfo?.homepage ? (
             <Link
-              className="flex items-center text-sm truncate text-muted-foreground hover:underline"
+              className="text-muted-foreground flex items-center truncate text-sm hover:underline"
               href={packageInfo?.homepage}
               target="_blank"
             >
-              <i className="w-4 h-4 mr-2 i-ri-link" />
+              <i className="i-ri-link mr-2 h-4 w-4 flex-none" />
               {packageInfo?.homepage}
             </Link>
           ) : null}
           {isLoading ? (
-            <Skeleton className="w-full h-4" />
+            <Skeleton className="h-4 w-full" />
           ) : packageInfo?.repository?.url ? (
             <Link
-              className="flex items-center text-sm truncate text-muted-foreground hover:underline"
+              className="text-muted-foreground flex items-center truncate text-sm hover:underline"
               href={packageInfo?.repository?.url}
               target="_blank"
             >
-              <i className="w-4 h-4 mr-2 i-ri-github-fill" />
+              <i className="i-ri-github-fill mr-2 h-4 w-4 flex-none" />
               {packageInfo?.repository?.url}
             </Link>
           ) : null}
           {isLoading ? (
-            <Skeleton className="w-full h-4" />
+            <Skeleton className="h-4 w-full" />
           ) : packageInfo?.license ? (
-            <div className="flex items-center text-sm text-muted-foreground">
-              <i className="w-4 h-4 mr-2 i-ri-scales-3-line" />
+            <div className="text-muted-foreground flex items-center text-sm">
+              <i className="i-ri-scales-3-line mr-2 h-4 w-4 flex-none" />
               {packageInfo?.license.name || packageInfo?.license}
             </div>
           ) : null}
           {isLoading ? (
-            <Skeleton className="w-full h-4" />
+            <Skeleton className="h-4 w-full" />
           ) : packageInfo?.language ? (
-            <div className="flex items-center text-sm text-muted-foreground">
-              <i className="w-4 h-4 mr-2 i-ri-circle-line fill-sky-400 text-sky-400" />
+            <div className="text-muted-foreground flex items-center text-sm">
+              <i className="i-ri-circle-line mr-2 h-4 w-4 fill-sky-400 text-sky-400" />
               {packageInfo?.language}
             </div>
           ) : null}

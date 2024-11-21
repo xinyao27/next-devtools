@@ -30,7 +30,7 @@ export default function Provider({ children }: Props) {
           <Initial />
           <main
             className={cn(
-              'grid grid-cols-[50px_1fr] md:grid-cols-[180px_1fr] h-screen overflow-hidden bg-neutral-50 dark:bg-neutral-900',
+              'grid h-screen grid-cols-[50px_1fr] overflow-hidden bg-neutral-50/80 backdrop-blur-md md:grid-cols-[180px_1fr] dark:bg-neutral-900/80',
               {
                 '!grid-cols-[50px_1fr]': nabBarSnap.collapsed === true,
                 '!grid-cols-[180px_1fr]': nabBarSnap.collapsed === false,
@@ -38,9 +38,9 @@ export default function Provider({ children }: Props) {
             )}
           >
             <SideBar />
-            <div className="h-screen p-2 pl-0">
-              <div className="h-full rounded-lg shadow-md dark:shadow-[0_0_10px_1px] dark:shadow-accent bg-white dark:bg-black overflow-hidden">
-                <div className="h-full overflow-x-hidden overflow-y-auto">{children}</div>
+            <div className="h-screen overflow-hidden p-2 pl-0">
+              <div className="dark:shadow-accent h-full overflow-hidden rounded-lg bg-white shadow-md dark:bg-black dark:shadow-[0_0_10px_1px]">
+                <div className="h-full overflow-y-auto overflow-x-hidden">{children}</div>
               </div>
             </div>
           </main>

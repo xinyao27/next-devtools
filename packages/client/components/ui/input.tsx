@@ -1,28 +1,23 @@
 import * as React from 'react'
-
 import { cn } from '@/lib/utils'
 
-export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
-  prefix?: React.ReactNode
-}
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type, prefix, ...props }, ref) => {
+const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type, ...props }, ref) => {
   return (
-    <div
+    <input
+      ref={ref}
+      type={type}
       className={cn(
-        'flex items-center space-x-2 h-9 w-full px-3 py-1 rounded-md border border-input transition-all focus-within:border-primary focus-within:ring-2 focus-within:ring-ring',
-        { 'cursor-not-allowed opacity-50': props.disabled },
+        'border-input bg-background text-foreground ring-offset-background placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:ring-ring/30 flex h-9 w-full rounded-lg border px-3 py-2 text-sm shadow-sm shadow-black/5 transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+        type === 'search' &&
+          '[&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none',
+        type === 'file' &&
+          'text-muted-foreground/70 file:border-input file:text-foreground p-0 pr-3 italic file:me-3 file:h-full file:border-0 file:border-r file:border-solid file:bg-transparent file:px-3 file:text-sm file:font-medium file:not-italic',
         className,
       )}
-    >
-      {prefix}
-      <input
-        ref={ref}
-        className="flex-1 w-full h-full rounded-md text-sm bg-transparent outline-none file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-        type={type}
-        {...props}
-      />
-    </div>
+      {...props}
+    />
   )
 })
 Input.displayName = 'Input'
