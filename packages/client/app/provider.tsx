@@ -6,8 +6,7 @@ import { useSnapshot } from 'valtio'
 import { ThemeProvider } from '@/components/theme-provider'
 import SideBar from '@/components/side-bar'
 import { TooltipProvider } from '@/components/ui/tooltip'
-import { Toaster } from '@/components/ui/toaster'
-import { ScrollArea } from '@/components/ui/scroll-area'
+import { Toaster } from '@/components/ui/sonner'
 import { navBarStore } from '@/store'
 import { cn } from '@/lib/utils'
 import Initial from './initial'
@@ -16,7 +15,7 @@ interface Props {
   children: React.ReactNode
 }
 export default function Provider({ children }: Props) {
-  const nabBarSnap = useSnapshot(navBarStore)
+  const navBarSnap = useSnapshot(navBarStore)
 
   return (
     <ThemeProvider disableTransitionOnChange enableSystem attribute="class" defaultTheme="system">
@@ -31,17 +30,17 @@ export default function Provider({ children }: Props) {
           <Initial />
           <main
             className={cn(
-              'grid grid-cols-[50px_1fr] md:grid-cols-[180px_1fr] h-full overflow-hidden bg-neutral-50 dark:bg-neutral-900',
+              'grid h-screen grid-cols-[50px_1fr] overflow-hidden bg-neutral-50/80 backdrop-blur-md md:grid-cols-[180px_1fr] dark:bg-neutral-900/80',
               {
-                '!grid-cols-[50px_1fr]': nabBarSnap.collapsed === true,
-                '!grid-cols-[180px_1fr]': nabBarSnap.collapsed === false,
+                '!grid-cols-[50px_1fr]': navBarSnap.collapsed === true,
+                '!grid-cols-[180px_1fr]': navBarSnap.collapsed === false,
               },
             )}
           >
             <SideBar />
-            <div className="h-full p-2 pl-0">
-              <div className="h-full rounded-lg shadow-md dark:shadow-[0_0_10px_1px] dark:shadow-accent bg-white dark:bg-black">
-                <ScrollArea className="h-full max-h-[calc(100vh-16px)]">{children}</ScrollArea>
+            <div className="h-screen overflow-hidden p-2 pl-0">
+              <div className="dark:shadow-accent h-full overflow-hidden rounded-lg bg-white shadow-md dark:bg-black dark:shadow-[0_0_10px_1px]">
+                <div className="h-full overflow-y-auto overflow-x-hidden">{children}</div>
               </div>
             </div>
           </main>

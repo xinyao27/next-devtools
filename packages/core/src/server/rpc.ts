@@ -14,4 +14,8 @@ export function createRPCServer(options: WebpackOptionsNormalized, context: Cont
     handler.broadcastReconnectNotification()
     wss.close()
   })
+  __NEXT_DEVTOOLS_EE__.on('project:restart', () => {
+    handler.broadcastReconnectNotification()
+    wss.close()
+  })
 }

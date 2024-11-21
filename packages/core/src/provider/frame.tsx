@@ -86,8 +86,7 @@ function Frame() {
               boxShadow:
                 '0 2px 15px -3px var(--next-devtools-widget-shadow), 0 4px 6px -4px var(--next-devtools-widget-shadow)',
               border: '1px solid var(--next-devtools-widget-border)',
-              borderRadius: '100px',
-              backdropFilter: 'blur(10px)',
+              borderRadius: '4px',
               userSelect: 'none',
               touchAction: 'none',
             }}
@@ -168,8 +167,8 @@ function Frame() {
               height: '100%',
               boxShadow:
                 '0 2px 15px -3px var(--next-devtools-widget-shadow), 0 4px 6px -4px var(--next-devtools-widget-shadow)',
-              border: 'none',
-              borderRadius: '10px',
+              border: '1px solid hsla(0,0%,100%,.05)',
+              borderRadius: '4px',
               pointerEvents: 'auto',
             }}
           />

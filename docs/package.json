@@ -8,26 +8,25 @@
     "docs:build": "next build"
   },
   "dependencies": {
-    "@vercel/analytics": "^1.1.1",
-    "clsx": "^2.1.0",
-    "framer-motion": "^10.17.9",
-    "next": "13.5.6",
+    "@vercel/analytics": "^1.4.0",
+    "clsx": "catalog:",
+    "framer-motion": "catalog:",
+    "next": "catalog:next14",
     "nextra": "latest",
     "nextra-theme-docs": "latest",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tailwind-merge": "^2.2.0"
+    "react": "catalog:react",
+    "react-dom": "catalog:react",
+    "tailwind-merge": "catalog:"
   },
   "devDependencies": {
-    "@egoist/tailwindcss-icons": "^1.7.2",
-    "@iconify-json/ri": "^1.1.18",
+    "@egoist/tailwindcss-icons": "catalog:",
+    "@iconify-json/ri": "catalog:",
     "@tailwindcss/aspect-ratio": "^0.4.2",
-    "@types/node": "18.11.10",
-    "@types/react": "^18.2.47",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.33",
-    "tailwindcss": "^3.4.1",
-    "taze": "^0.13.1",
-    "typescript": "^5.3.3"
+    "@types/node": "catalog:",
+    "@types/react": "catalog:react",
+    "autoprefixer": "catalog:",
+    "postcss": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
   }
 }

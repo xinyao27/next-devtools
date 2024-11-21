@@ -48,6 +48,18 @@ const menuItems = [
     link: '/envs',
     icon: 'i-ri-shapes-line',
   },
+  {
+    value: 'terminal',
+    label: 'Terminal',
+    link: '/terminal',
+    icon: 'i-ri-terminal-box-line',
+  },
+  {
+    value: 'bundle-analyzer',
+    label: 'Bundle Analyzer',
+    link: '/bundle-analyzer',
+    icon: 'i-ri-pie-chart-box-line',
+  },
 ]
 
 export default function SideBar() {

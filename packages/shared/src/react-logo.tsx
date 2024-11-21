@@ -17,7 +17,7 @@ export function ReactLogo({ className, theme = 'dark' }: Props) {
       xmlns="http://www.w3.org/2000/svg"
     >
       <circle cx="0" cy="0" fill="currentColor" r="2" />
-      <g fill="none" stroke="currentColor" stroke-width="1">
+      <g fill="none" stroke="currentColor" strokeWidth="1">
         <ellipse rx="10" ry="4.5" />
         <ellipse rx="10" ry="4.5" transform="rotate(60)" />
         <ellipse rx="10" ry="4.5" transform="rotate(120)" />

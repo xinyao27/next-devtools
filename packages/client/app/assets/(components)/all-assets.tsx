@@ -33,21 +33,21 @@ function AssetComponent({ data }: AssetProps) {
   )
   return (
     <Sheet>
-      <SheetTrigger>
-        <button className="flex flex-col items-center gap-1 p-2 transition rounded hover:bg-muted">
-          <div className="flex items-center justify-center p-2 border rounded h-28 w-28 bg-muted">{previewElement}</div>
-          <div className="text-xs truncate whitespace-nowrap">{data.file}</div>
+      <SheetTrigger asChild>
+        <button className="hover:bg-muted flex flex-col items-center gap-1 rounded p-2 transition">
+          <div className="bg-muted flex h-28 w-28 items-center justify-center rounded border p-2">{previewElement}</div>
+          <div className="truncate whitespace-nowrap text-xs">{data.file}</div>
         </button>
       </SheetTrigger>
-      <SheetContent className="sm:max-w-[540px] sm:w-[540px]">
+      <SheetContent className="sm:w-[540px] sm:max-w-[540px]">
         <SheetHeader>
           <SheetTitle>{data.file}</SheetTitle>
           <SheetDescription>
             <div className="flex flex-col gap-6 py-4">
               <div className="space-y-4">
-                <h4 className="text-sm font-medium text-primary">Preview</h4>
+                <h4 className="text-primary text-sm font-medium">Preview</h4>
                 <div>
-                  <div className="flex items-center justify-center p-2 border rounded h-28 w-28 bg-muted">
+                  <div className="bg-muted flex h-28 w-28 items-center justify-center rounded border p-2">
                     {previewElement}
                   </div>
                 </div>
@@ -56,31 +56,31 @@ function AssetComponent({ data }: AssetProps) {
               <Separator />
 
               <div className="space-y-4">
-                <h4 className="text-sm font-medium text-primary">Details</h4>
+                <h4 className="text-primary text-sm font-medium">Details</h4>
                 <table className="table-fixed">
                   <tbody>
                     <tr>
-                      <td className="pr-4 text-right opacity-50 w-28 whitespace-nowrap">File Path</td>
+                      <td className="w-28 whitespace-nowrap pr-4 text-right opacity-50">File Path</td>
                       <td className="text-primary">
                         <OpenInVscode value={data.filePath}>{data.filePath}</OpenInVscode>
                       </td>
                     </tr>
                     <tr>
-                      <td className="pr-4 text-right opacity-50 w-28 whitespace-nowrap">Public Path</td>
+                      <td className="w-28 whitespace-nowrap pr-4 text-right opacity-50">Public Path</td>
                       <td className="text-primary">
                         <CopyToClipboard value={data.publicPath}>{data.publicPath}</CopyToClipboard>
                       </td>
                     </tr>
                     <tr>
-                      <td className="pr-4 text-right opacity-50 w-28 whitespace-nowrap">Type</td>
+                      <td className="w-28 whitespace-nowrap pr-4 text-right opacity-50">Type</td>
                       <td className="text-primary">{data.type}</td>
                     </tr>
                     <tr>
-                      <td className="pr-4 text-right opacity-50 w-28 whitespace-nowrap">File Size</td>
+                      <td className="w-28 whitespace-nowrap pr-4 text-right opacity-50">File Size</td>
                       <td className="text-primary">{formatBytes(data.size)}</td>
                     </tr>
                     <tr>
-                      <td className="pr-4 text-right opacity-50 w-28 whitespace-nowrap">Last modified</td>
+                      <td className="w-28 whitespace-nowrap pr-4 text-right opacity-50">Last modified</td>
                       <td className="text-primary">
                         {format(data.mtime, 'MM/dd/yyyy, HH:mm:ss')}{' '}
                         <span className="opacity-50">({formatDistanceToNow(data.mtime, { addSuffix: true })})</span>
