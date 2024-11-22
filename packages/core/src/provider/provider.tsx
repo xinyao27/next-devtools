@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Frame from './frame'
+import './styles.css'
 
 interface NextDevtoolsProviderProps {
   children: React.ReactNode

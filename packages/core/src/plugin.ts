@@ -7,9 +7,12 @@ import { getPort } from 'get-port-please'
 import { createLocalService } from './server/local'
 import { createRPCServer } from './server/rpc'
 import { createStaticServer } from './server/static'
+import { getGlobalThis } from './utils'
 import type { Context } from './server/router'
 import type { NextConfig } from 'next'
 import type { Compiler } from 'webpack'
+
+const globalThis = getGlobalThis()
 
 export class Plugin {
   context: Context

@@ -4,10 +4,6 @@ import React from 'react'
 import { NextLogo } from '@next-devtools/shared'
 import type { CSSProperties } from 'react'
 
-function Separator() {
-  return <div style={{ width: 1, height: 10, borderLeft: '1px solid rgba(136, 136, 136, 0.2)', margin: '0 6px' }} />
-}
-
 interface ToolbarProps {
   inspectorActive: boolean
   setInspectorActive: React.Dispatch<React.SetStateAction<boolean>>
@@ -24,97 +20,26 @@ export default function Toolbar({ inspectorActive, setInspectorActive }: Toolbar
     setInspectorActive((s) => !s)
   }, [show])
 
-  const { ref, dragStyles, frameStyles } = useDrag({ show, frameRef })
+  const { ref, dragStyles, frameStyles, isDragging } = useDrag({ show, frameRef })
 
   return (
-    <div
-      id="next-devtools-container"
-      style={{
-        position: 'fixed',
-        width: 0,
-        zIndex: 2147483645,
-        // @ts-expect-error noop
-        '--next-devtools-widget-bg': '#fafafa',
-        '--next-devtools-widget-border': '#efefef',
-        '--next-devtools-widget-shadow': 'rgb(0 0 0 / 10%)',
-      }}
-    >
-      <div
-        id="next-devtools-anchor"
-        style={{
-          width: 0,
-          zIndex: 2147483645,
-          position: 'fixed',
-          display: 'flex',
-          justifyContent: 'center',
-          bottom: 8,
-          transform: 'translate(-50%, -50%) rotate(0)',
-          transformOrigin: 'center center',
-          ...dragStyles,
-        }}
-      >
-        <div
-          ref={ref}
-          id="next-devtools-panel"
-          style={{
-            padding: '0 6px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'var(--next-devtools-widget-bg)',
-            boxShadow:
-              '0 2px 15px -3px var(--next-devtools-widget-shadow), 0 4px 6px -4px var(--next-devtools-widget-shadow)',
-            border: '1px solid var(--next-devtools-widget-border)',
-            borderRadius: '4px',
-            userSelect: 'none',
-            touchAction: 'none',
-          }}
-        >
-          <button
-            title="Toggle Next Devtools"
-            style={{
-              marginLeft: 6,
-              marginRight: 6,
-              background: 'none',
-              cursor: 'pointer',
-              borderRadius: '100%',
-              borderWidth: 0,
-              width: 30,
-              height: 30,
-              color: '#000',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              opacity: 0.8,
-              transition: 'opacity 0.2s ease-in-out',
-            }}
-            onClick={handleToggle}
-          >
-            <NextLogo mode="small" theme="light" />
+    <div className="next-devtools-container" id="next-devtools-container">
+      <div className="next-devtools-anchor" id="next-devtools-anchor" style={dragStyles}>
+        <div ref={ref} className="next-devtools-panel" id="next-devtools-panel">
+          <button className="next-devtools-toggle-button" title="Toggle Next Devtools" onClick={handleToggle}>
+            <NextLogo fill={show ? 'var(--next-devtools-primary-color' : '#fff'} mode="small" theme="light" />
           </button>
 
-          <Separator />
+          <div className="next-devtools-separator" />
 
           <button
+            className="next-devtools-inspector-button"
             title="Toggle Component Inspector"
-            style={{
-              background: 'none',
-              cursor: 'pointer',
-              borderRadius: '100%',
-              borderWidth: 0,
-              width: 30,
-              height: 30,
-              color: '#000',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              opacity: 0.8,
-              transition: 'opacity 0.2s ease-in-out',
-            }}
             onClick={handleToggleInspectorActive}
           >
             <svg
-              style={{ width: 16, height: 16, opacity: inspectorActive ? 1 : 0.5 }}
+              className="next-devtools-inspector-icon"
+              style={{ fill: inspectorActive ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.8)' }}
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -125,28 +50,19 @@ export default function Toolbar({ inspectorActive, setInspectorActive }: Toolbar
 
         <div
           ref={frameRef}
+          className="next-devtools-frame"
           id="next-devtools-frame"
           style={{
-            position: 'fixed',
-            zIndex: -1,
-            pointerEvents: 'auto',
-            bottom: 24,
             ...frameStyles,
+            cursor: isDragging ? 'grabbing' : undefined,
+            opacity: isDragging ? 0.75 : 1,
           }}
         >
           <iframe
+            className="next-devtools-iframe"
             id="next-devtools-iframe"
             src="/__next_devtools__/client"
-            style={{
-              display: show ? 'block' : 'none',
-              width: '100%',
-              height: '100%',
-              boxShadow:
-                '0 2px 15px -3px var(--next-devtools-widget-shadow), 0 4px 6px -4px var(--next-devtools-widget-shadow)',
-              border: '1px solid hsla(0,0%,100%,.05)',
-              borderRadius: '4px',
-              pointerEvents: 'auto',
-            }}
+            style={{ display: show ? 'block' : 'none' }}
           />
         </div>
       </div>
@@ -165,6 +81,7 @@ function useDrag({ show, frameRef }: { show: boolean; frameRef: React.RefObject<
   const [isDragging, setIsDragging] = React.useState(false)
   const [draggingOffset, setDraggingOffset] = React.useState<Position | null>(null)
   const [position, setPosition] = React.useState<Position | null>(() => {
+    if (typeof window === 'undefined') return null
     const storedPosition = window?.localStorage?.getItem(NEXT_DEVTOOLS_POSITION)
     if (storedPosition) {
       try {

@@ -9,7 +9,7 @@ export async function createLocalService(port: string) {
   const terminalOptions = { id: 'devtools:local-service', name: 'Local Service', icon: 'i-ri-service-line' }
 
   let __process: any
-  if (process.env.DEV) {
+  if (process.env.NODE_ENV === 'development') {
     __process = await executeCommand(
       {
         command: 'npx',

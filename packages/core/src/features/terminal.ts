@@ -1,5 +1,8 @@
 import { observable } from '@trpc/server/observable'
+import { getGlobalThis } from '../utils'
 import type { Options, Subprocess } from 'execa'
+
+const globalThis = getGlobalThis()
 
 export interface TerminalBase {
   id: string
@@ -44,16 +47,16 @@ export function runTerminalAction(id: string, action: TerminalAction) {
 }
 
 export async function setupTerminal() {
-  __NEXT_DEVTOOLS_EE__.on('terminal:register', (terminal) => {
+  globalThis.__NEXT_DEVTOOLS_EE__.on('terminal:register', (terminal) => {
     terminals.set(terminal.id, terminal)
     return terminal.id
   })
-  __NEXT_DEVTOOLS_EE__.on('terminal:remove', ({ id }) => {
+  globalThis.__NEXT_DEVTOOLS_EE__.on('terminal:remove', ({ id }) => {
     if (!terminals.has(id)) return false
     terminals.delete(id)
     return true
   })
-  __NEXT_DEVTOOLS_EE__.on('terminal:exit', ({ id }) => {
+  globalThis.__NEXT_DEVTOOLS_EE__.on('terminal:exit', ({ id }) => {
     const terminal = terminals.get(id)
     if (!terminal) return false
     return true
@@ -71,9 +74,9 @@ export async function onTerminalWrite() {
       emit.next(data)
       return true
     }
-    __NEXT_DEVTOOLS_EE__.on('terminal:write', handler)
+    globalThis.__NEXT_DEVTOOLS_EE__.on('terminal:write', handler)
     return () => {
-      __NEXT_DEVTOOLS_EE__.off('terminal:write', handler)
+      globalThis.__NEXT_DEVTOOLS_EE__.off('terminal:write', handler)
     }
   })
 }
@@ -107,21 +110,24 @@ export async function executeCommand(
       },
     })
 
-    __NEXT_DEVTOOLS_EE__.emit('terminal:write', {
+    globalThis.__NEXT_DEVTOOLS_EE__.emit('terminal:write', {
       id,
       data: `> ${[execaOptions.command, ...(execaOptions.args || [])].join(' ')}\n\n`,
     })
     childProcess.stdout!.on('data', (data) => {
-      __NEXT_DEVTOOLS_EE__.emit('terminal:write', { id, data: data.toString() })
+      globalThis.__NEXT_DEVTOOLS_EE__.emit('terminal:write', { id, data: data.toString() })
     })
     childProcess.stderr!.on('data', (data) => {
-      __NEXT_DEVTOOLS_EE__.emit('terminal:write', { id, data: data.toString() })
+      globalThis.__NEXT_DEVTOOLS_EE__.emit('terminal:write', { id, data: data.toString() })
     })
     childProcess?.on('exit', (code) => {
       if (!restarting) {
         execaOptions.options?.onExit?.(code || 0)
-        __NEXT_DEVTOOLS_EE__.emit('terminal:write', { id, data: `\n> process terminalated with ${code}\n` })
-        __NEXT_DEVTOOLS_EE__.emit('terminal:exit', { id, code: code || 0 })
+        globalThis.__NEXT_DEVTOOLS_EE__.emit('terminal:write', {
+          id,
+          data: `\n> process terminalated with ${code}\n`,
+        })
+        globalThis.__NEXT_DEVTOOLS_EE__.emit('terminal:exit', { id, code: code || 0 })
       }
     })
 
@@ -153,11 +159,11 @@ export async function executeCommand(
   function terminate() {
     restarting = false
     __process?.kill('SIGTERM')
-    __NEXT_DEVTOOLS_EE__.emit('terminal:remove', { id })
+    globalThis.__NEXT_DEVTOOLS_EE__.emit('terminal:remove', { id })
   }
 
   function register() {
-    __NEXT_DEVTOOLS_EE__.emit('terminal:register', {
+    globalThis.__NEXT_DEVTOOLS_EE__.emit('terminal:register', {
       ...terminalOptions,
       restart,
       clear,

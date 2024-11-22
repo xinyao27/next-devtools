@@ -38,7 +38,7 @@ export default function Provider({ children }: Props) {
             )}
           >
             <SideBar />
-            <div className="h-screen overflow-hidden p-2 pl-0">
+            <div className="h-screen p-2 pl-0">
               <div className="dark:shadow-accent h-full overflow-hidden rounded-lg bg-white shadow-md dark:bg-black dark:shadow-[0_0_10px_1px]">
                 <div className="h-full overflow-y-auto overflow-x-hidden">{children}</div>
               </div>

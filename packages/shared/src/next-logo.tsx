@@ -6,9 +6,10 @@ interface Props {
   className?: string
   mode?: 'full' | 'small'
   theme?: 'light' | 'dark'
+  fill?: string
 }
-export function NextLogo({ className, mode = 'full', theme = 'dark' }: Props) {
-  const fill = React.useMemo(() => (theme === 'dark' ? '#fff' : '#000'), [theme])
+export function NextLogo({ className, mode = 'full', theme = 'dark', fill: fillProp }: Props) {
+  const fill = React.useMemo(() => fillProp || (theme === 'dark' ? '#fff' : '#000'), [theme, fillProp])
 
   if (mode === 'small') {
     return (
