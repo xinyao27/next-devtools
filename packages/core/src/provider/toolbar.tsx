@@ -23,7 +23,11 @@ export default function Toolbar({ inspectorActive, setInspectorActive }: Toolbar
   const { ref, dragStyles, frameStyles, isDragging } = useDrag({ show, frameRef })
 
   return (
-    <div className="next-devtools-container" id="next-devtools-container">
+    <div
+      className="next-devtools-container"
+      id="next-devtools-container"
+      style={{ position: 'fixed', zIndex: 2147483645, width: 0 }}
+    >
       <div className="next-devtools-anchor" id="next-devtools-anchor" style={dragStyles}>
         <div ref={ref} className="next-devtools-panel" id="next-devtools-panel">
           <button className="next-devtools-toggle-button" title="Toggle Next Devtools" onClick={handleToggle}>

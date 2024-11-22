@@ -1,7 +1,4 @@
 .next-devtools-container {
-  position: fixed;
-  width: 0;
-  z-index: 2147483645;
   --next-devtools-widget-bg: rgba(0, 0, 0, 0.8);
   --next-devtools-widget-border: rgba(0, 0, 0, 0.2);
   --next-devtools-widget-border-light: rgba(0, 0, 0, 0.05);
