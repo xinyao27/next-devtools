@@ -7,9 +7,10 @@ import type { CSSProperties } from 'react'
 interface ToolbarProps {
   inspectorActive: boolean
   setInspectorActive: React.Dispatch<React.SetStateAction<boolean>>
+  iframeRef: React.RefObject<HTMLIFrameElement>
 }
 
-export default function Toolbar({ inspectorActive, setInspectorActive }: ToolbarProps) {
+export default function Toolbar({ inspectorActive, setInspectorActive, iframeRef }: ToolbarProps) {
   const frameRef = React.useRef<HTMLDivElement>(null)
   const [show, setShow] = React.useState(false)
   const [panelActive, setPanelActive] = React.useState(false)
@@ -90,6 +91,7 @@ export default function Toolbar({ inspectorActive, setInspectorActive }: Toolbar
 
         <div ref={frameRef} className="next-devtools-frame" id="next-devtools-frame" style={frameStyles}>
           <iframe
+            ref={iframeRef}
             className="next-devtools-iframe"
             id="next-devtools-iframe"
             src="/__next_devtools__/client"

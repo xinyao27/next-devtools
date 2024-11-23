@@ -41,7 +41,7 @@ function Frame() {
         }}
       />
 
-      <Toolbar inspectorActive={inspectorActive} setInspectorActive={setInspectorActive} />
+      <Toolbar iframeRef={iframeRef} inspectorActive={inspectorActive} setInspectorActive={setInspectorActive} />
     </MessageProvider>
   )
 }

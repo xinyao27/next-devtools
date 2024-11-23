@@ -4,15 +4,17 @@ const FRAME_SOURCE = 'next-devtools-frame'
 export type FrameMessageFunctions = Record<string, (...args: any[]) => any>
 
 export function createFrameMessageHandler(fns: FrameMessageFunctions, ref: React.RefObject<HTMLIFrameElement>) {
-  const handler = (event: MessageEvent) => {
+  const handler = async (event: MessageEvent) => {
     const { type, payload, source, timestamp } = event.data
     if (source !== CLIENT_SOURCE) return
     if (!type || !payload || !timestamp) return
 
     if (type in fns) {
-      const result = fns[type](...(payload || []))
-      if (ref.current)
-        ref.current.contentWindow?.postMessage({ source: FRAME_SOURCE, type, payload: result, timestamp }, '*')
+      const result = await fns[type](...(payload || []))
+      if (ref.current) {
+        const message = { source: FRAME_SOURCE, type, payload: result, timestamp }
+        ref.current.contentWindow?.postMessage(message, '*')
+      }
 
       return result
     }
@@ -28,7 +30,6 @@ export function createFrameMessageClient<T extends FrameMessageFunctions>() {
   const client = new Proxy({} as T, {
     get(_, type: string) {
       if (blackList.includes(type)) return
-
       return (...args: any[]) =>
         new Promise((resolve) => {
           const timestamp = new Date().getDate()
@@ -44,7 +45,7 @@ export function createFrameMessageClient<T extends FrameMessageFunctions>() {
 }
 
 export interface FrameMessageHandler extends FrameMessageFunctions {
-  getRoute: () => string
-  pushRoute: (href: string) => void
-  backRoute: (href: string) => void
+  getRoute: () => Promise<string>
+  pushRoute: (href: string) => Promise<void>
+  backRoute: (href: string) => Promise<void>
 }

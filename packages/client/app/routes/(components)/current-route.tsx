@@ -7,6 +7,7 @@ export default function CurrentRoute() {
   const messageClient = useMessageClient()
   const { data, mutate } = useSWR('getRoute', () => messageClient.getRoute())
   const [currentRoute, setCurrentRoute] = React.useState(data || '')
+
   React.useEffect(() => {
     if (data) setCurrentRoute(data)
   }, [data])

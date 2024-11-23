@@ -18,16 +18,16 @@ export function MessageProvider({ children, iframeRef }: Props) {
 
   React.useEffect(() => {
     const handler: FrameMessageHandler = {
-      getRoute: () => latestPathname.current,
-      pushRoute: (href: string, options?: NavigateOptions) => {
+      getRoute: async () => latestPathname.current,
+      pushRoute: async (href: string, options?: NavigateOptions) => {
         router.push(href, options)
       },
-      backRoute: () => {
+      backRoute: async () => {
         router.back()
       },
     }
     createFrameMessageHandler(handler, iframeRef)
-  }, [])
+  }, [iframeRef])
 
   return <>{children}</>
 }
