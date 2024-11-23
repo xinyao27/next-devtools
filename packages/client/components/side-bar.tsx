@@ -103,16 +103,16 @@ export default function SideBar() {
                   )}
                 >
                   <i
-                    className={cn(item.icon, 'absolute left-0 size-5 flex-none transition-all duration-200', {
-                      'left-2': navBarSnap.collapsed === true,
-                      'left-3': navBarSnap.collapsed === false,
+                    className={cn(item.icon, 'absolute left-2 size-5 flex-none transition-all duration-200 md:left-3', {
+                      '!left-2': navBarSnap.collapsed === true,
+                      '!left-3': navBarSnap.collapsed === false,
                     })}
                   />
                   <div
                     className={cn(
-                      'w-0 transition-all duration-200 md:w-auto',
+                      'w-0 opacity-0 transition-all duration-200 md:w-full md:pl-7 md:opacity-100',
                       { '!w-0 !opacity-0': navBarSnap.collapsed === true },
-                      { '!w-full pl-7 !opacity-100': navBarSnap.collapsed === false },
+                      { '!w-full !pl-7 !opacity-100': navBarSnap.collapsed === false },
                     )}
                   >
                     {item.label}
