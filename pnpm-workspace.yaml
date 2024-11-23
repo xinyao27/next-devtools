@@ -5,8 +5,8 @@ packages:
 catalog:
   '@egoist/tailwindcss-icons': ^1.8.1
   '@iconify-json/ri': ^1.2.3
-  '@types/node': ^20.17.7
-  '@xystack/style-guide': ^0.2.4
+  '@types/node': ^22.9.3
+  '@xystack/style-guide': ^0.2.5
   autoprefixer: ^10.4.20
   clsx: ^2.1.1
   eslint: ^9.15.0
