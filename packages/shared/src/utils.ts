@@ -11,3 +11,9 @@ export function prettySize(size: number) {
   }
   return `${size.toFixed(2)} ${sizes[i]}`
 }
+
+export const noop = () => {}
+
+export const isBrowser = typeof window !== 'undefined'
+
+export const isNavigator = typeof navigator !== 'undefined'

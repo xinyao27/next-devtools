@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { NextLogo } from '@next-devtools/shared'
+import { NextLogo, useLocalStorage } from '@next-devtools/shared'
 import type { CSSProperties } from 'react'
 
 interface ToolbarProps {
@@ -111,18 +111,7 @@ function useDrag({ show, frameRef }: { show: boolean; frameRef: React.RefObject<
   const [windowSize, setWindowSize] = React.useState({ width: 0, height: 0 })
   const [isDragging, setIsDragging] = React.useState(false)
   const [draggingOffset, setDraggingOffset] = React.useState<Position | null>(null)
-  const [position, setPosition] = React.useState<Position | null>(() => {
-    if (typeof window === 'undefined') return null
-    const storedPosition = window?.localStorage?.getItem(NEXT_DEVTOOLS_POSITION)
-    if (storedPosition) {
-      try {
-        return JSON.parse(storedPosition)
-      } catch {
-        /**/
-      }
-    }
-    return null
-  })
+  const [position, setPosition] = useLocalStorage<Position | null>(NEXT_DEVTOOLS_POSITION, null)
   const isMouseDownOnToolbar = React.useRef(false)
 
   const dragStyles = React.useMemo(() => {
@@ -130,7 +119,7 @@ function useDrag({ show, frameRef }: { show: boolean; frameRef: React.RefObject<
       return Math.min(Math.max(value, min), max)
     }
     const halfWidth = (ref.current?.clientWidth || 0) / 2
-    const left = position?.x || 0
+    const left = ((position?.x || 0) * windowSize.width) / 100
     return {
       left: clamp(
         left,
@@ -160,7 +149,7 @@ function useDrag({ show, frameRef }: { show: boolean; frameRef: React.RefObject<
         if (x < panelMargins.current.left + ref.current.clientWidth / 2) return
 
         setPosition({
-          x,
+          x: snapToPoints((x / windowSize.width) * 100),
         })
       }
     },
@@ -170,12 +159,7 @@ function useDrag({ show, frameRef }: { show: boolean; frameRef: React.RefObject<
     if (!position) return
 
     if (isDragging) {
-      const adjustedPosition = position
-      if (adjustedPosition.x !== position.x) {
-        setPosition(adjustedPosition)
-      }
       setTimeout(() => {
-        localStorage.setItem('NEXT_DEVTOOLS_POSITION', JSON.stringify(adjustedPosition))
         setIsDragging(false)
       }, 200 + 16)
     }
@@ -191,13 +175,6 @@ function useDrag({ show, frameRef }: { show: boolean; frameRef: React.RefObject<
 
     const { innerWidth, innerHeight } = window
     setWindowSize({ width: innerWidth, height: innerHeight })
-    const { width } = ref.current.getBoundingClientRect()
-
-    const newX = (position.x / (innerWidth - width)) * (innerWidth - width)
-    const newPosition = { x: newX }
-
-    setPosition(newPosition)
-    localStorage.setItem(NEXT_DEVTOOLS_POSITION, JSON.stringify(newPosition))
   }, [position])
 
   React.useEffect(() => {
@@ -230,13 +207,11 @@ function useDrag({ show, frameRef }: { show: boolean; frameRef: React.RefObject<
   }, [isDragging, position, onMouseMove, onMouseUp, onWindowResize])
 
   const frameStyles = React.useMemo(() => {
-    const halfHeight = (ref.current?.clientHeight || 0) / 2
-
     const frameMargin = {
-      left: panelMargins.current.left + halfHeight,
-      top: panelMargins.current.top + halfHeight,
-      right: panelMargins.current.right + halfHeight,
-      bottom: panelMargins.current.bottom + halfHeight,
+      left: panelMargins.current.left,
+      top: panelMargins.current.top,
+      right: panelMargins.current.right,
+      bottom: panelMargins.current.bottom,
     }
 
     const marginHorizontal = frameMargin.left + frameMargin.right
@@ -255,18 +230,16 @@ function useDrag({ show, frameRef }: { show: boolean; frameRef: React.RefObject<
     }
 
     const width = Math.min(maxWidth, (80 * windowSize.width) / 100)
-    const anchorX = position?.x || 0
+    const anchorX = dragStyles.left
 
     style.transform = 'translate(0, 0)'
     if (anchorX - frameMargin.left < width / 2) {
       style.left = `${width / 2 - anchorX + frameMargin.left - iframeBoundingClientRect.width / 2}px`
     } else if (windowSize.width - anchorX - frameMargin.right < width / 2) {
       style.left = `${windowSize.width - anchorX - width / 2 - frameMargin.right - iframeBoundingClientRect.width / 2}px`
-    } else {
-      style.left = `-${iframeBoundingClientRect.width / 2}px`
     }
     return style
-  }, [isDragging, position, windowSize, show, frameRef])
+  }, [isDragging, position, windowSize, dragStyles, show, frameRef])
 
   return {
     ref,
@@ -274,4 +247,12 @@ function useDrag({ show, frameRef }: { show: boolean; frameRef: React.RefObject<
     dragStyles,
     frameStyles,
   }
+}
+
+const SNAP_THRESHOLD = 2
+function snapToPoints(value: number) {
+  if (value < 5) return 0
+  if (value > 95) return 100
+  if (Math.abs(value - 50) < SNAP_THRESHOLD) return 50
+  return value
 }
