@@ -80,7 +80,7 @@ export default function SideBar() {
   return (
     <nav
       className={cn(
-        'h-full w-[50px] overflow-y-auto overflow-x-hidden transition-all md:w-[180px]',
+        'h-full w-[50px] overflow-y-auto overflow-x-hidden transition-all duration-200 md:w-[180px]',
         { '!w-[50px]': navBarSnap.collapsed === true },
         { '!w-[180px]': navBarSnap.collapsed === false },
       )}
@@ -94,24 +94,29 @@ export default function SideBar() {
                   href={item.link}
                   className={cn(
                     buttonVariants({ variant: 'ghost', size: 'sm' }),
-                    'justify-center space-x-2 px-0 opacity-50 transition md:justify-start md:px-3',
+                    'hover:text-primary group relative overflow-hidden px-0 opacity-50 transition-all duration-200 hover:bg-zinc-500/10 md:px-3',
                     {
-                      'text-primary bg-accent opacity-100': pathname.startsWith(item.link),
-                      '!justify-center !px-0': navBarSnap.collapsed === true,
-                      '!justify-start !px-3': navBarSnap.collapsed === false,
+                      'text-primary bg-secondary opacity-100': pathname.startsWith(item.link),
+                      '!px-0': navBarSnap.collapsed === true,
+                      '!px-3': navBarSnap.collapsed === false,
                     },
                   )}
                 >
-                  <i className={cn(item.icon, 'h-5 w-5')} />
-                  <span
+                  <i
+                    className={cn(item.icon, 'absolute left-0 size-5 flex-none transition-all duration-200', {
+                      'left-2': navBarSnap.collapsed === true,
+                      'left-3': navBarSnap.collapsed === false,
+                    })}
+                  />
+                  <div
                     className={cn(
-                      'hidden md:inline-block',
-                      { '!hidden': navBarSnap.collapsed === true },
-                      { '!inline-block': navBarSnap.collapsed === false },
+                      'w-0 transition-all duration-200 md:w-auto',
+                      { '!w-0 !opacity-0': navBarSnap.collapsed === true },
+                      { '!w-full pl-7 !opacity-100': navBarSnap.collapsed === false },
                     )}
                   >
                     {item.label}
-                  </span>
+                  </div>
                 </Link>
               </TooltipTrigger>
               <TooltipContent
@@ -130,10 +135,13 @@ export default function SideBar() {
         <Separator />
 
         <section
-          className={cn('flex flex-col-reverse items-center justify-between gap-1 px-1.5 md:flex-row', {
-            '!flex-col-reverse': navBarSnap.collapsed === true,
-            '!flex-row': navBarSnap.collapsed === false,
-          })}
+          className={cn(
+            'flex flex-col-reverse items-center justify-between gap-1 px-1.5 transition-all duration-200 md:flex-row',
+            {
+              '!flex-col-reverse': navBarSnap.collapsed === true,
+              '!flex-row': navBarSnap.collapsed === false,
+            },
+          )}
         >
           <Button
             className="opacity-50 transition hover:opacity-100"

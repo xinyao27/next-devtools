@@ -30,7 +30,7 @@ export default function Provider({ children }: Props) {
           <Initial />
           <main
             className={cn(
-              'grid h-screen grid-cols-[50px_1fr] overflow-hidden bg-neutral-50/80 backdrop-blur-md md:grid-cols-[180px_1fr] dark:bg-neutral-900/80',
+              'grid h-screen grid-cols-[50px_1fr] overflow-hidden bg-neutral-50/80 backdrop-blur-md transition-all duration-300 md:grid-cols-[180px_1fr] dark:bg-neutral-900/80',
               {
                 '!grid-cols-[50px_1fr]': navBarSnap.collapsed === true,
                 '!grid-cols-[180px_1fr]': navBarSnap.collapsed === false,
