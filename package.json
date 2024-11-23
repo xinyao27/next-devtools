@@ -2,7 +2,7 @@
   "name": "@next-devtools/monorepo",
   "version": "0.2.0",
   "private": true,
-  "packageManager": "pnpm@9.13.2",
+  "packageManager": "pnpm@9.14.2",
   "type": "module",
   "license": "MIT",
   "author": {
@@ -30,8 +30,8 @@
     "docs:build": "turbo run docs:build"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.5.0",
-    "@commitlint/config-conventional": "^19.5.0",
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
     "@release-it/bumper": "^6.0.1",
     "@release-it/conventional-changelog": "^9.0.3",
     "@xystack/style-guide": "catalog:",
@@ -41,14 +41,14 @@
     "cross-env": "^7.0.3",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "catalog:",
-    "husky": "^9.1.6",
+    "husky": "^9.1.7",
     "lint-staged": "^15.2.10",
     "npm-run-all": "^4.1.5",
     "prettier": "catalog:",
     "release-it": "^17.10.0",
-    "rimraf": "^5.0.10",
+    "rimraf": "^6.0.1",
     "taze": "^0.18.0",
-    "turbo": "^2.3.0",
+    "turbo": "^2.3.1",
     "typescript": "catalog:"
   },
   "prettier": "@xystack/style-guide/prettier"

@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "@next-devtools/shared": "workspace:*",
-    "@next/env": "^14.2.18",
+    "@next/env": "^15.0.3",
     "@trpc/client": "^10.45.2",
     "@trpc/server": "^10.45.2",
     "address": "^2.0.3",
