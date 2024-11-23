@@ -25,7 +25,7 @@ export default function Page() {
   const { data: rootPath } = useSWR('getRootPath', () => rpcClient?.getRootPath.query())
   const [selectedTab, setSelectedTab] = useState('client')
   const analyzeDir = useMemo(() => {
-    return rootPath ? `/__next_devtools__/static/analyze/${selectedTab}.html` : ''
+    return rootPath ? `/__next_devtools__/static/analyze/${selectedTab}.html` : '#'
   }, [rootPath, selectedTab])
 
   async function handleBuild() {

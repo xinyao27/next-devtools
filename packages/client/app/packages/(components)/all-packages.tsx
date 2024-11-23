@@ -23,7 +23,7 @@ export default function AllPackages({ data }: Props) {
         </AccordionTrigger>
         <AccordionContent>
           <div className="grid grid-cols-1 gap-4 py-2 sm:grid-cols-2 xl:grid-cols-5">
-            {data?.map((pkg) => <PackageItem key={`${pkg.name}@${pkg.version}`} data={pkg} />)}
+            {data?.map((pkg) => <PackageItem key={`${pkg.type}-${pkg.name}@${pkg.version}`} data={pkg} />)}
           </div>
         </AccordionContent>
       </AccordionItem>
