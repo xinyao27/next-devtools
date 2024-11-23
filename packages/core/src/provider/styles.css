@@ -1,15 +1,15 @@
 .next-devtools-container {
-  --next-devtools-widget-bg: rgba(0, 0, 0, 0.8);
-  --next-devtools-widget-border: rgba(0, 0, 0, 0.2);
-  --next-devtools-widget-border-light: rgba(0, 0, 0, 0.05);
+  --next-devtools-widget-bg: rgba(255, 255, 255, 1);
+  --next-devtools-widget-border: rgba(0, 0, 0, 0.05);
   --next-devtools-widget-shadow: rgb(0, 0, 0, 0.1);
   --next-devtools-primary-color: #3b82f6;
+  --next-devtools-primary-light-color: #6ba2f9;
 }
 
 .next-devtools-separator {
   width: 1px;
   height: 10px;
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
   margin: 0 6px;
 }
 
@@ -19,16 +19,12 @@
   position: fixed;
   display: flex;
   justify-content: center;
-  bottom: 8px;
+  bottom: 2px;
   transform: translate(-50%, -50%) rotate(0);
   transform-origin: center center;
 }
 
 .next-devtools-panel {
-  padding: 0 6px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: var(--next-devtools-widget-bg);
   box-shadow:
     0 2px 15px -3px var(--next-devtools-widget-shadow),
@@ -37,11 +33,33 @@
   border-radius: 4px;
   user-select: none;
   touch-action: none;
+
+  transform: scale(0.85);
+  transform-origin: bottom;
+  transition: all 0.3s;
+}
+
+.next-devtools-panel.active {
+  transform: scale(1);
+}
+
+.next-devtools-panel-wrapper {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 42px;
+  height: 32px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.next-devtools-panel.active .next-devtools-panel-wrapper {
+  padding: 0 6px;
+  width: 100px;
 }
 
 .next-devtools-toggle-button {
-  margin-left: 6px;
-  margin-right: 6px;
+  margin: 0 6px;
   background: none;
   cursor: pointer;
   border-radius: 100%;
@@ -55,6 +73,10 @@
   transition: opacity 0.2s ease-in-out;
 }
 
+.next-devtools-toggle-button:hover {
+  opacity: 1;
+}
+
 .next-devtools-inspector-button {
   background: none;
   cursor: pointer;
@@ -65,6 +87,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0.8;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.next-devtools-inspector-button:hover {
+  opacity: 1;
 }
 
 .next-devtools-inspector-icon {
@@ -85,7 +113,7 @@
   box-shadow:
     0 2px 15px -3px var(--next-devtools-widget-shadow),
     0 4px 6px -4px var(--next-devtools-widget-shadow);
-  border: 1px solid var(--next-devtools-widget-border-light);
+  border: 1px solid var(--next-devtools-widget-border);
   border-radius: 4px;
   pointer-events: auto;
 }

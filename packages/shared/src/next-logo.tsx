@@ -2,18 +2,17 @@
 
 import React from 'react'
 
-interface Props {
-  className?: string
+interface Props extends React.SVGProps<SVGSVGElement> {
   mode?: 'full' | 'small'
   theme?: 'light' | 'dark'
   fill?: string
 }
-export function NextLogo({ className, mode = 'full', theme = 'dark', fill: fillProp }: Props) {
+export function NextLogo({ mode = 'full', theme = 'dark', fill: fillProp, ...props }: Props) {
   const fill = React.useMemo(() => fillProp || (theme === 'dark' ? '#fff' : '#000'), [theme, fillProp])
 
   if (mode === 'small') {
     return (
-      <svg suppressHydrationWarning aria-label="Next.js logotype" className={className} role="img" viewBox="0 0 330 79">
+      <svg suppressHydrationWarning aria-label="Next.js logotype" role="img" viewBox="0 0 330 79" {...props}>
         <path
           suppressHydrationWarning
           d="M261.919 0.0330722H330.547V12.7H303.323V79.339H289.71V12.7H261.919V0.0330722Z"
@@ -45,7 +44,7 @@ export function NextLogo({ className, mode = 'full', theme = 'dark', fill: fillP
     )
   }
   return (
-    <svg suppressHydrationWarning aria-label="Next.js logotype" className={className} role="img" viewBox="0 0 394 79">
+    <svg suppressHydrationWarning aria-label="Next.js logotype" role="img" viewBox="0 0 394 79" {...props}>
       <path
         suppressHydrationWarning
         d="M261.919 0.0330722H330.547V12.7H303.323V79.339H289.71V12.7H261.919V0.0330722Z"
