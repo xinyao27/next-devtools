@@ -48,11 +48,11 @@ export default function Page() {
               <SheetHeader>
                 <SheetTitle>Start bundle analyzer build?</SheetTitle>
                 <SheetDescription className="opacity-50">
-                  <p>
+                  <div>
                     After the build is completed, the project will be restarted, then return to the bundle analyzer page
                     to view the analysis results.
-                  </p>
-                  <p>The following command will be executed in your terminal:</p>
+                  </div>
+                  <div>The following command will be executed in your terminal:</div>
                 </SheetDescription>
               </SheetHeader>
 
@@ -60,7 +60,7 @@ export default function Page() {
                 <CodeBlock>ANALYZE=true npx next build</CodeBlock>
               </div>
 
-              <SheetFooter className="mt-8 gap-2 space-x-0">
+              <SheetFooter className="mt-8">
                 <SheetClose asChild>
                   <Button variant="outline">Cancel</Button>
                 </SheetClose>

@@ -32,7 +32,7 @@ export class Plugin {
         createRPCServer(options, this.context)
         createStaticServer(this.context, this.context.staticServerPort)
 
-        consola.log(colors.gray(`   ▲ Next Devtools ${process.env.VERSION}`))
+        consola.log(colors.blueBright(`   ▲ Next Devtools ${process.env.VERSION}`))
         consola.log('')
         this.running = true
       }

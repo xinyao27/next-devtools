@@ -16,7 +16,7 @@ export default function OpenInVscode({ value, children, className, disableLine }
 
   return (
     <button
-      className={cn('group flex cursor-pointer items-center gap-2 transition hover:underline', className)}
+      className={cn('group flex cursor-pointer items-center gap-2 text-left transition hover:underline', className)}
       onClick={() => {
         if (disableLine) return
         handleOpenInVscode(value)

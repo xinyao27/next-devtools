@@ -42,7 +42,7 @@ function AssetComponent({ data }: AssetProps) {
       <SheetContent className="sm:w-[540px] sm:max-w-[540px]">
         <SheetHeader>
           <SheetTitle>{data.file}</SheetTitle>
-          <SheetDescription>
+          <SheetDescription asChild>
             <div className="flex flex-col gap-6 py-4">
               <div className="space-y-4">
                 <h4 className="text-sm font-medium">Preview</h4>
