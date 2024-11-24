@@ -8,7 +8,7 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type, prefix, ...props }, ref) => {
   return (
-    <div className={cn('relative', { 'cursor-not-allowed opacity-50': props.disabled })}>
+    <div className={cn('relative w-full', { 'cursor-not-allowed opacity-50': props.disabled })}>
       <input
         ref={ref}
         type={type}

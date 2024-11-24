@@ -10,6 +10,7 @@ import { getOverviewData } from '../features/overview'
 import { executeCommand, getTerminal, getTerminals, onTerminalWrite, runTerminalAction } from '../features/terminal'
 import { runNpmCommand } from '../features/npm'
 import { restartProject } from '../features/service'
+import { getInternal } from '../features/internal'
 import type { NextConfig, WebpackConfigContext } from 'next/dist/server/config-shared'
 import type { WebpackOptionsNormalized } from 'webpack'
 
@@ -23,6 +24,10 @@ export interface Context extends WebpackConfigContext {
 const t = initTRPC.context<() => { options: WebpackOptionsNormalized; context: Context }>().create()
 
 export const appRouter = t.router({
+  getInternal: t.procedure.query(async (opts) => {
+    const options = opts.ctx.options
+    return await getInternal(options)
+  }),
   getOverviewData: t.procedure.query(async (opts) => {
     const options = opts.ctx.options
     const context = opts.ctx.context

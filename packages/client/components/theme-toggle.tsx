@@ -11,9 +11,9 @@ export function ThemeToggle() {
   }
 
   return (
-    <Button className="opacity-50 hover:opacity-100 transition" size="icon" variant="ghost" onClick={handleToggleTheme}>
-      <i className="i-ri-sun-line h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <i className="i-ri-moon-line absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+    <Button className="opacity-50 transition hover:opacity-100" size="icon" variant="ghost" onClick={handleToggleTheme}>
+      <i className="i-ri-sun-line size-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+      <i className="i-ri-moon-line absolute size-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
       <span className="sr-only">Toggle theme</span>
     </Button>
   )

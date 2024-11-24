@@ -14,7 +14,7 @@ export default function AllPackages({ data }: Props) {
       <AccordionItem value="all-packages">
         <AccordionTrigger>
           <div className="flex items-center gap-2">
-            <i className="i-ri-box-3-line h-6 w-6" />
+            <i className="i-ri-box-3-line size-6" />
             <div className="text-left">
               <div>All Packages</div>
               <div className="opacity-50">{data?.length} packages installed in your application</div>

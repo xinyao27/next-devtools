@@ -20,7 +20,7 @@ export default function AllEnvs({ data }: Props) {
       <AccordionItem value="public-envs">
         <AccordionTrigger>
           <div className="flex items-center gap-2">
-            <i className="w-6 h-6 i-ri-file-3-line" />
+            <i className="i-ri-file-3-line size-6" />
             <div className="text-left">
               <div>Public Runtime Environments</div>
             </div>
@@ -42,7 +42,7 @@ export default function AllEnvs({ data }: Props) {
       <AccordionItem value="private-envs">
         <AccordionTrigger>
           <div className="flex items-center gap-2">
-            <i className="w-6 h-6 i-ri-file-shield-2-line" />
+            <i className="i-ri-file-shield-2-line size-6" />
             <div className="text-left">
               <div>Private Runtime Environments</div>
               <div className="opacity-50">These values are not exposed to the client. Readonly in the DevTools.</div>
@@ -50,7 +50,7 @@ export default function AllEnvs({ data }: Props) {
           </div>
         </AccordionTrigger>
         <AccordionContent className="overflow-hidden">
-          <div className="py-4 overflow-hidden">
+          <div className="overflow-hidden py-4">
             {data?.privateEnv ? (
               <ReactJson
                 name={false}

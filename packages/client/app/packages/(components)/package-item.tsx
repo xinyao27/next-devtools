@@ -46,7 +46,7 @@ export default function PackageItem({ data }: Props) {
               href={packageInfo?.repository?.url ?? ''}
               target="_blank"
             >
-              <i className="i-ri-star-line mr-2 h-4 w-4" />
+              <i className="i-ri-star-line mr-2 size-4" />
               Star
             </Link>
           )}
@@ -55,7 +55,7 @@ export default function PackageItem({ data }: Props) {
       <CardContent>
         <div className="space-y-2">
           <div className="text-muted-foreground flex items-center truncate text-sm">
-            <i className="i-ri-box-3-line mr-2 h-4 w-4 flex-none" />
+            <i className="i-ri-box-3-line mr-2 size-4 flex-none" />
             <NpmVersionCheck
               options={{ dev: data.type === 'devDependencies' }}
               packageName={data.name}
@@ -71,7 +71,7 @@ export default function PackageItem({ data }: Props) {
               href={packageInfo?.homepage}
               target="_blank"
             >
-              <i className="i-ri-link mr-2 h-4 w-4 flex-none" />
+              <i className="i-ri-link mr-2 size-4 flex-none" />
               {packageInfo?.homepage}
             </Link>
           ) : null}
@@ -83,7 +83,7 @@ export default function PackageItem({ data }: Props) {
               href={packageInfo?.repository?.url}
               target="_blank"
             >
-              <i className="i-ri-github-fill mr-2 h-4 w-4 flex-none" />
+              <i className="i-ri-github-fill mr-2 size-4 flex-none" />
               {packageInfo?.repository?.url}
             </Link>
           ) : null}
@@ -91,7 +91,7 @@ export default function PackageItem({ data }: Props) {
             <Skeleton className="h-4 w-full" />
           ) : packageInfo?.license ? (
             <div className="text-muted-foreground flex items-center text-sm">
-              <i className="i-ri-scales-3-line mr-2 h-4 w-4 flex-none" />
+              <i className="i-ri-scales-3-line mr-2 size-4 flex-none" />
               {packageInfo?.license.name || packageInfo?.license}
             </div>
           ) : null}
@@ -99,7 +99,7 @@ export default function PackageItem({ data }: Props) {
             <Skeleton className="h-4 w-full" />
           ) : packageInfo?.language ? (
             <div className="text-muted-foreground flex items-center text-sm">
-              <i className="i-ri-circle-line mr-2 h-4 w-4 fill-sky-400 text-sky-400" />
+              <i className="i-ri-circle-line mr-2 size-4 fill-sky-400 text-sky-400" />
               {packageInfo?.language}
             </div>
           ) : null}

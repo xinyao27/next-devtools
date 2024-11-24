@@ -1,3 +1,8 @@
+export interface Internal {
+  root: string
+  pkgPath?: string
+}
+
 export type AssetType = 'image' | 'font' | 'video' | 'audio' | 'text' | 'json' | 'other' | 'component'
 
 export interface Asset {

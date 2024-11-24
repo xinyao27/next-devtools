@@ -162,19 +162,19 @@ export default function Page() {
       <section className="flex flex-col justify-center space-x-4 py-16 md:flex-row">
         <Link href="https://github.com/xinyao27/next-devtools" target="_black">
           <Button className="w-full font-normal" variant="ghost">
-            <i className="i-ri-star-line mr-2 h-4 w-4" />
+            <i className="i-ri-star-line mr-2 size-4" />
             Star on Github
           </Button>
         </Link>
         <Link href="https://github.com/xinyao27/next-devtools/discussions/15" target="_black">
           <Button className="w-full font-normal" variant="ghost">
-            <i className="i-ri-lightbulb-flash-line mr-2 h-4 w-4" />
+            <i className="i-ri-lightbulb-flash-line mr-2 size-4" />
             Ideas & Suggestions
           </Button>
         </Link>
         <Link href="https://github.com/xinyao27/next-devtools/issues/new/choose" target="_black">
           <Button className="w-full font-normal" variant="ghost">
-            <i className="i-ri-bug-line mr-2 h-4 w-4" />
+            <i className="i-ri-bug-line mr-2 size-4" />
             Bug Reports
           </Button>
         </Link>

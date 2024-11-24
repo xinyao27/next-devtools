@@ -22,7 +22,7 @@ export default function AllRoutes({ data }: Props) {
       <AccordionItem value="all-routes">
         <AccordionTrigger>
           <div className="flex items-center gap-2">
-            <i className="i-ri-node-tree h-6 w-6" />
+            <i className="i-ri-node-tree size-6" />
             <div className="text-left">
               <div>All Routes</div>
               <div className="opacity-50">{data?.length} routes registered in your application</div>

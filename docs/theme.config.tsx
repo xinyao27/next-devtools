@@ -4,16 +4,16 @@ import { useRouter } from 'next/router'
 import Logo from './components/logo'
 
 const config: DocsThemeConfig = {
-  logo: <Logo className="text-white w-36" />,
+  logo: <Logo className="w-36 text-white" />,
   project: { link: 'https://github.com/xinyao27/next-devtools' },
-  chat: { icon: <i className="block w-6 h-6 i-ri-twitter-x-fill" />, link: 'https://x.com/xinyao27' },
+  chat: { icon: <i className="i-ri-twitter-x-fill block size-6" />, link: 'https://x.com/xinyao27' },
   docsRepositoryBase: 'https://github.com/xinyao27/next-devtools/blob/main/docs',
   footer: {
     component: () => (
       <div className="border-t border-neutral-200/10">
-        <div className="container flex justify-between py-16 mx-auto">
+        <div className="container mx-auto flex justify-between py-16">
           <Link href="/">
-            <Logo className="text-white w-36" />
+            <Logo className="w-36 text-white" />
           </Link>
           <div className="opacity-50">
             Published under{' '}

@@ -32,7 +32,7 @@ export function Feature({ large, centered, children, lightOnly, className, href,
       {children}
       {href ? (
         <Link className={styles.link} href={href} target="_blank">
-          <i className="i-ri-arrow-right-s-line h-4 w-4" />
+          <i className="i-ri-arrow-right-s-line size-4" />
         </Link>
       ) : null}
     </motion.div>

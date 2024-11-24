@@ -29,7 +29,7 @@ export default function OpenInVscode({ value, children, className, disableLine }
         title="Open in vscode"
         onClick={() => handleOpenInVscode(value)}
       >
-        <i className="i-ri-share-box-line h-4 w-4" />
+        <i className="i-ri-share-box-line size-4" />
       </div>
     </button>
   )

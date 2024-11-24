@@ -30,18 +30,18 @@ export default function CopyToClipboard({ value, children }: Props) {
     <div className="group flex items-center gap-2">
       {children}
       <button
-        className="hidden group-hover:flex items-center opacity-50 hover:opacity-100 hover:text-primary transition"
+        className="hover:text-primary hidden items-center opacity-50 transition hover:opacity-100 group-hover:flex"
         title="Copy to clipboard"
         onClick={() => handleCopy(value)}
       >
         {copied ? (
           state.error ? (
-            <i className="i-ri-error-warning-line w-4 h-4 text-red-500" />
+            <i className="i-ri-error-warning-line size-4 text-red-500" />
           ) : (
-            state.value && <i className="i-ri-check-line w-4 h-4 text-green-500" />
+            state.value && <i className="i-ri-check-line size-4 text-green-500" />
           )
         ) : (
-          <i className="i-ri-file-copy-line w-4 h-4" />
+          <i className="i-ri-file-copy-line size-4" />
         )}
       </button>
     </div>
