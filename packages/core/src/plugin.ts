@@ -74,14 +74,15 @@ export function withNextDevtools(nextConfig: NextConfig): NextConfig {
       const nextRewrites = await nextConfig.rewrites?.()
       if (process.env.NODE_ENV === 'production') return nextRewrites || []
 
+      const localClientHost = ip('lo') || 'localhost'
       const rewrites = [
         {
           source: '/__next_devtools__/client/:path*',
-          destination: `http://${ip('lo')}:${localClientPort}/__next_devtools__/client/:path*`,
+          destination: `http://${localClientHost}:${localClientPort}/__next_devtools__/client/:path*`,
         },
         {
           source: '/__next_devtools__/static/:path*',
-          destination: `http://${ip('lo')}:${staticServerPort}/:path*`,
+          destination: `http://${localClientHost}:${staticServerPort}/:path*`,
         },
       ]
       if (Array.isArray(nextRewrites)) {
