@@ -82,7 +82,8 @@
     "sirv": "^3.0.0",
     "webpack-bundle-analyzer": "^4.10.2",
     "ws": "^8.18.0",
-    "zod": "^3.23.8"
+    "zod": "catalog:",
+    "zustand": "catalog:"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",

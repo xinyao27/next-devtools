@@ -1,13 +1,13 @@
 import fs from 'node:fs/promises'
-import { existsSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import fg from 'fast-glob'
 import { builtinHandlers, builtinResolvers, parse } from 'react-docgen'
+import { internalStore } from '../store/internal'
+import { settingsStore } from '../store/settings'
 import type Documentation from 'react-docgen/dist/Documentation'
 import type { ComponentNode } from 'react-docgen/dist/resolver'
 import type { Config, NodePath } from 'react-docgen'
-import type { WebpackOptionsNormalized } from 'webpack'
-import type { Component } from '@next-devtools/shared'
+import type { Component } from '@next-devtools/shared/types/features'
 
 type Plugins = NonNullable<NonNullable<NonNullable<Config['babelOptions']>['parserOpts']>['plugins']>
 const defaultPlugins: Plugins = [
@@ -50,22 +50,17 @@ const displayNameHandler = (documentation: Documentation, componentDefinition: N
   }
 }
 
-let cache: Component[]
-
-export async function getComponents(options: WebpackOptionsNormalized) {
+export async function getComponents() {
   try {
-    if (cache) return cache
-
-    const root = options.context!
-    const isSrcDirectory = existsSync(join(root, '/src'))
-    const codeRoot = isSrcDirectory ? join(root, '/src') : root
-    const componentPath = join(codeRoot, '/components')
+    const { root } = internalStore.getState()
+    const componentDirectory = settingsStore.getState().componentDirectory
+    const componentPath = join(root, componentDirectory)
     const files = await fg(['**/*.(tsx|js|jsx)'], {
       cwd: componentPath,
       onlyFiles: true,
       ignore: ['**/node_modules/**', '**/dist/**'],
     })
-    cache = (
+    return (
       await Promise.all(
         files.map(async (file: string) => {
           try {
@@ -103,7 +98,6 @@ export async function getComponents(options: WebpackOptionsNormalized) {
         }),
       )
     ).filter(Boolean) as Component[]
-    return cache
   } catch (error) {
     console.error(error)
     return []

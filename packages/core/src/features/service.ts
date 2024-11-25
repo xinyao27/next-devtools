@@ -1,4 +1,4 @@
-import { RESTART_EXIT_CODE } from '@next-devtools/shared'
+import { RESTART_EXIT_CODE } from '@next-devtools/shared/constants'
 
 export function setupService() {
   __NEXT_DEVTOOLS_EE__.on('project:restart', () => {

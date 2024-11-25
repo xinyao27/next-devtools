@@ -45,6 +45,12 @@ catalogs:
     typescript:
       specifier: ^5.7.2
       version: 5.7.2
+    zod:
+      specifier: ^3.23.8
+      version: 3.23.8
+    zustand:
+      specifier: ^5.0.1
+      version: 5.0.1
   next14:
     next:
       specifier: ^14.2.18
@@ -310,15 +316,15 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.15)
-      valtio:
-        specifier: ^2.1.2
-        version: 2.1.2(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106)
       xterm:
         specifier: 5.2.1
         version: 5.2.1
       xterm-addon-fit:
         specifier: ^0.8.0
         version: 0.8.0(xterm@5.2.1)
+      zustand:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/react@18.3.12)(immer@9.0.21)(react@19.0.0-rc-66855b96-20241106)(use-sync-external-store@1.2.2(react@19.0.0-rc-66855b96-20241106))
     devDependencies:
       '@egoist/tailwindcss-icons':
         specifier: 'catalog:'
@@ -414,8 +420,11 @@ importers:
         specifier: ^8.18.0
         version: 8.18.0
       zod:
-        specifier: ^3.23.8
+        specifier: 'catalog:'
         version: 3.23.8
+      zustand:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/react@18.3.12)(immer@9.0.21)(react@18.2.0)(use-sync-external-store@1.2.2(react@18.2.0))
     devDependencies:
       '@types/fs-extra':
         specifier: ^11.0.4
@@ -434,25 +443,32 @@ importers:
         version: 8.5.13
       next:
         specifier: catalog:next15
-        version: 15.0.3(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0)
+        version: 15.0.3(@babel/core@7.23.2)(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0)
       webpack:
         specifier: ^5.96.1
         version: 5.96.1(@swc/core@1.9.3(@swc/helpers@0.5.13))(esbuild@0.23.1)
 
   packages/shared:
+    dependencies:
+      zod:
+        specifier: 'catalog:'
+        version: 3.23.8
     devDependencies:
       '@types/react':
         specifier: catalog:react19
         version: 18.3.12
       next:
         specifier: catalog:next15
-        version: 15.0.3(@babel/core@7.23.2)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
+        version: 15.0.3(@babel/core@7.26.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
       react:
         specifier: catalog:react19
         version: 19.0.0-rc-66855b96-20241106
       react-docgen:
         specifier: ^7.1.0
         version: 7.1.0
+      zustand:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/react@18.3.12)(immer@9.0.21)(react@19.0.0-rc-66855b96-20241106)(use-sync-external-store@1.2.2(react@19.0.0-rc-66855b96-20241106))
 
   playgrounds/app-router:
     dependencies:
@@ -506,7 +522,7 @@ importers:
         version: 0.460.0(react@19.0.0-rc-66855b96-20241106)
       next:
         specifier: catalog:next15
-        version: 15.0.3(@babel/core@7.23.2)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
+        version: 15.0.3(@babel/core@7.26.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
       react:
         specifier: catalog:react19
         version: 19.0.0-rc-66855b96-20241106
@@ -7816,9 +7832,6 @@ packages:
     resolution: {integrity: sha512-u0piLU+nCOHMgGjRbimiXmA9kM/L9EHh3zL81xCdp7m+Y2pHIsnmbdDoEDoAz5geaonNR6q6+yOPQs6n4T6sBQ==}
     engines: {node: '>= 14'}
 
-  proxy-compare@3.0.0:
-    resolution: {integrity: sha512-y44MCkgtZUCT9tZGuE278fB7PWVf7fRYy0vbRXAts2o5F0EfC4fIQrvQQGBJo1WJbFcVLXzApOscyJuZqHQc1w==}
-
   proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
 
@@ -9304,18 +9317,6 @@ packages:
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
 
-  valtio@2.1.2:
-    resolution: {integrity: sha512-fhekN5Rq7dvHULHHBlJeXHrQDl0Jj9GXfNavCm3gkD06crGchaG1nf/J7gSlfZU2wPcRdVS5jBKWHtE2NNz97A==}
-    engines: {node: '>=12.20.0'}
-    peerDependencies:
-      '@types/react': '>=18.0.0'
-      react: '>=18.0.0'
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      react:
-        optional: true
-
   vfile-location@5.0.2:
     resolution: {integrity: sha512-NXPYyxyBSH7zB5U6+3uDdd6Nybz6o6/od9rk8bp9H8GR3L+cm/fC0uUTbqBmUTnMCUDslAGBOIKNfvvb+gGlDg==}
 
@@ -9622,6 +9623,24 @@ packages:
       react: '>=16.8'
     peerDependenciesMeta:
       react:
+        optional: true
+
+  zustand@5.0.1:
+    resolution: {integrity: sha512-pRET7Lao2z+n5R/HduXMio35TncTlSW68WsYBq2Lg1ASspsNGjpwLAsij3RpouyV6+kHMwwwzP0bZPD70/Jx/w==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=18.0.0'
+      immer: '>=9.0.6'
+      react: '>=18.0.0'
+      use-sync-external-store: '>=1.2.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      immer:
+        optional: true
+      react:
+        optional: true
+      use-sync-external-store:
         optional: true
 
   zwitch@2.0.4:
@@ -17649,7 +17668,7 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  next@15.0.3(@babel/core@7.23.2)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106):
+  next@15.0.3(@babel/core@7.23.2)(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0):
     dependencies:
       '@next/env': 15.0.3
       '@swc/counter': 0.1.3
@@ -17657,9 +17676,9 @@ snapshots:
       busboy: 1.6.0
       caniuse-lite: 1.0.30001680
       postcss: 8.4.31
-      react: 19.0.0-rc-66855b96-20241106
-      react-dom: 19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106)
-      styled-jsx: 5.1.6(@babel/core@7.23.2)(react@19.0.0-rc-66855b96-20241106)
+      react: 18.2.0
+      react-dom: 19.0.0-rc-66855b96-20241106(react@18.2.0)
+      styled-jsx: 5.1.6(@babel/core@7.23.2)(react@18.2.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.0.3
       '@next/swc-darwin-x64': 15.0.3
@@ -17685,31 +17704,6 @@ snapshots:
       react: 19.0.0-rc-66855b96-20241106
       react-dom: 19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106)
       styled-jsx: 5.1.6(@babel/core@7.26.0)(react@19.0.0-rc-66855b96-20241106)
-    optionalDependencies:
-      '@next/swc-darwin-arm64': 15.0.3
-      '@next/swc-darwin-x64': 15.0.3
-      '@next/swc-linux-arm64-gnu': 15.0.3
-      '@next/swc-linux-arm64-musl': 15.0.3
-      '@next/swc-linux-x64-gnu': 15.0.3
-      '@next/swc-linux-x64-musl': 15.0.3
-      '@next/swc-win32-arm64-msvc': 15.0.3
-      '@next/swc-win32-x64-msvc': 15.0.3
-      sharp: 0.33.5
-    transitivePeerDependencies:
-      - '@babel/core'
-      - babel-plugin-macros
-
-  next@15.0.3(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0):
-    dependencies:
-      '@next/env': 15.0.3
-      '@swc/counter': 0.1.3
-      '@swc/helpers': 0.5.13
-      busboy: 1.6.0
-      caniuse-lite: 1.0.30001680
-      postcss: 8.4.31
-      react: 18.2.0
-      react-dom: 19.0.0-rc-66855b96-20241106(react@18.2.0)
-      styled-jsx: 5.1.6(react@18.2.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.0.3
       '@next/swc-darwin-x64': 15.0.3
@@ -18380,8 +18374,6 @@ snapshots:
       socks-proxy-agent: 8.0.2
     transitivePeerDependencies:
       - supports-color
-
-  proxy-compare@3.0.0: {}
 
   proxy-from-env@1.1.0: {}
 
@@ -19690,10 +19682,10 @@ snapshots:
       client-only: 0.0.1
       react: 18.2.0
 
-  styled-jsx@5.1.6(@babel/core@7.23.2)(react@19.0.0-rc-66855b96-20241106):
+  styled-jsx@5.1.6(@babel/core@7.23.2)(react@18.2.0):
     dependencies:
       client-only: 0.0.1
-      react: 19.0.0-rc-66855b96-20241106
+      react: 18.2.0
     optionalDependencies:
       '@babel/core': 7.23.2
 
@@ -19703,11 +19695,6 @@ snapshots:
       react: 19.0.0-rc-66855b96-20241106
     optionalDependencies:
       '@babel/core': 7.26.0
-
-  styled-jsx@5.1.6(react@18.2.0):
-    dependencies:
-      client-only: 0.0.1
-      react: 18.2.0
 
   stylis@4.3.0: {}
 
@@ -20243,6 +20230,11 @@ snapshots:
     dependencies:
       react: 19.0.0-rc-66855b96-20241106
 
+  use-sync-external-store@1.2.2(react@18.2.0):
+    dependencies:
+      react: 18.2.0
+    optional: true
+
   use-sync-external-store@1.2.2(react@19.0.0-rc-66855b96-20241106):
     dependencies:
       react: 19.0.0-rc-66855b96-20241106
@@ -20257,13 +20249,6 @@ snapshots:
     dependencies:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
-
-  valtio@2.1.2(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106):
-    dependencies:
-      proxy-compare: 3.0.0
-    optionalDependencies:
-      '@types/react': 18.3.12
-      react: 19.0.0-rc-66855b96-20241106
 
   vfile-location@5.0.2:
     dependencies:
@@ -20581,5 +20566,19 @@ snapshots:
   zustand@3.7.2(react@19.0.0-rc-66855b96-20241106):
     optionalDependencies:
       react: 19.0.0-rc-66855b96-20241106
+
+  zustand@5.0.1(@types/react@18.3.12)(immer@9.0.21)(react@18.2.0)(use-sync-external-store@1.2.2(react@18.2.0)):
+    optionalDependencies:
+      '@types/react': 18.3.12
+      immer: 9.0.21
+      react: 18.2.0
+      use-sync-external-store: 1.2.2(react@18.2.0)
+
+  zustand@5.0.1(@types/react@18.3.12)(immer@9.0.21)(react@19.0.0-rc-66855b96-20241106)(use-sync-external-store@1.2.2(react@19.0.0-rc-66855b96-20241106)):
+    optionalDependencies:
+      '@types/react': 18.3.12
+      immer: 9.0.21
+      react: 19.0.0-rc-66855b96-20241106
+      use-sync-external-store: 1.2.2(react@19.0.0-rc-66855b96-20241106)
 
   zwitch@2.0.4: {}

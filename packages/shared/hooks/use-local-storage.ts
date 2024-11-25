@@ -1,7 +1,7 @@
 // https://github.com/streamich/react-use/blob/master/src/useLocalStorage.ts
 
 import { useCallback, useLayoutEffect, useRef, useState } from 'react'
-import { isBrowser, noop } from './utils'
+import { isBrowser, noop } from '../utils/helpers'
 import type { Dispatch, SetStateAction } from 'react'
 
 type parserOptions<T> =

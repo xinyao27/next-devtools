@@ -1,8 +1,3 @@
-export interface Internal {
-  root: string
-  pkgPath?: string
-}
-
 export type AssetType = 'image' | 'font' | 'video' | 'audio' | 'text' | 'json' | 'other' | 'component'
 
 export interface Asset {
@@ -18,6 +13,7 @@ export interface Documentation {
   description?: string
   displayName?: string
 }
+
 export interface Component extends Asset {
   documentations: Documentation[]
 }

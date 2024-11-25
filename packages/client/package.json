@@ -54,9 +54,9 @@
     "swr": "^2.2.5",
     "tailwind-merge": "catalog:",
     "tailwindcss-animate": "^1.0.7",
-    "valtio": "^2.1.2",
     "xterm": "5.2.1",
-    "xterm-addon-fit": "^0.8.0"
+    "xterm-addon-fit": "^0.8.0",
+    "zustand": "catalog:"
   },
   "devDependencies": {
     "@egoist/tailwindcss-icons": "catalog:",

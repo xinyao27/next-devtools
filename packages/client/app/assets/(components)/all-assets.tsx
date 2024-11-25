@@ -11,7 +11,7 @@ import CopyToClipboard from '@/components/copy-to-clipboard'
 import { formatBytes } from '@/lib/utils'
 import { useRPCClient } from '@/lib/client'
 import { Skeleton } from '@/components/ui/skeleton'
-import type { Asset } from '@next-devtools/shared'
+import type { Asset } from '@next-devtools/shared/types/features'
 
 interface AssetProps {
   data: Asset

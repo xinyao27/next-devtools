@@ -1,5 +1,5 @@
 import { createTRPCProxyClient, createWSClient, wsLink } from '@trpc/client'
-import { RPC_SERVER_PORT } from '@next-devtools/shared'
+import { RPC_SERVER_PORT } from '@next-devtools/shared/constants'
 import type { CreateTRPCProxyClient } from '@trpc/client'
 import type { AppRouter } from '@next-devtools/core/types'
 

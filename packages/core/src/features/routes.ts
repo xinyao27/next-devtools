@@ -1,7 +1,6 @@
-import { existsSync } from 'node:fs'
 import { join, parse, sep } from 'node:path'
 import fg from 'fast-glob'
-import type { Context } from '../server/router'
+import { internalStore } from '../store/internal'
 
 interface Opts {
   pageExtensions: string[]
@@ -65,13 +64,9 @@ export function getPageRoutes(files: string[], opts: Opts) {
     .filter(({ file }) => !file.includes('/api/'))
 }
 
-export async function getRoutes(context: Context) {
-  const root = context.dir
-  const isSrcDirectory = existsSync(join(root, '/src'))
-  const codeRoot = isSrcDirectory ? join(root, '/src') : root
-  const isApp = existsSync(join(codeRoot, '/app'))
-  const isPages = existsSync(join(codeRoot, '/pages'))
-  const routePath = join(codeRoot, isApp ? '/app' : isPages ? '/pages' : '/app')
+export async function getRoutes() {
+  const { isApp, isPages, routePath } = internalStore.getState()
+
   const pageExtensions = ['tsx', 'ts', 'jsx', 'js']
   const files = await fg(['**/*.(tsx|js|jsx)'], {
     cwd: routePath,

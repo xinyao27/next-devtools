@@ -2,7 +2,7 @@ import http from 'node:http'
 import path from 'node:path'
 import fs from 'fs-extra'
 import sirv from 'sirv'
-import { TEMP_DIR } from '@next-devtools/shared'
+import { TEMP_DIR } from '@next-devtools/shared/constants'
 import type { Context } from './router'
 
 export async function createStaticServer(context: Context, port: string) {

@@ -1,5 +1,6 @@
 import { initTRPC } from '@trpc/server'
 import { z } from 'zod'
+import { settingsSchema } from '@next-devtools/shared/types/settings'
 import { getStaticAssetInfo, getStaticAssets } from '../features/assets'
 import { getComponents } from '../features/components'
 import { getEnvs } from '../features/envs'
@@ -10,7 +11,8 @@ import { getOverviewData } from '../features/overview'
 import { executeCommand, getTerminal, getTerminals, onTerminalWrite, runTerminalAction } from '../features/terminal'
 import { runNpmCommand } from '../features/npm'
 import { restartProject } from '../features/service'
-import { getInternal } from '../features/internal'
+import { settingsStore } from '../store/settings'
+import { internalStore } from '../store/internal'
 import type { NextConfig, WebpackConfigContext } from 'next/dist/server/config-shared'
 import type { WebpackOptionsNormalized } from 'webpack'
 
@@ -24,35 +26,35 @@ export interface Context extends WebpackConfigContext {
 const t = initTRPC.context<() => { options: WebpackOptionsNormalized; context: Context }>().create()
 
 export const appRouter = t.router({
-  getInternal: t.procedure.query(async (opts) => {
-    const options = opts.ctx.options
-    return await getInternal(options)
+  setSettingsStore: t.procedure.input(z.object({ settings: settingsSchema.partial() })).mutation((opts) => {
+    const settings = opts.input.settings
+    return settingsStore.setState(settings)
   }),
-  getOverviewData: t.procedure.query(async (opts) => {
-    const options = opts.ctx.options
-    const context = opts.ctx.context
-    return await getOverviewData(options, context)
+  getSettingsStore: t.procedure.query(() => {
+    return settingsStore.getState()
   }),
-  getStaticAssets: t.procedure.query(async (opts) => {
-    const options = opts.ctx.options
-    return await getStaticAssets(options)
+  getInternalStore: t.procedure.query(() => {
+    return internalStore.getState()
+  }),
+  getOverviewData: t.procedure.query(async () => {
+    return await getOverviewData()
+  }),
+  getStaticAssets: t.procedure.query(async () => {
+    return await getStaticAssets()
   }),
   getStaticAssetInfo: t.procedure.input(z.string()).query(async (opts) => {
     const path = opts.input
     return await getStaticAssetInfo(path)
   }),
-  getComponents: t.procedure.query(async (opts) => {
-    const options = opts.ctx.options
-    return await getComponents(options)
+  getComponents: t.procedure.query(async () => {
+    return await getComponents()
   }),
   getEnvs: t.procedure.query(async (opts) => {
-    const options = opts.ctx.options
     const context = opts.ctx.context
-    return await getEnvs(options, context)
+    return await getEnvs(context)
   }),
-  getPackages: t.procedure.query(async (opts) => {
-    const options = opts.ctx.options
-    return await getPackages(options)
+  getPackages: t.procedure.query(async () => {
+    return await getPackages()
   }),
   getPackageInfo: t.procedure.input(z.string()).query(async (opts) => {
     const name = opts.input
@@ -66,9 +68,8 @@ export const appRouter = t.router({
       }),
     )
     .query(async (opts) => {
-      const options = opts.ctx.options
       const input = opts.input
-      return await checkPackageVersion(options, input.name, input.current)
+      return await checkPackageVersion(input.name, input.current)
     }),
   updatePackageVersion: t.procedure
     .input(
@@ -83,9 +84,8 @@ export const appRouter = t.router({
 
       return await runNpmCommand('update', input.name, { cwd: context.dir, ...input.options })
     }),
-  getRoutes: t.procedure.query(async (opts) => {
-    const context = opts.ctx.context
-    return await getRoutes(context)
+  getRoutes: t.procedure.query(async () => {
+    return await getRoutes()
   }),
   openInVscode: t.procedure
     .input(
@@ -146,10 +146,6 @@ export const appRouter = t.router({
         },
       )
     }),
-  getRootPath: t.procedure.query(async (opts) => {
-    const context = opts.ctx.context
-    return context.dir
-  }),
   restartProject: t.procedure.mutation(restartProject),
   runAnalyzeBuild: t.procedure.mutation(async (opts) => {
     const context = opts.ctx.context

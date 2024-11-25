@@ -1,26 +1,24 @@
-import { proxy, subscribe } from 'valtio'
+import { create } from 'zustand'
+import { Editor } from '@next-devtools/shared/types/settings'
+import { rpcClient } from '@/lib/client'
+import type { SettingsStore, SettingsStoreState } from '@next-devtools/shared/types/settings'
 
-export type Editor = 'vscode' | 'cursor' | 'windsurf'
-export interface SettingsStoreState {
-  sidebarCollapsed: boolean | undefined
-  uiScale: number
-  editor: Editor
-  componentDirectory: string
-}
-
-const NEXT_DEVTOOLS_SETTINGS_KEY = 'NEXT_DEVTOOLS_SETTINGS'
 const defaultState: SettingsStoreState = {
   sidebarCollapsed: undefined,
   uiScale: 15,
-  editor: 'vscode',
+  editor: Editor.VSCode,
   componentDirectory: '/src/components',
 }
-export const settingsStore = proxy<SettingsStoreState>(
-  typeof localStorage !== 'undefined'
-    ? JSON.parse(localStorage.getItem(NEXT_DEVTOOLS_SETTINGS_KEY) || 'null') || defaultState
-    : defaultState,
-)
+export const useSettingsStore = create<SettingsStore>()((set) => ({
+  ...defaultState,
 
-subscribe(settingsStore, () => {
-  localStorage.setItem(NEXT_DEVTOOLS_SETTINGS_KEY, JSON.stringify(settingsStore))
+  setup() {
+    rpcClient?.getSettingsStore.query().then((settings) => {
+      set(settings)
+    })
+  },
+}))
+
+useSettingsStore.subscribe((state) => {
+  rpcClient?.setSettingsStore.mutate({ settings: state })
 })

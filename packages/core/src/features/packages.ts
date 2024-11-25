@@ -1,11 +1,11 @@
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import semver from 'semver'
-import type { WebpackOptionsNormalized } from 'webpack'
-import type { Package } from '@next-devtools/shared'
+import { internalStore } from '../store/internal'
+import type { Package } from '@next-devtools/shared/types/features'
 
-export async function getPackages(options: WebpackOptionsNormalized) {
-  const root = options.context!
+export async function getPackages() {
+  const root = internalStore.getState().root
   const pkgPath = resolve(root, 'package.json')
   const data = JSON.parse(await readFile(pkgPath, 'utf-8').catch(() => '{}'))
   const packages: Package[] = []
@@ -48,9 +48,9 @@ export async function getPackageInfo(name: string, github = true) {
   return npmData
 }
 
-export async function checkPackageVersion(options: WebpackOptionsNormalized, name: string, current?: string) {
+export async function checkPackageVersion(name: string, current?: string) {
   if (!current) {
-    const pkg = (await getPackages(options)).find((v) => v.name === name)
+    const pkg = (await getPackages()).find((v) => v.name === name)
     if (!pkg) return
     current = pkg.version
   }

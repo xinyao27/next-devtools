@@ -2,13 +2,13 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useSnapshot } from 'valtio'
 import { useMedia } from 'react-use'
+import { useShallow } from 'zustand/react/shallow'
 import { cn } from '@/lib/utils'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { settingsStore } from '@/store'
+import { useSettingsStore } from '@/store/settings'
 import { ThemeToggle } from './theme-toggle'
 
 const menuItems = [
@@ -69,17 +69,17 @@ const menuItems = [
 ]
 
 export default function SideBar() {
-  const settingsSnap = useSnapshot(settingsStore)
+  const sidebarCollapsed = useSettingsStore(useShallow((state) => state.sidebarCollapsed))
   const pathname = usePathname()
   const isMobile = useMedia('(max-width: 768px)')
 
   function handleToggleSideBar() {
     if (isMobile) {
-      if (settingsStore.sidebarCollapsed !== undefined) settingsStore.sidebarCollapsed = !settingsStore.sidebarCollapsed
-      else settingsStore.sidebarCollapsed = false
+      if (sidebarCollapsed !== undefined) useSettingsStore.setState({ sidebarCollapsed: !sidebarCollapsed })
+      else useSettingsStore.setState({ sidebarCollapsed: false })
     } else {
-      if (settingsStore.sidebarCollapsed !== undefined) settingsStore.sidebarCollapsed = !settingsStore.sidebarCollapsed
-      else settingsStore.sidebarCollapsed = true
+      if (sidebarCollapsed !== undefined) useSettingsStore.setState({ sidebarCollapsed: !sidebarCollapsed })
+      else useSettingsStore.setState({ sidebarCollapsed: true })
     }
   }
 
@@ -87,8 +87,8 @@ export default function SideBar() {
     <nav
       className={cn(
         'h-full w-[3rem] overflow-y-auto overflow-x-hidden transition-all duration-200 md:w-[12rem]',
-        { '!w-[3rem]': settingsSnap.sidebarCollapsed === true },
-        { '!w-[12rem]': settingsSnap.sidebarCollapsed === false },
+        { '!w-[3rem]': sidebarCollapsed === true },
+        { '!w-[12rem]': sidebarCollapsed === false },
       )}
     >
       <div className="flex h-full flex-col space-y-2 p-2">
@@ -103,8 +103,8 @@ export default function SideBar() {
                     'hover:text-primary group relative overflow-hidden px-0 opacity-50 transition-all duration-200 hover:bg-zinc-500/10 md:px-3',
                     {
                       'text-primary bg-secondary opacity-100': pathname.startsWith(item.link),
-                      '!px-0': settingsSnap.sidebarCollapsed === true,
-                      '!px-3': settingsSnap.sidebarCollapsed === false,
+                      '!px-0': sidebarCollapsed === true,
+                      '!px-3': sidebarCollapsed === false,
                     },
                   )}
                 >
@@ -113,16 +113,16 @@ export default function SideBar() {
                       item.icon,
                       'absolute left-1.5 size-5 flex-none transition-all duration-200 md:left-3',
                       {
-                        '!left-1.5': settingsSnap.sidebarCollapsed === true,
-                        '!left-3': settingsSnap.sidebarCollapsed === false,
+                        '!left-1.5': sidebarCollapsed === true,
+                        '!left-3': sidebarCollapsed === false,
                       },
                     )}
                   />
                   <div
                     className={cn(
                       'w-0 opacity-0 transition-all duration-200 md:w-full md:pl-7 md:opacity-100',
-                      { '!w-0 !opacity-0': settingsSnap.sidebarCollapsed === true },
-                      { '!w-full !pl-7 !opacity-100': settingsSnap.sidebarCollapsed === false },
+                      { '!w-0 !opacity-0': sidebarCollapsed === true },
+                      { '!w-full !pl-7 !opacity-100': sidebarCollapsed === false },
                     )}
                   >
                     {item.label}
@@ -132,8 +132,8 @@ export default function SideBar() {
               <TooltipContent
                 side="right"
                 className={cn('md:hidden', {
-                  '!hidden': settingsSnap.sidebarCollapsed === false,
-                  '!inline-block': settingsSnap.sidebarCollapsed === true,
+                  '!hidden': sidebarCollapsed === false,
+                  '!inline-block': sidebarCollapsed === true,
                 })}
               >
                 <div>{item.label}</div>
@@ -148,8 +148,8 @@ export default function SideBar() {
           className={cn(
             'flex flex-col-reverse items-center justify-between gap-1 px-1.5 transition-all duration-200 md:flex-row',
             {
-              '!flex-col-reverse': settingsSnap.sidebarCollapsed === true,
-              '!flex-row': settingsSnap.sidebarCollapsed === false,
+              '!flex-col-reverse': sidebarCollapsed === true,
+              '!flex-row': sidebarCollapsed === false,
             },
           )}
         >
@@ -161,8 +161,8 @@ export default function SideBar() {
           >
             <i
               className={cn('i-ri-sidebar-unfold-line md:i-ri-sidebar-fold-line !h-5 !w-5', {
-                '!i-ri-sidebar-unfold-line': settingsSnap.sidebarCollapsed === true,
-                '!i-ri-sidebar-fold-line': settingsSnap.sidebarCollapsed === false,
+                '!i-ri-sidebar-unfold-line': sidebarCollapsed === true,
+                '!i-ri-sidebar-fold-line': sidebarCollapsed === false,
               })}
             />
             <span className="sr-only">Toggle sidebar</span>

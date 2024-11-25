@@ -2,12 +2,12 @@
 
 import React, { useEffect } from 'react'
 import { SWRConfig } from 'swr'
-import { useSnapshot } from 'valtio'
+import { useShallow } from 'zustand/react/shallow'
 import { ThemeProvider } from '@/components/theme-provider'
 import SideBar from '@/components/side-bar'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { Toaster } from '@/components/ui/sonner'
-import { settingsStore } from '@/store'
+import { useSettingsStore } from '@/store/settings'
 import { cn } from '@/lib/utils'
 import Initial from './initial'
 
@@ -15,11 +15,16 @@ interface Props {
   children: React.ReactNode
 }
 export default function Provider({ children }: Props) {
-  const settingsSnap = useSnapshot(settingsStore)
+  const { uiScale, sidebarCollapsed } = useSettingsStore(
+    useShallow((state) => ({
+      uiScale: state.uiScale,
+      sidebarCollapsed: state.sidebarCollapsed,
+    })),
+  )
 
   useEffect(() => {
-    document.documentElement.style.fontSize = `${settingsSnap.uiScale}px`
-  }, [settingsSnap.uiScale])
+    document.documentElement.style.fontSize = `${uiScale}px`
+  }, [uiScale])
 
   return (
     <ThemeProvider disableTransitionOnChange enableSystem attribute="class" defaultTheme="system">
@@ -36,8 +41,8 @@ export default function Provider({ children }: Props) {
             className={cn(
               'grid h-screen grid-cols-[3rem_1fr] overflow-hidden bg-neutral-50/80 backdrop-blur-md transition-all duration-300 md:grid-cols-[12rem_1fr] dark:bg-neutral-900/80',
               {
-                '!grid-cols-[3rem_1fr]': settingsSnap.sidebarCollapsed === true,
-                '!grid-cols-[12rem_1fr]': settingsSnap.sidebarCollapsed === false,
+                '!grid-cols-[3rem_1fr]': sidebarCollapsed === true,
+                '!grid-cols-[12rem_1fr]': sidebarCollapsed === false,
               },
             )}
           >

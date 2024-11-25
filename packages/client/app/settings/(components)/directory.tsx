@@ -1,18 +1,17 @@
 import React from 'react'
-import { useSnapshot } from 'valtio'
 import useSWR from 'swr'
-import { settingsStore } from '@/store/settings'
+import { useShallow } from 'zustand/react/shallow'
+import { useSettingsStore } from '@/store/settings'
 import { Input } from '@/components/ui/input'
 import { useRPCClient } from '@/lib/client'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 export default function Directory() {
-  const { componentDirectory } = useSnapshot(settingsStore)
+  const componentDirectory = useSettingsStore(useShallow((state) => state.componentDirectory))
   const rpcClient = useRPCClient()
-  const { data } = useSWR('getInternal', () => rpcClient?.getInternal.query())
-
+  const { data: internalStore } = useSWR('getInternalStore', () => rpcClient?.getInternalStore.query())
   const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    settingsStore.componentDirectory = event.target.value
+    useSettingsStore.setState({ componentDirectory: event.target.value })
   }
 
   return (
@@ -23,10 +22,10 @@ export default function Directory() {
           <div className="border-input bg-background text-muted-foreground col-span-4 flex items-center rounded-s border px-3 text-sm">
             <Tooltip>
               <TooltipTrigger asChild>
-                <span className="truncate [direction:rtl]">{data?.root ?? '/'}</span>
+                <span className="truncate [direction:rtl]">{internalStore?.root ?? '/'}</span>
               </TooltipTrigger>
               <TooltipContent>
-                <p>{data?.root ?? '/'}</p>
+                <p>{internalStore?.root ?? '/'}</p>
               </TooltipContent>
             </Tooltip>
           </div>

@@ -1,6 +1,8 @@
 'use client'
 
-import { NextLogo, ReactLogo, prettySize } from '@next-devtools/shared'
+import { NextLogo } from '@next-devtools/shared/components/next-logo'
+import { ReactLogo } from '@next-devtools/shared/components/react-logo'
+import { prettySize } from '@next-devtools/shared/utils/helpers'
 import React, { useMemo } from 'react'
 import useSWR from 'swr'
 import { useTheme } from 'next-themes'

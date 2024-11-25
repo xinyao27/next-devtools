@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Inspector } from 'react-dev-inspector'
-import { RPC_SERVER_PORT } from '@next-devtools/shared'
+import { RPC_SERVER_PORT } from '@next-devtools/shared/constants'
 import { createTRPCProxyClient, createWSClient, wsLink } from '@trpc/client'
 import { MessageProvider } from './message-provider'
 import Toolbar from './toolbar'

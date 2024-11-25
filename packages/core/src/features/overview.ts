@@ -1,21 +1,19 @@
-import { removeVersionPrefix } from '@next-devtools/shared'
+import { removeVersionPrefix } from '@next-devtools/shared/utils/helpers'
 import { getRoutes } from './routes'
 import { getComponents } from './components'
 import { getPackages } from './packages'
 import { getStaticAssets } from './assets'
-import type { WebpackOptionsNormalized } from 'webpack'
-import type { Context } from '../server/router'
 
-export async function getOverviewData(options: WebpackOptionsNormalized, context: Context) {
+export async function getOverviewData() {
   const version = process.env.VERSION!
 
-  const packages = await getPackages(options)
+  const packages = await getPackages()
   const nextVersion = removeVersionPrefix(packages.find((v) => v.name === 'next')!.version)
   const reactVersion = removeVersionPrefix(packages.find((v) => v.name === 'react')!.version)
 
-  const routes = (await getRoutes(context)).routes
-  const components = await getComponents(options)
-  const assets = await getStaticAssets(options)
+  const routes = (await getRoutes()).routes
+  const components = await getComponents()
+  const assets = await getStaticAssets()
 
   return {
     version,

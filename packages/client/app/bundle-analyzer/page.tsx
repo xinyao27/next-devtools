@@ -22,11 +22,11 @@ import { Separator } from '@/components/ui/separator'
 export default function Page() {
   const router = useRouter()
   const rpcClient = useRPCClient()
-  const { data: rootPath } = useSWR('getRootPath', () => rpcClient?.getRootPath.query())
+  const { data: internalStore } = useSWR('getInternalStore', () => rpcClient?.getInternalStore.query())
   const [selectedTab, setSelectedTab] = useState('client')
   const analyzeDir = useMemo(() => {
-    return rootPath ? `/__next_devtools__/static/analyze/${selectedTab}.html` : '#'
-  }, [rootPath, selectedTab])
+    return internalStore?.root ? `/__next_devtools__/static/analyze/${selectedTab}.html` : '#'
+  }, [internalStore, selectedTab])
 
   async function handleBuild() {
     await rpcClient?.runAnalyzeBuild.mutate()

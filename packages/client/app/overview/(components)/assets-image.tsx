@@ -2,7 +2,7 @@ import Image from 'next/image'
 import useSWR from 'swr'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useRPCClient } from '@/lib/client'
-import type { Asset } from '@next-devtools/shared'
+import type { Asset } from '@next-devtools/shared/types/features'
 
 interface AssetProps {
   data: Asset

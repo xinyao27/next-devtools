@@ -1,7 +1,8 @@
 'use client'
 
 import React from 'react'
-import { type Component, prettySize } from '@next-devtools/shared'
+import { type Component } from '@next-devtools/shared/types/features'
+import { prettySize } from '@next-devtools/shared/utils/helpers'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import OpenInVscode from '@/components/open-in-vscode'
 import TagComponent from './tag-component'

@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import Line from '@/components/line'
 import OpenInVscode from '@/components/open-in-vscode'
-import type { Route } from '@next-devtools/shared'
+import type { Route } from '@next-devtools/shared/types/features'
 
 interface Props {
   data?: Route[]

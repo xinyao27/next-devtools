@@ -6,7 +6,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 import { useRPCClient } from '@/lib/client'
 import NpmVersionCheck from '@/components/npm-version-check'
-import type { Package } from '@next-devtools/shared'
+import type { Package } from '@next-devtools/shared/types/features'
 
 interface Props {
   data: Package

@@ -1,12 +1,12 @@
-import { useSnapshot } from 'valtio'
-import { settingsStore } from '@/store/settings'
+import { useShallow } from 'zustand/react/shallow'
+import { useSettingsStore } from '@/store/settings'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 
 export default function SideBarCollapsed() {
-  const { sidebarCollapsed } = useSnapshot(settingsStore)
+  const sidebarCollapsed = useSettingsStore(useShallow((state) => state.sidebarCollapsed))
 
   const handleChange = (value: 'collapsed' | 'expanded') => {
-    settingsStore.sidebarCollapsed = value === 'collapsed'
+    useSettingsStore.setState({ sidebarCollapsed: value === 'collapsed' })
   }
 
   return (

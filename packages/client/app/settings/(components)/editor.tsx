@@ -1,11 +1,11 @@
 import Image from 'next/image'
-import { useSnapshot } from 'valtio'
-import { settingsStore } from '@/store/settings'
+import { useShallow } from 'zustand/react/shallow'
+import { useSettingsStore } from '@/store/settings'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import LogoVSCode from '@/public/vscode.png'
 import LogoCursor from '@/public/cursor.svg'
 import LogoWindsurf from '@/public/windsurf.svg'
-import type { Editor } from '@/store/settings'
+import type { Editor } from '@next-devtools/shared/types/settings'
 
 const editors = [
   {
@@ -32,10 +32,10 @@ const editors = [
 ]
 
 export default function EditorComponent() {
-  const { editor } = useSnapshot(settingsStore)
+  const editor = useSettingsStore(useShallow((state) => state.editor))
 
   const handleChange = (value: Editor) => {
-    settingsStore.editor = value
+    useSettingsStore.setState({ editor: value })
   }
 
   return (

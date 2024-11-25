@@ -1,7 +1,8 @@
 'use client'
 
 import React from 'react'
-import { NextLogo, useLocalStorage } from '@next-devtools/shared'
+import { NextLogo } from '@next-devtools/shared/components/next-logo'
+import { useLocalStorage } from '@next-devtools/shared/hooks/use-local-storage'
 import type { CSSProperties } from 'react'
 
 interface ToolbarProps {

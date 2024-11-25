@@ -1,13 +1,15 @@
 import { EventEmitter } from 'node:events'
 import consola from 'consola'
 import { colors } from 'consola/utils'
-import { LOCAL_CLIENT_PORT, STATIC_SERVER_PORT, TEMP_DIR } from '@next-devtools/shared'
+import { LOCAL_CLIENT_PORT, STATIC_SERVER_PORT, TEMP_DIR } from '@next-devtools/shared/constants'
 import { ip } from 'address'
 import { getPort } from 'get-port-please'
 import { createLocalService } from './server/local'
 import { createRPCServer } from './server/rpc'
 import { createStaticServer } from './server/static'
 import { getGlobalThis } from './utils'
+import { settingsStore } from './store/settings'
+import { internalStore } from './store/internal'
 import type { Context } from './server/router'
 import type { NextConfig } from 'next'
 import type { Compiler } from 'webpack'
@@ -28,6 +30,10 @@ export class Plugin {
 
         const __NEXT_DEVTOOLS_EE__ = new EventEmitter()
         globalThis.__NEXT_DEVTOOLS_EE__ = __NEXT_DEVTOOLS_EE__
+
+        settingsStore.getState().setup(this.context)
+        internalStore.getState().setup(options)
+
         createLocalService(this.context.localClientPort)
         createRPCServer(options, this.context)
         createStaticServer(this.context, this.context.staticServerPort)

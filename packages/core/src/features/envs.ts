@@ -1,16 +1,16 @@
 import dotenv from 'dotenv'
 import { loadEnvConfig } from '@next/env'
-import type { WebpackOptionsNormalized } from 'webpack'
-import type { Env } from '@next-devtools/shared'
+import { internalStore } from '../store/internal'
+import type { Env } from '@next-devtools/shared/types/features'
 import type { Context } from '../server/router'
 
 /**
  * Get all envs including .env, .env.local, .env.[mode], .env.[mode].local and next.config.js -> env
- * @param options
+ * @param context
  * @returns
  */
-export async function getEnvs(options: WebpackOptionsNormalized, context: Context) {
-  const root = options.context!
+export async function getEnvs(context: Context) {
+  const root = internalStore.getState().root
 
   const result: Env = {
     publicEnv: {},

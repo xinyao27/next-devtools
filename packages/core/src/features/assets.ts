@@ -2,8 +2,8 @@ import fs from 'node:fs/promises'
 import { basename, dirname, join } from 'node:path'
 import fg from 'fast-glob'
 import mine from 'mime-types'
-import type { WebpackOptionsNormalized } from 'webpack'
-import type { Asset, AssetType } from '@next-devtools/shared'
+import { internalStore } from '../store/internal'
+import type { Asset, AssetType } from '@next-devtools/shared/types/features'
 
 function guessType(path: string): AssetType {
   if (/\.(a?png|jpe?g|jxl|gif|svg|webp|avif|ico|bmp|tiff?)$/i.test(path)) return 'image'
@@ -29,10 +29,9 @@ function guessType(path: string): AssetType {
   return 'other'
 }
 
-export async function getStaticAssets(options: WebpackOptionsNormalized): Promise<Asset[]> {
-  const root = options.context!
-  const publicDirname = join(root, 'public')
-
+export async function getStaticAssets(): Promise<Asset[]> {
+  const publicPath = internalStore.getState().publicPath
+  if (!publicPath) return []
   const files = await fg(
     [
       // image
@@ -47,7 +46,7 @@ export async function getStaticAssets(options: WebpackOptionsNormalized): Promis
       '**/*.(json|json5|jsonc|txt|text|tsx|jsx|md|mdx|mdc|markdown)',
     ],
     {
-      cwd: publicDirname,
+      cwd: publicPath,
       onlyFiles: true,
       ignore: ['**/node_modules/**', '**/dist/**'],
     },
@@ -55,9 +54,9 @@ export async function getStaticAssets(options: WebpackOptionsNormalized): Promis
 
   const result = await Promise.all(
     files.map(async (path: string) => {
-      const filePath = join(publicDirname, path)
+      const filePath = join(publicPath, path)
       const stat = await fs.lstat(filePath)
-      const normalizedPath = publicDirname === basename(dirname(path)) ? path.replace(publicDirname, '') : path
+      const normalizedPath = publicPath === basename(dirname(path)) ? path.replace(publicPath, '') : path
       return {
         file: normalizedPath,
         filePath,

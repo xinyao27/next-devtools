@@ -1,6 +1,6 @@
-import { useSnapshot } from 'valtio'
+import { useShallow } from 'zustand/react/shallow'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { settingsStore } from '@/store/settings'
+import { useSettingsStore } from '@/store/settings'
 
 const options = [
   { value: 12, label: 'Tiny' },
@@ -11,10 +11,10 @@ const options = [
 ]
 
 export default function UIScale() {
-  const { uiScale } = useSnapshot(settingsStore)
+  const uiScale = useSettingsStore(useShallow((state) => state.uiScale))
 
   const handleChange = (value: string) => {
-    settingsStore.uiScale = Number.parseInt(value)
+    useSettingsStore.setState({ uiScale: Number.parseInt(value) })
   }
 
   return (
