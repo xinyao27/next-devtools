@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect } from 'react'
-import { SWRConfig } from 'swr'
 import { useShallow } from 'zustand/react/shallow'
 import { ThemeProvider } from '@/components/theme-provider'
 import SideBar from '@/components/side-bar'
@@ -9,6 +8,7 @@ import { TooltipProvider } from '@/components/ui/tooltip'
 import { Toaster } from '@/components/ui/sonner'
 import { useSettingsStore } from '@/store/settings'
 import { cn } from '@/lib/utils'
+import { TRPCReactProvider } from '@/lib/client'
 import Initial from './initial'
 
 interface Props {
@@ -29,12 +29,7 @@ export default function Provider({ children }: Props) {
   return (
     <ThemeProvider disableTransitionOnChange enableSystem attribute="class" defaultTheme="system">
       <TooltipProvider delayDuration={200}>
-        <SWRConfig
-          value={{
-            refreshInterval: 3000,
-            fetcher: (resource, init) => fetch(resource, init).then((res) => res.json()),
-          }}
-        >
+        <TRPCReactProvider>
           <Toaster />
           <Initial />
           <main
@@ -53,7 +48,7 @@ export default function Provider({ children }: Props) {
               </div>
             </div>
           </main>
-        </SWRConfig>
+        </TRPCReactProvider>
       </TooltipProvider>
     </ThemeProvider>
   )

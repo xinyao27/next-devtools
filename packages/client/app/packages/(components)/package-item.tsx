@@ -1,10 +1,9 @@
 import Link from 'next/link'
-import useSWR from 'swr'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { buttonVariants } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
-import { useRPCClient } from '@/lib/client'
+import { api } from '@/lib/client'
 import NpmVersionCheck from '@/components/npm-version-check'
 import type { Package } from '@next-devtools/shared/types/features'
 
@@ -12,12 +11,8 @@ interface Props {
   data: Package
 }
 export default function PackageItem({ data }: Props) {
-  const rpcClient = useRPCClient()
   const npmBase = 'https://www.npmjs.com/package/'
-  const { data: packageInfo, isLoading } = useSWR(
-    `getPackageInfo/${data.name}`,
-    data ? () => rpcClient?.getPackageInfo.query(data.name) : null,
-  )
+  const { data: packageInfo, isLoading } = api.getPackageInfo.useQuery(data.name)
 
   return (
     <Card className="overflow-hidden">

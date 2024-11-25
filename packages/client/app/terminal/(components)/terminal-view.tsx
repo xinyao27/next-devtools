@@ -4,8 +4,7 @@ import { useEffect, useRef } from 'react'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import { useEvent } from 'react-use'
-import { mutate } from 'swr'
-import { useRPCClient } from '@/lib/client'
+import { api } from '@/lib/client'
 import { Button } from '@/components/ui/button'
 import 'xterm/css/xterm.css'
 
@@ -13,10 +12,18 @@ interface TerminalViewProps {
   id?: string
 }
 export default function TerminalView(props: TerminalViewProps) {
-  const rpcClient = useRPCClient()
   const termRef = useRef<Terminal>()
   const fitAddonRef = useRef<FitAddon>()
   const containerRef = useRef<HTMLDivElement>(null)
+  const utils = api.useUtils()
+  const { mutate: runTerminalAction } = api.runTerminalAction.useMutation()
+  api.onTerminalWrite.useSubscription(undefined, {
+    onData: ({ id, data }) => {
+      if (id === props.id) {
+        termRef.current?.write(data)
+      }
+    },
+  })
 
   useEffect(() => {
     termRef.current = new Terminal({
@@ -30,24 +37,15 @@ export default function TerminalView(props: TerminalViewProps) {
     fitAddonRef.current.fit()
 
     if (props.id) {
-      rpcClient?.getTerminal.query(props.id).then((terminal) => {
+      utils.getTerminal.fetch(props.id).then((terminal) => {
         if (terminal?.buffer) {
           termRef.current?.write(terminal.buffer)
         }
       })
     }
 
-    const s = rpcClient?.onTerminalWrite.subscribe(undefined, {
-      onData: ({ id, data }) => {
-        if (id === props.id) {
-          termRef.current?.write(data)
-        }
-      },
-    })
-
     return () => {
       termRef.current?.dispose()
-      s?.unsubscribe()
     }
   }, [props.id])
   useEvent('resize', () => {
@@ -56,7 +54,7 @@ export default function TerminalView(props: TerminalViewProps) {
 
   function handleClear() {
     if (!props.id) return
-    rpcClient?.runTerminalAction.mutate({
+    runTerminalAction({
       id: props.id,
       action: 'clear',
     })
@@ -64,18 +62,18 @@ export default function TerminalView(props: TerminalViewProps) {
   }
   function handleRestart() {
     if (!props.id) return
-    rpcClient?.runTerminalAction.mutate({
+    runTerminalAction({
       id: props.id,
       action: 'restart',
     })
   }
   function handleTerminate() {
     if (!props.id) return
-    rpcClient?.runTerminalAction.mutate({
+    runTerminalAction({
       id: props.id,
       action: 'terminate',
     })
-    mutate('getTerminals')
+    utils.getTerminals.invalidate()
   }
 
   return (

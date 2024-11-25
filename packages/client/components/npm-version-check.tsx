@@ -1,7 +1,6 @@
-import useSWR from 'swr'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { useRPCClient } from '@/lib/client'
+import { api } from '@/lib/client'
 import { Badge } from './ui/badge'
 
 interface NpmVersionCheckProps {
@@ -18,14 +17,13 @@ export default function NpmVersionCheck({
   showVersionPrefix = true,
   options,
 }: NpmVersionCheckProps) {
-  const rpcClient = useRPCClient()
   const router = useRouter()
-  const { data } = useSWR(`checkPackageVersion/${packageName}@${version}`, () =>
-    rpcClient?.checkPackageVersion.query({ name: packageName, current: version }),
-  )
+  const { data } = api.checkPackageVersion.useQuery({ name: packageName, current: version })
+  const { mutateAsync: updatePackageVersion } = api.updatePackageVersion.useMutation()
+
   async function handleUpdate() {
     if (data?.isOutdated) {
-      await rpcClient?.updatePackageVersion.mutate({ name: packageName, options })
+      await updatePackageVersion({ name: packageName, options })
       toast(`Package ${packageName} is updating...`, {
         description: 'You can jump to the terminal page to check the update progress.',
         action: {

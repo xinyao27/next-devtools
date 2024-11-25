@@ -1,7 +1,6 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import useSWR from 'swr'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import CodeBlock from '@/components/ui/code-block'
@@ -16,20 +15,20 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
-import { useRPCClient } from '@/lib/client'
+import { api } from '@/lib/client'
 import { Separator } from '@/components/ui/separator'
 
 export default function Page() {
   const router = useRouter()
-  const rpcClient = useRPCClient()
-  const { data: internalStore } = useSWR('getInternalStore', () => rpcClient?.getInternalStore.query())
+  const { data: internalStore } = api.getInternalStore.useQuery()
+  const { mutate: runAnalyzeBuild } = api.runAnalyzeBuild.useMutation()
   const [selectedTab, setSelectedTab] = useState('client')
   const analyzeDir = useMemo(() => {
     return internalStore?.root ? `/__next_devtools__/static/analyze/${selectedTab}.html` : '#'
   }, [internalStore, selectedTab])
 
   async function handleBuild() {
-    await rpcClient?.runAnalyzeBuild.mutate()
+    await runAnalyzeBuild()
     router.push('/terminal')
   }
 

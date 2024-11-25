@@ -1,15 +1,13 @@
 'use client'
 
 import React from 'react'
-import useSWR from 'swr'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useRPCClient } from '@/lib/client'
+import { api } from '@/lib/client'
 import AllRoutes from './(components)/all-routes'
 import CurrentRoute from './(components)/current-route'
 
 export default function Page() {
-  const rpcClient = useRPCClient()
-  const { data, isLoading } = useSWR('getRoutes', () => rpcClient?.getRoutes.query())
+  const { data, isLoading } = api.getRoutes.useQuery()
 
   return (
     <div>

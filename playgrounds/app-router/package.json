@@ -6,7 +6,6 @@
   },
   "dependencies": {
     "@next-devtools/core": "workspace:*",
-    "nanoid": "5.0.4",
     "next": "catalog:next14",
     "react": "catalog:react",
     "react-dom": "catalog:react"

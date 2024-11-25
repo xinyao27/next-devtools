@@ -3,11 +3,10 @@
 import { NextLogo } from '@next-devtools/shared/components/next-logo'
 import { ReactLogo } from '@next-devtools/shared/components/react-logo'
 import { prettySize } from '@next-devtools/shared/utils/helpers'
-import React, { useMemo } from 'react'
-import useSWR from 'swr'
+import React from 'react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
-import { useRPCClient } from '@/lib/client'
+import { api } from '@/lib/client'
 import NpmVersionCheck from '@/components/npm-version-check'
 import { BentoCard, BentoGrid } from '@/components/magic/bento-grid'
 import { Button } from '@/components/ui/button'
@@ -21,11 +20,10 @@ import AssetsImage from './(components)/assets-image'
 import type { BentoCardProps } from '@/components/magic/bento-grid'
 
 export default function Page() {
-  const rpcClient = useRPCClient()
   const { theme } = useTheme()
-  const { data } = useSWR('getOverviewData', () => rpcClient?.getOverviewData.query())
+  const { data } = api.getOverviewData.useQuery()
 
-  const features = useMemo<BentoCardProps[]>(() => {
+  const features = React.useMemo<BentoCardProps[]>(() => {
     return [
       {
         name: 'Next',

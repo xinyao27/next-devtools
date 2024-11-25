@@ -1,12 +1,24 @@
 import React from 'react'
-import useSWR from 'swr'
+
+import { useQuery } from '@tanstack/react-query'
 import { Input } from '@/components/ui/input'
-import { useMessageClient } from '@/lib/client'
+import { getQueryClient, useMessageClient } from '@/lib/client'
 
 export default function CurrentRoute() {
   const messageClient = useMessageClient()
-  const { data, mutate } = useSWR('getRoute', () => messageClient.getRoute())
+  const { data } = useQuery({
+    queryKey: ['getRoute'],
+    queryFn: () => messageClient.getRoute(),
+  })
   const [currentRoute, setCurrentRoute] = React.useState(data || '')
+
+  const handleNavigate = (route: string) => {
+    messageClient.pushRoute(route)
+    setTimeout(() => {
+      const queryClient = getQueryClient()
+      queryClient.invalidateQueries({ queryKey: ['getRoute'] })
+    }, 300)
+  }
 
   React.useEffect(() => {
     if (data) setCurrentRoute(data)
@@ -28,10 +40,7 @@ export default function CurrentRoute() {
         onChange={(e) => setCurrentRoute(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
-            messageClient.pushRoute(currentRoute)
-            setTimeout(() => {
-              mutate()
-            }, 300)
+            handleNavigate(currentRoute)
           }
         }}
       />

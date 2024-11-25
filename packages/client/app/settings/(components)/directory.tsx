@@ -1,15 +1,13 @@
 import React from 'react'
-import useSWR from 'swr'
 import { useShallow } from 'zustand/react/shallow'
 import { useSettingsStore } from '@/store/settings'
 import { Input } from '@/components/ui/input'
-import { useRPCClient } from '@/lib/client'
+import { api } from '@/lib/client'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 export default function Directory() {
   const componentDirectory = useSettingsStore(useShallow((state) => state.componentDirectory))
-  const rpcClient = useRPCClient()
-  const { data: internalStore } = useSWR('getInternalStore', () => rpcClient?.getInternalStore.query())
+  const { data: internalStore } = api.getInternalStore.useQuery()
   const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     useSettingsStore.setState({ componentDirectory: event.target.value })
   }

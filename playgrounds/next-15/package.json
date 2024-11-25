@@ -14,12 +14,12 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.4",
     "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.1",
+    "clsx": "catalog:",
     "lucide-react": "^0.460.0",
     "next": "catalog:next15",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
-    "tailwind-merge": "^2.5.4",
+    "tailwind-merge": "catalog:",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
@@ -27,7 +27,6 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
-    "nanoid": "5.0.4",
     "next": "catalog:next15",
     "postcss": "catalog:",
     "tailwindcss": "catalog:",

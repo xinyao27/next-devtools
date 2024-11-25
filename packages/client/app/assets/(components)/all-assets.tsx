@@ -3,13 +3,12 @@
 import React, { useMemo } from 'react'
 import Image from 'next/image'
 import { format, formatDistanceToNow } from 'date-fns'
-import useSWR from 'swr'
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { Separator } from '@/components/ui/separator'
 import OpenInVscode from '@/components/open-in-vscode'
 import CopyToClipboard from '@/components/copy-to-clipboard'
 import { formatBytes } from '@/lib/utils'
-import { useRPCClient } from '@/lib/client'
+import { api } from '@/lib/client'
 import { Skeleton } from '@/components/ui/skeleton'
 import type { Asset } from '@next-devtools/shared/types/features'
 
@@ -17,11 +16,8 @@ interface AssetProps {
   data: Asset
 }
 function AssetComponent({ data }: AssetProps) {
-  const rpcClient = useRPCClient()
-  const { data: assetInfo, isLoading } = useSWR(
-    `getStaticAssetInfo/${data.filePath}`,
-    data ? () => rpcClient?.getStaticAssetInfo.query(data.filePath) : null,
-  )
+  const { data: assetInfo, isLoading } = api.getStaticAssetInfo.useQuery(data.filePath)
+
   const previewElement = useMemo(
     () =>
       isLoading ? (
@@ -31,6 +27,7 @@ function AssetComponent({ data }: AssetProps) {
       ),
     [data, assetInfo, isLoading],
   )
+
   return (
     <Sheet>
       <SheetTrigger asChild>

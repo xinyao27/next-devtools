@@ -1,9 +1,9 @@
 'use client'
 
 import React from 'react'
-import useSWR from 'swr'
+import { useQuery } from '@tanstack/react-query'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { useMessageClient } from '@/lib/client'
+import { getQueryClient, useMessageClient } from '@/lib/client'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import Line from '@/components/line'
@@ -15,7 +15,18 @@ interface Props {
 }
 export default function AllRoutes({ data }: Props) {
   const messageClient = useMessageClient()
-  const { data: currentRoute, mutate } = useSWR('getRoute', () => messageClient.getRoute())
+  const { data: currentRoute } = useQuery({
+    queryKey: ['getRoute'],
+    queryFn: () => messageClient.getRoute(),
+  })
+
+  const handleClick = (route: Route) => {
+    messageClient.pushRoute(route.route)
+    setTimeout(() => {
+      const queryClient = getQueryClient()
+      queryClient.invalidateQueries({ queryKey: ['getRoute'] })
+    }, 300)
+  }
 
   return (
     <Accordion collapsible defaultValue="all-routes" type="single">
@@ -41,10 +52,7 @@ export default function AllRoutes({ data }: Props) {
                       className={cn('opacity-50 transition hover:opacity-75', { '!opacity-100': active })}
                       title={`Navigate to ${route.route}`}
                       onClick={() => {
-                        messageClient.pushRoute(route.route)
-                        setTimeout(() => {
-                          mutate()
-                        }, 300)
+                        handleClick(route)
                       }}
                     >
                       <code>{route.route}</code>

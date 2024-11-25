@@ -1,18 +1,26 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import useSWR from 'swr'
 import dynamic from 'next/dynamic'
-import { useRPCClient } from '@/lib/client'
+import { getQueryKey } from '@trpc/react-query'
+import { api, getQueryClient } from '@/lib/client'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 
 const TerminalView = dynamic(() => import('./(components)/terminal-view'), { ssr: false })
 
 export default function Page() {
-  const rpcClient = useRPCClient()
-  const { data, mutate, isLoading } = useSWR('getTerminals', () => rpcClient?.getTerminals.query())
+  const { data, isLoading } = api.getTerminals.useQuery()
+  const { mutate: runTerminalAction } = api.runTerminalAction.useMutation()
   const [currentId, setCurrentId] = useState<string>()
+
+  const handleRunTerminalAction = (id: string, action: 'terminate') => {
+    runTerminalAction({ id, action })
+    const queryClient = getQueryClient()
+    const queryKey = getQueryKey(api.getTerminals)
+    queryClient.invalidateQueries({ queryKey })
+  }
+
   useEffect(() => {
     if (data && data.length > 0 && !currentId) {
       setCurrentId(data[0].id)
@@ -58,8 +66,7 @@ export default function Page() {
               size="icon"
               variant="ghost"
               onClick={() => {
-                rpcClient?.runTerminalAction.mutate({ id: terminal.id, action: 'terminate' })
-                mutate()
+                handleRunTerminalAction(terminal.id, 'terminate')
               }}
             >
               <i className="i-ri-close-line text-lg" />

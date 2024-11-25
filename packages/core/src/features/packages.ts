@@ -51,11 +51,11 @@ export async function getPackageInfo(name: string, github = true) {
 export async function checkPackageVersion(name: string, current?: string) {
   if (!current) {
     const pkg = (await getPackages()).find((v) => v.name === name)
-    if (!pkg) return
+    if (!pkg) return null
     current = pkg.version
   }
 
-  if (!current) return
+  if (!current) return null
 
   const npmData = await getPackageInfo(name)
   const latest = npmData['dist-tags'].latest

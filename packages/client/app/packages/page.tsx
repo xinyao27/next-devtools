@@ -1,14 +1,12 @@
 'use client'
 
 import React from 'react'
-import useSWR from 'swr'
 import useSearchElement from '@/hooks/use-search-element'
-import { useRPCClient } from '@/lib/client'
+import { api } from '@/lib/client'
 import AllPackages from './(components)/all-packages'
 
 export default function Page() {
-  const rpcClient = useRPCClient()
-  const { data } = useSWR('getPackages', () => rpcClient?.getPackages.query())
+  const { data } = api.getPackages.useQuery()
   const { element, filteredData } = useSearchElement(data, (item, searchText) =>
     item?.name?.toLowerCase().includes(searchText.toLowerCase()),
   )
