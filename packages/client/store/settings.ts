@@ -12,10 +12,9 @@ const defaultState: SettingsStoreState = {
 export const useSettingsStore = create<SettingsStore>()((set) => ({
   ...defaultState,
 
-  setup() {
-    trpcClient.getSettingsStore.query().then((settings) => {
-      set(settings)
-    })
+  async setup() {
+    const settings = await trpcClient.getSettingsStore.query()
+    set(settings)
   },
 }))
 

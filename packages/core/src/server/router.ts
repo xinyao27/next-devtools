@@ -26,14 +26,17 @@ export interface Context extends WebpackConfigContext {
 const t = initTRPC.context<() => { options: WebpackOptionsNormalized; context: Context }>().create()
 
 export const appRouter = t.router({
-  setSettingsStore: t.procedure.input(z.object({ settings: settingsSchema.partial() })).mutation((opts) => {
+  ping: t.procedure.query(async () => {
+    return 'pong'
+  }),
+  setSettingsStore: t.procedure.input(z.object({ settings: settingsSchema.partial() })).mutation(async (opts) => {
     const settings = opts.input.settings
     return settingsStore.setState(settings)
   }),
-  getSettingsStore: t.procedure.query(() => {
+  getSettingsStore: t.procedure.query(async () => {
     return settingsStore.getState()
   }),
-  getInternalStore: t.procedure.query(() => {
+  getInternalStore: t.procedure.query(async () => {
     return internalStore.getState()
   }),
   getOverviewData: t.procedure.query(async () => {
@@ -100,8 +103,10 @@ export const appRouter = t.router({
       const input = opts.input
       return openInEditor(input)
     }),
-  getTerminals: t.procedure.query(getTerminals),
-  getTerminal: t.procedure.input(z.string()).query((opts) => {
+  getTerminals: t.procedure.query(async () => {
+    return await getTerminals()
+  }),
+  getTerminal: t.procedure.input(z.string()).query(async (opts) => {
     const id = opts.input
     return getTerminal(id)
   }),
@@ -112,9 +117,9 @@ export const appRouter = t.router({
         action: z.union([z.literal('restart'), z.literal('clear'), z.literal('terminate')]),
       }),
     )
-    .mutation((opts) => {
+    .mutation(async (opts) => {
       const input = opts.input
-      return runTerminalAction(input.id, input.action)
+      return await runTerminalAction(input.id, input.action)
     }),
   onTerminalWrite: t.procedure.subscription(onTerminalWrite),
   executeCommand: t.procedure
@@ -147,7 +152,9 @@ export const appRouter = t.router({
         },
       )
     }),
-  restartProject: t.procedure.mutation(restartProject),
+  restartProject: t.procedure.mutation(async () => {
+    return restartProject()
+  }),
   runAnalyzeBuild: t.procedure.mutation(async (opts) => {
     const context = opts.ctx.context
     await executeCommand(
