@@ -4,7 +4,7 @@ import React from 'react'
 import { type Component } from '@next-devtools/shared/types/features'
 import { prettySize } from '@next-devtools/shared/utils/helpers'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import OpenInVscode from '@/components/open-in-vscode'
+import OpenInEditor from '@/components/open-in-editor'
 import TagComponent from './tag-component'
 
 interface Props {
@@ -25,11 +25,11 @@ export default function AllComponents({ data }: Props) {
             </AccordionTrigger>
             <AccordionContent>
               <div className="py-2">
-                <OpenInVscode className="flex flex-wrap gap-2" value={component.filePath}>
+                <OpenInEditor className="flex flex-wrap gap-2" value={component.filePath}>
                   {component.documentations.map((doc) => (
                     <TagComponent key={doc.displayName}>{doc.displayName}</TagComponent>
                   ))}
-                </OpenInVscode>
+                </OpenInEditor>
               </div>
             </AccordionContent>
           </AccordionItem>

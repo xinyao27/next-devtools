@@ -1,12 +1,12 @@
 import { initTRPC } from '@trpc/server'
 import { z } from 'zod'
-import { settingsSchema } from '@next-devtools/shared/types/settings'
+import { Editor, settingsSchema } from '@next-devtools/shared/types/settings'
 import { getStaticAssetInfo, getStaticAssets } from '../features/assets'
 import { getComponents } from '../features/components'
 import { getEnvs } from '../features/envs'
 import { checkPackageVersion, getPackageInfo, getPackages } from '../features/packages'
 import { getRoutes } from '../features/routes'
-import { openInVscode } from '../features/vscode'
+import { openInEditor } from '../features/editor'
 import { getOverviewData } from '../features/overview'
 import { executeCommand, getTerminal, getTerminals, onTerminalWrite, runTerminalAction } from '../features/terminal'
 import { runNpmCommand } from '../features/npm'
@@ -87,17 +87,18 @@ export const appRouter = t.router({
   getRoutes: t.procedure.query(async () => {
     return await getRoutes()
   }),
-  openInVscode: t.procedure
+  openInEditor: t.procedure
     .input(
       z.object({
         path: z.string(),
         line: z.string().optional(),
         column: z.string().optional(),
+        editor: z.nativeEnum(Editor).optional(),
       }),
     )
     .mutation(async (opts) => {
       const input = opts.input
-      return openInVscode(input)
+      return openInEditor(input)
     }),
   getTerminals: t.procedure.query(getTerminals),
   getTerminal: t.procedure.input(z.string()).query((opts) => {

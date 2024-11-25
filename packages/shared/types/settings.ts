@@ -6,6 +6,12 @@ export enum Editor {
   Windsurf = 'windsurf',
 }
 
+export const editorCommands = {
+  [Editor.VSCode]: 'code',
+  [Editor.Cursor]: 'cursor',
+  [Editor.Windsurf]: 'windsurf',
+}
+
 export const settingsSchema = z.object({
   sidebarCollapsed: z.boolean().optional(),
   uiScale: z.number().optional().default(15),

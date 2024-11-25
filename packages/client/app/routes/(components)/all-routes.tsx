@@ -7,7 +7,7 @@ import { getQueryClient, useMessageClient } from '@/lib/client'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import Line from '@/components/line'
-import OpenInVscode from '@/components/open-in-vscode'
+import OpenInEditor from '@/components/open-in-editor'
 import type { Route } from '@next-devtools/shared/types/features'
 
 interface Props {
@@ -47,7 +47,7 @@ export default function AllRoutes({ data }: Props) {
               return (
                 <Line key={route.path}>
                   <div className="w-16">{active ? <Badge variant="secondary">active</Badge> : null}</div>
-                  <OpenInVscode disableLine value={route.path}>
+                  <OpenInEditor disableLine value={route.path}>
                     <div
                       className={cn('opacity-50 transition hover:opacity-75', { '!opacity-100': active })}
                       title={`Navigate to ${route.route}`}
@@ -57,7 +57,7 @@ export default function AllRoutes({ data }: Props) {
                     >
                       <code>{route.route}</code>
                     </div>
-                  </OpenInVscode>
+                  </OpenInEditor>
                 </Line>
               )
             })}

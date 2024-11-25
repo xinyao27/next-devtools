@@ -33,7 +33,7 @@ function Frame() {
         active={inspectorActive}
         onActiveChange={setInspectorActive}
         onInspectElement={({ codeInfo }) => {
-          rpcClient.current?.openInVscode.mutate({
+          rpcClient.current?.openInEditor.mutate({
             path: codeInfo.absolutePath || codeInfo.relativePath || '',
             line: codeInfo.lineNumber,
             column: codeInfo.columnNumber,
