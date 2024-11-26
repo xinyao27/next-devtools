@@ -1,15 +1,15 @@
 .next-devtools-container {
-  --next-devtools-widget-bg: rgba(255, 255, 255, 1);
-  --next-devtools-widget-border: rgba(0, 0, 0, 0.05);
-  --next-devtools-widget-shadow: rgb(0, 0, 0, 0.1);
-  --next-devtools-primary-color: #3b82f6;
-  --next-devtools-primary-light-color: #6ba2f9;
+  --next-devtools-widget-bg: rgba(0, 0, 0, 1);
+  --next-devtools-widget-border: rgba(255, 255, 255, 0.2);
+  --next-devtools-widget-shadow: rgb(0, 0, 0, 0.2);
+  --next-devtools-primary-color: #c391e6;
+  --next-devtools-primary-light-color: #c391e690;
 }
 
 .next-devtools-separator {
   width: 1px;
   height: 10px;
-  border-left: 1px solid rgba(0, 0, 0, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
   margin: 0 6px;
 }
 
@@ -30,17 +30,19 @@
     0 2px 15px -3px var(--next-devtools-widget-shadow),
     0 4px 6px -4px var(--next-devtools-widget-shadow);
   border: 1px solid var(--next-devtools-widget-border);
-  border-radius: 4px;
+  border-radius: 99999px;
   user-select: none;
   touch-action: none;
 
-  transform: scale(0.85);
+  transform: scale(0.88);
+  padding: 0 6px;
   transform-origin: bottom;
   transition: all 0.3s;
 }
 
 .next-devtools-panel.active {
   transform: scale(1);
+  padding: 0;
 }
 
 .next-devtools-panel-wrapper {

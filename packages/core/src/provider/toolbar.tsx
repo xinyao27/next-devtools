@@ -26,19 +26,19 @@ export default function Toolbar({ inspectorActive, setInspectorActive, iframeRef
     setInspectorActive((s) => !s)
   }, [show])
   const handlePanelMouseEnter = React.useCallback(() => {
-    if (show) return
+    if (show || inspectorActive) return
     setPanelActive(true)
     if (panelActiveTimeout.current) clearTimeout(panelActiveTimeout.current)
-  }, [show])
+  }, [show, inspectorActive])
   const handlePanelMouseLeave = React.useCallback(() => {
-    if (show) return
+    if (show || inspectorActive) return
     panelActiveTimeout.current = setTimeout(
       () => {
         setPanelActive(false)
       },
       isDev ? 1000 : 3000,
     )
-  }, [show])
+  }, [show, inspectorActive])
 
   const { ref, dragStyles, frameStyles, isDragging } = useDrag({ show, frameRef })
 
@@ -65,7 +65,7 @@ export default function Toolbar({ inspectorActive, setInspectorActive, iframeRef
           <div className="next-devtools-panel-wrapper">
             <button className="next-devtools-toggle-button" title="Toggle Next Devtools" onClick={handleToggle}>
               <NextLogo
-                fill={show ? 'var(--next-devtools-primary-color' : '#000'}
+                fill={show ? 'var(--next-devtools-primary-color)' : '#fff'}
                 mode="small"
                 style={{ minWidth: 30 }}
                 theme="light"
@@ -81,7 +81,7 @@ export default function Toolbar({ inspectorActive, setInspectorActive, iframeRef
             >
               <svg
                 className="next-devtools-inspector-icon"
-                style={{ fill: inspectorActive ? 'rgba(0, 0, 0, 1)' : 'rgba(0, 0, 0, 0.8)' }}
+                style={{ fill: inspectorActive ? 'var(--next-devtools-primary-color)' : 'rgba(255, 255, 255, 0.8)' }}
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
