@@ -21,10 +21,9 @@
     "release:patch": "release-it patch",
     "publish": "pnpm run build && pnpm -r publish",
     "build": "turbo run build --force",
-    "dev": "turbo run dev dev:next15",
+    "dev": "turbo run dev dev:app",
     "dev:devtools": "turbo run dev",
     "dev:app": "turbo run dev:app",
-    "dev:next15": "turbo run dev:next15",
     "dev:pages": "turbo run dev:pages",
     "docs": "turbo run docs",
     "docs:build": "turbo run docs:build"
@@ -46,9 +45,8 @@
     "npm-run-all": "^4.1.5",
     "prettier": "catalog:",
     "release-it": "^17.10.0",
-    "rimraf": "^6.0.1",
     "taze": "^0.18.0",
-    "turbo": "^2.3.1",
+    "turbo": "^2.3.2",
     "typescript": "catalog:"
   },
   "prettier": "@xystack/style-guide/prettier"

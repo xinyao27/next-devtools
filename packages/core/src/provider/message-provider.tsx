@@ -2,9 +2,9 @@
 
 import React from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { createFrameMessageHandler } from '@next-devtools/shared/utils/frame-message'
+import { createFrameMessageHandler } from '@next-devtools/shared/utils'
 import type { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime'
-import type { FrameMessageHandler } from '@next-devtools/shared/utils/frame-message'
+import type { FrameMessageHandler } from '@next-devtools/shared/utils'
 
 interface Props {
   children: React.ReactNode

@@ -1,13 +1,12 @@
 import fs from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import fg from 'fast-glob'
-import { builtinHandlers, builtinResolvers, parse } from 'react-docgen'
 import { internalStore } from '../store/internal'
 import { settingsStore } from '../store/settings'
 import type Documentation from 'react-docgen/dist/Documentation'
 import type { ComponentNode } from 'react-docgen/dist/resolver'
 import type { Config, NodePath } from 'react-docgen'
-import type { Component } from '@next-devtools/shared/types/features'
+import type { Component } from '@next-devtools/shared/types'
 
 type Plugins = NonNullable<NonNullable<NonNullable<Config['babelOptions']>['parserOpts']>['plugins']>
 const defaultPlugins: Plugins = [
@@ -32,25 +31,27 @@ const defaultPlugins: Plugins = [
   'throwExpressions',
   'typescript',
 ]
-const { ChainResolver, FindAllDefinitionsResolver, FindAnnotatedDefinitionsResolver } = builtinResolvers
-const resolver = new ChainResolver([new FindAnnotatedDefinitionsResolver(), new FindAllDefinitionsResolver()], {
-  chainingLogic: ChainResolver.Logic.ALL,
-})
-// handle the case where displayName is empty
-const displayNameHandler = (documentation: Documentation, componentDefinition: NodePath<ComponentNode>) => {
-  builtinHandlers.displayNameHandler(documentation, componentDefinition)
-  if (!documentation.get('displayName')) {
-    const variableDeclarator = componentDefinition.parentPath
-    if (variableDeclarator.node.type === 'VariableDeclarator') {
-      const componentName = variableDeclarator.node.id.type === 'Identifier' ? variableDeclarator.node.id.name : null
-      if (componentName) {
-        documentation.set('displayName', componentName)
+
+export async function getComponents() {
+  const { builtinHandlers, builtinResolvers, parse } = await import('react-docgen')
+  const { ChainResolver, FindAllDefinitionsResolver, FindAnnotatedDefinitionsResolver } = builtinResolvers
+  const resolver = new ChainResolver([new FindAnnotatedDefinitionsResolver(), new FindAllDefinitionsResolver()], {
+    chainingLogic: ChainResolver.Logic.ALL,
+  })
+  // handle the case where displayName is empty
+  const displayNameHandler = (documentation: Documentation, componentDefinition: NodePath<ComponentNode>) => {
+    builtinHandlers.displayNameHandler(documentation, componentDefinition)
+    if (!documentation.get('displayName')) {
+      const variableDeclarator = componentDefinition.parentPath
+      if (variableDeclarator.node.type === 'VariableDeclarator') {
+        const componentName = variableDeclarator.node.id.type === 'Identifier' ? variableDeclarator.node.id.name : null
+        if (componentName) {
+          documentation.set('displayName', componentName)
+        }
       }
     }
   }
-}
 
-export async function getComponents() {
   try {
     const { root } = internalStore.getState()
     const componentDirectory = settingsStore.getState().componentDirectory

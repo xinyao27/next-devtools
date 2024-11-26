@@ -1,4 +1,4 @@
-import { removeVersionPrefix } from '@next-devtools/shared/utils/helpers'
+import { removeVersionPrefix } from '@next-devtools/shared/utils'
 import { getRoutes } from './routes'
 import { getComponents } from './components'
 import { getPackages } from './packages'

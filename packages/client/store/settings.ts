@@ -1,7 +1,7 @@
 import { create } from 'zustand'
-import { Editor } from '@next-devtools/shared/types/settings'
+import { Editor } from '@next-devtools/shared/types'
 import { trpcClient } from '@/lib/client'
-import type { SettingsStore, SettingsStoreState } from '@next-devtools/shared/types/settings'
+import type { SettingsStore, SettingsStoreState } from '@next-devtools/shared/types'
 
 const defaultState: SettingsStoreState = {
   sidebarCollapsed: undefined,

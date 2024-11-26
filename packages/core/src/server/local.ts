@@ -1,6 +1,7 @@
 import { clientDir } from '../dirs'
 import { executeCommand, setupTerminal } from '../features/terminal'
 import { setupService } from '../features/service'
+import { isDev } from '../utils'
 
 export async function createLocalService(port: string) {
   setupTerminal()
@@ -9,7 +10,7 @@ export async function createLocalService(port: string) {
   const terminalOptions = { id: 'devtools:local-service', name: 'Local Service', icon: 'i-ri-service-line' }
 
   let __process: any
-  if (process.env.NODE_ENV === 'development') {
+  if (isDev) {
     __process = await executeCommand(
       {
         command: 'npx',

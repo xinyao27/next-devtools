@@ -3,7 +3,7 @@
 import React from 'react'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import PackageItem from './package-item'
-import type { Package } from '@next-devtools/shared/types/features'
+import type { Package } from '@next-devtools/shared/types'
 
 interface Props {
   data?: Package[]

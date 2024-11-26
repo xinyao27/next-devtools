@@ -1,8 +1,9 @@
 'use client'
 
 import React from 'react'
-import { NextLogo } from '@next-devtools/shared/components/next-logo'
-import { useLocalStorage } from '@next-devtools/shared/hooks/use-local-storage'
+import { NextLogo } from '@next-devtools/shared/components'
+import { isDev } from '../utils'
+import { useLocalStorage } from './use-local-storage'
 import type { CSSProperties } from 'react'
 
 interface ToolbarProps {
@@ -35,7 +36,7 @@ export default function Toolbar({ inspectorActive, setInspectorActive, iframeRef
       () => {
         setPanelActive(false)
       },
-      process.env.NODE_ENV === 'development' ? 1000 : 3000,
+      isDev ? 1000 : 3000,
     )
   }, [show])
 

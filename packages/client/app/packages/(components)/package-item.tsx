@@ -5,7 +5,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 import { api } from '@/lib/client'
 import NpmVersionCheck from '@/components/npm-version-check'
-import type { Package } from '@next-devtools/shared/types/features'
+import type { Package } from '@next-devtools/shared/types'
 
 interface Props {
   data: Package

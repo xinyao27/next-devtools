@@ -4,7 +4,7 @@
   "tasks": {
     "build": {
       "cache": false,
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "^@next-devtools/shared#build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
     "dev": {
@@ -16,10 +16,6 @@
       "persistent": true
     },
     "dev:pages": {
-      "cache": false,
-      "persistent": true
-    },
-    "dev:next15": {
       "cache": false,
       "persistent": true
     },

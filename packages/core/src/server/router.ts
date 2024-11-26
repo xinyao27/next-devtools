@@ -1,6 +1,6 @@
 import { initTRPC } from '@trpc/server'
 import { z } from 'zod'
-import { Editor, settingsSchema } from '@next-devtools/shared/types/settings'
+import { Editor, settingsSchema } from '@next-devtools/shared/types'
 import { getStaticAssetInfo, getStaticAssets } from '../features/assets'
 import { getComponents } from '../features/components'
 import { getEnvs } from '../features/envs'

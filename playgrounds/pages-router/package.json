@@ -1,13 +1,22 @@
 {
   "name": "pages-router",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev:pages": "next dev -p 3001"
   },
   "dependencies": {
-    "@next-devtools/core": "workspace:*",
     "next": "catalog:next14",
-    "react": "catalog:react",
-    "react-dom": "catalog:react"
+    "react": "catalog:react18",
+    "react-dom": "catalog:react18"
+  },
+  "devDependencies": {
+    "@next-devtools/core": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:react18",
+    "@types/react-dom": "catalog:react18",
+    "postcss": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
   }
 }

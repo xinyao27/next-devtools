@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import semver from 'semver'
 import { internalStore } from '../store/internal'
-import type { Package } from '@next-devtools/shared/types/features'
+import type { Package } from '@next-devtools/shared/types'
 
 export async function getPackages() {
   const root = internalStore.getState().root

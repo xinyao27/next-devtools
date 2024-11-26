@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { isDev } from '../utils'
 import Frame from './frame'
 import './styles.css'
 
@@ -17,7 +18,7 @@ export function NextDevtoolsProvider({ children }: NextDevtoolsProviderProps) {
     }
   }, [])
 
-  if (process.env.NODE_ENV === 'development' && isMounted === true) {
+  if (isDev && isMounted === true) {
     return (
       <React.Suspense>
         <Frame />
@@ -26,5 +27,5 @@ export function NextDevtoolsProvider({ children }: NextDevtoolsProviderProps) {
     )
   }
 
-  return <>{children}</>
+  return <React.Fragment>{children}</React.Fragment>
 }

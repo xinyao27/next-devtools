@@ -53,12 +53,11 @@
     "access": "public"
   },
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "cross-env NODE_ENV=production PACKAGE_NAME=@next-devtools/core VERSION=$(node -e 'console.log(require(`./package.json`).version)') bunchee --no-clean --external next,react --env=NODE_ENV,PACKAGE_NAME,VERSION",
+    "build": "cross-env NODE_ENV=production PACKAGE_NAME=@next-devtools/core VERSION=$(node -e 'console.log(require(`./package.json`).version)') bunchee --external next,react --env=NODE_ENV,PACKAGE_NAME,VERSION",
     "dev": "cross-env NODE_ENV=development PACKAGE_NAME=@next-devtools/core VERSION=$(node -e 'console.log(require(`./package.json`).version)') bunchee --no-clean --external next,react --env=NODE_ENV,PACKAGE_NAME,VERSION --watch"
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": ">= 18"
   },
   "dependencies": {
     "@next-devtools/shared": "workspace:*",

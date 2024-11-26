@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
-import { loadEnvConfig } from '@next/env'
+import nextEnv from '@next/env'
 import { internalStore } from '../store/internal'
-import type { Env } from '@next-devtools/shared/types/features'
+import type { Env } from '@next-devtools/shared/types'
 import type { Context } from '../server/router'
 
 /**
@@ -17,7 +17,7 @@ export async function getEnvs(context: Context) {
     privateEnv: {},
     loadedEnvFiles: [],
   }
-  const nextEnvConfig = loadEnvConfig(root, context.dev)
+  const nextEnvConfig = nextEnv.loadEnvConfig(root, context.dev)
   Object.keys(nextEnvConfig.combinedEnv).forEach((key) => {
     const value = nextEnvConfig.combinedEnv[key]
     if (typeof value === 'string') {

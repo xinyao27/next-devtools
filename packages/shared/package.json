@@ -12,20 +12,73 @@
     "name": "Xinyao",
     "email": "hi@xinyao.me"
   },
+  "files": [
+    "*.cjs",
+    "*.d.ts",
+    "*.js",
+    "*.mjs",
+    "*.mts",
+    "dist"
+  ],
+  "exports": {
+    "./components": {
+      "require": {
+        "types": "./dist/cjs/components.d.ts",
+        "default": "./dist/cjs/components.js"
+      },
+      "import": {
+        "types": "./dist/es/components.d.mts",
+        "default": "./dist/es/components.mjs"
+      }
+    },
+    "./constants": {
+      "require": {
+        "types": "./dist/cjs/constants.d.ts",
+        "default": "./dist/cjs/constants.js"
+      },
+      "import": {
+        "types": "./dist/es/constants.d.mts",
+        "default": "./dist/es/constants.mjs"
+      }
+    },
+    "./types": {
+      "require": {
+        "types": "./dist/cjs/types.d.ts",
+        "default": "./dist/cjs/types.js"
+      },
+      "import": {
+        "types": "./dist/es/types.d.mts",
+        "default": "./dist/es/types.mjs"
+      }
+    },
+    "./utils": {
+      "require": {
+        "types": "./dist/cjs/utils.d.ts",
+        "default": "./dist/cjs/utils.js"
+      },
+      "import": {
+        "types": "./dist/es/utils.d.mts",
+        "default": "./dist/es/utils.mjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "build": "bunchee --external react",
+    "dev": "bunchee --no-clean --external react --watch"
+  },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": ">= 18"
   },
   "dependencies": {
     "zod": "catalog:"
   },
   "devDependencies": {
     "@types/react": "catalog:react19",
-    "next": "catalog:next15",
-    "react": "catalog:react19",
-    "react-docgen": "^7.1.0",
     "zustand": "catalog:"
   }
 }

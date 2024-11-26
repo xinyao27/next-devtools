@@ -1,6 +1,6 @@
 'use client'
 
-import { type FrameMessageHandler, createFrameMessageClient } from '@next-devtools/shared/utils/frame-message'
+import { type FrameMessageHandler, createFrameMessageClient } from '@next-devtools/shared/utils'
 import React from 'react'
 import { QueryClient, QueryClientProvider, defaultShouldDehydrateQuery, isServer } from '@tanstack/react-query'
 import { createTRPCClient, createTRPCReact, createWSClient, wsLink } from '@trpc/react-query'

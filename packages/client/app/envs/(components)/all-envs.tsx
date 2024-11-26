@@ -4,7 +4,7 @@ import React from 'react'
 import { useTheme } from 'next-themes'
 import dynamic from 'next/dynamic'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import type { Env } from '@next-devtools/shared/types/features'
+import type { Env } from '@next-devtools/shared/types'
 import './react-json-view.css'
 
 const ReactJson = dynamic(() => import('@microlink/react-json-view'), { ssr: false })

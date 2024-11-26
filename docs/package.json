@@ -14,8 +14,8 @@
     "next": "catalog:next14",
     "nextra": "latest",
     "nextra-theme-docs": "latest",
-    "react": "catalog:react",
-    "react-dom": "catalog:react",
+    "react": "catalog:react18",
+    "react-dom": "catalog:react18",
     "tailwind-merge": "catalog:"
   },
   "devDependencies": {
@@ -23,7 +23,7 @@
     "@iconify-json/ri": "catalog:",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/node": "catalog:",
-    "@types/react": "catalog:react",
+    "@types/react": "catalog:react18",
     "autoprefixer": "catalog:",
     "postcss": "catalog:",
     "tailwindcss": "catalog:",

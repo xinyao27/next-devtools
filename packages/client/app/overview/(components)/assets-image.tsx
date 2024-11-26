@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Skeleton } from '@/components/ui/skeleton'
 import { api } from '@/lib/client'
-import type { Asset } from '@next-devtools/shared/types/features'
+import type { Asset } from '@next-devtools/shared/types'
 
 interface AssetProps {
   data: Asset

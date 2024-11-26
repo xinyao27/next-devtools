@@ -1,12 +1,12 @@
 import path from 'node:path'
 import fs from 'fs-extra'
 import { createStore } from 'zustand/vanilla'
-import { Editor } from '@next-devtools/shared/types/settings'
+import { Editor } from '@next-devtools/shared/types'
 import { SETTINGS_FILE, TEMP_DIR } from '@next-devtools/shared/constants'
 import consola from 'consola'
 import { internalStore } from './internal'
 import type { Context } from '../server/router'
-import type { SettingsStore, SettingsStoreState } from '@next-devtools/shared/types/settings'
+import type { SettingsStore, SettingsStoreState } from '@next-devtools/shared/types'
 
 const defaultState: SettingsStoreState = {
   sidebarCollapsed: undefined,

@@ -3,7 +3,7 @@ import { basename, dirname, join } from 'node:path'
 import fg from 'fast-glob'
 import mine from 'mime-types'
 import { internalStore } from '../store/internal'
-import type { Asset, AssetType } from '@next-devtools/shared/types/features'
+import type { Asset, AssetType } from '@next-devtools/shared/types'
 
 function guessType(path: string): AssetType {
   if (/\.(a?png|jpe?g|jxl|gif|svg|webp|avif|ico|bmp|tiff?)$/i.test(path)) return 'image'

@@ -1,4 +1,4 @@
-import { Editor, editorCommands } from '@next-devtools/shared/types/settings'
+import { Editor, editorCommands } from '@next-devtools/shared/types'
 import { settingsStore } from '../store/settings'
 import { executeCommand } from './terminal'
 

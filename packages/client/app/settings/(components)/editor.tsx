@@ -5,7 +5,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import LogoVSCode from '@/public/vscode.png'
 import LogoCursor from '@/public/cursor.svg'
 import LogoWindsurf from '@/public/windsurf.svg'
-import type { Editor } from '@next-devtools/shared/types/settings'
+import type { Editor } from '@next-devtools/shared/types'
 
 const editors = [
   {

@@ -10,7 +10,7 @@ import CopyToClipboard from '@/components/copy-to-clipboard'
 import { formatBytes } from '@/lib/utils'
 import { api } from '@/lib/client'
 import { Skeleton } from '@/components/ui/skeleton'
-import type { Asset } from '@next-devtools/shared/types/features'
+import type { Asset } from '@next-devtools/shared/types'
 
 interface AssetProps {
   data: Asset
