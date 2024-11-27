@@ -1,1 +1,1 @@
-export { NextDevtoolsProvider } from './provider/provider'
+export { NextDevtoolsServerProvider as NextDevtoolsProvider } from './provider/provider.server'

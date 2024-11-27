@@ -10,6 +10,8 @@ import { createStaticServer } from './server/static'
 import { getGlobalThis } from './utils'
 import { settingsStore } from './store/settings'
 import { internalStore } from './store/internal'
+import { setupTerminal } from './features/terminal'
+import { networkStore } from './store/network'
 import type { Context } from './server/router'
 import type { NextConfig } from 'next'
 import type { Compiler } from 'webpack'
@@ -33,7 +35,9 @@ export class Plugin {
 
         settingsStore.getState().setup(this.context)
         internalStore.getState().setup(options)
+        networkStore.getState().setup()
 
+        setupTerminal()
         createLocalService(this.context.localClientPort)
         createRPCServer(options, this.context)
         createStaticServer(this.context, this.context.staticServerPort)

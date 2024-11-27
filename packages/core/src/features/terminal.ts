@@ -1,4 +1,4 @@
-import { observable } from '@trpc/server/observable'
+import { on } from 'node:events'
 import { getGlobalThis } from '../utils'
 import type { Options, Subprocess } from 'execa'
 
@@ -62,23 +62,19 @@ export async function setupTerminal() {
     return true
   })
 }
-export async function onTerminalWrite() {
-  return observable<TerminalWrite>((emit) => {
-    const handler = (data: TerminalWrite) => {
-      const terminal = terminals.get(data.id)
-      if (!terminal) return false
 
-      if (!terminal.buffer) terminal.buffer = ''
-      terminal.buffer += data.data
+export async function* onTerminalWrite(opts: any) {
+  for await (const [data] of on(globalThis.__NEXT_DEVTOOLS_EE__, 'terminal:write', {
+    signal: opts.signal,
+  })) {
+    const terminal = terminals.get(data.id)
+    if (!terminal) continue
 
-      emit.next(data)
-      return true
-    }
-    globalThis.__NEXT_DEVTOOLS_EE__.on('terminal:write', handler)
-    return () => {
-      globalThis.__NEXT_DEVTOOLS_EE__.off('terminal:write', handler)
-    }
-  })
+    if (!terminal.buffer) terminal.buffer = ''
+    terminal.buffer += data.data
+
+    yield data
+  }
 }
 
 interface ExecuteCommandOptions {

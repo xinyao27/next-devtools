@@ -49,6 +49,12 @@ const menuItems = [
     icon: 'i-ri-shapes-line',
   },
   {
+    value: 'network',
+    label: 'Network',
+    link: '/network',
+    icon: 'i-ri-earth-line',
+  },
+  {
     value: 'terminal',
     label: 'Terminal',
     link: '/terminal',

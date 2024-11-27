@@ -13,6 +13,8 @@ import { runNpmCommand } from '../features/npm'
 import { restartProject } from '../features/service'
 import { settingsStore } from '../store/settings'
 import { internalStore } from '../store/internal'
+import { networkStore } from '../store/network'
+import { onNetworkUpdate } from '../features/network'
 import type { NextConfig, WebpackConfigContext } from 'next/dist/server/config-shared'
 import type { WebpackOptionsNormalized } from 'webpack'
 
@@ -178,6 +180,11 @@ export const appRouter = t.router({
       },
     )
   }),
+  getNetworkRequests: t.procedure.query(async () => {
+    const requests = Array.from(networkStore.getState().requests.values())
+    return requests.sort((a, b) => b.startTime - a.startTime)
+  }),
+  onNetworkUpdate: t.procedure.subscription(onNetworkUpdate),
 })
 
 export type AppRouter = typeof appRouter

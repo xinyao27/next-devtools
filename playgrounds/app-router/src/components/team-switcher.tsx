@@ -42,7 +42,7 @@ export function TeamSwitcher({
             <DropdownMenuLabel className="text-muted-foreground text-xs">Teams</DropdownMenuLabel>
             {teams.map((team, index) => (
               <DropdownMenuItem key={team.name} className="gap-2 p-2" onClick={() => setActiveTeam(team)}>
-                <div className="flex size-6 items-center justify-center rounded-sm border">
+                <div className="flex size-6 items-center justify-center rounded border">
                   <team.logo className="size-4 shrink-0" />
                 </div>
                 {team.name}

@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import semver from 'semver'
 import { internalStore } from '../store/internal'
+import { getFetchHeaders } from '../utils'
 import type { Package } from '@next-devtools/shared/types'
 
 export async function getPackages() {
@@ -29,7 +30,7 @@ export async function getPackageInfo(name: string, github = true) {
   // Get NPM data
   const npmRegistryUrl = 'https://registry.npmjs.org'
   const npmUrl = `${npmRegistryUrl}/${name}`
-  const npmResponse = await fetch(npmUrl, { cache: 'force-cache' })
+  const npmResponse = await fetch(npmUrl, { cache: 'force-cache', headers: getFetchHeaders() })
   const npmData = await npmResponse.json()
   if (npmData.repository?.url.startsWith('git+')) npmData.repository.url = npmData.repository.url.slice(4)
 
@@ -39,7 +40,7 @@ export async function getPackageInfo(name: string, github = true) {
     const githubUser = githubUrl?.split('/')[3]
     const githubRepo = githubUrl?.split('/')[4]?.split('.git')[0]
     const githubApiUrl = `https://api.github.com/repos/${githubUser}/${githubRepo}`
-    const githubResponse = await fetch(githubApiUrl, { cache: 'force-cache' })
+    const githubResponse = await fetch(githubApiUrl, { cache: 'force-cache', headers: getFetchHeaders() })
     const githubData = await githubResponse.json()
 
     return { ...npmData, ...githubData }

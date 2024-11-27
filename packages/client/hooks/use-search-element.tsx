@@ -1,10 +1,18 @@
-import React, { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useDebounce } from 'react-use'
 import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 
-export default function useSearchElement<T>(data: T[] | undefined, compare: (item: T, searchText: string) => boolean) {
-  const [filteredData, setFilteredData] = React.useState<T[]>([])
-  const [searchText, setSearchText] = React.useState('')
+export default function useSearchElement<T>(
+  data: T[] | undefined,
+  compare: (item: T, searchText: string) => boolean,
+  props?: {
+    className?: string
+  },
+) {
+  const [filteredData, setFilteredData] = useState<T[]>([])
+  const [searchText, setSearchText] = useState('')
+
   useDebounce(
     () => {
       if (searchText) {
@@ -18,9 +26,15 @@ export default function useSearchElement<T>(data: T[] | undefined, compare: (ite
     [searchText],
   )
 
+  useEffect(() => {
+    if (data?.length && !searchText) {
+      setFilteredData(data ?? [])
+    }
+  }, [data, searchText])
+
   const element = useMemo(() => {
     return (
-      <div className="space-y-1 border-b p-4">
+      <div className={cn('space-y-1 border-b p-4', props?.className)}>
         <Input
           placeholder="Search..."
           prefix={<i className="i-ri-search-line text-muted-foreground size-4" />}

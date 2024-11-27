@@ -1,14 +1,14 @@
 'use client'
 
 import React from 'react'
-import { isDev } from '../utils'
-import Frame from './frame'
+import Frame from './frame.client'
+
 import './styles.css'
 
-interface NextDevtoolsProviderProps {
+interface NextDevtoolsClientProviderProps {
   children: React.ReactNode
 }
-export function NextDevtoolsProvider({ children }: NextDevtoolsProviderProps) {
+export function NextDevtoolsClientProvider({ children }: NextDevtoolsClientProviderProps) {
   const [isMounted, setIsMounted] = React.useState(false)
 
   React.useEffect(() => {
@@ -18,7 +18,7 @@ export function NextDevtoolsProvider({ children }: NextDevtoolsProviderProps) {
     }
   }, [])
 
-  if (isDev && isMounted === true) {
+  if (isMounted === true) {
     return (
       <React.Suspense>
         <Frame />
@@ -27,5 +27,5 @@ export function NextDevtoolsProvider({ children }: NextDevtoolsProviderProps) {
     )
   }
 
-  return <React.Fragment>{children}</React.Fragment>
+  return children
 }

@@ -1,10 +1,9 @@
 import { clientDir } from '../dirs'
-import { executeCommand, setupTerminal } from '../features/terminal'
+import { executeCommand } from '../features/terminal'
 import { setupService } from '../features/service'
 import { isDev } from '../utils'
 
 export async function createLocalService(port: string) {
-  setupTerminal()
   setupService()
 
   const terminalOptions = { id: 'devtools:local-service', name: 'Local Service', icon: 'i-ri-service-line' }
