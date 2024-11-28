@@ -181,8 +181,8 @@ export const appRouter = t.router({
     )
   }),
   getNetworkRequests: t.procedure.query(async () => {
-    const requests = Array.from(networkStore.getState().requests.values())
-    return requests.sort((a, b) => b.startTime - a.startTime)
+    const requests = networkStore.getState().requests
+    return requests
   }),
   onNetworkUpdate: t.procedure.subscription(onNetworkUpdate),
 })

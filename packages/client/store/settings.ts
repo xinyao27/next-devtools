@@ -21,6 +21,8 @@ export const settingsStore = createStore<SettingsStore>()((set) => ({
     const settings = await trpcClient.getSettingsStore.query()
     set(settings)
   },
+
+  setState: (state) => set(state),
 }))
 
 export type SettingsStoreApi = typeof settingsStore

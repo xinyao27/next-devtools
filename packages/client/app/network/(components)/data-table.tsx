@@ -34,6 +34,7 @@ export interface DataTableProps<TData, TValue> {
   isFetching?: boolean
   getTitle?: (data?: TData) => React.ReactNode
   getDetailsContent?: (data?: TData) => React.ReactNode
+  headerExtra?: React.ReactNode
 }
 
 function DataTable<TData, TValue>({
@@ -44,6 +45,7 @@ function DataTable<TData, TValue>({
   isFetching,
   getTitle,
   getDetailsContent,
+  headerExtra,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -94,7 +96,7 @@ function DataTable<TData, TValue>({
 
   return (
     <>
-      <DataTableToolbar table={table} />
+      <DataTableToolbar extra={headerExtra} table={table} />
 
       <div ref={tableContainerRef} className={cn('relative overflow-auto', className)}>
         <Table className="grid">

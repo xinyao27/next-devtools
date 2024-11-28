@@ -18,16 +18,16 @@ export interface NetworkRequest {
 }
 
 export interface NetworkStoreState {
-  requests: Map<NetworkId, NetworkRequest>
+  requests: Record<NetworkId, NetworkRequest>
 }
 
 export interface NetworkActions {
   setup: () => void
   add: (id: NetworkId, request: NetworkRequest) => void
-  update: (id: NetworkId, request: NetworkRequest) => void
+  update: (id: NetworkId, request: Partial<NetworkRequest>) => void
   remove: (id: NetworkId) => void
   clear: () => void
-  set: (data: NetworkRequest[] | Map<NetworkId, NetworkRequest>) => void
+  set: (data: Record<NetworkId, NetworkRequest>) => void
 }
 
 export type NetworkStore = NetworkStoreState & NetworkActions

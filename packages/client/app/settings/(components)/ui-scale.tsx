@@ -12,16 +12,16 @@ const options = [
 
 export default function UIScale() {
   const uiScale = useSettingsStore(useShallow((state) => state.uiScale))
-
+  const setState = useSettingsStore((state) => state.setState)
   const handleChange = (value: string) => {
-    useSettingsStore.setState({ uiScale: Number.parseInt(value) })
+    setState({ uiScale: Number.parseInt(value) })
   }
 
   return (
     <section className="space-y-2">
       <h2 id="ui-scale">UI Scale</h2>
       <div className="rounded border p-4">
-        <Select value={uiScale.toString()} onValueChange={handleChange}>
+        <Select value={uiScale?.toString()} onValueChange={handleChange}>
           <SelectTrigger
             className="[&>span_svg]:text-muted-foreground/80 [&>span]:flex [&>span]:items-center [&>span]:gap-2 [&>span_svg]:shrink-0"
             id="select-35"

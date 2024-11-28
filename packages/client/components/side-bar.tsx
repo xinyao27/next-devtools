@@ -76,16 +76,17 @@ const menuItems = [
 
 export default function SideBar() {
   const sidebarCollapsed = useSettingsStore(useShallow((state) => state.sidebarCollapsed))
+  const setState = useSettingsStore((state) => state.setState)
   const pathname = usePathname()
   const isMobile = useMedia('(max-width: 768px)')
 
   function handleToggleSideBar() {
     if (isMobile) {
-      if (sidebarCollapsed !== undefined) useSettingsStore.setState({ sidebarCollapsed: !sidebarCollapsed })
-      else useSettingsStore.setState({ sidebarCollapsed: false })
+      if (sidebarCollapsed !== undefined) setState({ sidebarCollapsed: !sidebarCollapsed })
+      else setState({ sidebarCollapsed: false })
     } else {
-      if (sidebarCollapsed !== undefined) useSettingsStore.setState({ sidebarCollapsed: !sidebarCollapsed })
-      else useSettingsStore.setState({ sidebarCollapsed: true })
+      if (sidebarCollapsed !== undefined) setState({ sidebarCollapsed: !sidebarCollapsed })
+      else setState({ sidebarCollapsed: true })
     }
   }
 

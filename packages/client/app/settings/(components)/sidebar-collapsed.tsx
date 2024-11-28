@@ -4,9 +4,9 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 
 export default function SideBarCollapsed() {
   const sidebarCollapsed = useSettingsStore(useShallow((state) => state.sidebarCollapsed))
-
+  const setState = useSettingsStore((state) => state.setState)
   const handleChange = (value: 'collapsed' | 'expanded') => {
-    useSettingsStore.setState({ sidebarCollapsed: value === 'collapsed' })
+    setState({ sidebarCollapsed: value === 'collapsed' })
   }
 
   return (

@@ -8,7 +8,7 @@ import { StoreContext } from './provider'
 import type { NetworkStore, NetworkStoreState } from '@next-devtools/shared/types'
 
 const defaultState: NetworkStoreState = {
-  requests: new Map(),
+  requests: {},
 }
 export const networkStore = createStore<NetworkStore>()(
   subscribeWithSelector((set) => ({
@@ -22,8 +22,7 @@ export const networkStore = createStore<NetworkStore>()(
       set(networkStore.getInitialState())
     },
     set: (data) => {
-      const requests = data instanceof Map ? data : new Map(data.map((request) => [request.id, request]))
-      set({ requests })
+      set({ requests: data })
     },
   })),
 )

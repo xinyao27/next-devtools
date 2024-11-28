@@ -1,6 +1,7 @@
 'use client'
 
 import prettyMs from 'pretty-ms'
+import { formatDate } from '@next-devtools/shared/utils'
 import { formatBytes } from '@/lib/utils'
 import Status from './status'
 import { DataTableColumnHeader } from './data-table-column-header'
@@ -66,6 +67,17 @@ export const columns: ColumnDef<NetworkRequest>[] = [
       const value = row.getValue('size') as number
       if (!value) return <i className="i-ri-subtract-line opacity-60" />
       return <div className="truncate">{formatBytes(value)}</div>
+    },
+    size: 100,
+  },
+  {
+    id: 'startTime',
+    accessorKey: 'startTime',
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Start Time" />,
+    cell: ({ row }) => {
+      const value = row.getValue('startTime') as number
+      if (!value) return <i className="i-ri-subtract-line opacity-60" />
+      return <div className="truncate">{formatDate(value, { format: 'HH:mm:ss' })}</div>
     },
     size: 100,
   },

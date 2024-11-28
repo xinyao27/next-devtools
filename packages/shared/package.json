@@ -76,6 +76,7 @@
   },
   "dependencies": {
     "date-fns": "catalog:",
+    "microdiff": "^1.4.0",
     "zod": "catalog:"
   },
   "devDependencies": {

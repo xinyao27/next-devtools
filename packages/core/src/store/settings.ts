@@ -29,6 +29,7 @@ export const settingsStore = createStore<SettingsStore>()((set) => ({
     }
     set(settings)
   },
+  setState: (state) => set(state),
 }))
 
 settingsStore.subscribe((state) => {

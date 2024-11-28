@@ -45,6 +45,7 @@
     "clsx": "catalog:",
     "cmdk": "^1.0.4",
     "cobe": "^0.6.3",
+    "date-fns": "catalog:",
     "framer-motion": "catalog:",
     "lucide-react": "^0.461.0",
     "mini-svg-data-uri": "^1.4.4",

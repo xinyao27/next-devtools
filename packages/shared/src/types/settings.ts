@@ -22,6 +22,7 @@ export type SettingsStoreState = z.infer<typeof settingsSchema>
 
 export interface SettingsStoreActions {
   setup: (options?: any) => void
+  setState: (state: Partial<SettingsStoreState>) => void
 }
 
 export type SettingsStore = SettingsStoreState & SettingsStoreActions

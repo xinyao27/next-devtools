@@ -7,9 +7,10 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 
 export default function Directory() {
   const componentDirectory = useSettingsStore(useShallow((state) => state.componentDirectory))
+  const setState = useSettingsStore((state) => state.setState)
   const { data: internalStore } = api.getInternalStore.useQuery()
   const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    useSettingsStore.setState({ componentDirectory: event.target.value })
+    setState({ componentDirectory: event.target.value })
   }
 
   return (

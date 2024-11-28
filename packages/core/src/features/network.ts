@@ -1,7 +1,8 @@
 import { on } from 'node:events'
 import { getFetchHeaders } from '../utils'
 import { networkStore } from '../store/network'
-import type { NetworkId, NetworkMethod, NetworkRequest } from '@next-devtools/shared/types'
+import type { Difference } from '@next-devtools/shared/utils'
+import type { NetworkMethod, NetworkRequest } from '@next-devtools/shared/types'
 
 export function patchFetch(original: typeof globalThis.fetch) {
   // @ts-expect-error: If the fetch is already patched, return the original
@@ -28,7 +29,7 @@ export function patchFetch(original: typeof globalThis.fetch) {
       headers,
       body: null,
     }
-    networkStore.getState().add(networkRequest.id, networkRequest)
+    networkStore.getState().add(id, networkRequest)
 
     return Reflect.apply(original, this, [resource, options])
       .then(async (response) => {
@@ -71,10 +72,8 @@ export async function* onNetworkUpdate(opts: any) {
   for await (const [data] of on(globalThis.__NEXT_DEVTOOLS_EE__, 'network:update', {
     signal: opts.signal,
   })) {
-    if (data.requests) {
-      const requestsMap = data.requests as Map<NetworkId, NetworkRequest>
-      const requests = Array.from(requestsMap.values())
-      yield requests.sort((a, b) => b.startTime - a.startTime)
+    if (data.diff) {
+      yield data.diff as Difference[]
     }
   }
 }

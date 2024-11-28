@@ -35,9 +35,10 @@ const methods = [
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
+  extra?: React.ReactNode
 }
 
-export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>) {
+export function DataTableToolbar<TData>({ table, extra }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
 
   return (
@@ -53,14 +54,24 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
         {table.getColumn('method') && (
           <DataTableFacetedFilter column={table.getColumn('method')} options={methods} title="Method" />
         )}
+        <DataTableViewOptions table={table} />
         {isFiltered ? (
-          <Button className="h-8 px-2 lg:px-3" variant="ghost" onClick={() => table.resetColumnFilters()}>
-            <i className="i-ri-close-line mr-2 size-4" />
+          <Button size="sm" variant="outline" onClick={() => table.resetColumnFilters()}>
+            <i className="i-ri-close-line mr-1 size-4" />
             Reset
           </Button>
         ) : null}
       </div>
-      <DataTableViewOptions table={table} />
+
+      <div className="flex items-center gap-2">
+        {table.getCoreRowModel().rows.length > 0 ? (
+          <div className="text-xs opacity-60">
+            {table.getFilteredRowModel().rows.length} / {table.getCoreRowModel().rows.length} requests
+          </div>
+        ) : null}
+
+        {extra}
+      </div>
     </div>
   )
 }
