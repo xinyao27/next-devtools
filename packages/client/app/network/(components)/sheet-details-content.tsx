@@ -93,12 +93,13 @@ interface SheetDetailsContentProps extends React.HTMLAttributes<HTMLDListElement
 export function SheetDetailsContent({ data, ...props }: SheetDetailsContentProps) {
   return (
     <dl {...props}>
-      {rows.map((row) => (
+      {rows.map((row, index) => (
         <div
           key={row.id}
           className={cn(
             'flex items-center justify-between gap-2 border-b py-2 text-sm',
             row.direction === 'col' && 'flex-col items-start',
+            index === rows.length - 1 && 'border-b-0',
           )}
         >
           <dt className="text-muted-foreground text-nowrap">{row.label}</dt>

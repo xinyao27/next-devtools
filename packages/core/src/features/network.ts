@@ -4,6 +4,9 @@ import { networkStore } from '../store/network'
 import type { NetworkId, NetworkMethod, NetworkRequest } from '@next-devtools/shared/types'
 
 export function patchFetch(original: typeof globalThis.fetch) {
+  // @ts-expect-error: If the fetch is already patched, return the original
+  if (original.__nextDevtoolsPatched) return original
+
   const patched = function (resource: URL | RequestInfo, options?: RequestInit) {
     if (isNextDevToolsRequest(options?.headers)) {
       return Reflect.apply(original, this, [resource, options])

@@ -54,12 +54,11 @@
     "react-resizable-panels": "^2.1.7",
     "react-spring": "^9.7.4",
     "react-use": "^17.5.1",
-    "shiki": "^1.23.1",
     "sonner": "^1.7.0",
+    "sugar-high": "^0.7.5",
     "superjson": "catalog:",
     "tailwind-merge": "catalog:",
     "tailwindcss-animate": "^1.0.7",
-    "vesper-purple-theme": "^0.2.2",
     "xterm": "5.2.1",
     "xterm-addon-fit": "^0.8.0",
     "zustand": "catalog:"

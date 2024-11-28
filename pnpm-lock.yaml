@@ -343,12 +343,12 @@ importers:
       react-use:
         specifier: ^17.5.1
         version: 17.5.1(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
-      shiki:
-        specifier: ^1.23.1
-        version: 1.23.1
       sonner:
         specifier: ^1.7.0
         version: 1.7.0(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
+      sugar-high:
+        specifier: ^0.7.5
+        version: 0.7.5
       superjson:
         specifier: 'catalog:'
         version: 2.2.1
@@ -358,9 +358,6 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.15)
-      vesper-purple-theme:
-        specifier: ^0.2.2
-        version: 0.2.2
       xterm:
         specifier: 5.2.1
         version: 5.2.1
@@ -8866,6 +8863,9 @@ packages:
   suf-log@2.5.3:
     resolution: {integrity: sha512-KvC8OPjzdNOe+xQ4XWJV2whQA0aM1kGVczMQ8+dStAO6KfEB140JEVQ9dE76ONZ0/Ylf67ni4tILPJB41U0eow==}
 
+  sugar-high@0.7.5:
+    resolution: {integrity: sha512-lfGxo0il0Mx4WLdXEt0WsJ8V3QkQWssXnolj5xBurzlGJW07LuwmJWKtS0B2WJ5XWz1439RHngXAmzsnLD0rFA==}
+
   superjson@2.2.1:
     resolution: {integrity: sha512-8iGv75BYOa0xRJHK5vRLEjE2H/i4lulTjzpUXic3Eg8akftYjkmQDa8JARQ42rlczXyFR3IeRoeFCc7RxHsYZA==}
     engines: {node: '>=16'}
@@ -9381,10 +9381,6 @@ packages:
 
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
-
-  vesper-purple-theme@0.2.2:
-    resolution: {integrity: sha512-FeR3XyIJC48XoHEDqOgJtwFuQ9N64u9x7bNNNEzICaN8ynNAiZ0OvnSvPPN321l8K3emJO24USmpbpYvg4fvpA==}
-    engines: {vscode: ^1.64.0}
 
   vfile-location@5.0.2:
     resolution: {integrity: sha512-NXPYyxyBSH7zB5U6+3uDdd6Nybz6o6/od9rk8bp9H8GR3L+cm/fC0uUTbqBmUTnMCUDslAGBOIKNfvvb+gGlDg==}
@@ -19795,6 +19791,8 @@ snapshots:
     dependencies:
       s.color: 0.0.15
 
+  sugar-high@0.7.5: {}
+
   superjson@2.2.1:
     dependencies:
       copy-anything: 3.0.5
@@ -20326,8 +20324,6 @@ snapshots:
     dependencies:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
-
-  vesper-purple-theme@0.2.2: {}
 
   vfile-location@5.0.2:
     dependencies:

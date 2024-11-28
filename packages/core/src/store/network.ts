@@ -1,5 +1,6 @@
 import { createStore } from 'zustand/vanilla'
 import { subscribeWithSelector } from 'zustand/middleware'
+import { patchFetch } from '../features/network'
 import type { NetworkStore, NetworkStoreState } from '@next-devtools/shared/types'
 
 const defaultState: NetworkStoreState = {
@@ -9,7 +10,11 @@ export const networkStore = createStore<NetworkStore>()(
   subscribeWithSelector((set) => ({
     ...defaultState,
 
-    setup: () => {},
+    setup: () => {
+      const originalFetch = globalThis.fetch
+      // @ts-expect-error: TODO
+      globalThis.fetch = patchFetch(originalFetch)
+    },
     add: (id, request) => {
       set((state) => {
         const requests = new Map(state.requests)
