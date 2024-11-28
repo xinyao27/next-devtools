@@ -1,6 +1,11 @@
-import { create } from 'zustand'
+'use client'
+
+import { createStore } from 'zustand/vanilla'
 import { Editor } from '@next-devtools/shared/types'
+import { useContext } from 'react'
+import { useStore } from 'zustand'
 import { trpcClient } from '@/lib/client'
+import { StoreContext } from './provider'
 import type { SettingsStore, SettingsStoreState } from '@next-devtools/shared/types'
 
 const defaultState: SettingsStoreState = {
@@ -9,7 +14,7 @@ const defaultState: SettingsStoreState = {
   editor: Editor.VSCode,
   componentDirectory: '/src/components',
 }
-export const useSettingsStore = create<SettingsStore>()((set) => ({
+export const settingsStore = createStore<SettingsStore>()((set) => ({
   ...defaultState,
 
   async setup() {
@@ -18,6 +23,18 @@ export const useSettingsStore = create<SettingsStore>()((set) => ({
   },
 }))
 
-useSettingsStore.subscribe((state) => {
+export type SettingsStoreApi = typeof settingsStore
+
+settingsStore.subscribe((state) => {
   trpcClient.setSettingsStore.mutate({ settings: state })
 })
+
+export const useSettingsStore = <T>(selector: (store: SettingsStore) => T): T => {
+  const storeContext = useContext(StoreContext)
+
+  if (!storeContext) {
+    throw new Error(`useSettingsStore must be used within StoreProvider`)
+  }
+
+  return useStore(storeContext, selector)
+}

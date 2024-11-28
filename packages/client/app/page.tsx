@@ -8,10 +8,11 @@ import { useSettingsStore } from '@/store/settings'
 export default function Page() {
   const router = useRouter()
   const connected = useConnect()
+  const setup = useSettingsStore((state) => state.setup)
 
   React.useEffect(() => {
     if (connected) {
-      useSettingsStore.getState().setup()
+      setup()
 
       if (document.visibilityState === 'visible') {
         router.replace('/overview')

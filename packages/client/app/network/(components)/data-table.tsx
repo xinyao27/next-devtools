@@ -30,8 +30,8 @@ export interface DataTableProps<TData, TValue> {
   className?: string
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  isLoading: boolean
-  isFetching: boolean
+  isLoading?: boolean
+  isFetching?: boolean
   getTitle?: (data?: TData) => React.ReactNode
   getDetailsContent?: (data?: TData) => React.ReactNode
 }

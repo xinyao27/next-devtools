@@ -39,6 +39,7 @@ export const networkStore = createStore<NetworkStore>()(
     clear: () => {
       set(networkStore.getInitialState())
     },
+    set: () => {},
   })),
 )
 

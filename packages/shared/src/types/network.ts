@@ -27,6 +27,7 @@ export interface NetworkActions {
   update: (id: NetworkId, request: NetworkRequest) => void
   remove: (id: NetworkId) => void
   clear: () => void
+  set: (data: NetworkRequest[] | Map<NetworkId, NetworkRequest>) => void
 }
 
 export type NetworkStore = NetworkStoreState & NetworkActions
