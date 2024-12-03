@@ -1,7 +1,13 @@
 import { EventEmitter } from 'node:events'
 import consola from 'consola'
 import { colors } from 'consola/utils'
-import { LOCAL_CLIENT_PORT, STATIC_SERVER_PORT, TEMP_DIR } from '@next-devtools/shared/constants'
+import {
+  CLIENT_BASE_PATH,
+  LOCAL_CLIENT_PORT,
+  STATIC_BASE_PATH,
+  STATIC_SERVER_PORT,
+  TEMP_DIR,
+} from '@next-devtools/shared/constants'
 import { ip } from 'address'
 import { getPort } from 'get-port-please'
 import { createLocalService } from './server/local'
@@ -12,37 +18,40 @@ import { settingsStore } from './store/settings'
 import { internalStore } from './store/internal'
 import { setupTerminal } from './features/terminal'
 import { networkStore } from './store/network'
-import type { Context } from './server/router'
+import type { NextDevtoolsServerContext } from '@next-devtools/shared/types'
 import type { NextConfig } from 'next'
 import type { Compiler } from 'webpack'
 
 const globalThis = getGlobalThis()
 
 export class Plugin {
-  context: Context
+  context: NextDevtoolsServerContext['context']
   running: boolean = false
-  constructor(context: Context) {
+  constructor(context: NextDevtoolsServerContext['context']) {
     this.context = context
   }
 
   apply(compiler: Compiler) {
     compiler.hooks.emit.tap('NextDevtoolsPlugin', () => {
       if (!this.running && this.context.dev && this.context.runtime === 'node' && typeof window === 'undefined') {
-        const options = compiler.options
+        const ctx: NextDevtoolsServerContext = {
+          options: compiler.options,
+          context: this.context,
+        }
 
         const __NEXT_DEVTOOLS_EE__ = new EventEmitter()
         globalThis.__NEXT_DEVTOOLS_EE__ = __NEXT_DEVTOOLS_EE__
 
-        settingsStore.getState().setup(this.context)
-        internalStore.getState().setup(options)
+        // Ensuring order
+        createRPCServer(ctx)
+        createLocalService()
+        createStaticServer(ctx)
+        setupTerminal()
+        internalStore.getState().setup(ctx)
+        settingsStore.getState().setup(ctx)
         networkStore.getState().setup()
 
-        setupTerminal()
-        createLocalService(this.context.localClientPort)
-        createRPCServer(options, this.context)
-        createStaticServer(this.context, this.context.staticServerPort)
-
-        consola.log(colors.blueBright(`   ▲ Next Devtools ${process.env.VERSION}`))
+        consola.log(colors.magenta(colors.bold(`   ▲ Next Devtools ${process.env.VERSION}`)))
         consola.log('')
         this.running = true
       }
@@ -79,19 +88,19 @@ export function withNextDevtools(nextConfig: NextConfig): NextConfig {
     },
 
     rewrites: async () => {
-      localClientPort = (await getPort({ port: Number(LOCAL_CLIENT_PORT) })).toString()
-      staticServerPort = (await getPort({ port: Number(STATIC_SERVER_PORT) })).toString()
+      localClientPort = await getPort({ port: LOCAL_CLIENT_PORT })
+      staticServerPort = await getPort({ port: STATIC_SERVER_PORT })
       const nextRewrites = await nextConfig.rewrites?.()
       if (process.env.NODE_ENV === 'production') return nextRewrites || []
 
       const localClientHost = ip('lo') || 'localhost'
       const rewrites = [
         {
-          source: '/__next_devtools__/client/:path*',
-          destination: `http://${localClientHost}:${localClientPort}/__next_devtools__/client/:path*`,
+          source: `${CLIENT_BASE_PATH}/:path*`,
+          destination: `http://${localClientHost}:${localClientPort}${CLIENT_BASE_PATH}/:path*`,
         },
         {
-          source: '/__next_devtools__/static/:path*',
+          source: `${STATIC_BASE_PATH}/:path*`,
           destination: `http://${localClientHost}:${staticServerPort}/:path*`,
         },
       ]

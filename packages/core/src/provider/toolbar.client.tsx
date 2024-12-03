@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { NextLogo } from '@next-devtools/shared/components'
+import { CLIENT_BASE_PATH } from '@next-devtools/shared/constants'
 import { isDev } from '../utils'
 import { useLocalStorage } from './use-local-storage'
 import type { CSSProperties } from 'react'
@@ -96,7 +97,7 @@ export default function Toolbar({ inspectorActive, setInspectorActive, iframeRef
             ref={iframeRef}
             className="next-devtools-iframe"
             id="next-devtools-iframe"
-            src="/__next_devtools__/client"
+            src={CLIENT_BASE_PATH}
             style={{ display: show ? 'block' : 'none' }}
           />
         </div>

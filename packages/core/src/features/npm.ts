@@ -1,5 +1,7 @@
 import { detectPackageManager } from 'nypm'
 import { executeCommand } from './terminal'
+import { restartProject } from './service'
+import type { NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
 
 export type NpmCommandType = 'install' | 'uninstall' | 'update'
 export interface NpmCommandOptions {
@@ -55,4 +57,31 @@ export async function runNpmCommand(command: NpmCommandType, packageName: string
   return {
     processId,
   }
+}
+
+export function setupNpmRpc({ context }: NextDevtoolsServerContext) {
+  return {
+    runAnalyzeBuild: async () => {
+      await executeCommand(
+        {
+          command: 'npx',
+          args: [`next`, `build`],
+          options: {
+            env: {
+              ANALYZE: 'true',
+            },
+            cwd: context.dir,
+            onExit: () => {
+              restartProject()
+            },
+          },
+        },
+        {
+          id: `devtools:build`,
+          name: `next build`,
+          icon: 'i-ri-pie-chart-box-line',
+        },
+      )
+    },
+  } satisfies Partial<ServerFunctions>
 }

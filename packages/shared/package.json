@@ -81,6 +81,8 @@
   },
   "devDependencies": {
     "@types/react": "catalog:react19",
+    "next": "catalog:next15",
+    "webpack": "catalog:",
     "zustand": "catalog:"
   }
 }

@@ -3,10 +3,10 @@ import path from 'node:path'
 import fs from 'fs-extra'
 import sirv from 'sirv'
 import { TEMP_DIR } from '@next-devtools/shared/constants'
-import type { Context } from './router'
+import type { NextDevtoolsServerContext } from '@next-devtools/shared/types'
 
-export async function createStaticServer(context: Context, port: string) {
-  const dir = path.join(context.dir, TEMP_DIR)
+export async function createStaticServer(ctx: NextDevtoolsServerContext) {
+  const dir = path.join(ctx.context.dir, TEMP_DIR)
 
   if (!(await fs.exists(dir))) {
     await fs.mkdir(dir)
@@ -14,7 +14,7 @@ export async function createStaticServer(context: Context, port: string) {
 
   const server = http.createServer(sirv(dir, { dev: true, single: false }))
 
-  const app = server.listen(port)
+  const app = server.listen(ctx.context.staticServerPort)
 
   process.on('SIGTERM', () => {
     app.close()

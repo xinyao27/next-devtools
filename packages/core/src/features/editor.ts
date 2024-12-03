@@ -1,6 +1,7 @@
 import { Editor, editorCommands } from '@next-devtools/shared/types'
 import { settingsStore } from '../store/settings'
 import { executeCommand } from './terminal'
+import type { NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
 
 interface OpenInEditorOptions {
   path: string
@@ -23,4 +24,10 @@ export async function openInEditor({ path, line, column, editor }: OpenInEditorO
   } else {
     executeCommand({ command: editorCommands[editor], args: [path] }, terminalOptions)
   }
+}
+
+export function setupEditorRpc(_: NextDevtoolsServerContext) {
+  return {
+    openInEditor,
+  } satisfies Partial<ServerFunctions>
 }

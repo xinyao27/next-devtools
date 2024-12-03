@@ -3,6 +3,7 @@ import { getRoutes } from './routes'
 import { getComponents } from './components'
 import { getPackages } from './packages'
 import { getStaticAssets } from './assets'
+import type { NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
 
 export async function getOverviewData() {
   const version = process.env.VERSION!
@@ -24,4 +25,10 @@ export async function getOverviewData() {
     assets,
     packages,
   }
+}
+
+export function setupOverviewRpc(_: NextDevtoolsServerContext) {
+  return {
+    getOverviewData,
+  } satisfies Partial<ServerFunctions>
 }

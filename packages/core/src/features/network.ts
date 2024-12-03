@@ -1,8 +1,11 @@
-import { on } from 'node:events'
 import { getFetchHeaders } from '../utils'
 import { networkStore } from '../store/network'
-import type { Difference } from '@next-devtools/shared/utils'
-import type { NetworkMethod, NetworkRequest } from '@next-devtools/shared/types'
+import type {
+  NetworkMethod,
+  NetworkRequest,
+  NextDevtoolsServerContext,
+  ServerFunctions,
+} from '@next-devtools/shared/types'
 
 export function patchFetch(original: typeof globalThis.fetch) {
   // @ts-expect-error: If the fetch is already patched, return the original
@@ -68,12 +71,8 @@ function isNextDevToolsRequest(headers?: HeadersInit) {
   return true
 }
 
-export async function* onNetworkUpdate(opts: any) {
-  for await (const [data] of on(globalThis.__NEXT_DEVTOOLS_EE__, 'network:update', {
-    signal: opts.signal,
-  })) {
-    if (data.diff) {
-      yield data.diff as Difference[]
-    }
-  }
+export function setupNetworkRpc(_: NextDevtoolsServerContext) {
+  return {
+    getNetworkRequests: async () => networkStore.getState().requests,
+  } satisfies Partial<ServerFunctions>
 }

@@ -5,8 +5,7 @@ import { Editor } from '@next-devtools/shared/types'
 import { SETTINGS_FILE, TEMP_DIR } from '@next-devtools/shared/constants'
 import consola from 'consola'
 import { internalStore } from './internal'
-import type { Context } from '../server/router'
-import type { SettingsStore, SettingsStoreState } from '@next-devtools/shared/types'
+import type { NextDevtoolsServerContext, SettingsStore, SettingsStoreState } from '@next-devtools/shared/types'
 
 const defaultState: SettingsStoreState = {
   sidebarCollapsed: undefined,
@@ -17,8 +16,8 @@ const defaultState: SettingsStoreState = {
 export const settingsStore = createStore<SettingsStore>()((set) => ({
   ...defaultState,
 
-  setup: async (context: Context) => {
-    const dir = path.join(context.dir, TEMP_DIR)
+  setup: async (ctx: NextDevtoolsServerContext) => {
+    const dir = path.join(ctx.context.dir, TEMP_DIR)
     const settingsPath = path.join(dir, SETTINGS_FILE)
     let settings = defaultState
     try {
@@ -29,7 +28,6 @@ export const settingsStore = createStore<SettingsStore>()((set) => ({
     }
     set(settings)
   },
-  setState: (state) => set(state),
 }))
 
 settingsStore.subscribe((state) => {

@@ -3,7 +3,7 @@ import { basename, dirname, join } from 'node:path'
 import fg from 'fast-glob'
 import mine from 'mime-types'
 import { internalStore } from '../store/internal'
-import type { Asset, AssetType } from '@next-devtools/shared/types'
+import type { Asset, AssetType, NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
 
 function guessType(path: string): AssetType {
   if (/\.(a?png|jpe?g|jxl|gif|svg|webp|avif|ico|bmp|tiff?)$/i.test(path)) return 'image'
@@ -74,4 +74,11 @@ export async function getStaticAssetInfo(path: string) {
   const data = await fs.readFile(path, { encoding: 'base64' })
   const base64 = `data:${mine.lookup(path)};base64,${data}`
   return base64
+}
+
+export function setupAssetsRpc(_: NextDevtoolsServerContext) {
+  return {
+    getStaticAssets,
+    getStaticAssetInfo,
+  } satisfies Partial<ServerFunctions>
 }

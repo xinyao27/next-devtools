@@ -6,7 +6,7 @@ import { settingsStore } from '../store/settings'
 import type Documentation from 'react-docgen/dist/Documentation'
 import type { ComponentNode } from 'react-docgen/dist/resolver'
 import type { Config, NodePath } from 'react-docgen'
-import type { Component } from '@next-devtools/shared/types'
+import type { Component, NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
 
 type Plugins = NonNullable<NonNullable<NonNullable<Config['babelOptions']>['parserOpts']>['plugins']>
 const defaultPlugins: Plugins = [
@@ -103,4 +103,10 @@ export async function getComponents() {
     console.error(error)
     return []
   }
+}
+
+export function setupComponentsRpc(_: NextDevtoolsServerContext) {
+  return {
+    getComponents,
+  } satisfies Partial<ServerFunctions>
 }

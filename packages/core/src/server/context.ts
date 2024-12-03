@@ -1,5 +1,5 @@
 import type { WebpackOptionsNormalized } from 'webpack'
-import type { Context } from './router'
+import type { Context } from './rpc'
 
 export function createContext(options: WebpackOptionsNormalized, context: Context) {
   return () => {

@@ -1,5 +1,5 @@
-import { on } from 'node:events'
 import { getGlobalThis } from '../utils'
+import type { NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
 import type { Options, Subprocess } from 'execa'
 
 const globalThis = getGlobalThis()
@@ -61,20 +61,15 @@ export async function setupTerminal() {
     if (!terminal) return false
     return true
   })
-}
-
-export async function* onTerminalWrite(opts: any) {
-  for await (const [data] of on(globalThis.__NEXT_DEVTOOLS_EE__, 'terminal:write', {
-    signal: opts.signal,
-  })) {
+  globalThis.__NEXT_DEVTOOLS_EE__.on('terminal:write', (data) => {
     const terminal = terminals.get(data.id)
-    if (!terminal) continue
+    if (!terminal) return
 
     if (!terminal.buffer) terminal.buffer = ''
     terminal.buffer += data.data
 
-    yield data
-  }
+    globalThis.__NEXT_DEVTOOLS_RPC__?.broadcast.onTerminalWrite(data)
+  })
 }
 
 interface ExecuteCommandOptions {
@@ -175,4 +170,34 @@ export async function executeCommand(
     restart,
     clear,
   }
+}
+
+export function setupTerminalRpc({ context }: NextDevtoolsServerContext) {
+  return {
+    getTerminals: async () => await getTerminals(),
+    getTerminal: async (id: string) => await getTerminal(id),
+    runTerminalAction: async (id: string, action: TerminalAction) => await runTerminalAction(id, action),
+    executeCommand: async (
+      input: ExecuteCommandOptions & {
+        id: string
+        name: string
+        description?: string
+        icon: string
+      },
+    ) => {
+      await executeCommand(
+        {
+          command: input.command,
+          args: input.args,
+          options: { cwd: context.dir, ...input.options },
+        },
+        {
+          id: input.id,
+          name: input.name,
+          description: input.description,
+          icon: input.icon,
+        },
+      )
+    },
+  } satisfies Partial<ServerFunctions>
 }

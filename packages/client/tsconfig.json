@@ -1,19 +1,16 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "incremental": true,
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     },
-    "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "types": ["@types/wicg-file-system-access"]
+    ]
   },
-  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

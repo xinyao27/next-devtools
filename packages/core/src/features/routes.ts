@@ -1,6 +1,7 @@
 import { join, parse, sep } from 'node:path'
 import fg from 'fast-glob'
 import { internalStore } from '../store/internal'
+import type { NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
 
 interface Opts {
   pageExtensions: string[]
@@ -92,7 +93,13 @@ export async function getRoutes() {
       path: join(routePath, route.filePath),
       route: route.file,
     })),
-  }
+  } as const
 
   return result
+}
+
+export function setupRoutesRpc(_: NextDevtoolsServerContext) {
+  return {
+    getRoutes,
+  } satisfies Partial<ServerFunctions>
 }

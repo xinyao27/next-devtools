@@ -1,8 +1,7 @@
 import { join, resolve } from 'node:path'
 import { createStore } from 'zustand/vanilla'
 import fs from 'fs-extra'
-import type { WebpackOptionsNormalized } from 'webpack'
-import type { InternalStore } from '@next-devtools/shared/types'
+import type { InternalStore, NextDevtoolsServerContext } from '@next-devtools/shared/types'
 
 export const internalStore = createStore<InternalStore>()((set) => ({
   root: '',
@@ -13,9 +12,10 @@ export const internalStore = createStore<InternalStore>()((set) => ({
   isApp: false,
   isPages: false,
   routePath: '',
+  dev: false,
 
-  setup: (options: WebpackOptionsNormalized) => {
-    const root = options.context!
+  setup: (ctx: NextDevtoolsServerContext) => {
+    const root = ctx.options.context!
     const isSrcDirectory = fs.existsSync(join(root, '/src'))
     const codeRoot = isSrcDirectory ? join(root, '/src') : root
     let pkgPath: InternalStore['pkgPath'] = resolve(root, 'package.json')
@@ -26,6 +26,7 @@ export const internalStore = createStore<InternalStore>()((set) => ({
     const isApp = fs.existsSync(join(codeRoot, '/app'))
     const isPages = fs.existsSync(join(codeRoot, '/pages'))
     const routePath = join(codeRoot, isApp ? '/app' : isPages ? '/pages' : '/app')
+    const dev = ctx.context.dev
 
     set({
       root,
@@ -36,6 +37,7 @@ export const internalStore = createStore<InternalStore>()((set) => ({
       isApp,
       isPages,
       routePath,
+      dev,
     })
   },
 }))

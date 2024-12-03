@@ -1,23 +1,22 @@
 import dotenv from 'dotenv'
 import nextEnv from '@next/env'
 import { internalStore } from '../store/internal'
-import type { Env } from '@next-devtools/shared/types'
-import type { Context } from '../server/router'
+import type { Env, NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
 
 /**
  * Get all envs including .env, .env.local, .env.[mode], .env.[mode].local and next.config.js -> env
  * @param context
  * @returns
  */
-export async function getEnvs(context: Context) {
-  const root = internalStore.getState().root
+export async function getEnvs() {
+  const { root, dev } = internalStore.getState()
 
   const result: Env = {
     publicEnv: {},
     privateEnv: {},
     loadedEnvFiles: [],
   }
-  const nextEnvConfig = nextEnv.loadEnvConfig(root, context.dev)
+  const nextEnvConfig = nextEnv.loadEnvConfig(root, dev)
   Object.keys(nextEnvConfig.combinedEnv).forEach((key) => {
     const value = nextEnvConfig.combinedEnv[key]
     if (typeof value === 'string') {
@@ -31,4 +30,10 @@ export async function getEnvs(context: Context) {
   })
 
   return result
+}
+
+export function setupEnvsRpc(_: NextDevtoolsServerContext) {
+  return {
+    getEnvs,
+  } satisfies Partial<ServerFunctions>
 }

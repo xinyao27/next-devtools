@@ -14,12 +14,10 @@
     "email": "hi@xinyao.me"
   },
   "scripts": {
-    "build": "next build",
-    "postbuild": "sh ./postbuild.sh"
+    "build": "vite build"
   },
   "dependencies": {
     "@microlink/react-json-view": "^1.23.4",
-    "@next-devtools/core": "workspace:*",
     "@next-devtools/shared": "workspace:*",
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-checkbox": "^1.1.2",
@@ -39,8 +37,7 @@
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-table": "catalog:",
     "@tanstack/react-virtual": "catalog:",
-    "@trpc/client": "catalog:",
-    "@trpc/react-query": "catalog:",
+    "birpc": "catalog:",
     "class-variance-authority": "^0.7.1",
     "clsx": "catalog:",
     "cmdk": "^1.0.4",
@@ -48,18 +45,17 @@
     "date-fns": "catalog:",
     "framer-motion": "catalog:",
     "lucide-react": "^0.461.0",
-    "mini-svg-data-uri": "^1.4.4",
     "next-themes": "^0.4.3",
     "pretty-ms": "^9.2.0",
     "react": "catalog:react19",
+    "react-dom": "catalog:react19",
     "react-resizable-panels": "^2.1.7",
-    "react-spring": "^9.7.4",
+    "react-router": "^7.0.1",
     "react-use": "^17.5.1",
     "sonner": "^1.7.0",
     "sugar-high": "^0.7.5",
     "superjson": "catalog:",
     "tailwind-merge": "catalog:",
-    "tailwindcss-animate": "^1.0.7",
     "xterm": "5.2.1",
     "xterm-addon-fit": "^0.8.0",
     "zustand": "catalog:"
@@ -67,11 +63,14 @@
   "devDependencies": {
     "@egoist/tailwindcss-icons": "catalog:",
     "@iconify-json/ri": "catalog:",
+    "@next-devtools/core": "workspace:*",
     "@types/react": "catalog:react19",
-    "@types/wicg-file-system-access": "^2023.10.5",
+    "@types/react-dom": "catalog:react19",
+    "@vitejs/plugin-react-swc": "^3.7.2",
     "autoprefixer": "catalog:",
-    "next": "catalog:next15",
     "postcss": "catalog:",
-    "tailwindcss": "catalog:"
+    "tailwindcss": "catalog:",
+    "tailwindcss-animate": "^1.0.7",
+    "vite": "^6.0.1"
   }
 }

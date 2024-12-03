@@ -1,9 +1,11 @@
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import semver from 'semver'
+import { getLatestVersion } from 'fast-npm-meta'
 import { internalStore } from '../store/internal'
 import { getFetchHeaders } from '../utils'
-import type { Package } from '@next-devtools/shared/types'
+import { runNpmCommand } from './npm'
+import type { NextDevtoolsServerContext, Package, ServerFunctions } from '@next-devtools/shared/types'
 
 export async function getPackages() {
   const root = internalStore.getState().root
@@ -55,12 +57,15 @@ export async function checkPackageVersion(name: string, current?: string) {
     if (!pkg) return null
     current = pkg.version
   }
-
   if (!current) return null
+  current = semver.clean(current)!
+  if (typeof current !== 'string') return null
 
   const npmData = await getPackageInfo(name)
-  const latest = npmData['dist-tags'].latest
-  const isOutdated = latest !== current && semver.gt(latest, current)
+  const { version: latest } = await getLatestVersion(name, {
+    fetch,
+  })
+  const isOutdated = !!latest && latest !== current && semver.lt(current, latest)
 
   return {
     name,
@@ -69,4 +74,16 @@ export async function checkPackageVersion(name: string, current?: string) {
     isOutdated,
     npmData,
   }
+}
+
+export function setupPackagesRpc(_: NextDevtoolsServerContext) {
+  return {
+    getPackages,
+    getPackageInfo,
+    checkPackageVersion,
+    updatePackageVersion: async (name, options) => {
+      const root = internalStore.getState().root
+      await runNpmCommand('update', name, { cwd: root, ...options })
+    },
+  } satisfies Partial<ServerFunctions>
 }

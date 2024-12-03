@@ -62,13 +62,13 @@
   "dependencies": {
     "@next-devtools/shared": "workspace:*",
     "@next/env": "^15.0.3",
-    "@trpc/client": "catalog:",
-    "@trpc/server": "catalog:",
     "address": "^2.0.3",
+    "birpc": "catalog:",
     "consola": "catalog:",
     "dotenv": "^16.4.5",
     "execa": "^9.5.1",
     "fast-glob": "^3.3.2",
+    "fast-npm-meta": "^0.2.2",
     "fkill": "^9.0.0",
     "fs-extra": "^11.2.0",
     "get-port-please": "^3.1.2",
@@ -93,6 +93,6 @@
     "@types/semver": "^7.5.8",
     "@types/ws": "^8.5.13",
     "next": "catalog:next15",
-    "webpack": "^5.96.1"
+    "webpack": "catalog:"
   }
 }

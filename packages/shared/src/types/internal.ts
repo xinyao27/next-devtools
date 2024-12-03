@@ -1,3 +1,5 @@
+import type { NextDevtoolsServerContext } from './rpc'
+
 export interface InternalStoreState {
   root: string
   isSrcDirectory: boolean
@@ -7,10 +9,11 @@ export interface InternalStoreState {
   isApp: boolean
   isPages: boolean
   routePath: string
+  dev: boolean
 }
 
 export interface InternalStoreActions {
-  setup: (options: any) => void
+  setup: (ctx: NextDevtoolsServerContext) => void
 }
 
 export type InternalStore = InternalStoreState & InternalStoreActions
