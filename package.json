@@ -2,7 +2,7 @@
   "name": "@next-devtools/monorepo",
   "version": "0.2.0",
   "private": true,
-  "packageManager": "pnpm@9.14.2",
+  "packageManager": "pnpm@9.14.4",
   "type": "module",
   "license": "MIT",
   "author": {
@@ -34,7 +34,7 @@
     "@release-it/bumper": "^6.0.1",
     "@release-it/conventional-changelog": "^9.0.3",
     "@xystack/style-guide": "catalog:",
-    "bunchee": "^5.6.1",
+    "bunchee": "^6.0.0",
     "commitizen": "^4.3.1",
     "copyfiles": "^2.4.1",
     "cross-env": "^7.0.3",
@@ -46,7 +46,7 @@
     "prettier": "catalog:",
     "release-it": "^17.10.0",
     "taze": "^0.18.0",
-    "turbo": "^2.3.2",
+    "turbo": "^2.3.3",
     "typescript": "catalog:"
   },
   "prettier": "@xystack/style-guide/prettier"

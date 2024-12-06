@@ -17,7 +17,7 @@
     "@stripe/stripe-js": "^5.2.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "catalog:",
-    "lucide-react": "^0.461.0",
+    "lucide-react": "^0.468.0",
     "nanoid": "4.0.0",
     "next": "catalog:next15",
     "react": "catalog:react19",
