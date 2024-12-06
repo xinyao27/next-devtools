@@ -60,7 +60,7 @@ export default function Page() {
               </SheetHeader>
 
               <div className="mt-4 space-y-2">
-                <CodeBlock>ANALYZE=true npx next build</CodeBlock>
+                <CodeBlock code="ANALYZE=true npx next build" />
               </div>
 
               <SheetFooter className="mt-8">

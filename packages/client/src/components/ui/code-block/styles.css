@@ -1,3 +1,18 @@
+:root {
+  /**
+    * sugar-high colors
+    */
+  --sh-class: #ed9cc2;
+  --sh-property: #ed9cc2;
+  --sh-entity: #c391e6;
+  --sh-keyword: #f47067;
+  --sh-string: #a3a3a3;
+  --sh-jsxliterals: #a3a3a3;
+  --sh-sign: #a3a3a3;
+  --sh-comment: #a3a3a3;
+  --sh-identifier: #a3a3a3;
+}
+
 .sh__line {
   display: block;
 }

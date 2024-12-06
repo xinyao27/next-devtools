@@ -1,32 +1,48 @@
 'use client'
 
 import { useCallback, useMemo, useRef, useState } from 'react'
-import { useCopyToClipboard } from 'react-use'
 import { generate, tokenize } from 'sugar-high'
 import { useVirtualizer } from '@tanstack/react-virtual'
+import { Check, Clipboard } from 'lucide-react'
+import { useCopyToClipboard } from 'react-use'
 import { cn } from '@/lib/utils'
 import { Button } from '../button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../tabs'
+
 import './styles.css'
 
 export interface CodeProps {
-  children?: string
+  code?: string
+  codes?: {
+    label: string
+    code: string
+  }[]
   className?: string
   language?: string
   fileName?: string
   lineNumbers?: boolean
+  showLanguage?: boolean
 }
-const CodeBlock = ({ children, className, language, fileName, lineNumbers = false, ...rest }: CodeProps) => {
+const SingleCodeBlock = ({
+  code,
+  className,
+  language,
+  fileName,
+  lineNumbers = false,
+  showLanguage = false,
+  ...rest
+}: Omit<CodeProps, 'codes'>) => {
   const parentRef = useRef<HTMLPreElement>(null)
   const [copied, setCopied] = useState(false)
   const [, copyToClipboard] = useCopyToClipboard()
-  const handleCopy = useCallback((text: string) => {
+  const handleCopy = useCallback((code: string) => {
     setCopied(true)
     setTimeout(() => setCopied(false), 3000)
-    copyToClipboard(text)
+    copyToClipboard(code)
   }, [])
   const match = useMemo(() => /language-(?<lang>\w+)/.exec(className || ''), [className])
   const lang = useMemo(() => language || match?.[1], [language, match?.[1]])
-  const lines = useMemo(() => generate(tokenize(children ?? '')), [children, match])
+  const lines = useMemo(() => generate(tokenize(code ?? '')), [code, match])
   const rowVirtualizer = useVirtualizer({
     count: lines.length,
     getScrollElement: () => parentRef.current,
@@ -80,29 +96,25 @@ const CodeBlock = ({ children, className, language, fileName, lineNumbers = fals
 
   const copyNode = (
     <Button
-      disabled={!children}
+      disabled={!code}
       size="icon"
-      variant="outline"
+      variant="secondary"
       className={cn(
         'absolute right-2 top-2 z-10 opacity-0 transition-all duration-300 ease-in-out',
-        children && 'group-hover:opacity-100',
+        code && 'group-hover:opacity-100',
       )}
-      onClick={() => handleCopy(children!)}
+      onClick={() => handleCopy(code!)}
     >
-      {copied ? (
-        <i className="i-ri-check-line size-4 text-green-500" />
-      ) : (
-        <i className="i-ri-clipboard-line text-foreground/60 size-4" />
-      )}
+      {copied ? <Check className="size-4 text-green-500" /> : <Clipboard className="text-foreground size-4" />}
     </Button>
   )
 
   return (
-    <div className="border-accent group relative min-h-12 overflow-hidden rounded border">
+    <div className="border-accent group relative min-h-12 w-full overflow-hidden rounded-sm border">
       {fileName ? (
         <span className="text-muted-foreground absolute left-2 top-1 z-10 select-none text-xs">{fileName}</span>
       ) : null}
-      {lang ? (
+      {lang && showLanguage ? (
         <span className="text-muted-foreground absolute right-2 top-1 z-10 text-xs opacity-100 transition-all duration-300 ease-in-out group-hover:opacity-0">
           {lang}
         </span>
@@ -111,6 +123,33 @@ const CodeBlock = ({ children, className, language, fileName, lineNumbers = fals
       {node}
     </div>
   )
+}
+
+const CodeBlock = (props: CodeProps) => {
+  const { codes, ...rest } = props
+  const multipleCodes = codes && codes.length > 1
+  const [selected, setSelected] = useState<string>(codes?.[0].label ?? '')
+
+  if (multipleCodes) {
+    return (
+      <Tabs className="w-full space-y-0" defaultValue={selected} onValueChange={setSelected}>
+        <TabsList className="w-full justify-start border-b-transparent">
+          {codes.map((code) => (
+            <TabsTrigger key={code.label} value={code.label}>
+              {code.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        {codes.map((code) => (
+          <TabsContent key={code.label} value={code.label}>
+            <SingleCodeBlock code={code.code} {...rest} />
+          </TabsContent>
+        ))}
+      </Tabs>
+    )
+  }
+
+  return <SingleCodeBlock {...props} />
 }
 
 export default CodeBlock

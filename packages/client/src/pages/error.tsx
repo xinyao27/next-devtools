@@ -20,7 +20,7 @@ export default function ErrorPage() {
           <CardDescription>Sorry, an unexpected error has occurred.</CardDescription>
         </CardHeader>
         <CardContent>
-          {error ? <CodeBlock>{error.error?.stack ?? error.error?.message ?? error.toString()}</CodeBlock> : null}
+          {error ? <CodeBlock code={error.error?.stack ?? error.error?.message ?? error.toString()} /> : null}
         </CardContent>
         <CardFooter className="flex gap-2">
           <Button size="sm" variant="secondary" onClick={handleRetry}>

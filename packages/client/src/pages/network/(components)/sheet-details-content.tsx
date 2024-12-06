@@ -67,7 +67,7 @@ const rows: Row[] = [
     label: 'Headers',
     content: (data) =>
       data.headers ? (
-        <CodeBlock language="json">{JSON.stringify(data.headers, null, 2)}</CodeBlock>
+        <CodeBlock code={JSON.stringify(data.headers, null, 2)} language="json" />
       ) : (
         <i className="i-ri-subtract-line opacity-60" />
       ),
@@ -78,7 +78,7 @@ const rows: Row[] = [
     label: 'Body',
     content: (data) =>
       data.body ? (
-        <CodeBlock language="json">{JSON.stringify(JSON.parse(data.body), null, 2)}</CodeBlock>
+        <CodeBlock code={JSON.stringify(JSON.parse(data.body), null, 2)} language="json" />
       ) : (
         <i className="i-ri-subtract-line opacity-60" />
       ),
