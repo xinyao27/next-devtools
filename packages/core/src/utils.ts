@@ -85,3 +85,11 @@ export function isNextDevToolsRequest(headers?: HeadersInit) {
 
   return true
 }
+
+export const customFetch = (url: URL | RequestInfo, options?: RequestInit) => {
+  const headers = {
+    ...options?.headers,
+    ...getFetchHeaders(),
+  }
+  return fetch(url, { ...options, headers })
+}

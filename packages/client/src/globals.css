@@ -67,37 +67,22 @@
 ::-webkit-scrollbar {
   width: 6px;
 }
-
 ::-webkit-scrollbar:horizontal {
   height: 6px;
 }
-
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
-
 ::-webkit-scrollbar-track {
   background: transparent;
   border-radius: 7px;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #999;
+  background: hsl(var(--muted));
   border-radius: 7px;
   -webkit-transition: background 0.2s ease;
   transition: background 0.2s ease;
 }
-.dark::-webkit-scrollbar-thumb {
-  background: #333;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #666;
-}
-.dark::-webkit-scrollbar-thumb:hover {
-  background: #999;
-}
-
 .no-scrollbar::-webkit-scrollbar {
   display: none;
   height: 0 !important;

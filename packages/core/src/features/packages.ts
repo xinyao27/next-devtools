@@ -3,7 +3,7 @@ import { resolve } from 'node:path'
 import semver from 'semver'
 import { getLatestVersion } from 'fast-npm-meta'
 import { internalStore } from '../store/internal'
-import { getFetchHeaders } from '../utils'
+import { customFetch, getFetchHeaders } from '../utils'
 import { runNpmCommand } from './npm'
 import type { NextDevtoolsServerContext, Package, ServerFunctions } from '@next-devtools/shared/types'
 
@@ -63,7 +63,7 @@ export async function checkPackageVersion(name: string, current?: string) {
 
   const npmData = await getPackageInfo(name)
   const { version: latest } = await getLatestVersion(name, {
-    fetch,
+    fetch: customFetch,
   })
   const isOutdated = !!latest && latest !== current && semver.lt(current, latest)
 
