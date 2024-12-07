@@ -1,7 +1,7 @@
 import { createStore } from 'zustand/vanilla'
 import { subscribeWithSelector } from 'zustand/middleware'
 import { diff } from '@next-devtools/shared/utils'
-import { patchFetch } from '../features/network'
+import { patchFetch } from '../utils'
 import type { NetworkStore, NetworkStoreState } from '@next-devtools/shared/types'
 
 const defaultState: NetworkStoreState = {

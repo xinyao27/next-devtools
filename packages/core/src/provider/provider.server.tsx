@@ -1,7 +1,6 @@
 'use server'
 
-import { patchFetch } from '../features/network'
-import { isDev } from '../utils'
+import { isDev, patchFetch } from '../utils'
 import { NextDevtoolsClientProvider } from './provider.client'
 
 interface NextDevtoolsServerProviderProps {
