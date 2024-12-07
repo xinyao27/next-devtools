@@ -107,7 +107,7 @@ export default function SideBar() {
                       size="sm"
                       variant="ghost"
                       className={cn(
-                        'hover:text-primary group relative flex w-full overflow-hidden px-0 opacity-50 transition-all duration-200 hover:bg-zinc-500/10 md:px-3',
+                        'group relative flex w-full overflow-hidden px-0 opacity-50 transition-all duration-200 hover:bg-zinc-500/10 md:px-3',
                         {
                           'text-primary bg-secondary opacity-100': isActive,
                           '!px-0': sidebarCollapsed === true,
@@ -118,7 +118,7 @@ export default function SideBar() {
                       <i
                         className={cn(
                           item.icon,
-                          'absolute left-1.5 size-5 flex-none transition-all duration-200 md:left-3',
+                          'group-hover:text-primary absolute left-1.5 size-5 flex-none transition-all duration-200 md:left-3',
                           {
                             '!left-1.5': sidebarCollapsed === true,
                             '!left-3': sidebarCollapsed === false,
@@ -127,7 +127,7 @@ export default function SideBar() {
                       />
                       <div
                         className={cn(
-                          'w-0 text-left opacity-0 transition-all duration-200 md:w-full md:pl-7 md:opacity-100',
+                          'group-hover:text-primary w-0 text-left opacity-0 transition-all duration-200 md:w-full md:pl-7 md:opacity-100',
                           { '!w-0 !opacity-0': sidebarCollapsed === true },
                           { '!w-full !pl-7 !opacity-100': sidebarCollapsed === false },
                         )}

@@ -22,7 +22,7 @@ export default function OpenInEditor({ value, children, className, disableLine }
       <div
         className="group-hover:text-primary hidden items-center transition group-hover:flex"
         role="button"
-        title="Open in vscode"
+        title="Open in editor"
         onClick={() => openInEditor({ path: value })}
       >
         <i className="i-ri-share-box-line size-4" />
