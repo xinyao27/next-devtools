@@ -1,4 +1,3 @@
-import { ChevronDown, ChevronUp } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { Column } from '@tanstack/react-table'
 
@@ -23,17 +22,15 @@ export function DataTableColumnHeader<TData, TValue>({
     >
       <span>{title}</span>
       <span className="flex flex-col">
-        <ChevronUp
-          size={12}
+        <i
           className={cn(
-            '-mb-0.5 opacity-50',
+            'i-ri-arrow-up-s-line -mb-0.5 opacity-50',
             column.getIsSorted() === 'asc' ? 'text-accent-foreground opacity-100' : 'text-muted-foreground opacity-50',
           )}
         />
-        <ChevronDown
-          size={12}
+        <i
           className={cn(
-            '-mt-0.5 opacity-50',
+            'i-ri-arrow-down-s-line -mt-0.5 opacity-50',
             column.getIsSorted() === 'desc' ? 'text-accent-foreground opacity-100' : 'text-muted-foreground opacity-50',
           )}
         />

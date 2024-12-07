@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { X } from 'lucide-react'
 import * as ToastPrimitives from '@radix-ui/react-toast'
 import { type VariantProps, cva } from 'class-variance-authority'
 
@@ -71,7 +70,7 @@ const ToastClose = React.forwardRef<
     )}
     {...props}
   >
-    <X className="size-4" />
+    <i className="i-ri-close-line size-4" />
   </ToastPrimitives.Close>
 ))
 ToastClose.displayName = ToastPrimitives.Close.displayName

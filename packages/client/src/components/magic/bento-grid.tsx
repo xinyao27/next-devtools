@@ -1,4 +1,3 @@
-import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router'
 import { cn } from '@/lib/utils'
 import type { ReactNode } from 'react'
@@ -48,7 +47,7 @@ const BentoCard = ({ name, className, background, Icon, description, href, cta }
         )}
       >
         {cta}
-        <ArrowRight className="ml-2 size-4" />
+        <i className="i-ri-arrow-right-line ml-2 size-4" />
       </div>
       <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/[.03] group-hover:dark:bg-neutral-800/10" />
     </Link>

@@ -3,7 +3,6 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { generate, tokenize } from 'sugar-high'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { Check, Clipboard } from 'lucide-react'
 import { useCopyToClipboard } from 'react-use'
 import { cn } from '@/lib/utils'
 import { Button } from '../button'
@@ -105,7 +104,11 @@ const SingleCodeBlock = ({
       )}
       onClick={() => handleCopy(code!)}
     >
-      {copied ? <Check className="size-4 text-green-500" /> : <Clipboard className="text-foreground size-4" />}
+      {copied ? (
+        <i className="i-ri-check-line size-4 text-green-500" />
+      ) : (
+        <i className="i-ri-clipboard-line text-foreground size-4" />
+      )}
     </Button>
   )
 

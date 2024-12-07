@@ -1,6 +1,5 @@
 'use client'
 
-import { ChevronDown, ChevronUp, X } from 'lucide-react'
 import * as React from 'react'
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
@@ -53,14 +52,14 @@ export function DataTableSheetDetails<TData>({ table, title, children }: DataTab
   return (
     <Sheet open={!!selectedRowKey} onOpenChange={() => table.toggleAllRowsSelected(false)}>
       <SheetContent className="overflow-y-auto p-0 sm:max-w-md">
-        <SheetHeader className="bg-background sticky top-0 border-b p-4">
+        <SheetHeader className="bg-background sticky top-0 z-10 border-b p-4">
           <div className="flex items-center justify-between gap-2">
             <SheetTitle className="truncate text-left font-mono">{title}</SheetTitle>
             <div className="flex h-7 items-center gap-1">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button className="h-7 w-7" disabled={!prevId} size="icon" variant="ghost" onClick={onPrev}>
-                    <ChevronUp className="h-5 w-5" />
+                    <i className="i-ri-arrow-up-s-line h-5 w-5" />
                     <span className="sr-only">Previous</span>
                   </Button>
                 </TooltipTrigger>
@@ -73,7 +72,7 @@ export function DataTableSheetDetails<TData>({ table, title, children }: DataTab
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button className="h-7 w-7" disabled={!nextId} size="icon" variant="ghost" onClick={onNext}>
-                    <ChevronDown className="h-5 w-5" />
+                    <i className="i-ri-arrow-down-s-line h-5 w-5" />
                     <span className="sr-only">Next</span>
                   </Button>
                 </TooltipTrigger>
@@ -86,7 +85,7 @@ export function DataTableSheetDetails<TData>({ table, title, children }: DataTab
               <Separator className="mx-1" orientation="vertical" />
               <SheetClose asChild autoFocus={true}>
                 <Button className="h-7 w-7" size="icon" variant="ghost">
-                  <X className="h-5 w-5" />
+                  <i className="i-ri-close-line h-5 w-5" />
                   <span className="sr-only">Close</span>
                 </Button>
               </SheetClose>
