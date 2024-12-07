@@ -23,6 +23,7 @@ export default {
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
+        sidebar: 'hsl(var(--sidebar))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

@@ -26,6 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script async src="https://unpkg.com/react-scan/dist/auto.global.js" />
+        {/* rest of your scripts go under */}
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NextDevtoolsProvider>{children}</NextDevtoolsProvider>
       </body>

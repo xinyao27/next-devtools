@@ -1,7 +1,6 @@
-/* eslint-disable react/no-array-index-key */
 'use client'
 import React from 'react'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { cn } from '@/utils/cn'
 
 export function BackgroundBeams({ className }: { className?: string }) {
@@ -60,12 +59,12 @@ export function BackgroundBeams({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'absolute  h-full w-full inset-0  [mask-size:40px] [mask-repeat:no-repeat] flex items-center justify-center',
+        'absolute inset-0 flex h-full w-full items-center justify-center [mask-repeat:no-repeat] [mask-size:40px]',
         className,
       )}
     >
       <svg
-        className="absolute z-0 w-full h-full pointer-events-none "
+        className="pointer-events-none absolute z-0 h-full w-full"
         fill="none"
         height="100%"
         viewBox="0 0 696 316"

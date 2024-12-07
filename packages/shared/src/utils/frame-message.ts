@@ -23,6 +23,10 @@ export function createFrameMessageHandler(fns: FrameMessageFunctions, ref: React
   window?.addEventListener('beforeunload', () => {
     window?.removeEventListener('message', handler, false)
   })
+  const unsubscribe = () => {
+    window?.removeEventListener('message', handler, false)
+  }
+  return unsubscribe
 }
 
 const blackList = ['$$typeof']
@@ -44,7 +48,10 @@ export function createFrameMessageClient<T extends FrameMessageFunctions>() {
   return client
 }
 
+export type FrameStatus = 'hide' | 'mini' | 'full'
+
 export interface FrameMessageHandler extends FrameMessageFunctions {
+  toggle: (status: FrameStatus) => Promise<void>
   getRoute: () => Promise<string>
   pushRoute: (href: string) => Promise<void>
   backRoute: (href: string) => Promise<void>

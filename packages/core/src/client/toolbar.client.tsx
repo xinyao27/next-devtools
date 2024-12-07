@@ -3,105 +3,142 @@
 import React from 'react'
 import { NextLogo } from '@next-devtools/shared/components'
 import { CLIENT_BASE_PATH } from '@next-devtools/shared/constants'
+import { AnimatePresence, motion } from 'motion/react'
 import { isDev } from '../utils'
 import { useLocalStorage } from './use-local-storage'
-import type { CSSProperties } from 'react'
+import { useResizable } from './use-resizable'
+import type { MoveValues } from './use-resizable'
+import type { FrameStatus } from '@next-devtools/shared/utils'
 
 interface ToolbarProps {
-  inspectorActive: boolean
-  setInspectorActive: React.Dispatch<React.SetStateAction<boolean>>
   iframeRef: React.RefObject<HTMLIFrameElement>
+  frameStatus: FrameStatus
+  setFrameStatus: React.Dispatch<React.SetStateAction<FrameStatus>>
 }
 
-export default function Toolbar({ inspectorActive, setInspectorActive, iframeRef }: ToolbarProps) {
-  const frameRef = React.useRef<HTMLDivElement>(null)
-  const [show, setShow] = React.useState(false)
+export default function Toolbar({ iframeRef, frameStatus, setFrameStatus }: ToolbarProps) {
   const [panelActive, setPanelActive] = React.useState(false)
+  const [resizing, setResizing] = React.useState(false)
   const panelActiveTimeout = React.useRef<NodeJS.Timeout | null>(null)
 
   const handleToggle = React.useCallback(() => {
-    setShow((s) => !s)
+    setFrameStatus((s) => (s === 'hide' ? 'mini' : 'hide'))
   }, [])
-  const handleToggleInspectorActive = React.useCallback(() => {
-    if (show === true) setShow(false)
-    setInspectorActive((s) => !s)
-  }, [show])
+
   const handlePanelMouseEnter = React.useCallback(() => {
-    if (show || inspectorActive) return
+    if (frameStatus !== 'hide') return
     setPanelActive(true)
     if (panelActiveTimeout.current) clearTimeout(panelActiveTimeout.current)
-  }, [show, inspectorActive])
+  }, [frameStatus])
+
   const handlePanelMouseLeave = React.useCallback(() => {
-    if (show || inspectorActive) return
+    if (frameStatus !== 'hide') return
     panelActiveTimeout.current = setTimeout(
       () => {
         setPanelActive(false)
       },
       isDev ? 1000 : 3000,
     )
-  }, [show, inspectorActive])
+  }, [frameStatus])
 
-  const { ref, dragStyles, frameStyles, isDragging } = useDrag({ show, frameRef })
+  const handleResizeChange = React.useCallback(({ newHeight }: MoveValues) => {
+    document.body.style.paddingBottom = `${newHeight}px`
+  }, [])
+
+  // Set a default padding bottom so that the iframe doesn't jump when it's resized
+  React.useEffect(() => {
+    if (frameStatus === 'hide') return
+    document.body.style.paddingBottom = '500px'
+  }, [frameStatus])
+
+  const { ref, dragStyles, isDragging } = useDrag()
+  const { getRootProps, getHandleProps } = useResizable({
+    lockHorizontal: true,
+    initialHeight: 500,
+    initialWidth: '100%',
+    onDragStart: (values) => {
+      setResizing(true)
+      handleResizeChange(values)
+    },
+    onResize: (values) => {
+      setResizing(true)
+      handleResizeChange(values)
+    },
+    onDragEnd: (values) => {
+      setResizing(false)
+      handleResizeChange(values)
+    },
+  })
 
   return (
-    <div
-      className="next-devtools-container"
-      id="next-devtools-container"
-      style={{ position: 'fixed', zIndex: 2147483645, width: 0 }}
-    >
+    <div className="next-devtools-container" id="next-devtools-container">
       <div className="next-devtools-anchor" id="next-devtools-anchor" style={dragStyles}>
-        <div
-          ref={ref}
-          className={`next-devtools-panel ${panelActive ? 'active' : ''}`}
-          id="next-devtools-panel"
-          style={{
-            cursor: isDragging ? 'grabbing' : undefined,
-            transform: isDragging ? 'scale(1)' : show ? 'scale(1)' : undefined,
-            borderColor: isDragging ? 'var(--next-devtools-primary-light-color)' : undefined,
-            borderStyle: isDragging ? 'dashed' : undefined,
-          }}
-          onMouseEnter={handlePanelMouseEnter}
-          onMouseLeave={handlePanelMouseLeave}
-        >
-          <div className="next-devtools-panel-wrapper">
-            <button className="next-devtools-toggle-button" title="Toggle Next Devtools" onClick={handleToggle}>
-              <NextLogo
-                fill={show ? 'var(--next-devtools-primary-color)' : '#fff'}
-                mode="small"
-                style={{ minWidth: 30 }}
-                theme="light"
-              />
-            </button>
-
-            <div className="next-devtools-separator" />
-
-            <button
-              className="next-devtools-inspector-button"
-              title="Toggle Component Inspector"
-              onClick={handleToggleInspectorActive}
+        <AnimatePresence>
+          {frameStatus === 'hide' && (
+            <motion.div
+              ref={ref}
+              className={`next-devtools-panel ${panelActive ? 'active' : ''}`}
+              id="next-devtools-panel"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{
+                y: 0,
+                opacity: 1,
+              }}
+              exit={{
+                y: 20,
+                opacity: 0,
+              }}
+              style={{
+                cursor: isDragging ? 'grabbing' : undefined,
+              }}
+              transition={{
+                duration: 0.3,
+                ease: 'easeInOut',
+              }}
+              onMouseEnter={handlePanelMouseEnter}
+              onMouseLeave={handlePanelMouseLeave}
             >
-              <svg
-                className="next-devtools-inspector-icon"
-                style={{ fill: inspectorActive ? 'var(--next-devtools-primary-color)' : 'rgba(255, 255, 255, 0.8)' }}
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M13 1L13.001 4.06201C16.6192 4.51365 19.4869 7.38163 19.9381 11L23 11V13L19.938 13.001C19.4864 16.6189 16.6189 19.4864 13.001 19.938L13 23H11L11 19.9381C7.38163 19.4869 4.51365 16.6192 4.06201 13.001L1 13V11L4.06189 11C4.51312 7.38129 7.38129 4.51312 11 4.06189L11 1H13ZM12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6ZM12 10C13.1046 10 14 10.8954 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10Z" />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <div ref={frameRef} className="next-devtools-frame" id="next-devtools-frame" style={frameStyles}>
-          <iframe
-            ref={iframeRef}
-            className="next-devtools-iframe"
-            id="next-devtools-iframe"
-            src={CLIENT_BASE_PATH}
-            style={{ display: show ? 'block' : 'none' }}
-          />
-        </div>
+              <div className="next-devtools-panel-wrapper">
+                <button className="next-devtools-toggle-button" title="Toggle Next Devtools" onClick={handleToggle}>
+                  <NextLogo
+                    fill={frameStatus !== 'hide' ? 'var(--next-devtools-primary-color)' : '#000'}
+                    mode="small"
+                    style={{ minWidth: 30, width: '80%', height: '80%' }}
+                    theme="light"
+                  />
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
+
+      <AnimatePresence>
+        {frameStatus !== 'hide' ? (
+          <motion.aside
+            className="next-devtools-frame"
+            id="next-devtools-frame"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{
+              y: 0,
+              opacity: 1,
+            }}
+            exit={{
+              y: 20,
+              opacity: 0,
+            }}
+            transition={{
+              duration: 0.2,
+              ease: 'easeInOut',
+            }}
+            {...getRootProps()}
+          >
+            <div {...getHandleProps()} className={`next-devtools-frame-handle ${resizing ? 'resizing' : ''}`} />
+
+            <iframe ref={iframeRef} className="next-devtools-iframe" id="next-devtools-iframe" src={CLIENT_BASE_PATH} />
+          </motion.aside>
+        ) : null}
+      </AnimatePresence>
     </div>
   )
 }
@@ -110,7 +147,7 @@ interface Position {
   x: number
 }
 const NEXT_DEVTOOLS_POSITION = 'NEXT_DEVTOOLS_POSITION'
-function useDrag({ show, frameRef }: { show: boolean; frameRef: React.RefObject<HTMLDivElement> }) {
+function useDrag() {
   const ref = React.useRef<HTMLDivElement | null>(null)
   const panelMargins = React.useRef({ left: 10, top: 10, right: 10, bottom: 10 })
   const [windowSize, setWindowSize] = React.useState({ width: 0, height: 0 })
@@ -211,49 +248,12 @@ function useDrag({ show, frameRef }: { show: boolean; frameRef: React.RefObject<
     }
   }, [isDragging, position, onMouseMove, onMouseUp, onWindowResize])
 
-  const frameStyles = React.useMemo(() => {
-    const frameMargin = {
-      left: panelMargins.current.left,
-      top: panelMargins.current.top,
-      right: panelMargins.current.right,
-      bottom: panelMargins.current.bottom,
-    }
-
-    const marginHorizontal = frameMargin.left + frameMargin.right
-    const marginVertical = frameMargin.top + frameMargin.bottom
-
-    const maxWidth = windowSize.width - marginHorizontal
-    const iframeBoundingClientRect = frameRef.current?.getBoundingClientRect() || { width: 0, height: 0 }
-
-    const style: CSSProperties = {
-      position: 'fixed',
-      zIndex: -1,
-      pointerEvents: isDragging || !show ? 'none' : 'auto',
-      width: `min(80vw, calc(100vw - ${marginHorizontal}px))`,
-      height: `min(60vh, calc(100vh - ${marginVertical}px))`,
-      left: `-${iframeBoundingClientRect.width / 2}px`,
-    }
-
-    const width = Math.min(maxWidth, (80 * windowSize.width) / 100)
-    const anchorX = dragStyles.left
-
-    style.transform = 'translate(0, 0)'
-    if (anchorX - frameMargin.left < width / 2) {
-      style.left = `${width / 2 - anchorX + frameMargin.left - iframeBoundingClientRect.width / 2}px`
-    } else if (windowSize.width - anchorX - frameMargin.right < width / 2) {
-      style.left = `${windowSize.width - anchorX - width / 2 - frameMargin.right - iframeBoundingClientRect.width / 2}px`
-    }
-    return style
-  }, [isDragging, position, windowSize, dragStyles, show, frameRef])
-
   return {
     ref,
     isDragging,
     dragStyles,
-    frameStyles,
   }
 }
-
 const SNAP_THRESHOLD = 2
 function snapToPoints(value: number) {
   if (value < 5) return 0

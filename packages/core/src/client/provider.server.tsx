@@ -6,7 +6,7 @@ import { NextDevtoolsClientProvider } from './provider.client'
 interface NextDevtoolsServerProviderProps {
   children: React.ReactNode
 }
-export async function NextDevtoolsServerProvider({ children }: NextDevtoolsServerProviderProps) {
+export function NextDevtoolsServerProvider({ children }: NextDevtoolsServerProviderProps) {
   if (isDev) {
     const originalFetch = globalThis.fetch
     // @ts-expect-error: TODO

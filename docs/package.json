@@ -10,7 +10,7 @@
   "dependencies": {
     "@vercel/analytics": "^1.4.1",
     "clsx": "catalog:",
-    "framer-motion": "catalog:",
+    "motion": "catalog:",
     "next": "catalog:next14",
     "nextra": "latest",
     "nextra-theme-docs": "latest",

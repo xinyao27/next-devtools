@@ -44,7 +44,7 @@
     "cmdk": "catalog:",
     "cobe": "catalog:",
     "date-fns": "catalog:",
-    "framer-motion": "catalog:",
+    "motion": "catalog:",
     "next-themes": "catalog:",
     "pretty-ms": "catalog:",
     "react": "catalog:react19",

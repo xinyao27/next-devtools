@@ -1,10 +1,10 @@
 'use client'
 import React, { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'motion/react'
 
 export function Header({ translate, titleComponent }: any) {
   return (
-    <motion.div className="max-w-5xl mx-auto text-center div" style={{ translateY: translate }}>
+    <motion.div className="div mx-auto max-w-5xl text-center" style={{ translateY: translate }}>
       {titleComponent}
     </motion.div>
   )
@@ -23,14 +23,14 @@ export function Card({
 }) {
   return (
     <motion.div
-      className="-mt-2 mx-auto w-full rounded-[30px] max-w-5xl"
+      className="mx-auto -mt-2 w-full max-w-5xl rounded-[30px]"
       style={{
         rotateX: rotate, // rotate in X-axis
         scale,
       }}
     >
       <motion.div
-        className="w-full h-full"
+        className="h-full w-full"
         style={{
           translateY: translate,
           boxShadow:
@@ -76,9 +76,9 @@ export function ContainerScroll({
   return (
     <div
       ref={containerRef}
-      className="h-[90vh] sm:h-[120vh] flex items-start sm:items-center justify-center relative p-20"
+      className="relative flex h-[90vh] items-start justify-center p-20 sm:h-[120vh] sm:items-center"
     >
-      <div className="relative w-full h-full" style={{ perspective: '1000px' }}>
+      <div className="relative h-full w-full" style={{ perspective: '1000px' }}>
         <Header titleComponent={titleComponent} translate={translate} />
         <Card content={content} rotate={rotate} scale={scale} translate={translate} />
       </div>

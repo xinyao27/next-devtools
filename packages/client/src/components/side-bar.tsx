@@ -6,8 +6,8 @@ import { useShallow } from 'zustand/react/shallow'
 import { cn } from '@/lib/utils'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import { useSettingsStore } from '@/store/settings'
+import { useMessageClient } from '@/lib/client'
 import { ThemeToggle } from './theme-toggle'
 
 const menuItems = [
@@ -74,6 +74,7 @@ const menuItems = [
 ]
 
 export default function SideBar() {
+  const messageClient = useMessageClient()
   const sidebarCollapsed = useSettingsStore(useShallow((state) => state.sidebarCollapsed))
   const setSettings = useSettingsStore.setState
   const isMobile = useMedia('(max-width: 768px)')
@@ -91,13 +92,31 @@ export default function SideBar() {
   return (
     <nav
       className={cn(
-        'h-full w-[3rem] overflow-y-auto overflow-x-hidden transition-all duration-200 md:w-[12rem]',
+        'no-scrollbar h-full w-[3rem] overflow-y-auto overflow-x-hidden px-2 transition-all duration-200 md:w-[12rem]',
         { '!w-[3rem]': sidebarCollapsed === true },
         { '!w-[12rem]': sidebarCollapsed === false },
       )}
     >
-      <div className="flex h-full flex-col space-y-2 p-2">
-        <section className="flex flex-1 flex-col gap-1">
+      <div className="relative flex h-full flex-col">
+        <section className="sticky top-0 z-10">
+          <div className="bg-sidebar flex items-center justify-between overflow-hidden border-b py-1.5">
+            <div
+              className={cn(
+                'h-5 font-medium transition-all duration-200',
+                { 'w-0 flex-none opacity-0': sidebarCollapsed === true },
+                { 'w-full flex-1 opacity-100': sidebarCollapsed === false },
+              )}
+            >
+              Next Devtools
+            </div>
+
+            <Button size="icon" variant="ghost" onClick={() => messageClient.toggle('hide')}>
+              <i className="i-ri-arrow-down-double-line size-4" />
+            </Button>
+          </div>
+        </section>
+
+        <section className="flex flex-1 flex-col gap-1 py-1.5">
           {menuItems.map((item) => (
             <Tooltip key={item.value}>
               <TooltipTrigger asChild>
@@ -151,17 +170,17 @@ export default function SideBar() {
           ))}
         </section>
 
-        <Separator />
-
         <section
           className={cn(
-            'flex flex-col-reverse items-center justify-between gap-1 px-1.5 transition-all duration-200 md:flex-row',
+            'bg-sidebar sticky bottom-0 z-10 flex flex-col items-center justify-between gap-1 border-t p-1.5 transition-all duration-200 md:flex-row',
             {
-              '!flex-col-reverse': sidebarCollapsed === true,
+              '!flex-col': sidebarCollapsed === true,
               '!flex-row': sidebarCollapsed === false,
             },
           )}
         >
+          <ThemeToggle />
+
           <Button
             className="opacity-50 transition hover:opacity-100"
             size="icon"
@@ -176,8 +195,6 @@ export default function SideBar() {
             />
             <span className="sr-only">Toggle sidebar</span>
           </Button>
-
-          <ThemeToggle />
         </section>
       </div>
     </nav>

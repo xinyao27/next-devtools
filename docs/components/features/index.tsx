@@ -1,5 +1,5 @@
 import cn from 'clsx'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import Link from 'next/link'
 import styles from './styles.module.css'
 import type { ReactNode } from 'react'
