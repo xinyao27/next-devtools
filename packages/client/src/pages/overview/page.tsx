@@ -1,6 +1,6 @@
 'use client'
 
-import { NextLogo, ReactLogo } from '@next-devtools/shared/components'
+import { Logo, NextLogo, ReactLogo } from '@next-devtools/shared/components'
 import { prettySize } from '@next-devtools/shared/utils'
 import React from 'react'
 import { useTheme } from 'next-themes'
@@ -146,8 +146,9 @@ export default function Page() {
 
   return (
     <div className="h-full p-4">
-      <section className="mt-12 flex w-full flex-col items-center justify-center space-y-2">
-        <h1 className="flex gap-2 text-4xl font-bold">Next DevTools</h1>
+      <section className="mt-12 flex w-full flex-col items-center justify-center space-y-8">
+        <Logo className="size-16 text-zinc-800/90 dark:text-white" />
+
         <div className="opacity-50">
           Next Devtools <NpmVersionCheck packageName="@next-devtools/core" version={data?.version} />
         </div>

@@ -19,11 +19,7 @@ export interface BentoCardProps {
 const BentoCard = ({ name, className, background, Icon, description, href, cta }: BentoCardProps) => (
   <div
     className={cn(
-      'group relative col-span-1 flex overflow-hidden rounded',
-      // light styles
-      'bg-white [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]',
-      // dark styles
-      'transform-gpu dark:bg-black dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]',
+      'group relative col-span-1 flex transform-gpu overflow-hidden rounded border border-zinc-100 bg-white shadow-sm dark:border-zinc-800 dark:bg-black',
       className,
     )}
   >

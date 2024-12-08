@@ -37,14 +37,12 @@ const clientFunctions: ClientFunctions = {
   onTerminalWrite: () => {},
 }
 
-export function getBaseUrl() {
+export function getRpcClient() {
+  if (typeof window === 'undefined') return
+
   const _ip = window.location.hostname
   const _protocol = window.location.protocol === 'https:' ? 'wss' : 'ws'
-  return `${_protocol}://${_ip}:${RPC_SERVER_PORT}`
-}
-
-export function getRpcClient() {
-  const ws = new WebSocket(getBaseUrl())
+  const ws = new WebSocket(`${_protocol}://${_ip}:${RPC_SERVER_PORT}`)
   const rpc = createBirpc<ServerFunctions, ClientFunctions>(clientFunctions, {
     post: (data) =>
       ws.send(

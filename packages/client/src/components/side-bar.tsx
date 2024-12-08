@@ -3,6 +3,7 @@
 import { NavLink } from 'react-router'
 import { useMedia } from 'react-use'
 import { useShallow } from 'zustand/react/shallow'
+import { Logo } from '@next-devtools/shared/components'
 import { cn } from '@/lib/utils'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Button } from '@/components/ui/button'
@@ -99,15 +100,18 @@ export default function SideBar() {
     >
       <div className="relative flex h-full flex-col">
         <section className="sticky top-0 z-10">
-          <div className="bg-sidebar flex items-center justify-between overflow-hidden border-b py-1.5">
+          <div className="bg-sidebar flex items-center justify-between overflow-hidden border-b px-3 py-2">
             <div
               className={cn(
-                'h-5 font-medium transition-all duration-200',
+                'flex h-5 items-center gap-1 font-medium transition-all duration-200',
                 { 'w-0 flex-none opacity-0': sidebarCollapsed === true },
                 { 'w-full flex-1 opacity-100': sidebarCollapsed === false },
               )}
             >
-              Next Devtools
+              <div className="w-6">
+                <Logo className="size-5" />
+              </div>
+              <span className="mt-0.5 text-lg font-medium">Devtools</span>
             </div>
 
             <Button size="icon" variant="ghost" onClick={() => messageClient.toggle('mini')}>
