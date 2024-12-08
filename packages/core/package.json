@@ -62,6 +62,7 @@
   "dependencies": {
     "@next-devtools/shared": "workspace:*",
     "@next/env": "catalog:",
+    "@tanstack/react-query": "catalog:",
     "address": "catalog:",
     "birpc": "catalog:",
     "consola": "catalog:",

@@ -110,8 +110,8 @@ export default function SideBar() {
               Next Devtools
             </div>
 
-            <Button size="icon" variant="ghost" onClick={() => messageClient.toggle('hide')}>
-              <i className="i-ri-arrow-down-double-line size-4" />
+            <Button size="icon" variant="ghost" onClick={() => messageClient.toggle('mini')}>
+              <i className="i-ri-fullscreen-exit-line size-4" />
             </Button>
           </div>
         </section>

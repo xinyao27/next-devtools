@@ -611,6 +611,9 @@ importers:
       '@next/env':
         specifier: 'catalog:'
         version: 15.0.4
+      '@tanstack/react-query':
+        specifier: 'catalog:'
+        version: 5.62.3(react@18.3.1)
       address:
         specifier: 'catalog:'
         version: 2.0.3
@@ -10038,6 +10041,11 @@ snapshots:
       tailwindcss: 3.4.16
 
   '@tanstack/query-core@5.62.3': {}
+
+  '@tanstack/react-query@5.62.3(react@18.3.1)':
+    dependencies:
+      '@tanstack/query-core': 5.62.3
+      react: 18.3.1
 
   '@tanstack/react-query@5.62.3(react@19.0.0)':
     dependencies:

@@ -1,9 +1,11 @@
 .next-devtools-container {
-  --next-devtools-widget-bg: rgba(255, 255, 255, 1);
+  --next-devtools-widget-bg: #f7f8f6;
+  --next-devtools-widget-bg-hover: #f7f8f690;
   --next-devtools-widget-border: rgba(0, 0, 0, 0.08);
   --next-devtools-widget-shadow: rgb(0, 0, 0, 0.2);
   --next-devtools-primary-color: #c391e6;
   --next-devtools-primary-light-color: #c391e690;
+  --next-devtools-mini-toolbar-height: 42px;
 
   position: fixed;
   z-index: 2147483645;
@@ -142,4 +144,58 @@
     0 2px 15px -3px var(--next-devtools-widget-shadow),
     0 4px 6px -4px var(--next-devtools-widget-shadow);
   pointer-events: auto;
+}
+
+.next-devtools-mini-toolbar {
+  position: fixed;
+  z-index: -1;
+  pointer-events: auto;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--next-devtools-mini-toolbar-height);
+  width: 100vw;
+  background-color: var(--next-devtools-widget-bg);
+  border: 1px solid var(--next-devtools-widget-border);
+  box-shadow:
+    0 2px 15px -3px var(--next-devtools-widget-shadow),
+    0 4px 6px -4px var(--next-devtools-widget-shadow);
+}
+
+.next-devtools-mini-toolbar > div::-webkit-scrollbar {
+  display: none;
+  height: 0 !important;
+  width: 0 !important;
+}
+
+.next-devtools-mini-toolbar button {
+  background-color: var(--next-devtools-widget-bg);
+  cursor: pointer;
+  height: var(--next-devtools-mini-toolbar-height);
+  padding: 6px 16px;
+  border-right: 1px solid var(--next-devtools-widget-border);
+  transition: background-color 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  flex-wrap: nowrap;
+}
+
+.next-devtools-mini-toolbar button:last-child {
+  border-right: none;
+}
+.next-devtools-mini-toolbar button:hover {
+  background-color: var(--next-devtools-widget-bg-hover);
+}
+.next-devtools-mini-toolbar button > span {
+  text-wrap: nowrap;
+}
+.next-devtools-mini-toolbar button > span[data-label] {
+  display: none;
+}
+@media (min-width: 768px) {
+  .next-devtools-mini-toolbar button > span[data-label] {
+    display: inline-block;
+  }
 }
