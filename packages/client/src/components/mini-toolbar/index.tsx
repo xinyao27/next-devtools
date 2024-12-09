@@ -3,6 +3,7 @@
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { ToolbarDefaultSize, ToolbarPosition } from '@next-devtools/shared/types'
+import { useNavigate } from 'react-router'
 import { rpcClient } from '@/lib/client'
 import { useSettingsStore } from '@/store/settings'
 import { cn } from '@/lib/utils'
@@ -12,6 +13,7 @@ import FpsCounter from './fps-counter'
 import MemoryUsage from './memory-usage'
 
 export default function MiniToolbar() {
+  const navigate = useNavigate()
   const toolbarPosition = useSettingsStore((state) => state.toolbarPosition)
   const setToolbarSize = useSettingsStore((state) => state.setToolbarSize)
   const setToolbarPosition = useSettingsStore((state) => state.setToolbarPosition)
@@ -79,6 +81,10 @@ export default function MiniToolbar() {
               'border-r': isHorizontal,
               'flex-col items-center border-b': isVertical,
             })}
+            onClick={() => {
+              navigate('/routes')
+              setToolbarSize(ToolbarDefaultSize[toolbarPosition].height as number)
+            }}
           >
             <i className="i-ri-node-tree size-4 opacity-60" />
             <span className="hidden opacity-60 lg:block" data-label="ROUTES">
@@ -98,6 +104,10 @@ export default function MiniToolbar() {
               'border-r': isHorizontal,
               'flex-col items-center border-b': isVertical,
             })}
+            onClick={() => {
+              navigate('/routes')
+              setToolbarSize(ToolbarDefaultSize[toolbarPosition].height as number)
+            }}
           >
             <i className="i-ri-box-1-line size-4 opacity-60" />
             <span className="hidden opacity-60 lg:block" data-label="COMPONENTS">
@@ -117,6 +127,10 @@ export default function MiniToolbar() {
               'border-r': isHorizontal,
               'flex-col items-center border-b': isVertical,
             })}
+            onClick={() => {
+              navigate('/assets')
+              setToolbarSize(ToolbarDefaultSize[toolbarPosition].height as number)
+            }}
           >
             <i className="i-ri-gallery-line size-4 opacity-60" />
             <span className="hidden opacity-60 lg:block" data-label="ASSETS">
@@ -136,6 +150,10 @@ export default function MiniToolbar() {
               'border-r': isHorizontal,
               'flex-col items-center border-b': isVertical,
             })}
+            onClick={() => {
+              navigate('/packages')
+              setToolbarSize(ToolbarDefaultSize[toolbarPosition].height as number)
+            }}
           >
             <i className="i-ri-box-3-line size-4 opacity-60" />
             <span className="hidden opacity-60 lg:block" data-label="PACKAGES">
@@ -165,6 +183,7 @@ export default function MiniToolbar() {
           >
             <CollapsibleTrigger asChild>
               <button
+                title="Switch Toolbar Position"
                 className={cn(buttonClass, 'transition-transform duration-200 [&[data-state=open]>i]:rotate-180', {
                   'border-l': isHorizontal,
                   'border-t': isVertical,
@@ -190,6 +209,7 @@ export default function MiniToolbar() {
                 })}
               >
                 <button
+                  title="Top"
                   className={cn(buttonClass, {
                     'h-full border-l': isHorizontal,
                     'w-full border-t': isVertical,
@@ -203,6 +223,7 @@ export default function MiniToolbar() {
                 </button>
 
                 <button
+                  title="Bottom"
                   className={cn(buttonClass, {
                     'border-l': isHorizontal,
                     'border-t': isVertical,
@@ -216,6 +237,7 @@ export default function MiniToolbar() {
                 </button>
 
                 <button
+                  title="Left"
                   className={cn(buttonClass, {
                     'border-l': isHorizontal,
                     'border-t': isVertical,
@@ -229,6 +251,7 @@ export default function MiniToolbar() {
                 </button>
 
                 <button
+                  title="Right"
                   className={cn(buttonClass, {
                     'border-l': isHorizontal,
                     'border-t': isVertical,
