@@ -15,6 +15,7 @@ export default function MiniToolbar() {
   const toolbarPosition = useSettingsStore((state) => state.toolbarPosition)
   const setToolbarSize = useSettingsStore((state) => state.setToolbarSize)
   const setToolbarPosition = useSettingsStore((state) => state.setToolbarPosition)
+  const [positionToggleOpen, setPositionToggleOpen] = React.useState(false)
 
   const isHorizontal = toolbarPosition === ToolbarPosition.Top || toolbarPosition === ToolbarPosition.Bottom
   const isVertical = toolbarPosition === ToolbarPosition.Left || toolbarPosition === ToolbarPosition.Right
@@ -155,10 +156,12 @@ export default function MiniToolbar() {
         >
           {/* switch toolbar position */}
           <Collapsible
+            open={positionToggleOpen}
             className={cn('flex h-full', {
               'h-full flex-row-reverse items-center': isHorizontal,
               'w-full flex-col-reverse justify-center': isVertical,
             })}
+            onOpenChange={setPositionToggleOpen}
           >
             <CollapsibleTrigger asChild>
               <button
@@ -191,7 +194,10 @@ export default function MiniToolbar() {
                     'h-full border-l': isHorizontal,
                     'w-full border-t': isVertical,
                   })}
-                  onClick={() => setToolbarPosition(ToolbarPosition.Top)}
+                  onClick={() => {
+                    setToolbarPosition(ToolbarPosition.Top)
+                    setPositionToggleOpen(false)
+                  }}
                 >
                   <i className="i-ri-layout-top-2-line size-4 opacity-60" />
                 </button>
@@ -201,7 +207,10 @@ export default function MiniToolbar() {
                     'border-l': isHorizontal,
                     'border-t': isVertical,
                   })}
-                  onClick={() => setToolbarPosition(ToolbarPosition.Bottom)}
+                  onClick={() => {
+                    setToolbarPosition(ToolbarPosition.Bottom)
+                    setPositionToggleOpen(false)
+                  }}
                 >
                   <i className="i-ri-layout-bottom-2-line size-4 opacity-60" />
                 </button>
@@ -211,7 +220,10 @@ export default function MiniToolbar() {
                     'border-l': isHorizontal,
                     'border-t': isVertical,
                   })}
-                  onClick={() => setToolbarPosition(ToolbarPosition.Left)}
+                  onClick={() => {
+                    setToolbarPosition(ToolbarPosition.Left)
+                    setPositionToggleOpen(false)
+                  }}
                 >
                   <i className="i-ri-layout-left-2-line size-4 opacity-60" />
                 </button>
@@ -221,7 +233,10 @@ export default function MiniToolbar() {
                     'border-l': isHorizontal,
                     'border-t': isVertical,
                   })}
-                  onClick={() => setToolbarPosition(ToolbarPosition.Right)}
+                  onClick={() => {
+                    setToolbarPosition(ToolbarPosition.Right)
+                    setPositionToggleOpen(false)
+                  }}
                 >
                   <i className="i-ri-layout-right-2-line size-4 opacity-60" />
                 </button>
