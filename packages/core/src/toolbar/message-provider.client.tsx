@@ -4,14 +4,13 @@ import React from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { createFrameMessageHandler } from '@next-devtools/shared/utils'
 import type { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime'
-import type { FrameMessageHandler, FrameStatus } from '@next-devtools/shared/utils'
+import type { FrameMessageHandler } from '@next-devtools/shared/utils'
 
 interface Props {
   children: React.ReactNode
   iframeRef: React.RefObject<HTMLIFrameElement>
-  setFrameStatus: React.Dispatch<React.SetStateAction<FrameStatus>>
 }
-export function MessageProvider({ children, iframeRef, setFrameStatus }: Props) {
+export function MessageProvider({ children, iframeRef }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const latestPathname = React.useRef(pathname)
@@ -19,9 +18,6 @@ export function MessageProvider({ children, iframeRef, setFrameStatus }: Props) 
 
   React.useEffect(() => {
     const handler: FrameMessageHandler = {
-      toggle: async (status) => {
-        setFrameStatus(status)
-      },
       getRoute: async () => latestPathname.current,
       pushRoute: async (href: string, options?: NavigateOptions) => {
         router.push(href, options)
@@ -35,7 +31,7 @@ export function MessageProvider({ children, iframeRef, setFrameStatus }: Props) 
     return () => {
       unsubscribe()
     }
-  }, [iframeRef, setFrameStatus])
+  }, [iframeRef])
 
   return <>{children}</>
 }

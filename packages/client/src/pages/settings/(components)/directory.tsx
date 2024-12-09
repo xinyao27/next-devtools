@@ -8,7 +8,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 
 export default function Directory() {
   const componentDirectory = useSettingsStore(useShallow((state) => state.componentDirectory))
-  const setSettings = useSettingsStore.setState
+  const setSettings = useSettingsStore((state) => state.setState)
   const { data: internalStore } = useQuery({
     queryKey: ['getInternalStore'],
     queryFn: () => rpcClient.getInternalStore(),

@@ -54,6 +54,7 @@ catalog:
   'dotenv': ^16.4.7
   'eslint': ^9.16.0
   'execa': ^9.5.1
+  'es-toolkit': ^1.29.0
   'fast-glob': ^3.3.2
   'fast-npm-meta': ^0.2.2
   'fkill': ^9.0.0

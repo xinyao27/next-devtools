@@ -1,33 +1,48 @@
 import path from 'node:path'
 import fs from 'fs-extra'
 import { createStore } from 'zustand/vanilla'
-import { Editor } from '@next-devtools/shared/types'
+import { ToolbarPosition, settingsStoreDefaultState } from '@next-devtools/shared/types'
 import { SETTINGS_FILE, TEMP_DIR } from '@next-devtools/shared/constants'
 import consola from 'consola'
 import { internalStore } from './internal'
-import type { NextDevtoolsServerContext, SettingsStore, SettingsStoreState } from '@next-devtools/shared/types'
+import type { NextDevtoolsServerContext, SettingsStore } from '@next-devtools/shared/types'
 
-const defaultState: SettingsStoreState = {
-  sidebarCollapsed: undefined,
-  uiScale: 15,
-  editor: Editor.VSCode,
-  componentDirectory: '/src/components',
-}
-export const settingsStore = createStore<SettingsStore>()((set) => ({
-  ...defaultState,
+export const settingsStore = createStore<SettingsStore>()((set, get) => ({
+  ...settingsStoreDefaultState,
 
-  setup: async (ctx: NextDevtoolsServerContext) => {
+  setup: (ctx: NextDevtoolsServerContext) => {
     const dir = path.join(ctx.context.dir, TEMP_DIR)
     const settingsPath = path.join(dir, SETTINGS_FILE)
-    let settings = defaultState
+    let settings = settingsStoreDefaultState
     try {
-      settings = await fs.readJSON(settingsPath)
+      settings = fs.readJSONSync(settingsPath)
     } catch {
       consola.info('No settings file found, using default settings')
-      await fs.writeJSON(settingsPath, defaultState)
+      fs.writeJSONSync(settingsPath, settingsStoreDefaultState)
     }
     set(settings)
   },
+
+  setState(state) {
+    set(state)
+  },
+
+  setToolbarSize(size) {
+    const toolbarPosition = get().toolbarPosition
+
+    switch (toolbarPosition) {
+      case ToolbarPosition.Top:
+      case ToolbarPosition.Bottom:
+        set({ toolbarSize: { width: '100%', height: size } })
+        break
+      case ToolbarPosition.Left:
+      case ToolbarPosition.Right:
+        set({ toolbarSize: { width: size, height: '100%' } })
+        break
+    }
+  },
+
+  setToolbarPosition: () => {},
 }))
 
 settingsStore.subscribe((state) => {
@@ -35,4 +50,6 @@ settingsStore.subscribe((state) => {
   const dir = path.join(internal.root, TEMP_DIR)
   const settingsPath = path.join(dir, SETTINGS_FILE)
   fs.writeJSON(settingsPath, state)
+
+  globalThis.__NEXT_DEVTOOLS_RPC__.broadcast.onSettingsStoreUpdate(state)
 })

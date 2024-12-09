@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Frame from './frame.client'
+import { useInternalStore } from './internal.store'
 
 import './styles.css'
 
@@ -10,6 +11,7 @@ interface NextDevtoolsClientProviderProps {
 }
 export function NextDevtoolsClientProvider({ children }: NextDevtoolsClientProviderProps) {
   const [isMounted, setIsMounted] = React.useState(false)
+  const serverReady = useInternalStore((state) => state.serverReady)
 
   React.useEffect(() => {
     setIsMounted(true)
@@ -18,7 +20,7 @@ export function NextDevtoolsClientProvider({ children }: NextDevtoolsClientProvi
     }
   }, [])
 
-  if (isMounted === true) {
+  if (serverReady && isMounted === true) {
     return (
       <React.Suspense>
         <Frame />

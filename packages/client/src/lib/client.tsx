@@ -9,6 +9,8 @@ import { createBirpc } from 'birpc'
 import { WS_CLIENT_TO_SERVER_EVENT_NAME, WS_SERVER_EVENT_NAME } from '@next-devtools/shared/types'
 import { useNetworkStore } from '@/store/network'
 import { useTerminalStore } from '@/store/terminal'
+import { useSettingsStore } from '@/store/settings'
+import { useInternalStore } from '@/store/internal'
 import type { FrameMessageHandler } from '@next-devtools/shared/utils'
 import type { ClientFunctions, RpcMessage, ServerFunctions } from '@next-devtools/shared/types'
 
@@ -49,6 +51,10 @@ export function getBaseUrl() {
 }
 
 const clientFunctions: ClientFunctions = {
+  serverReady: () => {
+    useInternalStore.getState().setup()
+  },
+
   onNetworkUpdate: (diff) => {
     const data = structuredClone(useNetworkStore.getState().requests)
     const newData = diffApply(data, diff)
@@ -56,6 +62,9 @@ const clientFunctions: ClientFunctions = {
   },
   onTerminalWrite: (data) => {
     useTerminalStore.getState().onTerminalWrite(data)
+  },
+  onSettingsStoreUpdate: (state) => {
+    useSettingsStore.setState(state)
   },
 }
 

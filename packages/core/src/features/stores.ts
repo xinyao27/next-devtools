@@ -4,7 +4,9 @@ import type { NextDevtoolsServerContext, ServerFunctions, SettingsStoreState } f
 
 export function setupStoreRpc(_: NextDevtoolsServerContext) {
   return {
-    setSettingsStore: async (settings: Partial<SettingsStoreState>) => settingsStore.setState(settings),
+    setSettingsStore: async (settings: Partial<SettingsStoreState>) => {
+      settingsStore.setState(settings)
+    },
     getSettingsStore: async () => settingsStore.getState(),
 
     getInternalStore: async () => internalStore.getState(),

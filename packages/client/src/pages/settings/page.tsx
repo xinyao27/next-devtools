@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Theme from './(components)/theme'
+import ToolbarPosition from './(components)/toolbar-position'
 import UIScale from './(components)/ui-scale'
 import SideBarCollapsed from './(components)/sidebar-collapsed'
 import Editor from './(components)/editor'
@@ -10,6 +11,7 @@ import Actions from './(components)/actions'
 
 const sections = [
   { id: 'theme', label: 'Theme', component: Theme },
+  { id: 'toolbar-position', label: 'Toolbar Position', component: ToolbarPosition },
   { id: 'ui-scale', label: 'UI Scale', component: UIScale },
   { id: 'sidebar-collapsed', label: 'Sidebar Collapsed', component: SideBarCollapsed },
   { id: 'editor', label: 'Editor', component: Editor },

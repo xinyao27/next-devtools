@@ -153,6 +153,9 @@ catalogs:
     dotenv:
       specifier: ^16.4.7
       version: 16.4.7
+    es-toolkit:
+      specifier: ^1.29.0
+      version: 1.29.0
     eslint:
       specifier: ^9.16.0
       version: 9.16.0
@@ -454,6 +457,9 @@ importers:
       '@radix-ui/react-checkbox':
         specifier: 'catalog:'
         version: 1.1.2(@types/react-dom@18.3.2)(@types/react@18.3.14)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-collapsible':
+        specifier: ^1.1.1
+        version: 1.1.1(@types/react-dom@18.3.2)(@types/react@18.3.14)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@radix-ui/react-dialog':
         specifier: 'catalog:'
         version: 1.1.2(@types/react-dom@18.3.2)(@types/react@18.3.14)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -611,9 +617,6 @@ importers:
       '@next/env':
         specifier: 'catalog:'
         version: 15.0.4
-      '@tanstack/react-query':
-        specifier: 'catalog:'
-        version: 5.62.3(react@18.3.1)
       address:
         specifier: 'catalog:'
         version: 2.0.3
@@ -626,6 +629,9 @@ importers:
       dotenv:
         specifier: 'catalog:'
         version: 16.4.7
+      es-toolkit:
+        specifier: 'catalog:'
+        version: 1.29.0
       execa:
         specifier: 'catalog:'
         version: 9.5.1
@@ -655,16 +661,19 @@ importers:
         version: 2.1.35
       motion:
         specifier: 'catalog:'
-        version: 12.0.0-alpha.2(@emotion/is-prop-valid@1.3.1)(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
+        version: 12.0.0-alpha.2(@emotion/is-prop-valid@1.3.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       nypm:
         specifier: 'catalog:'
         version: 0.4.1
       react:
         specifier: '>= 18'
-        version: 18.3.1
+        version: 19.0.0
       react-docgen:
         specifier: 'catalog:'
         version: 7.1.0
+      react-use:
+        specifier: 'catalog:'
+        version: 17.5.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       semver:
         specifier: 'catalog:'
         version: 7.6.3
@@ -685,7 +694,7 @@ importers:
         version: 3.23.8
       zustand:
         specifier: 'catalog:'
-        version: 5.0.2(@types/react@18.3.14)(immer@10.1.1)(react@18.3.1)(use-sync-external-store@1.2.2(react@18.3.1))
+        version: 5.0.2(@types/react@18.3.14)(immer@10.1.1)(react@19.0.0)(use-sync-external-store@1.2.2(react@19.0.0))
     devDependencies:
       '@types/fs-extra':
         specifier: 'catalog:'
@@ -704,7 +713,7 @@ importers:
         version: 8.5.13
       next:
         specifier: catalog:next15
-        version: 15.0.4(@babel/core@7.23.2)(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
+        version: 15.0.4(@babel/core@7.23.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       webpack:
         specifier: 'catalog:'
         version: 5.97.1(@swc/core@1.9.3(@swc/helpers@0.5.13))(esbuild@0.23.1)
@@ -719,7 +728,7 @@ importers:
         version: 1.4.0
       react:
         specifier: '>= 18'
-        version: 18.3.1
+        version: 19.0.0
       zod:
         specifier: 'catalog:'
         version: 3.23.8
@@ -729,13 +738,13 @@ importers:
         version: 18.3.14
       next:
         specifier: catalog:next15
-        version: 15.0.4(@babel/core@7.23.2)(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
+        version: 15.0.4(@babel/core@7.23.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       webpack:
         specifier: 'catalog:'
         version: 5.97.1(@swc/core@1.9.3(@swc/helpers@0.5.13))(esbuild@0.23.1)
       zustand:
         specifier: 'catalog:'
-        version: 5.0.2(@types/react@18.3.14)(immer@10.1.1)(react@18.3.1)(use-sync-external-store@1.2.2(react@18.3.1))
+        version: 5.0.2(@types/react@18.3.14)(immer@10.1.1)(react@19.0.0)(use-sync-external-store@1.2.2(react@19.0.0))
 
   playgrounds/app-router:
     dependencies:
@@ -780,7 +789,7 @@ importers:
         version: 4.0.0
       next:
         specifier: catalog:next15
-        version: 15.0.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 15.0.4(@babel/core@7.23.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react:
         specifier: catalog:react19
         version: 19.0.0
@@ -4297,6 +4306,9 @@ packages:
   es-to-primitive@1.2.1:
     resolution: {integrity: sha512-QCOllgZJtaUo9miYBcLChTUaHNjJF3PYs1VidD7AwiEj1kYxKeQTctLAezAOH5ZKRH0g2IgPn6KwB4IT8iRpvA==}
     engines: {node: '>= 0.4'}
+
+  es-toolkit@1.29.0:
+    resolution: {integrity: sha512-GjTll+E6APcfAQA09D89HdT8Qn2Yb+TeDSDBTMcxAo+V+w1amAtCI15LJu4YPH/UCPoSo/F47Gr1LIM0TE0lZA==}
 
   esast-util-from-estree@2.0.0:
     resolution: {integrity: sha512-4CyanoAudUSBAn5K13H4JhsMH6L9ZP7XbLVe/dKybkxMO7eDyLsT8UHl9TRNrU2Gr9nz+FovfSIjuXWJ81uVwQ==}
@@ -10042,11 +10054,6 @@ snapshots:
 
   '@tanstack/query-core@5.62.3': {}
 
-  '@tanstack/react-query@5.62.3(react@18.3.1)':
-    dependencies:
-      '@tanstack/query-core': 5.62.3
-      react: 18.3.1
-
   '@tanstack/react-query@5.62.3(react@19.0.0)':
     dependencies:
       '@tanstack/query-core': 5.62.3
@@ -11935,6 +11942,8 @@ snapshots:
       is-date-object: 1.0.5
       is-symbol: 1.0.4
 
+  es-toolkit@1.29.0: {}
+
   esast-util-from-estree@2.0.0:
     dependencies:
       '@types/estree-jsx': 1.0.3
@@ -12583,14 +12592,6 @@ snapshots:
       '@emotion/is-prop-valid': 1.3.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-
-  framer-motion@12.0.0-alpha.2(@emotion/is-prop-valid@1.3.1)(react-dom@19.0.0(react@18.3.1))(react@18.3.1):
-    dependencies:
-      tslib: 2.8.1
-    optionalDependencies:
-      '@emotion/is-prop-valid': 1.3.1
-      react: 18.3.1
-      react-dom: 19.0.0(react@18.3.1)
 
   framer-motion@12.0.0-alpha.2(@emotion/is-prop-valid@1.3.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
@@ -14311,15 +14312,6 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  motion@12.0.0-alpha.2(@emotion/is-prop-valid@1.3.1)(react-dom@19.0.0(react@18.3.1))(react@18.3.1):
-    dependencies:
-      framer-motion: 12.0.0-alpha.2(@emotion/is-prop-valid@1.3.1)(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
-      tslib: 2.8.1
-    optionalDependencies:
-      '@emotion/is-prop-valid': 1.3.1
-      react: 18.3.1
-      react-dom: 19.0.0(react@18.3.1)
-
   motion@12.0.0-alpha.2(@emotion/is-prop-valid@1.3.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       framer-motion: 12.0.0-alpha.2(@emotion/is-prop-valid@1.3.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -14411,32 +14403,7 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  next@15.0.4(@babel/core@7.23.2)(react-dom@19.0.0(react@18.3.1))(react@18.3.1):
-    dependencies:
-      '@next/env': 15.0.4
-      '@swc/counter': 0.1.3
-      '@swc/helpers': 0.5.13
-      busboy: 1.6.0
-      caniuse-lite: 1.0.30001680
-      postcss: 8.4.31
-      react: 18.3.1
-      react-dom: 19.0.0(react@18.3.1)
-      styled-jsx: 5.1.6(@babel/core@7.23.2)(react@18.3.1)
-    optionalDependencies:
-      '@next/swc-darwin-arm64': 15.0.4
-      '@next/swc-darwin-x64': 15.0.4
-      '@next/swc-linux-arm64-gnu': 15.0.4
-      '@next/swc-linux-arm64-musl': 15.0.4
-      '@next/swc-linux-x64-gnu': 15.0.4
-      '@next/swc-linux-x64-musl': 15.0.4
-      '@next/swc-win32-arm64-msvc': 15.0.4
-      '@next/swc-win32-x64-msvc': 15.0.4
-      sharp: 0.33.5
-    transitivePeerDependencies:
-      - '@babel/core'
-      - babel-plugin-macros
-
-  next@15.0.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  next@15.0.4(@babel/core@7.23.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       '@next/env': 15.0.4
       '@swc/counter': 0.1.3
@@ -14446,7 +14413,7 @@ snapshots:
       postcss: 8.4.31
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
-      styled-jsx: 5.1.6(react@19.0.0)
+      styled-jsx: 5.1.6(@babel/core@7.23.2)(react@19.0.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.0.4
       '@next/swc-darwin-x64': 15.0.4
@@ -15103,11 +15070,6 @@ snapshots:
       loose-envify: 1.4.0
       react: 18.3.1
       scheduler: 0.23.2
-
-  react-dom@19.0.0(react@18.3.1):
-    dependencies:
-      react: 18.3.1
-      scheduler: 0.25.0
 
   react-dom@19.0.0(react@19.0.0):
     dependencies:
@@ -16067,17 +16029,12 @@ snapshots:
       client-only: 0.0.1
       react: 18.3.1
 
-  styled-jsx@5.1.6(@babel/core@7.23.2)(react@18.3.1):
-    dependencies:
-      client-only: 0.0.1
-      react: 18.3.1
-    optionalDependencies:
-      '@babel/core': 7.23.2
-
-  styled-jsx@5.1.6(react@19.0.0):
+  styled-jsx@5.1.6(@babel/core@7.23.2)(react@19.0.0):
     dependencies:
       client-only: 0.0.1
       react: 19.0.0
+    optionalDependencies:
+      '@babel/core': 7.23.2
 
   stylis@4.3.4: {}
 
@@ -16558,11 +16515,6 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.3.14
 
-  use-sync-external-store@1.2.2(react@18.3.1):
-    dependencies:
-      react: 18.3.1
-    optional: true
-
   use-sync-external-store@1.2.2(react@19.0.0):
     dependencies:
       react: 19.0.0
@@ -16872,13 +16824,6 @@ snapshots:
   zod@3.22.4: {}
 
   zod@3.23.8: {}
-
-  zustand@5.0.2(@types/react@18.3.14)(immer@10.1.1)(react@18.3.1)(use-sync-external-store@1.2.2(react@18.3.1)):
-    optionalDependencies:
-      '@types/react': 18.3.14
-      immer: 10.1.1
-      react: 18.3.1
-      use-sync-external-store: 1.2.2(react@18.3.1)
 
   zustand@5.0.2(@types/react@18.3.14)(immer@10.1.1)(react@19.0.0)(use-sync-external-store@1.2.2(react@19.0.0)):
     optionalDependencies:

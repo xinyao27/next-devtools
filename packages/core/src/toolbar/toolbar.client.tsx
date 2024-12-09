@@ -1,122 +1,122 @@
 'use client'
 
 import React from 'react'
-import { NextLogo } from '@next-devtools/shared/components'
 import { CLIENT_BASE_PATH } from '@next-devtools/shared/constants'
 import { AnimatePresence, motion } from 'motion/react'
-import { isDev } from '../utils'
+import {
+  MINI_TOOLBAR_SIZE,
+  TOOLBAR_MIN_SIZE,
+  ToolbarDefaultSize,
+  ToolbarPosition,
+  getToolbarStatusBySize,
+} from '@next-devtools/shared/types'
+import { throttle } from 'es-toolkit'
 import { useResizable } from './hooks/use-resizable'
-import { useDrag } from './hooks/use-drag'
-import MiniToolbar from './mini-toolbar.client'
-import type { MoveValues } from './hooks/use-resizable'
-import type { FrameStatus } from '@next-devtools/shared/utils'
+import { useSettingsStore } from './settings.store'
+import type { ToolbarSize } from '@next-devtools/shared/types'
 
 interface ToolbarProps {
   iframeRef: React.RefObject<HTMLIFrameElement>
-  frameStatus: FrameStatus
-  setFrameStatus: React.Dispatch<React.SetStateAction<FrameStatus>>
 }
 
-export default function Toolbar({ iframeRef, frameStatus, setFrameStatus }: ToolbarProps) {
-  const [panelActive, setPanelActive] = React.useState(false)
+const setToolbarSize = throttle((size: ToolbarSize) => {
+  useSettingsStore.getState().setState({ toolbarSize: size })
+}, 50)
+
+export default function Toolbar({ iframeRef }: ToolbarProps) {
   const [resizing, setResizing] = React.useState(false)
-  const panelActiveTimeout = React.useRef<NodeJS.Timeout | null>(null)
+  const toolbarPosition = useSettingsStore((state) => state.toolbarPosition)
+  const toolbarSize = useSettingsStore((state) => state.toolbarSize || ToolbarDefaultSize[toolbarPosition])
 
-  const handlePanelMouseEnter = React.useCallback(() => {
-    if (frameStatus !== 'hide') return
-    setPanelActive(true)
-    if (panelActiveTimeout.current) clearTimeout(panelActiveTimeout.current)
-  }, [frameStatus])
+  const toolbarStatus = React.useMemo(
+    () => getToolbarStatusBySize(toolbarSize, toolbarPosition),
+    [toolbarSize, toolbarPosition],
+  )
 
-  const handlePanelMouseLeave = React.useCallback(() => {
-    if (frameStatus !== 'hide') return
-    panelActiveTimeout.current = setTimeout(
-      () => {
-        setPanelActive(false)
-      },
-      isDev ? 1000 : 3000,
-    )
-  }, [frameStatus])
+  const handleToolbarSizeChange = React.useCallback(
+    (size: ToolbarSize) => {
+      switch (toolbarPosition) {
+        case ToolbarPosition.Top:
+        case ToolbarPosition.Bottom: {
+          const value = Number(size.height)
+          if (value < MINI_TOOLBAR_SIZE) {
+            setToolbarSize({ height: 0, width: '100%' })
+          } else if (value <= TOOLBAR_MIN_SIZE) {
+            setToolbarSize({ height: MINI_TOOLBAR_SIZE, width: '100%' })
+          } else {
+            setToolbarSize({ height: value, width: '100%' })
+          }
+          break
+        }
+        case ToolbarPosition.Left:
+        case ToolbarPosition.Right: {
+          const value = Number(size.width)
+          if (value < MINI_TOOLBAR_SIZE) {
+            setToolbarSize({ width: 0, height: '100%' })
+          } else if (value <= TOOLBAR_MIN_SIZE) {
+            setToolbarSize({ width: MINI_TOOLBAR_SIZE, height: '100%' })
+          } else {
+            setToolbarSize({ width: value, height: '100%' })
+          }
+          break
+        }
+      }
+    },
+    [toolbarPosition],
+  )
 
-  const handleResizeChange = React.useCallback(({ newHeight }: MoveValues) => {
-    document.body.style.paddingBottom = `${newHeight}px`
-  }, [])
-
-  // Set a default padding bottom so that the iframe doesn't jump when it's resized
-  React.useEffect(() => {
-    if (frameStatus === 'hide') document.body.style.paddingBottom = '0'
-    else if (frameStatus === 'mini') document.body.style.paddingBottom = '42px'
-    else if (frameStatus === 'full') document.body.style.paddingBottom = '500px'
-  }, [frameStatus])
-
-  const { ref, dragStyles, isDragging } = useDrag()
   const { getRootProps, getHandleProps } = useResizable({
-    lockHorizontal: true,
-    initialHeight: 500,
-    initialWidth: '100%',
+    lockHorizontal: toolbarPosition === ToolbarPosition.Bottom || toolbarPosition === ToolbarPosition.Top,
+    lockVertical: toolbarPosition === ToolbarPosition.Left || toolbarPosition === ToolbarPosition.Right,
+    initialHeight: toolbarSize.height,
+    initialWidth: toolbarSize.width,
+    minHeight:
+      toolbarPosition === ToolbarPosition.Bottom || toolbarPosition === ToolbarPosition.Top
+        ? MINI_TOOLBAR_SIZE
+        : undefined,
+    minWidth:
+      toolbarPosition === ToolbarPosition.Left || toolbarPosition === ToolbarPosition.Right
+        ? MINI_TOOLBAR_SIZE
+        : undefined,
     onDragStart: (values) => {
       setResizing(true)
-      handleResizeChange(values)
+      handleToolbarSizeChange({ height: values.newHeight, width: values.newWidth })
     },
     onResize: (values) => {
       setResizing(true)
-      handleResizeChange(values)
+      handleToolbarSizeChange({ height: values.newHeight, width: values.newWidth })
     },
     onDragEnd: (values) => {
       setResizing(false)
-      handleResizeChange(values)
+      handleToolbarSizeChange({ height: values.newHeight, width: values.newWidth })
     },
   })
 
+  React.useEffect(() => {
+    switch (toolbarPosition) {
+      case ToolbarPosition.Top:
+        document.body.style.padding = `${toolbarSize.height}px 0 0 0`
+        break
+      case ToolbarPosition.Bottom:
+        document.body.style.padding = `0 0 ${toolbarSize.height}px 0`
+        break
+      case ToolbarPosition.Left:
+        document.body.style.padding = `0 0 0 ${toolbarSize.width}px`
+        break
+      case ToolbarPosition.Right:
+        document.body.style.padding = `0 ${toolbarSize.width}px 0 0`
+        break
+    }
+  }, [toolbarPosition, toolbarSize])
+
+  React.useEffect(() => {
+    useSettingsStore.getState().setup()
+  }, [])
+
   return (
     <div className="next-devtools-container" id="next-devtools-container">
-      <div className="next-devtools-anchor" id="next-devtools-anchor" style={dragStyles}>
-        <AnimatePresence>
-          {frameStatus === 'hide' && (
-            <motion.div
-              ref={ref}
-              className={`next-devtools-panel ${panelActive ? 'active' : ''}`}
-              id="next-devtools-panel"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{
-                y: 0,
-                opacity: 1,
-              }}
-              exit={{
-                y: 20,
-                opacity: 0,
-              }}
-              style={{
-                cursor: isDragging ? 'grabbing' : undefined,
-              }}
-              transition={{
-                duration: 0.3,
-                ease: 'easeInOut',
-              }}
-              onMouseEnter={handlePanelMouseEnter}
-              onMouseLeave={handlePanelMouseLeave}
-            >
-              <div className="next-devtools-panel-wrapper">
-                <button
-                  className="next-devtools-toggle-button"
-                  title="Toggle Next Devtools"
-                  onClick={() => setFrameStatus('mini')}
-                >
-                  <NextLogo
-                    fill={frameStatus !== 'hide' ? 'var(--next-devtools-primary-color)' : '#000'}
-                    mode="small"
-                    style={{ minWidth: 30, width: '80%', height: '80%' }}
-                    theme="light"
-                  />
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
       <AnimatePresence>
-        {frameStatus === 'full' ? (
+        {toolbarStatus === 'full' || toolbarStatus === 'mini' ? (
           <motion.aside
             className="next-devtools-frame"
             id="next-devtools-frame"
@@ -134,36 +134,20 @@ export default function Toolbar({ iframeRef, frameStatus, setFrameStatus }: Tool
               ease: 'easeInOut',
             }}
             {...getRootProps()}
+            data-position={toolbarPosition}
+            style={toolbarSize}
           >
-            <div {...getHandleProps()} className={`next-devtools-frame-handle ${resizing ? 'resizing' : ''}`} />
+            <div
+              {...getHandleProps({
+                reverse: toolbarPosition === ToolbarPosition.Top || toolbarPosition === ToolbarPosition.Left,
+              })}
+              className={`next-devtools-frame-handle ${resizing ? 'resizing' : ''}`}
+              data-position={toolbarPosition}
+            />
 
             <iframe ref={iframeRef} className="next-devtools-iframe" id="next-devtools-iframe" src={CLIENT_BASE_PATH} />
           </motion.aside>
         ) : null}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {frameStatus === 'mini' && (
-          <motion.aside
-            className="next-devtools-mini-toolbar"
-            id="next-devtools-mini-toolbar"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{
-              y: 0,
-              opacity: 1,
-            }}
-            exit={{
-              y: 20,
-              opacity: 0,
-            }}
-            transition={{
-              duration: 0.2,
-              ease: 'easeInOut',
-            }}
-          >
-            <MiniToolbar setFrameStatus={setFrameStatus} />
-          </motion.aside>
-        )}
       </AnimatePresence>
     </div>
   )

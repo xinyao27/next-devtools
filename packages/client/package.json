@@ -21,6 +21,7 @@
     "@next-devtools/shared": "workspace:*",
     "@radix-ui/react-accordion": "catalog:",
     "@radix-ui/react-checkbox": "catalog:",
+    "@radix-ui/react-collapsible": "^1.1.1",
     "@radix-ui/react-dialog": "catalog:",
     "@radix-ui/react-dropdown-menu": "catalog:",
     "@radix-ui/react-label": "catalog:",

@@ -118,8 +118,11 @@ export interface ServerFunctions {
 }
 
 export interface ClientFunctions {
+  serverReady: () => void
+
   onNetworkUpdate: (diff: Difference[]) => void
   onTerminalWrite: (data: { id: string; data: string }) => void
+  onSettingsStoreUpdate: (settings: Partial<SettingsStoreState>) => void
 }
 
 export const WS_SERVER_EVENT_NAME = 'next:devtools:rpc:server'

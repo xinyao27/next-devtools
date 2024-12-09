@@ -48,10 +48,8 @@ export function createFrameMessageClient<T extends FrameMessageFunctions>() {
   return client
 }
 
-export type FrameStatus = 'hide' | 'mini' | 'full'
-
 export interface FrameMessageHandler extends FrameMessageFunctions {
-  toggle: (status: FrameStatus) => Promise<void>
+  // routes
   getRoute: () => Promise<string>
   pushRoute: (href: string) => Promise<void>
   backRoute: (href: string) => Promise<void>

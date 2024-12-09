@@ -4,37 +4,20 @@ import { RPC_SERVER_PORT } from '@next-devtools/shared/constants'
 import { WS_CLIENT_TO_SERVER_EVENT_NAME, WS_SERVER_EVENT_NAME } from '@next-devtools/shared/types'
 import { createBirpc } from 'birpc'
 import SuperJSON from 'superjson'
-import { QueryClient, defaultShouldDehydrateQuery } from '@tanstack/react-query'
+import { useSettingsStore } from './settings.store'
+import { useInternalStore } from './internal.store'
 import type { ClientFunctions, RpcMessage, ServerFunctions } from '@next-devtools/shared/types'
 
-export function makeQueryClient() {
-  return new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 60 * 1000,
-      },
-      dehydrate: {
-        serializeData: SuperJSON.serialize,
-        // include pending queries in dehydration
-        shouldDehydrateQuery: (query) => defaultShouldDehydrateQuery(query) || query.state.status === 'pending',
-      },
-      hydrate: {
-        deserializeData: SuperJSON.deserialize,
-      },
-    },
-  })
-}
-
-let browserQueryClient: QueryClient | undefined
-
-export function getQueryClient() {
-  if (!browserQueryClient) browserQueryClient = makeQueryClient()
-  return browserQueryClient
-}
-
 const clientFunctions: ClientFunctions = {
+  serverReady: () => {
+    useInternalStore.getState().setup()
+  },
+
   onNetworkUpdate: () => {},
   onTerminalWrite: () => {},
+  onSettingsStoreUpdate: (state) => {
+    useSettingsStore.setState(state)
+  },
 }
 
 export function getRpcClient() {

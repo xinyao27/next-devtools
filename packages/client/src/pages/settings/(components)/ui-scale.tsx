@@ -12,7 +12,7 @@ const options = [
 
 export default function UIScale() {
   const uiScale = useSettingsStore(useShallow((state) => state.uiScale))
-  const setSettings = useSettingsStore.setState
+  const setSettings = useSettingsStore((state) => state.setState)
   const handleChange = (value: string) => {
     setSettings({ uiScale: Number.parseInt(value) })
   }

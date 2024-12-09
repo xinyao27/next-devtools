@@ -32,7 +32,7 @@ const editors = [
 
 export default function EditorComponent() {
   const editor = useSettingsStore(useShallow((state) => state.editor))
-  const setSettings = useSettingsStore.setState
+  const setSettings = useSettingsStore((state) => state.setState)
 
   const handleChange = (value: Editor) => {
     setSettings({ editor: value })

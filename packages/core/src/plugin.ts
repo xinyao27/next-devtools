@@ -51,6 +51,10 @@ export class Plugin {
         settingsStore.getState().setup(ctx)
         networkStore.getState().setup()
 
+        setInterval(() => {
+          globalThis.__NEXT_DEVTOOLS_RPC__.broadcast.serverReady()
+        }, 1000)
+
         consola.log(colors.magenta(colors.bold(`   ▲ Next Devtools ${process.env.VERSION}`)))
         consola.log('')
         this.running = true

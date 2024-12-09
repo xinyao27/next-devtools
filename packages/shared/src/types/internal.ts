@@ -17,3 +17,13 @@ export interface InternalStoreActions {
 }
 
 export type InternalStore = InternalStoreState & InternalStoreActions
+
+export interface ClientInternalStoreState {
+  serverReady: boolean
+}
+
+export interface ClientInternalStoreActions {
+  setup: () => void
+}
+
+export type ClientInternalStore = ClientInternalStoreState & ClientInternalStoreActions

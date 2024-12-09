@@ -7,39 +7,26 @@ import {
   ToolbarPosition,
   settingsStoreDefaultState,
 } from '@next-devtools/shared/types'
-import { rpcClient } from '@/lib/client'
+import { rpcClient } from './rpc'
 import type { SettingsStore, SettingsStoreState } from '@next-devtools/shared/types'
 
 export const useSettingsStore = create<SettingsStore>()((set, get) => {
   const setState = (state: Partial<SettingsStore>) => {
     set(state)
-    rpcClient.setSettingsStore(state)
+    rpcClient?.setSettingsStore(state)
   }
 
   return {
     ...settingsStoreDefaultState,
 
     async setup() {
-      const settings = await rpcClient.getSettingsStore()
-      set(settings)
+      const settings = await rpcClient?.getSettingsStore()
+      if (settings) set(settings)
     },
 
     setState,
 
-    setToolbarSize(size) {
-      const toolbarPosition = get().toolbarPosition
-
-      switch (toolbarPosition) {
-        case ToolbarPosition.Top:
-        case ToolbarPosition.Bottom:
-          setState({ toolbarSize: { width: '100%', height: size } })
-          break
-        case ToolbarPosition.Left:
-        case ToolbarPosition.Right:
-          setState({ toolbarSize: { width: size, height: '100%' } })
-          break
-      }
-    },
+    setToolbarSize() {},
 
     setToolbarPosition(toolbarPosition: ToolbarPosition) {
       const toolbarSize = get().toolbarSize

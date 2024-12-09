@@ -67,6 +67,9 @@ export const useResizable = (options: ResizableProps) => {
 
   const overlayRef = React.useRef<HTMLDivElement | null>(null)
 
+  const [height, setHeight] = React.useState(props.initialHeight)
+  const [width, setWidth] = React.useState(props.initialWidth)
+
   const createOverlay = () => {
     const overlay = document.createElement('div')
     overlay.style.position = 'fixed'
@@ -88,13 +91,8 @@ export const useResizable = (options: ResizableProps) => {
   }
 
   const getRootProps = () => {
-    const { initialHeight, initialWidth } = props
     return {
       ref: parentRef,
-      style: {
-        height: initialHeight,
-        width: initialWidth,
-      },
     }
   }
 
@@ -147,9 +145,7 @@ export const useResizable = (options: ResizableProps) => {
           roundedHeight = minHeight
         }
 
-        if (parent?.current) {
-          parent.current.style.height = `${roundedHeight}px`
-        }
+        setHeight(roundedHeight)
       }
 
       if (!lockHorizontal) {
@@ -166,9 +162,7 @@ export const useResizable = (options: ResizableProps) => {
           roundedWidth = minWidth
         }
 
-        if (parent?.current) {
-          parent.current.style.width = `${roundedWidth}px`
-        }
+        setWidth(roundedWidth)
       }
 
       if (maintainAspectRatio) {
@@ -176,14 +170,10 @@ export const useResizable = (options: ResizableProps) => {
         const newAspectRatio = roundedWidth / roundedHeight
         if (newAspectRatio > aspectRatio) {
           roundedWidth = roundedHeight * aspectRatio
-          if (parent?.current) {
-            parent.current.style.width = `${roundedWidth}px`
-          }
+          setWidth(roundedWidth)
         } else {
           roundedHeight = roundedWidth / aspectRatio
-          if (parent?.current) {
-            parent.current.style.height = `${roundedHeight}px`
-          }
+          setHeight(roundedHeight)
         }
       }
 
@@ -306,5 +296,6 @@ export const useResizable = (options: ResizableProps) => {
     rootRef: parentRef,
     getRootProps,
     getHandleProps,
+    size: { height, width },
   }
 }

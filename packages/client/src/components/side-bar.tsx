@@ -4,11 +4,11 @@ import { NavLink } from 'react-router'
 import { useMedia } from 'react-use'
 import { useShallow } from 'zustand/react/shallow'
 import { Logo } from '@next-devtools/shared/components'
+import { MINI_TOOLBAR_SIZE } from '@next-devtools/shared/types'
 import { cn } from '@/lib/utils'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Button } from '@/components/ui/button'
 import { useSettingsStore } from '@/store/settings'
-import { useMessageClient } from '@/lib/client'
 import { ThemeToggle } from './theme-toggle'
 
 const menuItems = [
@@ -75,9 +75,9 @@ const menuItems = [
 ]
 
 export default function SideBar() {
-  const messageClient = useMessageClient()
   const sidebarCollapsed = useSettingsStore(useShallow((state) => state.sidebarCollapsed))
-  const setSettings = useSettingsStore.setState
+  const setSettings = useSettingsStore((state) => state.setState)
+  const setToolbarSize = useSettingsStore((state) => state.setToolbarSize)
   const isMobile = useMedia('(max-width: 768px)')
 
   function handleToggleSideBar() {
@@ -90,6 +90,10 @@ export default function SideBar() {
     }
   }
 
+  function handleToggleToolbar() {
+    setToolbarSize(MINI_TOOLBAR_SIZE)
+  }
+
   return (
     <nav
       className={cn(
@@ -100,7 +104,13 @@ export default function SideBar() {
     >
       <div className="relative flex h-full flex-col">
         <section className="sticky top-0 z-10">
-          <div className="bg-sidebar flex items-center justify-between overflow-hidden border-b px-3 py-2">
+          <div
+            className={cn(
+              'bg-sidebar flex items-center justify-between overflow-hidden border-b py-2 transition-all duration-200',
+              { 'px-3': sidebarCollapsed === false },
+              { 'px-0': sidebarCollapsed === true },
+            )}
+          >
             <div
               className={cn(
                 'flex h-5 items-center gap-1 font-medium transition-all duration-200',
@@ -114,7 +124,7 @@ export default function SideBar() {
               <span className="mt-0.5 text-lg font-medium">Devtools</span>
             </div>
 
-            <Button size="icon" variant="ghost" onClick={() => messageClient.toggle('mini')}>
+            <Button size="icon" variant="ghost" onClick={handleToggleToolbar}>
               <i className="i-ri-fullscreen-exit-line size-4" />
             </Button>
           </div>
