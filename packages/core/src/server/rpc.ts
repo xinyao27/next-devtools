@@ -15,6 +15,7 @@ import { setupTerminalRpc } from '../features/terminal'
 import { setupRoutesRpc } from '../features/routes'
 import { setupComponentsRpc } from '../features/components'
 import { setupEnvsRpc } from '../features/envs'
+import { setupMemoryRpc } from '../features/memory'
 import { setupNetworkRpc } from '../features/network'
 import { setupPackagesRpc } from '../features/packages'
 import { setupServiceRpc } from '../features/service'
@@ -41,6 +42,7 @@ export function createRPCServer(ctx: NextDevtoolsServerContext) {
     ...setupComponentsRpc(ctx),
     ...setupEditorRpc(ctx),
     ...setupEnvsRpc(ctx),
+    ...setupMemoryRpc(ctx),
     ...setupNetworkRpc(ctx),
     ...setupNpmRpc(ctx),
     ...setupOverviewRpc(ctx),

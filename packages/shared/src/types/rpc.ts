@@ -39,6 +39,9 @@ export interface ServerFunctions {
   // envs
   getEnvs: () => Promise<Env>
 
+  // memory
+  getNextServerMemory: () => Promise<NodeJS.MemoryUsage>
+
   // network
   getNetworkRequests: () => Promise<NetworkStoreState['requests']>
 

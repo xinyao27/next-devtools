@@ -7,7 +7,9 @@ import { rpcClient } from '@/lib/client'
 import { useSettingsStore } from '@/store/settings'
 import { cn } from '@/lib/utils'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import FpsCounter from './fps-counter'
+import MemoryUsage from './memory-usage'
 
 export default function MiniToolbar() {
   const toolbarPosition = useSettingsStore((state) => state.toolbarPosition)
@@ -16,8 +18,9 @@ export default function MiniToolbar() {
 
   const isHorizontal = toolbarPosition === ToolbarPosition.Top || toolbarPosition === ToolbarPosition.Bottom
   const isVertical = toolbarPosition === ToolbarPosition.Left || toolbarPosition === ToolbarPosition.Right
+
   const buttonClass = cn(
-    'bg-sidebar cursor-pointer transition-all duration-200 flex gap-2 text-xs flex-nowrap hover:shadow-inner hover:bg-sidebar/80',
+    'bg-sidebar cursor-pointer transition-all duration-200 flex gap-2 text-xs flex-nowrap hover:shadow-inner hover:bg-sidebar/90',
     {
       'h-full px-4 py-2 items-center': isHorizontal,
       'w-full px-2 py-4 justify-center': isVertical,
@@ -30,193 +33,206 @@ export default function MiniToolbar() {
   })
 
   return (
-    <div
-      className={cn('no-scrollbar bg-sidebar relative flex', {
-        'h-full flex-row overflow-x-auto overflow-y-hidden': isHorizontal,
-        'h-full w-full flex-col overflow-y-auto overflow-x-hidden': isVertical,
+    <ScrollArea
+      className={cn('bg-sidebar relative whitespace-nowrap', {
+        'h-full [&>div>div]:h-full': isHorizontal,
+        'size-full [&>div>div]:h-full': isVertical,
       })}
     >
-      {/* toggle full */}
-      <button
-        aria-label="Fullscreen"
-        title="Fullscreen"
-        className={cn(buttonClass, 'sticky', {
-          'left-0 top-0 border-r': isHorizontal,
-          'left-0 top-0 border-b': isVertical,
-        })}
-        onClick={() => setToolbarSize(ToolbarDefaultSize[toolbarPosition].height as number)}
-      >
-        <i className="i-ri-fullscreen-line size-4 opacity-60" />
-      </button>
-
       <div
-        className={cn('flex flex-1', {
+        className={cn('flex', {
           'h-full flex-row': isHorizontal,
-          'w-full flex-col': isVertical,
+          'h-full w-full flex-col': isVertical,
         })}
       >
-        {/* FPS */}
-        <FpsCounter className={buttonClass} isHorizontal={isHorizontal} isVertical={isVertical} />
-
-        {/* routes */}
+        {/* toggle full */}
         <button
-          aria-label={`${data?.routes.length ?? 0} Routes`}
-          title={`${data?.routes.length ?? 0} Routes`}
-          className={cn(buttonClass, {
+          aria-label="Fullscreen"
+          title="Fullscreen"
+          className={cn(buttonClass, 'bg-sidebar sticky left-0 top-0 z-10', {
             'border-r': isHorizontal,
-            'flex-col items-center border-b': isVertical,
+            'border-b': isVertical,
           })}
+          onClick={() => setToolbarSize(ToolbarDefaultSize[toolbarPosition].height as number)}
         >
-          <i className="i-ri-node-tree size-4 opacity-60" />
-          <span className="hidden opacity-60 md:block" data-label="ROUTES">
-            ROUTES
-          </span>
-          <span className="text-nowrap opacity-70">
-            <span className="font-medium">{data?.routes.length ?? 0}</span>{' '}
-            <span className={cn(isVertical && 'hidden')}>Routes</span>
-          </span>
+          <i className="i-ri-fullscreen-line size-4 opacity-60" />
         </button>
 
-        {/* components */}
-        <button
-          aria-label={`${data?.components.length ?? 0} Components`}
-          title={`${data?.components.length ?? 0} Components`}
-          className={cn(buttonClass, {
-            'border-r': isHorizontal,
-            'flex-col items-center border-b': isVertical,
+        <div
+          className={cn('flex grow', {
+            'h-full flex-row': isHorizontal,
+            'w-full flex-col': isVertical,
           })}
         >
-          <i className="i-ri-box-1-line size-4 opacity-60" />
-          <span className="hidden opacity-60 md:block" data-label="COMPONENTS">
-            COMPONENTS
-          </span>
-          <span className="text-nowrap opacity-70">
-            <span className="font-medium">{data?.components.length ?? 0}</span>{' '}
-            <span className={cn(isVertical && 'hidden')}>Components</span>
-          </span>
-        </button>
+          {/* FPS */}
+          <FpsCounter className={buttonClass} isHorizontal={isHorizontal} isVertical={isVertical} />
 
-        {/* assets */}
-        <button
-          aria-label={`${data?.assets.length ?? 0} Assets`}
-          title={`${data?.assets.length ?? 0} Assets`}
-          className={cn(buttonClass, {
-            'border-r': isHorizontal,
-            'flex-col items-center border-b': isVertical,
-          })}
-        >
-          <i className="i-ri-gallery-line size-4 opacity-60" />
-          <span className="hidden opacity-60 md:block" data-label="ASSETS">
-            ASSETS
-          </span>
-          <span className="text-nowrap opacity-70">
-            <span className="font-medium">{data?.assets.length ?? 0}</span>{' '}
-            <span className={cn(isVertical && 'hidden')}>Assets</span>
-          </span>
-        </button>
+          {/* Memory Usage */}
+          <MemoryUsage className={buttonClass} isHorizontal={isHorizontal} isVertical={isVertical} />
 
-        {/* packages */}
-        <button
-          aria-label={`${data?.packages.length ?? 0} Packages`}
-          title={`${data?.packages.length ?? 0} Packages`}
-          className={cn(buttonClass, {
-            'border-r': isHorizontal,
-            'flex-col items-center border-b': isVertical,
-          })}
-        >
-          <i className="i-ri-box-3-line size-4 opacity-60" />
-          <span className="hidden opacity-60 md:block" data-label="PACKAGES">
-            PACKAGES
-          </span>
-          <span className="text-nowrap opacity-70">
-            <span className="font-medium">{data?.packages.length ?? 0}</span>{' '}
-            <span className={cn(isVertical && 'hidden')}>Packages</span>
-          </span>
-        </button>
-      </div>
-
-      <div
-        className={cn('sticky z-10 flex', {
-          'right-0 h-full flex-row items-center': isHorizontal,
-          'bottom-0 w-full flex-col justify-center': isVertical,
-        })}
-      >
-        {/* switch toolbar position */}
-        <Collapsible
-          className={cn('flex h-full', {
-            'h-full flex-row-reverse items-center': isHorizontal,
-            'w-full flex-col-reverse justify-center': isVertical,
-          })}
-        >
-          <CollapsibleTrigger asChild>
-            <button
-              className={cn(buttonClass, 'transition-transform duration-200 [&[data-state=open]>i]:rotate-180', {
-                'border-l': isHorizontal,
-                'border-t': isVertical,
-              })}
-            >
-              {isHorizontal ? (
-                <i className="i-ri-arrow-left-s-line size-4 opacity-60" />
-              ) : (
-                <i className="i-ri-arrow-up-s-line size-4 opacity-60" />
-              )}
-            </button>
-          </CollapsibleTrigger>
-          <CollapsibleContent
-            className={cn({
-              'h-full': isHorizontal,
-              'w-full': isVertical,
+          {/* routes */}
+          <button
+            aria-label={`${data?.routes.length ?? 0} Routes`}
+            title={`${data?.routes.length ?? 0} Routes`}
+            className={cn(buttonClass, {
+              'border-r': isHorizontal,
+              'flex-col items-center border-b': isVertical,
             })}
           >
-            <div
-              className={cn('flex', {
-                'h-full flex-row items-center': isHorizontal,
-                'w-full flex-col justify-center': isVertical,
+            <i className="i-ri-node-tree size-4 opacity-60" />
+            <span className="hidden opacity-60 lg:block" data-label="ROUTES">
+              ROUTES
+            </span>
+            <span className="text-nowrap opacity-70">
+              <span className="font-medium">{data?.routes.length ?? 0}</span>{' '}
+              <span className={cn(isVertical && 'hidden')}>Routes</span>
+            </span>
+          </button>
+
+          {/* components */}
+          <button
+            aria-label={`${data?.components.length ?? 0} Components`}
+            title={`${data?.components.length ?? 0} Components`}
+            className={cn(buttonClass, {
+              'border-r': isHorizontal,
+              'flex-col items-center border-b': isVertical,
+            })}
+          >
+            <i className="i-ri-box-1-line size-4 opacity-60" />
+            <span className="hidden opacity-60 lg:block" data-label="COMPONENTS">
+              COMPONENTS
+            </span>
+            <span className="text-nowrap opacity-70">
+              <span className="font-medium">{data?.components.length ?? 0}</span>{' '}
+              <span className={cn(isVertical && 'hidden')}>Components</span>
+            </span>
+          </button>
+
+          {/* assets */}
+          <button
+            aria-label={`${data?.assets.length ?? 0} Assets`}
+            title={`${data?.assets.length ?? 0} Assets`}
+            className={cn(buttonClass, {
+              'border-r': isHorizontal,
+              'flex-col items-center border-b': isVertical,
+            })}
+          >
+            <i className="i-ri-gallery-line size-4 opacity-60" />
+            <span className="hidden opacity-60 lg:block" data-label="ASSETS">
+              ASSETS
+            </span>
+            <span className="text-nowrap opacity-70">
+              <span className="font-medium">{data?.assets.length ?? 0}</span>{' '}
+              <span className={cn(isVertical && 'hidden')}>Assets</span>
+            </span>
+          </button>
+
+          {/* packages */}
+          <button
+            aria-label={`${data?.packages.length ?? 0} Packages`}
+            title={`${data?.packages.length ?? 0} Packages`}
+            className={cn(buttonClass, {
+              'border-r': isHorizontal,
+              'flex-col items-center border-b': isVertical,
+            })}
+          >
+            <i className="i-ri-box-3-line size-4 opacity-60" />
+            <span className="hidden opacity-60 lg:block" data-label="PACKAGES">
+              PACKAGES
+            </span>
+            <span className="text-nowrap opacity-70">
+              <span className="font-medium">{data?.packages.length ?? 0}</span>{' '}
+              <span className={cn(isVertical && 'hidden')}>Packages</span>
+            </span>
+          </button>
+        </div>
+
+        <div
+          className={cn('sticky z-10 flex', {
+            'right-0 h-full flex-row items-center': isHorizontal,
+            'bottom-0 w-full flex-col justify-center': isVertical,
+          })}
+        >
+          {/* switch toolbar position */}
+          <Collapsible
+            className={cn('flex h-full', {
+              'h-full flex-row-reverse items-center': isHorizontal,
+              'w-full flex-col-reverse justify-center': isVertical,
+            })}
+          >
+            <CollapsibleTrigger asChild>
+              <button
+                className={cn(buttonClass, 'transition-transform duration-200 [&[data-state=open]>i]:rotate-180', {
+                  'border-l': isHorizontal,
+                  'border-t': isVertical,
+                })}
+              >
+                {isHorizontal ? (
+                  <i className="i-ri-arrow-left-s-line size-4 opacity-60" />
+                ) : (
+                  <i className="i-ri-arrow-up-s-line size-4 opacity-60" />
+                )}
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent
+              className={cn({
+                'h-full': isHorizontal,
+                'w-full': isVertical,
               })}
             >
-              <button
-                className={cn(buttonClass, {
-                  'h-full border-l': isHorizontal,
-                  'w-full border-t': isVertical,
+              <div
+                className={cn('flex', {
+                  'h-full flex-row items-center': isHorizontal,
+                  'w-full flex-col justify-center': isVertical,
                 })}
-                onClick={() => setToolbarPosition(ToolbarPosition.Top)}
               >
-                <i className="i-ri-layout-top-2-line size-4 opacity-60" />
-              </button>
+                <button
+                  className={cn(buttonClass, {
+                    'h-full border-l': isHorizontal,
+                    'w-full border-t': isVertical,
+                  })}
+                  onClick={() => setToolbarPosition(ToolbarPosition.Top)}
+                >
+                  <i className="i-ri-layout-top-2-line size-4 opacity-60" />
+                </button>
 
-              <button
-                className={cn(buttonClass, {
-                  'border-l': isHorizontal,
-                  'border-t': isVertical,
-                })}
-                onClick={() => setToolbarPosition(ToolbarPosition.Bottom)}
-              >
-                <i className="i-ri-layout-bottom-2-line size-4 opacity-60" />
-              </button>
+                <button
+                  className={cn(buttonClass, {
+                    'border-l': isHorizontal,
+                    'border-t': isVertical,
+                  })}
+                  onClick={() => setToolbarPosition(ToolbarPosition.Bottom)}
+                >
+                  <i className="i-ri-layout-bottom-2-line size-4 opacity-60" />
+                </button>
 
-              <button
-                className={cn(buttonClass, {
-                  'border-l': isHorizontal,
-                  'border-t': isVertical,
-                })}
-                onClick={() => setToolbarPosition(ToolbarPosition.Left)}
-              >
-                <i className="i-ri-layout-left-2-line size-4 opacity-60" />
-              </button>
+                <button
+                  className={cn(buttonClass, {
+                    'border-l': isHorizontal,
+                    'border-t': isVertical,
+                  })}
+                  onClick={() => setToolbarPosition(ToolbarPosition.Left)}
+                >
+                  <i className="i-ri-layout-left-2-line size-4 opacity-60" />
+                </button>
 
-              <button
-                className={cn(buttonClass, {
-                  'border-l': isHorizontal,
-                  'border-t': isVertical,
-                })}
-                onClick={() => setToolbarPosition(ToolbarPosition.Right)}
-              >
-                <i className="i-ri-layout-right-2-line size-4 opacity-60" />
-              </button>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
+                <button
+                  className={cn(buttonClass, {
+                    'border-l': isHorizontal,
+                    'border-t': isVertical,
+                  })}
+                  onClick={() => setToolbarPosition(ToolbarPosition.Right)}
+                >
+                  <i className="i-ri-layout-right-2-line size-4 opacity-60" />
+                </button>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
       </div>
-    </div>
+
+      {isHorizontal ? <ScrollBar orientation="horizontal" /> : null}
+      {isVertical ? <ScrollBar orientation="vertical" /> : null}
+    </ScrollArea>
   )
 }

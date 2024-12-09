@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatBytes(bytes: number, decimals = 2) {
-  if (!+bytes) return '0 Bytes'
+  if (!+bytes) return '0Bytes'
 
   const k = 1024
   const dm = decimals < 0 ? 0 : decimals
@@ -14,5 +14,5 @@ export function formatBytes(bytes: number, decimals = 2) {
 
   const i = Math.floor(Math.log(bytes) / Math.log(k))
 
-  return `${Number.parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`
+  return `${Number.parseFloat((bytes / k ** i).toFixed(dm))}${sizes[i]}`
 }

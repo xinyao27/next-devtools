@@ -57,7 +57,7 @@ export default function FpsCounter({ className, isHorizontal, isVertical }: FpsC
       })}
     >
       <i className="i-ri-speed-up-line size-4 opacity-60" />
-      <span className="hidden opacity-60 md:block" data-label="FPS">
+      <span className="hidden opacity-60 lg:block" data-label="FPS">
         FPS
       </span>
       <span className="text-nowrap opacity-70">
