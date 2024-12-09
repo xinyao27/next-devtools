@@ -7,6 +7,7 @@ import { rpcClient } from '@/lib/client'
 import { useSettingsStore } from '@/store/settings'
 import { cn } from '@/lib/utils'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import FpsCounter from './fps-counter'
 
 export default function MiniToolbar() {
   const toolbarPosition = useSettingsStore((state) => state.toolbarPosition)
@@ -37,6 +38,8 @@ export default function MiniToolbar() {
     >
       {/* toggle full */}
       <button
+        aria-label="Fullscreen"
+        title="Fullscreen"
         className={cn(buttonClass, 'sticky', {
           'left-0 top-0 border-r': isHorizontal,
           'left-0 top-0 border-b': isVertical,
@@ -52,8 +55,13 @@ export default function MiniToolbar() {
           'w-full flex-col': isVertical,
         })}
       >
+        {/* FPS */}
+        <FpsCounter className={buttonClass} isHorizontal={isHorizontal} isVertical={isVertical} />
+
         {/* routes */}
         <button
+          aria-label={`${data?.routes.length ?? 0} Routes`}
+          title={`${data?.routes.length ?? 0} Routes`}
           className={cn(buttonClass, {
             'border-r': isHorizontal,
             'flex-col items-center border-b': isVertical,
@@ -71,6 +79,8 @@ export default function MiniToolbar() {
 
         {/* components */}
         <button
+          aria-label={`${data?.components.length ?? 0} Components`}
+          title={`${data?.components.length ?? 0} Components`}
           className={cn(buttonClass, {
             'border-r': isHorizontal,
             'flex-col items-center border-b': isVertical,
@@ -88,6 +98,8 @@ export default function MiniToolbar() {
 
         {/* assets */}
         <button
+          aria-label={`${data?.assets.length ?? 0} Assets`}
+          title={`${data?.assets.length ?? 0} Assets`}
           className={cn(buttonClass, {
             'border-r': isHorizontal,
             'flex-col items-center border-b': isVertical,
@@ -105,6 +117,8 @@ export default function MiniToolbar() {
 
         {/* packages */}
         <button
+          aria-label={`${data?.packages.length ?? 0} Packages`}
+          title={`${data?.packages.length ?? 0} Packages`}
           className={cn(buttonClass, {
             'border-r': isHorizontal,
             'flex-col items-center border-b': isVertical,
