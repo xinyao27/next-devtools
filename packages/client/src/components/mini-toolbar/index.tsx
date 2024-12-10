@@ -4,6 +4,7 @@ import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { ToolbarDefaultSize, ToolbarPosition } from '@next-devtools/shared/types'
 import { useNavigate } from 'react-router'
+import { Logo } from '@next-devtools/shared/components'
 import { rpcClient } from '@/lib/client'
 import { useSettingsStore } from '@/store/settings'
 import { cn } from '@/lib/utils'
@@ -35,6 +36,30 @@ export default function MiniToolbar() {
     queryFn: () => rpcClient?.getOverviewData(),
   })
 
+  const logoElement = (
+    <div
+      className={cn('bg-sidebar sticky left-0 top-0 z-10 flex items-center justify-center', {
+        'h-full border-l px-4': isHorizontal,
+        'border-b py-3': isVertical,
+      })}
+    >
+      <Logo className="size-6" />
+    </div>
+  )
+  const toggleFullscreenElement = (
+    <button
+      aria-label="Fullscreen"
+      title="Fullscreen"
+      className={cn(buttonClass, 'bg-sidebar', {
+        'border-r': isHorizontal,
+        'border-t': isVertical,
+      })}
+      onClick={() => setToolbarSize(ToolbarDefaultSize[toolbarPosition].height as number)}
+    >
+      <i className="i-ri-fullscreen-line size-4 opacity-60" />
+    </button>
+  )
+
   return (
     <ScrollArea
       className={cn('bg-sidebar relative whitespace-nowrap', {
@@ -48,18 +73,7 @@ export default function MiniToolbar() {
           'h-full w-full flex-col': isVertical,
         })}
       >
-        {/* toggle full */}
-        <button
-          aria-label="Fullscreen"
-          title="Fullscreen"
-          className={cn(buttonClass, 'bg-sidebar sticky left-0 top-0 z-10', {
-            'border-r': isHorizontal,
-            'border-b': isVertical,
-          })}
-          onClick={() => setToolbarSize(ToolbarDefaultSize[toolbarPosition].height as number)}
-        >
-          <i className="i-ri-fullscreen-line size-4 opacity-60" />
-        </button>
+        {isVertical ? logoElement : toggleFullscreenElement}
 
         <div
           className={cn('flex grow', {
@@ -266,6 +280,9 @@ export default function MiniToolbar() {
               </div>
             </CollapsibleContent>
           </Collapsible>
+
+          {/* toggle full */}
+          {isHorizontal ? logoElement : toggleFullscreenElement}
         </div>
       </div>
 

@@ -9,7 +9,10 @@ import { cn } from '@/lib/utils'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Button } from '@/components/ui/button'
 import { useSettingsStore } from '@/store/settings'
-import { ThemeToggle } from './theme-toggle'
+import { ToolbarPositionToggle } from '@/pages/settings/(components)/toolbar-position'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Separator } from '@/components/ui/separator'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 const menuItems = [
   {
@@ -106,27 +109,29 @@ export default function SideBar() {
         <section className="sticky top-0 z-10">
           <div
             className={cn(
-              'bg-sidebar flex items-center justify-between overflow-hidden border-b py-2 transition-all duration-200',
+              'bg-sidebar flex items-center justify-between overflow-hidden border-b pb-3 pt-4 transition-all duration-200',
               { 'px-3': sidebarCollapsed === false },
               { 'px-0': sidebarCollapsed === true },
             )}
           >
-            <div
-              className={cn(
-                'flex h-5 items-center gap-1 font-medium transition-all duration-200',
-                { 'w-0 flex-none opacity-0': sidebarCollapsed === true },
-                { 'w-full flex-1 opacity-100': sidebarCollapsed === false },
-              )}
-            >
-              <div className="w-6">
-                <Logo className="size-5" />
-              </div>
-              <span className="mt-0.5 text-lg font-medium">Devtools</span>
-            </div>
+            <div className="flex h-5 w-full items-center font-medium transition-all duration-200">
+              <Logo
+                className={cn('absolute size-5 flex-none transition-all duration-200', {
+                  'left-1.5': sidebarCollapsed === true,
+                  'left-3': sidebarCollapsed === false,
+                })}
+              />
 
-            <Button size="icon" variant="ghost" onClick={handleToggleToolbar}>
-              <i className="i-ri-fullscreen-exit-line size-4" />
-            </Button>
+              <span
+                className={cn(
+                  'text-lg font-medium transition-all duration-200',
+                  { 'w-0 flex-none opacity-0': sidebarCollapsed === true },
+                  { 'w-full flex-1 pl-7 opacity-100': sidebarCollapsed === false },
+                )}
+              >
+                Devtools
+              </span>
+            </div>
           </div>
         </section>
 
@@ -184,32 +189,44 @@ export default function SideBar() {
           ))}
         </section>
 
-        <section
-          className={cn(
-            'bg-sidebar sticky bottom-0 z-10 flex flex-col items-center justify-between gap-1 border-t p-1.5 transition-all duration-200 md:flex-row',
-            {
-              '!flex-col': sidebarCollapsed === true,
-              '!flex-row': sidebarCollapsed === false,
-            },
-          )}
-        >
-          <ThemeToggle />
+        <div className="bg-sidebar sticky bottom-0 z-10 w-full pb-2">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button className="w-full border-t" variant="ghost">
+                <i className="i-ri-more-line size-5 flex-none" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent align="end" className="p-0" side="right">
+              <div className="flex flex-col gap-2 px-4 py-3">
+                <div className="grid grid-cols-3 gap-1">
+                  {/* toggle sidebar */}
+                  <Button size="sm" variant="outline" onClick={handleToggleSideBar}>
+                    <i
+                      className={cn('i-ri-sidebar-unfold-line md:i-ri-sidebar-fold-line !h-5 !w-5', {
+                        '!i-ri-sidebar-unfold-line': sidebarCollapsed === true,
+                        '!i-ri-sidebar-fold-line': sidebarCollapsed === false,
+                      })}
+                    />
+                    <span className="ml-2">{sidebarCollapsed ? 'Expand' : 'Collapse'} Sidebar</span>
+                  </Button>
 
-          <Button
-            className="opacity-50 transition hover:opacity-100"
-            size="icon"
-            variant="ghost"
-            onClick={handleToggleSideBar}
-          >
-            <i
-              className={cn('i-ri-sidebar-unfold-line md:i-ri-sidebar-fold-line !h-5 !w-5', {
-                '!i-ri-sidebar-unfold-line': sidebarCollapsed === true,
-                '!i-ri-sidebar-fold-line': sidebarCollapsed === false,
-              })}
-            />
-            <span className="sr-only">Toggle sidebar</span>
-          </Button>
-        </section>
+                  {/* theme toggle */}
+                  <ThemeToggle />
+
+                  {/* exit fullscreen */}
+                  <Button size="sm" variant="outline" onClick={handleToggleToolbar}>
+                    <i className="i-ri-fullscreen-exit-line size-4" />
+                    <span className="ml-2">Exit Fullscreen</span>
+                  </Button>
+                </div>
+
+                <Separator />
+
+                <ToolbarPositionToggle />
+              </div>
+            </PopoverContent>
+          </Popover>
+        </div>
       </div>
     </nav>
   )
