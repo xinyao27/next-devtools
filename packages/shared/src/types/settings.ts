@@ -24,21 +24,23 @@ export interface ToolbarSize {
   height: number | string
 }
 
+export const DEFAULT_TOOLBAR_SIZE = 770
+
 export const ToolbarDefaultSize: Record<ToolbarPosition, ToolbarSize> = {
   [ToolbarPosition.Top]: {
     width: '100%',
-    height: 770,
+    height: DEFAULT_TOOLBAR_SIZE,
   },
   [ToolbarPosition.Bottom]: {
     width: '100%',
-    height: 770,
+    height: DEFAULT_TOOLBAR_SIZE,
   },
   [ToolbarPosition.Left]: {
-    width: 770,
+    width: DEFAULT_TOOLBAR_SIZE,
     height: '100%',
   },
   [ToolbarPosition.Right]: {
-    width: 770,
+    width: DEFAULT_TOOLBAR_SIZE,
     height: '100%',
   },
 }

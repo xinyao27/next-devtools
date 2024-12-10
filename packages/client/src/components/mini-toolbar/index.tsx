@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { ToolbarDefaultSize, ToolbarPosition } from '@next-devtools/shared/types'
+import { DEFAULT_TOOLBAR_SIZE, ToolbarPosition } from '@next-devtools/shared/types'
 import { useNavigate } from 'react-router'
 import { Logo } from '@next-devtools/shared/components'
 import { rpcClient } from '@/lib/client'
@@ -54,7 +54,9 @@ export default function MiniToolbar() {
         'border-r': isHorizontal,
         'border-t': isVertical,
       })}
-      onClick={() => setToolbarSize(ToolbarDefaultSize[toolbarPosition].height as number)}
+      onClick={() => {
+        setToolbarSize(DEFAULT_TOOLBAR_SIZE)
+      }}
     >
       <i className="i-ri-fullscreen-line size-4 opacity-60" />
     </button>
@@ -97,7 +99,7 @@ export default function MiniToolbar() {
             })}
             onClick={() => {
               navigate('/routes')
-              setToolbarSize(ToolbarDefaultSize[toolbarPosition].height as number)
+              setToolbarSize(DEFAULT_TOOLBAR_SIZE)
             }}
           >
             <i className="i-ri-node-tree size-4 opacity-60" />
@@ -120,7 +122,7 @@ export default function MiniToolbar() {
             })}
             onClick={() => {
               navigate('/routes')
-              setToolbarSize(ToolbarDefaultSize[toolbarPosition].height as number)
+              setToolbarSize(DEFAULT_TOOLBAR_SIZE)
             }}
           >
             <i className="i-ri-box-1-line size-4 opacity-60" />
@@ -143,7 +145,7 @@ export default function MiniToolbar() {
             })}
             onClick={() => {
               navigate('/assets')
-              setToolbarSize(ToolbarDefaultSize[toolbarPosition].height as number)
+              setToolbarSize(DEFAULT_TOOLBAR_SIZE)
             }}
           >
             <i className="i-ri-gallery-line size-4 opacity-60" />
@@ -166,7 +168,7 @@ export default function MiniToolbar() {
             })}
             onClick={() => {
               navigate('/packages')
-              setToolbarSize(ToolbarDefaultSize[toolbarPosition].height as number)
+              setToolbarSize(DEFAULT_TOOLBAR_SIZE)
             }}
           >
             <i className="i-ri-box-3-line size-4 opacity-60" />

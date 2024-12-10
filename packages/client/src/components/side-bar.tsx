@@ -196,9 +196,9 @@ export default function SideBar() {
                 <i className="i-ri-more-line size-5 flex-none" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent align="end" className="p-0" side="right">
-              <div className="flex flex-col gap-2 px-4 py-3">
-                <div className="grid grid-cols-3 gap-1">
+            <PopoverContent align="end" className="p-0">
+              <div className="flex w-[300px] flex-col gap-2 px-4 py-3 md:w-[450px]">
+                <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
                   {/* toggle sidebar */}
                   <Button size="sm" variant="outline" onClick={handleToggleSideBar}>
                     <i
