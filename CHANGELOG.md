@@ -1,5 +1,62 @@
 
 
+# [0.3.0-beta.0](https://github.com/xinyao27/next-devtools/compare/v0.2.0...v0.3.0-beta.0) (2024-12-12)
+
+
+### Bug Fixes
+
+* **client:** add types to useRPCClient hook ([3168d7d](https://github.com/xinyao27/next-devtools/commit/3168d7d9a621e5c981d9ff2b46b4a764018e538e))
+* **client:** current route is undefined ([bd83a32](https://github.com/xinyao27/next-devtools/commit/bd83a32d464dba53a8270542f2769cd674ba0774))
+* **client:** hydrate error ([dfbae2d](https://github.com/xinyao27/next-devtools/commit/dfbae2d85bd59174b62f784770f85aacd8b1a14e))
+* **client:** open-in-vscode ([1c698d6](https://github.com/xinyao27/next-devtools/commit/1c698d66bc123ec4f78dbcd969abac365f3ebed9))
+* component displayName ([4e0682a](https://github.com/xinyao27/next-devtools/commit/4e0682aef861f3fed3e1da492660365d8c35d5a3))
+* **core:** drag position issue ([6dafb15](https://github.com/xinyao27/next-devtools/commit/6dafb158f9dc965f953502633afff62725cdbdc0))
+* **core:** styles delay loading causing layout issue ([4f7936d](https://github.com/xinyao27/next-devtools/commit/4f7936d9ebf68da19cbce4f0f40ddb21b22711d7))
+* example deps versions ([8f93fea](https://github.com/xinyao27/next-devtools/commit/8f93feabac1130118e19eb1c2ccfd00f51a0a714))
+* input prefix ([7cb4e1f](https://github.com/xinyao27/next-devtools/commit/7cb4e1ff49b2ed606405b826f5af137e1d27c9af))
+* **plugin:** local host maybe undefined (Internal Server error [#16](https://github.com/xinyao27/next-devtools/issues/16)) ([82d033b](https://github.com/xinyao27/next-devtools/commit/82d033b16ce6bec430542ed4a95211cc7ca79da5))
+* replace nextEnv with loadEnvConfig ([e715330](https://github.com/xinyao27/next-devtools/commit/e715330e2dcb52dd879e8ef0422e8ef218f4ec81))
+* some styles optimize ([ad82d21](https://github.com/xinyao27/next-devtools/commit/ad82d212574c72090094160866a56687917ba27c))
+* wrong packageDir/distDir ([f0ef056](https://github.com/xinyao27/next-devtools/commit/f0ef056564e256f3a49cb537fa6053d7829adfa1))
+
+
+### Features
+
+* add bundle analyzer page ([dff48fd](https://github.com/xinyao27/next-devtools/commit/dff48fd22f62989223239dfbbdb3410571deb574))
+* add customFetch utility and update package version check to use it ([85c1c92](https://github.com/xinyao27/next-devtools/commit/85c1c92719ef001df2263f0d0e2d5d8fcd9be4ae))
+* add FPS counter and enhance mini-toolbar functionality ([44b0db4](https://github.com/xinyao27/next-devtools/commit/44b0db4fb2bf5f516a491ede18e31cb31156a07c))
+* add position toggle functionality to mini-toolbar ([4cfe841](https://github.com/xinyao27/next-devtools/commit/4cfe841bd2276a8e1261915f3227588caae30d1f))
+* add terminal page ([4b0ccda](https://github.com/xinyao27/next-devtools/commit/4b0ccdaf88a6487105dd8a8007fb3bb153adc15a))
+* better overview ([e128639](https://github.com/xinyao27/next-devtools/commit/e1286399a0bb6b00f33d0bf2d6c0fcae7ecfa91e))
+* **client:** add connect verify process ([2ab2dab](https://github.com/xinyao27/next-devtools/commit/2ab2dab639f422fadd55d191c86ce4c9a7849ba7))
+* **client:** ensure zustand data ([25a8df1](https://github.com/xinyao27/next-devtools/commit/25a8df1cdcf82d2b07c80ebfecdd8de7d21ecb83))
+* **client:** optimize drag styles ([2ff2601](https://github.com/xinyao27/next-devtools/commit/2ff2601d191f25510abe9d5336098f9761bf4b72))
+* **client:** optimize sidebar styles ([9c954db](https://github.com/xinyao27/next-devtools/commit/9c954db1c5399170dcfea4d44fbff1c589c2759a))
+* **client:** optimize sidebar styles ([027d552](https://github.com/xinyao27/next-devtools/commit/027d552774da8f0d8bb10b9e03269820b84b6c71))
+* **client:** settings page ([d1d92b6](https://github.com/xinyao27/next-devtools/commit/d1d92b67a3d4c4db7f0f33f8033f3088ee58fd97))
+* **client:** settings refetch data ([23ff5a8](https://github.com/xinyao27/next-devtools/commit/23ff5a8eb383a3da752b2f22c90542c4f6ed87d5))
+* **client:** update open-in-vscode ([4889630](https://github.com/xinyao27/next-devtools/commit/4889630bcfc070f0fc923771abf02dbd03a19c5e))
+* **core:** toobar drag ([8ddc982](https://github.com/xinyao27/next-devtools/commit/8ddc9828ce93f6975ad94e5713010415f36f72c0))
+* delete tsup ([0a339ca](https://github.com/xinyao27/next-devtools/commit/0a339ca37130482f07f595b2512221b472da79c3))
+* enhance mini-toolbar with navigation and button titles ([406d2d3](https://github.com/xinyao27/next-devtools/commit/406d2d3d9d835cfca643cee7bd2bab8a83d229a3))
+* major refactoring ([9305dcb](https://github.com/xinyao27/next-devtools/commit/9305dcba4ed0568b0af2605233f35a67cba0a95a))
+* memory usage for minitoolbar ([8b587c9](https://github.com/xinyao27/next-devtools/commit/8b587c924c333e2996102bc8f5643f8a318558dd))
+* minitoolbar ([36518a1](https://github.com/xinyao27/next-devtools/commit/36518a1832f2ae57e8ed6d2155ae051200fb3dd7))
+* network! ([aa8371d](https://github.com/xinyao27/next-devtools/commit/aa8371de35b4bca4590b76217514fa894de09869))
+* new layout ([41ee663](https://github.com/xinyao27/next-devtools/commit/41ee6633cab0baf7a37bb8830c556ca177316c4f))
+* new logo, thanks [@yikun](https://github.com/yikun)_Artdesign ([6269f8c](https://github.com/xinyao27/next-devtools/commit/6269f8c43c164d27ae9e098fdc787fcf908068b5))
+* new toolbar ([f5a841a](https://github.com/xinyao27/next-devtools/commit/f5a841ac1f0e7f1eb76fb48a7f88ad42da1436f5))
+* next15 ([63cdaec](https://github.com/xinyao27/next-devtools/commit/63cdaec9731541e2993f63731aac2b444251d4eb))
+* open in editor! ([5c5b874](https://github.com/xinyao27/next-devtools/commit/5c5b8744000cae11637066742b0f500d8af9f548))
+* optimize code-block performance ([1ed0117](https://github.com/xinyao27/next-devtools/commit/1ed01171ec13f50f92d1d406b7382256e0686607))
+* optimize network ([305a5a5](https://github.com/xinyao27/next-devtools/commit/305a5a58eeb71c25f8303da18e807cae18386baf))
+* purple has more flavor ([3c53049](https://github.com/xinyao27/next-devtools/commit/3c530491005bea22b2be3db14f655a40fee4be63))
+* refactor shared, using zustand and others ([f8f38f6](https://github.com/xinyao27/next-devtools/commit/f8f38f6ca5204f3c684a7313e08081a8825d9fb3))
+* seo ([4462fe4](https://github.com/xinyao27/next-devtools/commit/4462fe41601279764ae512a69a0857177575cbb3))
+* update code block ([44fc2f2](https://github.com/xinyao27/next-devtools/commit/44fc2f2365b0a11c0e449f2267b82541303c7dd8))
+* update sidebar and mini-toolbar with new popover and toolbar position toggle ([8fed4af](https://github.com/xinyao27/next-devtools/commit/8fed4afde45c669f60f3a62475e7005841f76f85))
+* use react-query instead of swr ([a38ee2d](https://github.com/xinyao27/next-devtools/commit/a38ee2d0c1c5f04436a099e130b4b8ab321278c2))
+
 # [0.2.0](https://github.com/xinyao27/next-devtools/compare/v0.1.3...v0.2.0) (2024-01-11)
 
 
