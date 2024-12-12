@@ -39,6 +39,13 @@ export default function Home() {
           >
             Pokemon
           </Link>
+          <Link
+            className="flex h-10 items-center justify-center rounded-full border border-solid border-black/[.08] px-4 text-sm transition-colors hover:border-transparent hover:bg-[#f2f2f2] sm:h-12 sm:min-w-44 sm:px-5 sm:text-base dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
+            href="/seo"
+            rel="noopener noreferrer"
+          >
+            SEO
+          </Link>
         </div>
       </main>
       <footer className="row-start-3 flex flex-wrap items-center justify-center gap-6">

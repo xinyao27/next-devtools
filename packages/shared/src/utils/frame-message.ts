@@ -1,3 +1,5 @@
+import type { SEOMetadata } from '../types'
+
 const CLIENT_SOURCE = 'next-devtools-client'
 const FRAME_SOURCE = 'next-devtools-frame'
 
@@ -53,4 +55,6 @@ export interface FrameMessageHandler extends FrameMessageFunctions {
   getRoute: () => Promise<string>
   pushRoute: (href: string) => Promise<void>
   backRoute: (href: string) => Promise<void>
+  // seo
+  getSEOMetadata: (route?: string) => Promise<SEOMetadata>
 }

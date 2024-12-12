@@ -3,6 +3,7 @@
 import React from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { createFrameMessageHandler } from '@next-devtools/shared/utils'
+import { getSEOMetadata } from '../features/seo'
 import type { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import type { FrameMessageHandler } from '@next-devtools/shared/utils'
 
@@ -18,6 +19,7 @@ export function MessageProvider({ children, iframeRef }: Props) {
 
   React.useEffect(() => {
     const handler: FrameMessageHandler = {
+      // routes
       getRoute: async () => latestPathname.current,
       pushRoute: async (href: string, options?: NavigateOptions) => {
         router.push(href, options)
@@ -25,6 +27,9 @@ export function MessageProvider({ children, iframeRef }: Props) {
       backRoute: async () => {
         router.back()
       },
+
+      // seo
+      getSEOMetadata,
     }
     const unsubscribe = createFrameMessageHandler(handler, iframeRef)
 

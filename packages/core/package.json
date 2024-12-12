@@ -80,6 +80,7 @@
     "nypm": "catalog:",
     "react-docgen": "catalog:",
     "react-use": "catalog:",
+    "schema-dts": "catalog:",
     "semver": "catalog:",
     "sirv": "catalog:",
     "superjson": "catalog:",

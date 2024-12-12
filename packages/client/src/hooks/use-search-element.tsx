@@ -35,12 +35,17 @@ export default function useSearchElement<T>(
   const element = useMemo(() => {
     return (
       <div className={cn('space-y-1 border-b p-4', props?.className)}>
-        <Input
-          placeholder="Search..."
-          prefix={<i className="i-ri-search-line text-muted-foreground size-4" />}
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
+        <div className="relative">
+          <Input
+            className="peer ps-9"
+            placeholder="Search..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+          <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
+            <i className="i-ri-search-line size-4" />
+          </div>
+        </div>
 
         <div className="text-sm opacity-50">
           {searchText ? <span>{filteredData.length} matched · </span> : null}

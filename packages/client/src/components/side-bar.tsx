@@ -58,6 +58,12 @@ const menuItems = [
     icon: 'i-ri-earth-line',
   },
   {
+    value: 'seo',
+    label: 'SEO',
+    link: '/seo',
+    icon: 'i-ri-seo-line',
+  },
+  {
     value: 'terminal',
     label: 'Terminal',
     link: '/terminal',

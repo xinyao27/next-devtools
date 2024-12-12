@@ -28,7 +28,7 @@ const ResizableHandle = ({
     {...props}
   >
     {withHandle ? (
-      <div className="bg-border z-10 flex h-4 w-3 items-center justify-center rounded border">
+      <div className="bg-border z-10 flex h-4 w-3 items-center justify-center rounded-sm border">
         <i className="i-ri-draggable h-2.5 w-2.5" />
       </div>
     ) : null}

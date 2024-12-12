@@ -1,5 +1,6 @@
 export * from './features'
 export * from './internal'
+export * from './metadata'
 export * from './network'
 export * from './rpc'
 export * from './settings'
