@@ -18,7 +18,6 @@
     "release:major": "release-it major",
     "release:minor": "release-it minor",
     "release:patch": "release-it patch",
-    "publish": "pnpm run build && pnpm -r publish",
     "build": "turbo run build --force",
     "dev": "turbo run dev dev:app",
     "dev:devtools": "turbo run dev",
