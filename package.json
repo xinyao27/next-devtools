@@ -13,7 +13,7 @@
     "preinstall": "npx only-allow pnpm",
     "up": "taze major -Ir",
     "lint": "eslint . --fix",
-    "prepare": "husky install",
+    "prepare": "husky",
     "release": "release-it",
     "preRelease": "release-it --preRelease=beta --npm.tag=beta",
     "release:major": "release-it major",
