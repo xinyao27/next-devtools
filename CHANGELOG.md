@@ -1,5 +1,12 @@
 
 
+# [0.3.0-beta.1](https://github.com/xinyao27/next-devtools/compare/v0.3.0-beta.0...v0.3.0-beta.1) (2024-12-13)
+
+
+### Bug Fixes
+
+* unable to start ([028c98d](https://github.com/xinyao27/next-devtools/commit/028c98d0425f8b3a0e35dcede75394c86904d423))
+
 # [0.3.0-beta.0](https://github.com/xinyao27/next-devtools/compare/v0.2.0...v0.3.0-beta.0) (2024-12-12)
 
 
