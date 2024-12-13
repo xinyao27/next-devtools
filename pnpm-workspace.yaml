@@ -61,7 +61,6 @@ catalog:
   'motion': 12.0.0-alpha.2
   'fs-extra': ^11.2.0
   'get-port-please': ^3.1.2
-  'husky': ^9.1.7
   'immer': ^10.1.1
   'is-installed-globally': ^1.0.0
   'lint-staged': ^15.2.10
@@ -80,6 +79,7 @@ catalog:
   'release-it': ^17.10.0
   'schema-dts': ^1.1.2
   'semver': ^7.6.3
+  'simple-git-hooks': ^2.11.1
   'sirv': ^3.0.0
   'sonner': ^1.7.0
   'sugar-high': ^0.7.5

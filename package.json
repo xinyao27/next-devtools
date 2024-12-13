@@ -13,7 +13,6 @@
     "preinstall": "npx only-allow pnpm",
     "up": "taze major -Ir",
     "lint": "eslint . --fix",
-    "prepare": "husky",
     "release": "release-it",
     "preRelease": "release-it --preRelease=beta --npm.tag=beta",
     "release:major": "release-it major",
@@ -40,14 +39,17 @@
     "cross-env": "catalog:",
     "cz-conventional-changelog": "catalog:",
     "eslint": "catalog:",
-    "husky": "catalog:",
     "lint-staged": "catalog:",
     "npm-run-all": "catalog:",
     "prettier": "catalog:",
     "release-it": "catalog:",
+    "simple-git-hooks": "catalog:",
     "taze": "catalog:",
     "turbo": "catalog:",
     "typescript": "catalog:"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
   },
   "prettier": "@xystack/style-guide/prettier"
 }

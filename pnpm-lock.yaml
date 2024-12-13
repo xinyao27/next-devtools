@@ -177,9 +177,6 @@ catalogs:
     get-port-please:
       specifier: ^3.1.2
       version: 3.1.2
-    husky:
-      specifier: ^9.1.7
-      version: 9.1.7
     immer:
       specifier: ^10.1.1
       version: 10.1.1
@@ -237,6 +234,9 @@ catalogs:
     semver:
       specifier: ^7.6.3
       version: 7.6.3
+    simple-git-hooks:
+      specifier: ^2.11.1
+      version: 2.11.1
     sirv:
       specifier: ^3.0.0
       version: 3.0.0
@@ -360,9 +360,6 @@ importers:
       eslint:
         specifier: 'catalog:'
         version: 9.16.0(jiti@2.4.0)
-      husky:
-        specifier: 'catalog:'
-        version: 9.1.7
       lint-staged:
         specifier: 'catalog:'
         version: 15.2.10
@@ -375,6 +372,9 @@ importers:
       release-it:
         specifier: 'catalog:'
         version: 17.10.0(typescript@5.7.2)
+      simple-git-hooks:
+        specifier: 'catalog:'
+        version: 2.11.1
       taze:
         specifier: 'catalog:'
         version: 0.18.0
@@ -5107,11 +5107,6 @@ packages:
     resolution: {integrity: sha512-/1/GPCpDUCCYwlERiYjxoczfP0zfvZMU/OWgQPMya9AbAE24vseigFdhAMObpc8Q4lc/kjutPfUddDYyAmejnA==}
     engines: {node: '>=18.18.0'}
 
-  husky@9.1.7:
-    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
-    engines: {node: '>=18'}
-    hasBin: true
-
   hyphenate-style-name@1.0.4:
     resolution: {integrity: sha512-ygGZLjmXfPHj+ZWh6LwbC37l43MhfztxetbFCoYTM2VjkIUpeHgSNn7QIyVFj7YQ1Wl9Cbw5sholVJPzWvC2MQ==}
 
@@ -7269,6 +7264,10 @@ packages:
   signal-exit@4.1.0:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
+
+  simple-git-hooks@2.11.1:
+    resolution: {integrity: sha512-tgqwPUMDcNDhuf1Xf6KTUsyeqGdgKMhzaH4PAZZuzguOgTl5uuyeYe/8mWgAr6IBxB5V06uqEf6Dy37gIWDtDg==}
+    hasBin: true
 
   simple-swizzle@0.2.2:
     resolution: {integrity: sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==}
@@ -13058,8 +13057,6 @@ snapshots:
 
   human-signals@8.0.0: {}
 
-  husky@9.1.7: {}
-
   hyphenate-style-name@1.0.4: {}
 
   iconv-lite@0.4.24:
@@ -15755,6 +15752,8 @@ snapshots:
   signal-exit@3.0.7: {}
 
   signal-exit@4.1.0: {}
+
+  simple-git-hooks@2.11.1: {}
 
   simple-swizzle@0.2.2:
     dependencies:
