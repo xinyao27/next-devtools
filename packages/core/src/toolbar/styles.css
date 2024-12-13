@@ -104,4 +104,5 @@
     0 2px 15px -3px var(--next-devtools-widget-shadow),
     0 4px 6px -4px var(--next-devtools-widget-shadow);
   pointer-events: auto;
+  border: none;
 }

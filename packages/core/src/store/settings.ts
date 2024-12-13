@@ -18,6 +18,7 @@ export const settingsStore = createStore<SettingsStore>()((set, get) => ({
       settings = fs.readJSONSync(settingsPath)
     } catch {
       consola.info('No settings file found, using default settings')
+      fs.ensureDirSync(dir)
       fs.writeJSONSync(settingsPath, settingsStoreDefaultState)
     }
     set(settings)

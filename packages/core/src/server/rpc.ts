@@ -7,7 +7,6 @@ import {
   WS_PROVIDER_TO_SERVER_EVENT_NAME,
   WS_SERVER_EVENT_NAME,
 } from '@next-devtools/shared/types'
-import SuperJSON from 'superjson'
 import { setupOverviewRpc } from '../features/overview'
 import { setupStoreRpc } from '../features/stores'
 import { setupNpmRpc } from '../features/npm'
@@ -82,8 +81,8 @@ export function createRPCServer(ctx: NextDevtoolsServerContext) {
           } catch {}
         })
       },
-      serialize: SuperJSON.stringify,
-      deserialize: SuperJSON.parse,
+      serialize: JSON.stringify,
+      deserialize: JSON.parse,
     }
     globalThis.__NEXT_DEVTOOLS_RPC__!.updateChannels((c) => c.push(channel))
     ws.on('close', () => {

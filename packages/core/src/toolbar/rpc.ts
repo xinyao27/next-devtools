@@ -3,7 +3,6 @@
 import { RPC_SERVER_PORT } from '@next-devtools/shared/constants'
 import { WS_CLIENT_TO_SERVER_EVENT_NAME, WS_SERVER_EVENT_NAME } from '@next-devtools/shared/types'
 import { createBirpc } from 'birpc'
-import SuperJSON from 'superjson'
 import { useSettingsStore } from './settings.store'
 import { useInternalStore } from './internal.store'
 import type { ClientFunctions, RpcMessage, ServerFunctions } from '@next-devtools/shared/types'
@@ -43,8 +42,8 @@ export function getRpcClient() {
         }
       })
     },
-    serialize: SuperJSON.stringify,
-    deserialize: SuperJSON.parse,
+    serialize: JSON.stringify,
+    deserialize: JSON.parse,
   })
   return rpc
 }

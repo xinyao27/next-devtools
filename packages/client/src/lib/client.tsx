@@ -3,7 +3,6 @@
 import { createFrameMessageClient, diffApply } from '@next-devtools/shared/utils'
 import React from 'react'
 import { QueryClient, defaultShouldDehydrateQuery } from '@tanstack/react-query'
-import SuperJSON from 'superjson'
 import { RPC_SERVER_PORT } from '@next-devtools/shared/constants'
 import { createBirpc } from 'birpc'
 import { WS_CLIENT_TO_SERVER_EVENT_NAME, WS_SERVER_EVENT_NAME } from '@next-devtools/shared/types'
@@ -26,12 +25,12 @@ export function makeQueryClient() {
         staleTime: 60 * 1000,
       },
       dehydrate: {
-        serializeData: SuperJSON.serialize,
+        serializeData: JSON.stringify,
         // include pending queries in dehydration
         shouldDehydrateQuery: (query) => defaultShouldDehydrateQuery(query) || query.state.status === 'pending',
       },
       hydrate: {
-        deserializeData: SuperJSON.deserialize,
+        deserializeData: JSON.parse,
       },
     },
   })
@@ -87,8 +86,8 @@ export function getRpcClient() {
         }
       })
     },
-    serialize: SuperJSON.stringify,
-    deserialize: SuperJSON.parse,
+    serialize: JSON.stringify,
+    deserialize: JSON.parse,
   })
   return rpc
 }
