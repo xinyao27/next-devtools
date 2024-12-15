@@ -14,10 +14,15 @@ export default function Page() {
     if (connected) {
       setup()
 
-      if (document.visibilityState === 'visible') {
-        navigate('/overview')
-      }
+      const interval = setInterval(() => {
+        if (document.visibilityState === 'visible') {
+          navigate('/overview')
+        }
+      }, 1000)
+
+      return () => clearInterval(interval)
     }
+    return () => {}
   }, [connected])
 
   return null
