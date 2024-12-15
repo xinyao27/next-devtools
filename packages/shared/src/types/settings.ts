@@ -25,6 +25,8 @@ export interface ToolbarSize {
 }
 
 export const DEFAULT_TOOLBAR_SIZE = 770
+export const TOOLBAR_MIN_SIZE = 100
+export const MINI_TOOLBAR_SIZE = 45
 
 export const ToolbarDefaultSize: Record<ToolbarPosition, ToolbarSize> = {
   [ToolbarPosition.Top]: {
@@ -48,7 +50,10 @@ export const ToolbarDefaultSize: Record<ToolbarPosition, ToolbarSize> = {
 export const settingsStoreDefaultState: SettingsStoreState = {
   sidebarCollapsed: undefined,
   toolbarPosition: ToolbarPosition.Bottom,
-  toolbarSize: ToolbarDefaultSize[ToolbarPosition.Bottom],
+  toolbarSize: {
+    width: '100%',
+    height: MINI_TOOLBAR_SIZE,
+  },
   uiScale: 15,
   editor: Editor.VSCode,
   componentDirectory: '/src/components',
@@ -60,8 +65,8 @@ export const settingsSchema = z.object({
   toolbarPosition: z.nativeEnum(ToolbarPosition).optional().default(ToolbarPosition.Bottom),
   toolbarSize: z
     .object({
-      width: z.number().or(z.string()).default(ToolbarDefaultSize[ToolbarPosition.Bottom].width),
-      height: z.number().or(z.string()).default(ToolbarDefaultSize[ToolbarPosition.Bottom].height),
+      width: z.number().or(z.string()).default('100%'),
+      height: z.number().or(z.string()).default(MINI_TOOLBAR_SIZE),
     })
     .optional(),
   editor: z.nativeEnum(Editor).optional().default(Editor.VSCode),
@@ -77,9 +82,6 @@ export interface SettingsStoreActions {
 }
 
 export type SettingsStore = SettingsStoreState & SettingsStoreActions
-
-export const TOOLBAR_MIN_SIZE = 100
-export const MINI_TOOLBAR_SIZE = 45
 
 export type ToolbarStatus = 'hide' | 'mini' | 'full'
 
