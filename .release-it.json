@@ -8,9 +8,6 @@
     "web": true,
     "autoGenerate": true
   },
-  "npm": {
-    "publish": true
-  },
   "plugins": {
     "@release-it/conventional-changelog": {
       "preset": "angular",
@@ -22,7 +19,6 @@
     }
   },
   "hooks": {
-    "after:bump": "npm run build",
-    "after:release": "echo Successfully released ${name} v${version}."
+    "after:bump": "npm run build"
   }
 }
