@@ -15,16 +15,32 @@ import GoogleCard from './(components)/google-card'
 import FacebookCard from './(components)/facebook-card'
 import OpenGraphTable from './(components)/open-graph-table'
 
-const PLATFORMS = ['google', 'x', 'facebook'] as const
+const PLATFORMS = [
+  {
+    label: 'Google',
+    value: 'google',
+    icon: <i className="i-ri-google-fill size-5" />,
+  },
+  {
+    label: 'X',
+    value: 'x',
+    icon: <i className="i-ri-twitter-x-line size-5" />,
+  },
+  {
+    label: 'Facebook',
+    value: 'facebook',
+    icon: <i className="i-ri-facebook-fill size-5" />,
+  },
+] as const
 
 export default function Page() {
   const [direction, setDirection] = useLocalStorage<'horizontal' | 'vertical'>(
     'NEXT_DEVTOOLS_SEO_LAYOUT_DIRECTION',
     'horizontal',
   )
-  const [platform, setPlatform] = useLocalStorage<(typeof PLATFORMS)[number]>(
+  const [platform, setPlatform] = useLocalStorage<(typeof PLATFORMS)[number]['value']>(
     'NEXT_DEVTOOLS_SEO_PLATFORM',
-    PLATFORMS[1],
+    PLATFORMS[1].value,
   )
   const messageClient = useMessageClient()
   const { data: route } = useQuery({
@@ -113,43 +129,63 @@ export default function Page() {
 
       <ResizablePanel maxSize={80} minSize={20}>
         <div
-          className={cn('flex size-full items-center justify-center', {
+          className={cn('flex size-full items-center justify-center overflow-auto', {
             'bg-black': platform === 'x',
             'bg-white': platform === 'google',
           })}
         >
-          <Tabs value={platform} onValueChange={(v) => setPlatform(v as (typeof PLATFORMS)[number])}>
-            <div className="mb-8 flex w-[600px] items-center justify-center">
-              <TabsList>
+          <Tabs
+            orientation={direction}
+            value={platform}
+            className={cn('flex gap-8', {
+              'flex-col': direction === 'horizontal',
+            })}
+            onValueChange={(v) => setPlatform(v as (typeof PLATFORMS)[number]['value'])}
+          >
+            <div
+              className={cn('flex items-center justify-center', {
+                'w-[600px]': direction === 'horizontal',
+                '-ml-12': direction === 'vertical',
+              })}
+            >
+              <TabsList
+                className={cn('flex', {
+                  'flex-col': direction === 'vertical',
+                })}
+              >
                 {PLATFORMS.map((platform) => (
-                  <TabsTrigger key={platform} value={platform}>
-                    <span className="capitalize">{platform}</span>
+                  <TabsTrigger key={platform.value} value={platform.value}>
+                    {platform.icon}
                   </TabsTrigger>
                 ))}
               </TabsList>
             </div>
 
-            <div className="flex h-[400px] items-start justify-center">
+            <div
+              className={cn('flex h-[400px] items-start justify-center', {
+                'w-[600px] items-center': direction === 'vertical',
+              })}
+            >
               {PLATFORMS.map((platform) => {
-                if (platform === 'google') {
+                if (platform.value === 'google') {
                   return (
-                    <TabsContent key={platform} value={platform}>
+                    <TabsContent key={platform.value} value={platform.value}>
                       <div className="flex size-full items-center justify-center">
                         <GoogleCard data={seoMetadata} />
                       </div>
                     </TabsContent>
                   )
-                } else if (platform === 'x') {
+                } else if (platform.value === 'x') {
                   return (
-                    <TabsContent key={platform} value={platform}>
+                    <TabsContent key={platform.value} value={platform.value}>
                       <div className="flex size-full items-center justify-center">
                         <XCard data={seoMetadata} />
                       </div>
                     </TabsContent>
                   )
-                } else if (platform === 'facebook') {
+                } else if (platform.value === 'facebook') {
                   return (
-                    <TabsContent key={platform} value={platform}>
+                    <TabsContent key={platform.value} value={platform.value}>
                       <div className="flex size-full items-center justify-center">
                         <FacebookCard data={seoMetadata} />
                       </div>
