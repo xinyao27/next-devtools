@@ -13,7 +13,16 @@
     "name": "Xinyao",
     "email": "hi@xinyao.me"
   },
+  "exports": {
+    ".": {
+      "types": "./src/index.tsx",
+      "require": "./dist/client.umd.js",
+      "import": "./dist/client.es.js"
+    },
+    "./styles.css": "./dist/client.css"
+  },
   "scripts": {
+    "dev": "vite build --watch",
     "build": "vite build"
   },
   "dependencies": {
@@ -45,11 +54,11 @@
     "cmdk": "catalog:",
     "cobe": "catalog:",
     "date-fns": "catalog:",
+    "es-toolkit": "catalog:",
     "motion": "catalog:",
     "next-themes": "catalog:",
     "pretty-ms": "catalog:",
     "react": "catalog:react19",
-    "react-dom": "catalog:react19",
     "react-resizable-panels": "catalog:",
     "react-router": "catalog:",
     "react-use": "catalog:",
@@ -63,11 +72,11 @@
   "devDependencies": {
     "@egoist/tailwindcss-icons": "catalog:",
     "@iconify-json/ri": "catalog:",
-    "@next-devtools/core": "workspace:*",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
     "@vitejs/plugin-react-swc": "catalog:",
     "autoprefixer": "catalog:",
+    "next": "^15.1.1",
     "postcss": "catalog:",
     "tailwindcss": "catalog:",
     "tailwindcss-animate": "catalog:",

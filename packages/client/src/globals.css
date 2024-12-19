@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  #next-devtools-toolbar-root {
     --sidebar: 90 12.5% 96.86%;
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
@@ -27,7 +27,7 @@
     --ring: 240 5% 64.9%;
     --radius: 0.25rem;
   }
-  .dark {
+  #next-devtools-toolbar-root.dark {
     --sidebar: 0 0% 12.55%;
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
@@ -56,13 +56,8 @@
   * {
     @apply border-border;
   }
-  body {
+  #next-devtools-toolbar-root {
     @apply bg-background text-foreground;
-  }
-  html,
-  body,
-  #root {
-    @apply h-full w-full;
   }
 }
 

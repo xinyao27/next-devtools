@@ -1,6 +1,7 @@
 {
   "name": "@next-devtools/shared",
   "version": "0.3.0-beta.1",
+  "private": true,
   "license": "MIT",
   "homepage": "https://github.com/xinyao27/next-devtools",
   "repository": {
@@ -39,6 +40,16 @@
       "import": {
         "types": "./dist/es/constants.d.mts",
         "default": "./dist/es/constants.mjs"
+      }
+    },
+    "./context": {
+      "require": {
+        "types": "./dist/cjs/context.d.ts",
+        "default": "./dist/cjs/context.js"
+      },
+      "import": {
+        "types": "./dist/es/context.d.mts",
+        "default": "./dist/es/context.mjs"
       }
     },
     "./types": {

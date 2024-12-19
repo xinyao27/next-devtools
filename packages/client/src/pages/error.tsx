@@ -13,7 +13,7 @@ export default function ErrorPage() {
   }
 
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-2 px-3" id="error-page">
+    <div className="bg-background flex h-full flex-col items-center justify-center gap-2 px-3" id="error-page">
       <Card className="min-w-[50vw] max-w-[80vw]">
         <CardHeader>
           <CardTitle>Oops!</CardTitle>

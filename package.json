@@ -18,7 +18,7 @@
     "release:major": "release-it major && pnpm -r publish --tag latest",
     "release:minor": "release-it minor && pnpm -r publish --tag latest",
     "release:patch": "release-it patch && pnpm -r publish --tag latest",
-    "build": "turbo run build --force",
+    "build": "turbo run build",
     "dev": "turbo run dev dev:app",
     "dev:devtools": "turbo run dev",
     "dev:app": "turbo run dev:app",

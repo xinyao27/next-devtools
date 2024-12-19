@@ -7,7 +7,6 @@ import type { NextConfig, WebpackConfigContext } from 'next/dist/server/config-s
 import type { WebpackOptionsNormalized } from 'webpack'
 
 export interface WebpackContext extends WebpackConfigContext {
-  localClientPort: number
   staticServerPort: number
   runtime: 'node' | 'edge' | 'browser'
   nextConfig: NextConfig

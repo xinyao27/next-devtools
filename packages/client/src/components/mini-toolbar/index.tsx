@@ -10,6 +10,7 @@ import { useSettingsStore } from '@/store/settings'
 import { cn } from '@/lib/utils'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import FpsCounter from './fps-counter'
 import MemoryUsage from './memory-usage'
 
@@ -24,7 +25,7 @@ export default function MiniToolbar() {
   const isVertical = toolbarPosition === ToolbarPosition.Left || toolbarPosition === ToolbarPosition.Right
 
   const buttonClass = cn(
-    'bg-sidebar cursor-pointer transition-all duration-200 flex gap-2 text-xs flex-nowrap hover:shadow-inner hover:bg-sidebar/90',
+    'bg-sidebar cursor-pointer transition-all duration-200 flex gap-2 text-xs flex-nowrap hover:shadow-inner hover:bg-accent',
     {
       'h-full px-4 py-2 items-center': isHorizontal,
       'w-full px-2 py-4 justify-center': isVertical,
@@ -224,61 +225,81 @@ export default function MiniToolbar() {
                   'w-full flex-col justify-center': isVertical,
                 })}
               >
-                <button
-                  title="Top"
-                  className={cn(buttonClass, {
-                    'h-full border-l': isHorizontal,
-                    'w-full border-t': isVertical,
-                  })}
-                  onClick={() => {
-                    setToolbarPosition(ToolbarPosition.Top)
-                    setPositionToggleOpen(false)
-                  }}
-                >
-                  <i className="i-ri-layout-top-2-line size-4 opacity-60" />
-                </button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      title="Top"
+                      className={cn(buttonClass, {
+                        'h-full border-l': isHorizontal,
+                        'w-full border-t': isVertical,
+                      })}
+                      onClick={() => {
+                        setToolbarPosition(ToolbarPosition.Top)
+                        setPositionToggleOpen(false)
+                      }}
+                    >
+                      <i className="i-ri-layout-top-2-line size-4 opacity-60" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Top</TooltipContent>
+                </Tooltip>
 
-                <button
-                  title="Bottom"
-                  className={cn(buttonClass, {
-                    'border-l': isHorizontal,
-                    'border-t': isVertical,
-                  })}
-                  onClick={() => {
-                    setToolbarPosition(ToolbarPosition.Bottom)
-                    setPositionToggleOpen(false)
-                  }}
-                >
-                  <i className="i-ri-layout-bottom-2-line size-4 opacity-60" />
-                </button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      title="Bottom"
+                      className={cn(buttonClass, {
+                        'border-l': isHorizontal,
+                        'border-t': isVertical,
+                      })}
+                      onClick={() => {
+                        setToolbarPosition(ToolbarPosition.Bottom)
+                        setPositionToggleOpen(false)
+                      }}
+                    >
+                      <i className="i-ri-layout-bottom-2-line size-4 opacity-60" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Bottom</TooltipContent>
+                </Tooltip>
 
-                <button
-                  title="Left"
-                  className={cn(buttonClass, {
-                    'border-l': isHorizontal,
-                    'border-t': isVertical,
-                  })}
-                  onClick={() => {
-                    setToolbarPosition(ToolbarPosition.Left)
-                    setPositionToggleOpen(false)
-                  }}
-                >
-                  <i className="i-ri-layout-left-2-line size-4 opacity-60" />
-                </button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      title="Left"
+                      className={cn(buttonClass, {
+                        'border-l': isHorizontal,
+                        'border-t': isVertical,
+                      })}
+                      onClick={() => {
+                        setToolbarPosition(ToolbarPosition.Left)
+                        setPositionToggleOpen(false)
+                      }}
+                    >
+                      <i className="i-ri-layout-left-2-line size-4 opacity-60" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Left</TooltipContent>
+                </Tooltip>
 
-                <button
-                  title="Right"
-                  className={cn(buttonClass, {
-                    'border-l': isHorizontal,
-                    'border-t': isVertical,
-                  })}
-                  onClick={() => {
-                    setToolbarPosition(ToolbarPosition.Right)
-                    setPositionToggleOpen(false)
-                  }}
-                >
-                  <i className="i-ri-layout-right-2-line size-4 opacity-60" />
-                </button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      title="Right"
+                      className={cn(buttonClass, {
+                        'border-l': isHorizontal,
+                        'border-t': isVertical,
+                      })}
+                      onClick={() => {
+                        setToolbarPosition(ToolbarPosition.Right)
+                        setPositionToggleOpen(false)
+                      }}
+                    >
+                      <i className="i-ri-layout-right-2-line size-4 opacity-60" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Right</TooltipContent>
+                </Tooltip>
               </div>
             </CollapsibleContent>
           </Collapsible>

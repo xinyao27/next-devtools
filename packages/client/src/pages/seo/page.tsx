@@ -4,11 +4,11 @@ import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useLocalStorage } from 'react-use'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useMessageClient } from '@/lib/client'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { useNextDevtoolsContent } from '@/hooks/use-next-devtools-context'
 import CurrentRoute from '../routes/(components)/current-route'
 import XCard from './(components)/x-card'
 import GoogleCard from './(components)/google-card'
@@ -34,6 +34,11 @@ const PLATFORMS = [
 ] as const
 
 export default function Page() {
+  const { getSEOMetadata, getRoute } = useNextDevtoolsContent()
+  const { data: currentRoute } = useQuery({
+    queryKey: ['getRoute'],
+    queryFn: () => getRoute(),
+  })
   const [direction, setDirection] = useLocalStorage<'horizontal' | 'vertical'>(
     'NEXT_DEVTOOLS_SEO_LAYOUT_DIRECTION',
     'horizontal',
@@ -42,18 +47,13 @@ export default function Page() {
     'NEXT_DEVTOOLS_SEO_PLATFORM',
     PLATFORMS[1].value,
   )
-  const messageClient = useMessageClient()
-  const { data: route } = useQuery({
-    queryKey: ['getRoute'],
-    queryFn: () => messageClient.getRoute(),
-  })
   const {
     data: seoMetadata,
     isLoading: isLoadingSEOMetadata,
     refetch: refetchSEOMetadata,
   } = useQuery({
-    queryKey: ['getSEOMetadata', route],
-    queryFn: () => messageClient.getSEOMetadata(route),
+    queryKey: ['getSEOMetadata', currentRoute],
+    queryFn: () => getSEOMetadata(currentRoute),
   })
 
   return (

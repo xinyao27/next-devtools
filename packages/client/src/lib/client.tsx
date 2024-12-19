@@ -1,7 +1,6 @@
 'use client'
 
-import { createFrameMessageClient, diffApply } from '@next-devtools/shared/utils'
-import React from 'react'
+import { diffApply } from '@next-devtools/shared/utils'
 import { QueryClient, defaultShouldDehydrateQuery } from '@tanstack/react-query'
 import { RPC_SERVER_PORT } from '@next-devtools/shared/constants'
 import { createBirpc } from 'birpc'
@@ -10,13 +9,7 @@ import { useNetworkStore } from '@/store/network'
 import { useTerminalStore } from '@/store/terminal'
 import { useSettingsStore } from '@/store/settings'
 import { useInternalStore } from '@/store/internal'
-import type { FrameMessageHandler } from '@next-devtools/shared/utils'
 import type { ClientFunctions, RpcMessage, ServerFunctions } from '@next-devtools/shared/types'
-
-export function useMessageClient() {
-  const ref = React.useRef(createFrameMessageClient<FrameMessageHandler>())
-  return ref.current
-}
 
 export function makeQueryClient() {
   return new QueryClient({
@@ -44,6 +37,7 @@ export function getQueryClient() {
 }
 
 export function getBaseUrl() {
+  if (typeof window === 'undefined') return
   const _ip = window.location.hostname
   const _protocol = window.location.protocol === 'https:' ? 'wss' : 'ws'
   return `${_protocol}://${_ip}:${RPC_SERVER_PORT}`
@@ -68,7 +62,7 @@ const clientFunctions: ClientFunctions = {
 }
 
 export function getRpcClient() {
-  const ws = new WebSocket(getBaseUrl())
+  const ws = new WebSocket(getBaseUrl()!)
   const rpc = createBirpc<ServerFunctions, ClientFunctions>(clientFunctions, {
     post: (data) =>
       ws.send(

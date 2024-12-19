@@ -53,20 +53,20 @@
     "access": "public"
   },
   "scripts": {
-    "build": "cross-env PACKAGE_NAME=@next-devtools/core VERSION=$(node -e 'console.log(require(`./package.json`).version)') bunchee --external next,react --env=PACKAGE_NAME,VERSION",
-    "dev": "cross-env PACKAGE_NAME=@next-devtools/core VERSION=$(node -e 'console.log(require(`./package.json`).version)') bunchee --no-clean --external next,react --env=PACKAGE_NAME,VERSION --watch"
+    "build": "cross-env PACKAGE_NAME=@next-devtools/core VERSION=$(node -e 'console.log(require(`./package.json`).version)') bunchee --external next,react,react-dom --env=PACKAGE_NAME,VERSION",
+    "dev": "cross-env PACKAGE_NAME=@next-devtools/core VERSION=$(node -e 'console.log(require(`./package.json`).version)') bunchee --no-clean --external next,react,react-dom --env=PACKAGE_NAME,VERSION --watch"
   },
   "peerDependencies": {
     "react": ">= 18"
   },
   "dependencies": {
+    "@next-devtools/client": "workspace:*",
     "@next-devtools/shared": "workspace:*",
     "@next/env": "catalog:",
     "address": "catalog:",
     "birpc": "catalog:",
     "consola": "catalog:",
     "dotenv": "catalog:",
-    "es-toolkit": "catalog:",
     "execa": "catalog:",
     "fast-glob": "catalog:",
     "fast-npm-meta": "catalog:",
@@ -92,6 +92,7 @@
     "@types/fs-extra": "catalog:",
     "@types/mime-types": "catalog:",
     "@types/react": "catalog:react19",
+    "@types/react-dom": "catalog:react19",
     "@types/semver": "catalog:",
     "@types/ws": "catalog:",
     "next": "catalog:next15",

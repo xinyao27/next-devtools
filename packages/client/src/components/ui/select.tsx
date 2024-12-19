@@ -63,7 +63,11 @@ const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
 >(({ className, children, position = 'popper', ...props }, ref) => (
-  <SelectPrimitive.Portal>
+  <SelectPrimitive.Portal
+    container={document
+      .querySelector('#next-devtools-toolbar')
+      ?.shadowRoot?.querySelector('#next-devtools-toolbar-wrapper')}
+  >
     <SelectPrimitive.Content
       ref={ref}
       position={position}

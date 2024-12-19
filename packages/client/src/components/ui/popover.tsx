@@ -17,7 +17,11 @@ const PopoverContent = React.forwardRef<
     showArrow?: boolean
   }
 >(({ className, align = 'center', sideOffset = 4, children, showArrow = true, ...props }, ref) => (
-  <PopoverPrimitive.Portal>
+  <PopoverPrimitive.Portal
+    container={document
+      .querySelector('#next-devtools-toolbar')
+      ?.shadowRoot?.querySelector('#next-devtools-toolbar-wrapper')}
+  >
     <PopoverPrimitive.Content
       ref={ref}
       align={align}

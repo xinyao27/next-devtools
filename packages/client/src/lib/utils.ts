@@ -16,3 +16,9 @@ export function formatBytes(bytes: number, decimals = 2) {
 
   return `${Number.parseFloat((bytes / k ** i).toFixed(dm))}${sizes[i]}`
 }
+
+export function getToolbarRoot() {
+  return document
+    .querySelector('#next-devtools-toolbar')
+    ?.shadowRoot?.querySelector<HTMLDivElement>('#next-devtools-toolbar-root')
+}

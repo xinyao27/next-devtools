@@ -3,25 +3,26 @@
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { getQueryClient, useMessageClient } from '@/lib/client'
+import { getQueryClient } from '@/lib/client'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import Line from '@/components/line'
 import OpenInEditor from '@/components/open-in-editor'
+import { useNextDevtoolsContent } from '@/hooks/use-next-devtools-context'
 import type { Route } from '@next-devtools/shared/types'
 
 interface Props {
   data?: Route[]
 }
 export default function AllRoutes({ data }: Props) {
-  const messageClient = useMessageClient()
+  const { getRoute, pushRoute } = useNextDevtoolsContent()
   const { data: currentRoute } = useQuery({
     queryKey: ['getRoute'],
-    queryFn: () => messageClient.getRoute(),
+    queryFn: () => getRoute(),
   })
 
   const handleClick = (route: Route) => {
-    messageClient.pushRoute(route.route)
+    pushRoute(route.route)
     setTimeout(() => {
       const queryClient = getQueryClient()
       queryClient.invalidateQueries({ queryKey: ['getRoute'] })

@@ -32,7 +32,11 @@ const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
-  <DialogPortal>
+  <DialogPortal
+    container={document
+      .querySelector('#next-devtools-toolbar')
+      ?.shadowRoot?.querySelector('#next-devtools-toolbar-wrapper')}
+  >
     <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}

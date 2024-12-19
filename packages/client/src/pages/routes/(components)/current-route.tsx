@@ -1,9 +1,9 @@
 import React from 'react'
-
 import { useQuery } from '@tanstack/react-query'
 import { Input } from '@/components/ui/input'
-import { getQueryClient, useMessageClient } from '@/lib/client'
+import { getQueryClient } from '@/lib/client'
 import { cn } from '@/lib/utils'
+import { useNextDevtoolsContent } from '@/hooks/use-next-devtools-context'
 
 interface CurrentRouteProps {
   className?: string
@@ -11,15 +11,15 @@ interface CurrentRouteProps {
 }
 
 export default function CurrentRoute({ className, actions }: CurrentRouteProps) {
-  const messageClient = useMessageClient()
+  const { getRoute, pushRoute } = useNextDevtoolsContent()
   const { data } = useQuery({
     queryKey: ['getRoute'],
-    queryFn: () => messageClient.getRoute(),
+    queryFn: () => getRoute(),
   })
   const [currentRoute, setCurrentRoute] = React.useState(data || '')
 
   const handleNavigate = (route: string) => {
-    messageClient.pushRoute(route)
+    pushRoute(route)
     setTimeout(() => {
       const queryClient = getQueryClient()
       queryClient.invalidateQueries({ queryKey: ['getRoute'] })

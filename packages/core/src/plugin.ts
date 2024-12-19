@@ -1,13 +1,7 @@
 import { EventEmitter } from 'node:events'
 import consola from 'consola'
 import { colors } from 'consola/utils'
-import {
-  CLIENT_BASE_PATH,
-  LOCAL_CLIENT_PORT,
-  STATIC_BASE_PATH,
-  STATIC_SERVER_PORT,
-  TEMP_DIR,
-} from '@next-devtools/shared/constants'
+import { STATIC_BASE_PATH, STATIC_SERVER_PORT, TEMP_DIR } from '@next-devtools/shared/constants'
 import { ip } from 'address'
 import { getPort } from 'get-port-please'
 import { createLocalService } from './server/local'
@@ -64,7 +58,6 @@ export class Plugin {
 }
 
 export function withNextDevtools(nextConfig: NextConfig): NextConfig {
-  let localClientPort = LOCAL_CLIENT_PORT
   let staticServerPort = STATIC_SERVER_PORT
   const nextDevtoolsConfig: NextConfig = {
     webpack: (config, context) => {
@@ -86,23 +79,18 @@ export function withNextDevtools(nextConfig: NextConfig): NextConfig {
       if (!context.dev) return config
 
       const runtime = context.isServer ? (context.nextRuntime === 'edge' ? 'edge' : 'node') : 'browser'
-      config.plugins.push(new Plugin({ ...context, runtime, nextConfig, localClientPort, staticServerPort }))
+      config.plugins.push(new Plugin({ ...context, runtime, nextConfig, staticServerPort }))
 
       return config
     },
 
     rewrites: async () => {
-      localClientPort = await getPort({ port: LOCAL_CLIENT_PORT })
       staticServerPort = await getPort({ port: STATIC_SERVER_PORT })
       const nextRewrites = await nextConfig.rewrites?.()
       if (process.env.NODE_ENV === 'production') return nextRewrites || []
 
       const localClientHost = ip('lo') || 'localhost'
       const rewrites = [
-        {
-          source: `${CLIENT_BASE_PATH}/:path*`,
-          destination: `http://${localClientHost}:${localClientPort}${CLIENT_BASE_PATH}/:path*`,
-        },
         {
           source: `${STATIC_BASE_PATH}/:path*`,
           destination: `http://${localClientHost}:${staticServerPort}/:path*`,

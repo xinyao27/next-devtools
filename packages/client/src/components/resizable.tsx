@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { CLIENT_BASE_PATH } from '@next-devtools/shared/constants'
 import { AnimatePresence, motion } from 'motion/react'
 import {
   MINI_TOOLBAR_SIZE,
@@ -11,19 +10,16 @@ import {
   getToolbarStatusBySize,
 } from '@next-devtools/shared/types'
 import { throttle } from 'es-toolkit'
-import { useResizable } from './hooks/use-resizable'
-import { useSettingsStore } from './settings.store'
+import { useResizable } from '@/hooks/use-resizable'
+import { useSettingsStore } from '@/store/settings'
+import { cn } from '@/lib/utils'
 import type { ToolbarSize } from '@next-devtools/shared/types'
-
-interface ToolbarProps {
-  iframeRef: React.RefObject<HTMLIFrameElement>
-}
 
 const setToolbarSize = throttle((size: ToolbarSize) => {
   useSettingsStore.getState().setState({ toolbarSize: size })
 }, 50)
 
-export default function Toolbar({ iframeRef }: ToolbarProps) {
+export default function Resizable({ children }: { children: React.ReactNode }) {
   const [resizing, setResizing] = React.useState(false)
   const toolbarPosition = useSettingsStore((state) => state.toolbarPosition)
   const toolbarSize = useSettingsStore((state) => state.toolbarSize || ToolbarDefaultSize[toolbarPosition])
@@ -114,41 +110,56 @@ export default function Toolbar({ iframeRef }: ToolbarProps) {
   }, [])
 
   return (
-    <div className="next-devtools-container" id="next-devtools-container">
-      <AnimatePresence>
-        {toolbarStatus === 'full' || toolbarStatus === 'mini' ? (
-          <motion.aside
-            className="next-devtools-frame"
-            id="next-devtools-frame"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{
-              y: 0,
-              opacity: 1,
-            }}
-            exit={{
-              y: 20,
-              opacity: 0,
-            }}
-            transition={{
-              duration: 0.2,
-              ease: 'easeInOut',
-            }}
-            {...getRootProps()}
-            data-position={toolbarPosition}
-            style={toolbarSize}
-          >
-            <div
-              {...getHandleProps({
-                reverse: toolbarPosition === ToolbarPosition.Top || toolbarPosition === ToolbarPosition.Left,
-              })}
-              className={`next-devtools-frame-handle ${resizing ? 'resizing' : ''}`}
-              data-position={toolbarPosition}
-            />
+    <AnimatePresence>
+      {toolbarStatus === 'full' || toolbarStatus === 'mini' ? (
+        <motion.aside
+          initial={{ y: 20, opacity: 0 }}
+          animate={{
+            y: 0,
+            opacity: 1,
+          }}
+          className={cn(
+            'pointer-events-auto fixed -z-10',
+            toolbarPosition === ToolbarPosition.Bottom && 'bottom-0 left-0 right-0 max-h-[90%] min-h-[42px] w-screen',
+            toolbarPosition === ToolbarPosition.Top && 'left-0 right-0 top-0 max-h-[90%] min-h-[42px] w-screen',
+            toolbarPosition === ToolbarPosition.Left && 'bottom-0 left-0 top-0 h-screen min-w-[42px] max-w-[90%]',
+            toolbarPosition === ToolbarPosition.Right && 'bottom-0 right-0 top-0 h-screen min-w-[42px] max-w-[90%]',
+          )}
+          exit={{
+            y: 20,
+            opacity: 0,
+          }}
+          transition={{
+            duration: 0.2,
+            ease: 'easeInOut',
+          }}
+          {...getRootProps()}
+          style={toolbarSize}
+        >
+          {/* drag handle */}
+          <div
+            {...getHandleProps({
+              reverse: toolbarPosition === ToolbarPosition.Top || toolbarPosition === ToolbarPosition.Left,
+            })}
+            className={cn(
+              'bg-border hover:bg-primary [&.resizing]:bg-primary absolute z-20 transition-all duration-200',
+              toolbarPosition === ToolbarPosition.Top &&
+                'bottom-0 left-0 right-0 h-px w-full hover:h-1 [&.resizing]:h-1',
+              toolbarPosition === ToolbarPosition.Bottom &&
+                'left-0 right-0 top-0 h-px w-full hover:h-1 [&.resizing]:h-1',
+              toolbarPosition === ToolbarPosition.Left &&
+                'bottom-0 right-0 top-0 h-full w-px hover:w-1 [&.resizing]:w-1',
+              toolbarPosition === ToolbarPosition.Right &&
+                'bottom-0 left-0 top-0 h-full w-px hover:w-1 [&.resizing]:w-1',
+              resizing && 'resizing',
+            )}
+          />
 
-            <iframe ref={iframeRef} className="next-devtools-iframe" id="next-devtools-iframe" src={CLIENT_BASE_PATH} />
-          </motion.aside>
-        ) : null}
-      </AnimatePresence>
-    </div>
+          <div className="size-full" id="next-devtools-toolbar-wrapper">
+            {children}
+          </div>
+        </motion.aside>
+      ) : null}
+    </AnimatePresence>
   )
 }
