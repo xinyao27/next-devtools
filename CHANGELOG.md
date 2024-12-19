@@ -1,5 +1,19 @@
 
 
+# [0.3.0-beta.2](https://github.com/xinyao27/next-devtools/compare/v0.3.0-beta.1...v0.3.0-beta.2) (2024-12-19)
+
+
+### Bug Fixes
+
+* implement visibility-based navigation with interval check in Page component ([d4b0e96](https://github.com/xinyao27/next-devtools/commit/d4b0e96a1d3f36f1a5e4c67f6f42e08319a2a3b3))
+
+
+### Features
+
+* add minimum and mini toolbar size constants and update default toolbar size settings ([0f7d9f6](https://github.com/xinyao27/next-devtools/commit/0f7d9f636998eae121da39f5c33370b1a3d2add1))
+* refactor tabs component in client to improve layout and accessibility ([8293052](https://github.com/xinyao27/next-devtools/commit/82930522b9d2abf54c296dc25b30f9cc6e45a4cd))
+* remove iframe form ([5e1075d](https://github.com/xinyao27/next-devtools/commit/5e1075d7beeb01dffb6e2cbf27d1ed55ebbff12b))
+
 # [0.3.0-beta.1](https://github.com/xinyao27/next-devtools/compare/v0.3.0-beta.0...v0.3.0-beta.1) (2024-12-13)
 
 
