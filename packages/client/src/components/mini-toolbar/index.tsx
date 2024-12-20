@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { DEFAULT_TOOLBAR_SIZE, ToolbarPosition } from '@next-devtools/shared/types'
+import { ToolbarPosition } from '@next-devtools/shared/types'
 import { useNavigate } from 'react-router'
 import { Logo } from '@next-devtools/shared/components'
 import { rpcClient } from '@/lib/client'
@@ -23,6 +23,18 @@ export default function MiniToolbar() {
 
   const isHorizontal = toolbarPosition === ToolbarPosition.Top || toolbarPosition === ToolbarPosition.Bottom
   const isVertical = toolbarPosition === ToolbarPosition.Left || toolbarPosition === ToolbarPosition.Right
+  const tooltipSide = React.useMemo(() => {
+    switch (toolbarPosition) {
+      case ToolbarPosition.Top:
+        return 'bottom'
+      case ToolbarPosition.Bottom:
+        return 'top'
+      case ToolbarPosition.Left:
+        return 'right'
+      case ToolbarPosition.Right:
+        return 'left'
+    }
+  }, [toolbarPosition])
 
   const buttonClass = cn(
     'bg-sidebar cursor-pointer transition-all duration-200 flex gap-2 text-xs flex-nowrap hover:shadow-inner hover:bg-accent',
@@ -38,34 +50,43 @@ export default function MiniToolbar() {
   })
 
   const logoElement = (
-    <div
-      className={cn('bg-sidebar sticky left-0 top-0 z-10 flex items-center justify-center', {
-        'h-full border-l px-4': isHorizontal,
-        'border-b py-3': isVertical,
-      })}
-    >
-      <Logo className="size-6" />
-    </div>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <div
+          className={cn('bg-sidebar sticky left-0 top-0 z-10 flex items-center justify-center gap-1', {
+            'h-full border-l px-4': isHorizontal,
+            'border-b py-3': isVertical,
+          })}
+        >
+          <Logo className="size-5" />
+          <span className={cn('select-none text-sm font-medium', isVertical && 'hidden')}>Next Devtools</span>
+        </div>
+      </TooltipTrigger>
+      <TooltipContent side={tooltipSide}>Next Devtools</TooltipContent>
+    </Tooltip>
   )
   const toggleFullscreenElement = (
-    <button
-      aria-label="Fullscreen"
-      title="Fullscreen"
-      className={cn(buttonClass, 'bg-sidebar', {
-        'border-r': isHorizontal,
-        'border-t': isVertical,
-      })}
-      onClick={toggleToolbar}
-    >
-      <i className="i-ri-fullscreen-line size-4 opacity-60" />
-    </button>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button
+          className={cn(buttonClass, 'bg-sidebar', {
+            'border-r': isHorizontal,
+            'border-t': isVertical,
+          })}
+          onClick={toggleToolbar}
+        >
+          <i className="i-ri-fullscreen-line size-4 opacity-60" />
+        </button>
+      </TooltipTrigger>
+      <TooltipContent side={tooltipSide}>Fullscreen</TooltipContent>
+    </Tooltip>
   )
 
   return (
     <ScrollArea
-      className={cn('bg-sidebar relative whitespace-nowrap', {
-        'h-full [&>div>div]:h-full': isHorizontal,
-        'size-full [&>div>div]:h-full': isVertical,
+      className={cn('bg-sidebar relative whitespace-nowrap [&>div>div]:!block [&>div>div]:size-full', {
+        'h-full': isHorizontal,
+        'size-full': isVertical,
       })}
     >
       <div
@@ -83,102 +104,124 @@ export default function MiniToolbar() {
           })}
         >
           {/* FPS */}
-          <FpsCounter className={buttonClass} isHorizontal={isHorizontal} isVertical={isVertical} />
+          <FpsCounter
+            className={buttonClass}
+            isHorizontal={isHorizontal}
+            isVertical={isVertical}
+            tooltipSide={tooltipSide}
+          />
 
           {/* Memory Usage */}
-          <MemoryUsage className={buttonClass} isHorizontal={isHorizontal} isVertical={isVertical} />
+          <MemoryUsage
+            className={buttonClass}
+            isHorizontal={isHorizontal}
+            isVertical={isVertical}
+            tooltipSide={tooltipSide}
+          />
 
           {/* routes */}
-          <button
-            aria-label={`${data?.routes.length ?? 0} Routes`}
-            title={`${data?.routes.length ?? 0} Routes`}
-            className={cn(buttonClass, {
-              'border-r': isHorizontal,
-              'flex-col items-center border-b': isVertical,
-            })}
-            onClick={() => {
-              navigate('/routes')
-              toggleToolbar()
-            }}
-          >
-            <i className="i-ri-node-tree size-4 opacity-60" />
-            <span className="hidden opacity-60 lg:block" data-label="ROUTES">
-              ROUTES
-            </span>
-            <span className="text-nowrap opacity-70">
-              <span className="font-medium">{data?.routes.length ?? 0}</span>{' '}
-              <span className={cn(isVertical && 'hidden')}>Routes</span>
-            </span>
-          </button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                className={cn(buttonClass, {
+                  'border-r': isHorizontal,
+                  'flex-col items-center border-b': isVertical,
+                })}
+                onClick={() => {
+                  navigate('/routes')
+                  toggleToolbar()
+                }}
+              >
+                <i className="i-ri-node-tree size-4 opacity-60" />
+                <span className={cn('hidden opacity-60', isHorizontal && 'block')} data-label="ROUTES">
+                  ROUTES
+                </span>
+                <span className="text-nowrap opacity-70">
+                  <span className="font-medium">{data?.routes.length ?? 0}</span>{' '}
+                  <span className={cn(isVertical && 'hidden')}>Routes</span>
+                </span>
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side={tooltipSide}>{data?.routes.length ?? 0} Routes</TooltipContent>
+          </Tooltip>
 
           {/* components */}
-          <button
-            aria-label={`${data?.components.length ?? 0} Components`}
-            title={`${data?.components.length ?? 0} Components`}
-            className={cn(buttonClass, {
-              'border-r': isHorizontal,
-              'flex-col items-center border-b': isVertical,
-            })}
-            onClick={() => {
-              navigate('/routes')
-              toggleToolbar()
-            }}
-          >
-            <i className="i-ri-box-1-line size-4 opacity-60" />
-            <span className="hidden opacity-60 lg:block" data-label="COMPONENTS">
-              COMPONENTS
-            </span>
-            <span className="text-nowrap opacity-70">
-              <span className="font-medium">{data?.components.length ?? 0}</span>{' '}
-              <span className={cn(isVertical && 'hidden')}>Components</span>
-            </span>
-          </button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                className={cn(buttonClass, {
+                  'border-r': isHorizontal,
+                  'flex-col items-center border-b': isVertical,
+                })}
+                onClick={() => {
+                  navigate('/routes')
+                  toggleToolbar()
+                }}
+              >
+                <i className="i-ri-box-1-line size-4 opacity-60" />
+                <span className={cn('hidden opacity-60', isHorizontal && 'block')} data-label="COMPONENTS">
+                  COMPONENTS
+                </span>
+                <span className="text-nowrap opacity-70">
+                  <span className="font-medium">{data?.components.length ?? 0}</span>{' '}
+                  <span className={cn(isVertical && 'hidden')}>Components</span>
+                </span>
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side={tooltipSide}>{data?.components.length ?? 0} Components</TooltipContent>
+          </Tooltip>
 
           {/* assets */}
-          <button
-            aria-label={`${data?.assets.length ?? 0} Assets`}
-            title={`${data?.assets.length ?? 0} Assets`}
-            className={cn(buttonClass, {
-              'border-r': isHorizontal,
-              'flex-col items-center border-b': isVertical,
-            })}
-            onClick={() => {
-              navigate('/assets')
-              toggleToolbar()
-            }}
-          >
-            <i className="i-ri-gallery-line size-4 opacity-60" />
-            <span className="hidden opacity-60 lg:block" data-label="ASSETS">
-              ASSETS
-            </span>
-            <span className="text-nowrap opacity-70">
-              <span className="font-medium">{data?.assets.length ?? 0}</span>{' '}
-              <span className={cn(isVertical && 'hidden')}>Assets</span>
-            </span>
-          </button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                className={cn(buttonClass, {
+                  'border-r': isHorizontal,
+                  'flex-col items-center border-b': isVertical,
+                })}
+                onClick={() => {
+                  navigate('/assets')
+                  toggleToolbar()
+                }}
+              >
+                <i className="i-ri-gallery-line size-4 opacity-60" />
+                <span className={cn('hidden opacity-60', isHorizontal && 'block')} data-label="ASSETS">
+                  ASSETS
+                </span>
+                <span className="text-nowrap opacity-70">
+                  <span className="font-medium">{data?.assets.length ?? 0}</span>{' '}
+                  <span className={cn(isVertical && 'hidden')}>Assets</span>
+                </span>
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side={tooltipSide}>{data?.assets.length ?? 0} Assets</TooltipContent>
+          </Tooltip>
 
           {/* packages */}
-          <button
-            aria-label={`${data?.packages.length ?? 0} Packages`}
-            title={`${data?.packages.length ?? 0} Packages`}
-            className={cn(buttonClass, {
-              'border-r': isHorizontal,
-              'flex-col items-center border-b': isVertical,
-            })}
-            onClick={() => {
-              navigate('/packages')
-              toggleToolbar()
-            }}
-          >
-            <i className="i-ri-box-3-line size-4 opacity-60" />
-            <span className="hidden opacity-60 lg:block" data-label="PACKAGES">
-              PACKAGES
-            </span>
-            <span className="text-nowrap opacity-70">
-              <span className="font-medium">{data?.packages.length ?? 0}</span>{' '}
-              <span className={cn(isVertical && 'hidden')}>Packages</span>
-            </span>
-          </button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                className={cn(buttonClass, {
+                  'border-r': isHorizontal,
+                  'flex-col items-center border-b': isVertical,
+                })}
+                onClick={() => {
+                  navigate('/packages')
+                  toggleToolbar()
+                }}
+              >
+                <i className="i-ri-box-3-line size-4 opacity-60" />
+                <span className={cn('hidden opacity-60', isHorizontal && 'block')} data-label="PACKAGES">
+                  PACKAGES
+                </span>
+                <span className="text-nowrap opacity-70">
+                  <span className="font-medium">{data?.packages.length ?? 0}</span>{' '}
+                  <span className={cn(isVertical && 'hidden')}>Packages</span>
+                </span>
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side={tooltipSide}>{data?.packages.length ?? 0} Packages</TooltipContent>
+          </Tooltip>
         </div>
 
         <div
@@ -239,7 +282,7 @@ export default function MiniToolbar() {
                       <i className="i-ri-layout-top-2-line size-4 opacity-60" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent>Top</TooltipContent>
+                  <TooltipContent side={tooltipSide}>Top</TooltipContent>
                 </Tooltip>
 
                 <Tooltip>
@@ -258,7 +301,7 @@ export default function MiniToolbar() {
                       <i className="i-ri-layout-bottom-2-line size-4 opacity-60" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent>Bottom</TooltipContent>
+                  <TooltipContent side={tooltipSide}>Bottom</TooltipContent>
                 </Tooltip>
 
                 <Tooltip>
@@ -277,7 +320,7 @@ export default function MiniToolbar() {
                       <i className="i-ri-layout-left-2-line size-4 opacity-60" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent>Left</TooltipContent>
+                  <TooltipContent side={tooltipSide}>Left</TooltipContent>
                 </Tooltip>
 
                 <Tooltip>
@@ -296,7 +339,7 @@ export default function MiniToolbar() {
                       <i className="i-ri-layout-right-2-line size-4 opacity-60" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent>Right</TooltipContent>
+                  <TooltipContent side={tooltipSide}>Right</TooltipContent>
                 </Tooltip>
               </div>
             </CollapsibleContent>

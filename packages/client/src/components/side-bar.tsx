@@ -101,8 +101,8 @@ export default function SideBar() {
     <nav
       className={cn(
         'no-scrollbar h-full w-[3rem] overflow-y-auto overflow-x-hidden px-2 transition-all duration-200 md:w-[12rem]',
-        { '!w-[3rem]': sidebarCollapsed === true },
-        { '!w-[12rem]': sidebarCollapsed === false },
+        { '!w-[3rem]': !!sidebarCollapsed },
+        { '!w-[12rem]': !sidebarCollapsed },
       )}
     >
       <div className="relative flex h-full flex-col">
@@ -113,16 +113,16 @@ export default function SideBar() {
                 <Button className="flex w-full items-center hover:bg-zinc-500/10" size="sm" variant="ghost">
                   <Logo
                     className={cn('absolute size-5 flex-none transition-all duration-200', {
-                      'left-1.5': sidebarCollapsed === true,
-                      'left-3': sidebarCollapsed === false,
+                      'left-1.5': !!sidebarCollapsed,
+                      'left-3': !sidebarCollapsed,
                     })}
                   />
 
                   <span
                     className={cn(
                       'text-left text-lg font-medium transition-all duration-200',
-                      { 'w-0 flex-none opacity-0': sidebarCollapsed === true },
-                      { 'w-full flex-1 pl-7 opacity-100': sidebarCollapsed === false },
+                      { 'w-0 flex-none opacity-0': !!sidebarCollapsed },
+                      { 'w-full flex-1 pl-7 opacity-100': !sidebarCollapsed },
                     )}
                   >
                     Devtools
@@ -136,8 +136,8 @@ export default function SideBar() {
                     <Button size="sm" variant="outline" onClick={handleToggleSideBar}>
                       <i
                         className={cn('i-ri-sidebar-unfold-line md:i-ri-sidebar-fold-line !h-5 !w-5 flex-none', {
-                          '!i-ri-sidebar-unfold-line': sidebarCollapsed === true,
-                          '!i-ri-sidebar-fold-line': sidebarCollapsed === false,
+                          '!i-ri-sidebar-unfold-line': !!sidebarCollapsed,
+                          '!i-ri-sidebar-fold-line': !sidebarCollapsed,
                         })}
                       />
                       <span className="ml-2">{sidebarCollapsed ? 'Expand' : 'Collapse'} Sidebar</span>
@@ -175,8 +175,8 @@ export default function SideBar() {
                         'group relative flex w-full overflow-hidden px-0 opacity-50 transition-all duration-200 hover:bg-zinc-500/10 md:px-3',
                         {
                           'text-primary bg-secondary opacity-100': isActive,
-                          '!px-0': sidebarCollapsed === true,
-                          '!px-3': sidebarCollapsed === false,
+                          '!px-0': !!sidebarCollapsed,
+                          '!px-3': !sidebarCollapsed,
                         },
                       )}
                     >
@@ -185,16 +185,16 @@ export default function SideBar() {
                           item.icon,
                           'group-hover:text-primary absolute left-1.5 size-5 flex-none transition-all duration-200 md:left-3',
                           {
-                            '!left-1.5': sidebarCollapsed === true,
-                            '!left-3': sidebarCollapsed === false,
+                            '!left-1.5': !!sidebarCollapsed,
+                            '!left-3': !sidebarCollapsed,
                           },
                         )}
                       />
                       <div
                         className={cn(
                           'group-hover:text-primary w-0 text-left opacity-0 transition-all duration-200 md:w-full md:pl-7 md:opacity-100',
-                          { '!w-0 !opacity-0': sidebarCollapsed === true },
-                          { '!w-full !pl-7 !opacity-100': sidebarCollapsed === false },
+                          { '!w-0 !opacity-0': !!sidebarCollapsed },
+                          { '!w-full !pl-7 !opacity-100': !sidebarCollapsed },
                         )}
                       >
                         {item.label}
@@ -206,8 +206,8 @@ export default function SideBar() {
               <TooltipContent
                 side="right"
                 className={cn('md:hidden', {
-                  '!hidden': sidebarCollapsed === false,
-                  '!inline-block': sidebarCollapsed === true,
+                  '!hidden': !sidebarCollapsed,
+                  '!inline-block': !!sidebarCollapsed,
                 })}
               >
                 <div>{item.label}</div>
