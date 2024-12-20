@@ -20,6 +20,9 @@
     },
     "./styles.css": "./dist/client.css"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build"
