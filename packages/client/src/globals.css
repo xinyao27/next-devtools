@@ -54,34 +54,12 @@
 
 @layer base {
   * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted)) transparent;
+
     @apply border-border;
   }
   #next-devtools-toolbar-root {
     @apply bg-background text-foreground;
   }
-}
-
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar:horizontal {
-  height: 6px;
-}
-::-webkit-scrollbar-corner {
-  background: transparent;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 7px;
-}
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted));
-  border-radius: 7px;
-  -webkit-transition: background 0.2s ease;
-  transition: background 0.2s ease;
-}
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-  height: 0 !important;
-  width: 0 !important;
 }

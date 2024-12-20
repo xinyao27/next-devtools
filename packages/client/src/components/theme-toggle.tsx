@@ -12,7 +12,11 @@ export function ThemeToggle() {
 
   return (
     <Button size="sm" variant="outline" onClick={handleToggleTheme}>
-      {theme === 'dark' ? <i className="i-ri-sun-line size-5" /> : <i className="i-ri-moon-line size-5" />}
+      {theme === 'dark' ? (
+        <i className="i-ri-sun-line size-5 flex-none" />
+      ) : (
+        <i className="i-ri-moon-line size-5 flex-none" />
+      )}
       <span className="ml-2">{theme === 'dark' ? 'Light' : 'Dark'}</span>
     </Button>
   )

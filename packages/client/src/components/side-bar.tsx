@@ -141,7 +141,7 @@ export default function SideBar() {
                     {/* toggle sidebar */}
                     <Button size="sm" variant="outline" onClick={handleToggleSideBar}>
                       <i
-                        className={cn('i-ri-sidebar-unfold-line md:i-ri-sidebar-fold-line !h-5 !w-5', {
+                        className={cn('i-ri-sidebar-unfold-line md:i-ri-sidebar-fold-line !h-5 !w-5 flex-none', {
                           '!i-ri-sidebar-unfold-line': sidebarCollapsed === true,
                           '!i-ri-sidebar-fold-line': sidebarCollapsed === false,
                         })}
@@ -154,7 +154,7 @@ export default function SideBar() {
 
                     {/* exit fullscreen */}
                     <Button size="sm" variant="outline" onClick={handleToggleToolbar}>
-                      <i className="i-ri-fullscreen-exit-line size-4" />
+                      <i className="i-ri-fullscreen-exit-line size-5 flex-none" />
                       <span className="ml-2">Exit Fullscreen</span>
                     </Button>
                   </div>
