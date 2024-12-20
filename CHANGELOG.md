@@ -1,5 +1,7 @@
 
 
+# [0.3.0-beta.3](https://github.com/xinyao27/next-devtools/compare/v0.3.0-beta.2...v0.3.0-beta.3) (2024-12-20)
+
 # [0.3.0-beta.2](https://github.com/xinyao27/next-devtools/compare/v0.3.0-beta.1...v0.3.0-beta.2) (2024-12-19)
 
 
