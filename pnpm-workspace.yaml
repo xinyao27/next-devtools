@@ -70,6 +70,7 @@ catalog:
   npm-run-all: ^4.1.5
   nypm: ^0.4.1
   postcss: ^8.4.49
+  posthog-js: ^1.203.1
   prettier: ^3.4.2
   pretty-ms: ^9.2.0
   react-docgen: ^7.1.0

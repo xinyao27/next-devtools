@@ -59,6 +59,7 @@
     "es-toolkit": "catalog:",
     "motion": "catalog:",
     "next-themes": "catalog:",
+    "posthog-js": "catalog:",
     "pretty-ms": "catalog:",
     "react": "catalog:react19",
     "react-resizable-panels": "catalog:",

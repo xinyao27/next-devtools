@@ -1,7 +1,9 @@
 'use client'
 
 import React from 'react'
-import { Outlet } from 'react-router'
+import posthog from 'posthog-js'
+import { PostHogProvider, usePostHog } from 'posthog-js/react'
+import { Outlet, useLocation } from 'react-router'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { getToolbarStatusBySize } from '@next-devtools/shared/types'
 import { useTheme } from 'next-themes'
@@ -17,20 +19,46 @@ import { useInternalStore } from '@/store/internal'
 import Initial from './initial'
 
 export default function Provider() {
-  return (
-    <ThemeProvider enableSystem attribute="class" defaultTheme="system">
-      <TooltipProvider delayDuration={200}>
-        <QueryClientProvider client={getQueryClient()}>
-          <Toaster />
-          <Initial />
+  if (typeof window !== 'undefined') {
+    posthog.init('phc_un1VkX5BmxsipGXyq4ZRL95JCh564TZOreGUoqcdllA', {
+      api_host: 'https://us.i.posthog.com',
+      capture_pageview: false,
+    })
+  }
 
-          <Main>
-            <Outlet />
-          </Main>
-        </QueryClientProvider>
-      </TooltipProvider>
-    </ThemeProvider>
+  return (
+    <PostHogProvider client={posthog}>
+      <ThemeProvider enableSystem attribute="class" defaultTheme="system">
+        <TooltipProvider delayDuration={200}>
+          <QueryClientProvider client={getQueryClient()}>
+            <Toaster />
+            <Initial />
+            <PostHogPageView />
+
+            <Main>
+              <Outlet />
+            </Main>
+          </QueryClientProvider>
+        </TooltipProvider>
+      </ThemeProvider>
+    </PostHogProvider>
   )
+}
+
+export function PostHogPageView() {
+  const location = useLocation()
+  const posthog = usePostHog()
+
+  React.useEffect(() => {
+    if (location && posthog) {
+      const url = location.pathname
+      posthog.capture('$pageview', {
+        $current_url: url,
+      })
+    }
+  }, [location, posthog])
+
+  return null
 }
 
 interface Props {
