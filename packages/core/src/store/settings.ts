@@ -44,6 +44,7 @@ export const settingsStore = createStore<SettingsStore>()((set, get) => ({
   },
 
   setToolbarPosition: () => {},
+  toggleToolbar: () => {},
 }))
 
 settingsStore.subscribe((state) => {

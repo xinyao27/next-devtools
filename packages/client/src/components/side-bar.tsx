@@ -4,7 +4,6 @@ import { NavLink } from 'react-router'
 import { useMedia } from 'react-use'
 import { useShallow } from 'zustand/react/shallow'
 import { Logo } from '@next-devtools/shared/components'
-import { MINI_TOOLBAR_SIZE } from '@next-devtools/shared/types'
 import { cn } from '@/lib/utils'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Button } from '@/components/ui/button'
@@ -86,7 +85,6 @@ const menuItems = [
 export default function SideBar() {
   const sidebarCollapsed = useSettingsStore(useShallow((state) => state.sidebarCollapsed))
   const setSettings = useSettingsStore((state) => state.setState)
-  const setToolbarSize = useSettingsStore((state) => state.setToolbarSize)
   const isMobile = useMedia('(max-width: 768px)')
 
   function handleToggleSideBar() {
@@ -97,10 +95,6 @@ export default function SideBar() {
       if (sidebarCollapsed !== undefined) setSettings({ sidebarCollapsed: !sidebarCollapsed })
       else setSettings({ sidebarCollapsed: true })
     }
-  }
-
-  function handleToggleToolbar() {
-    setToolbarSize(MINI_TOOLBAR_SIZE)
   }
 
   return (
@@ -153,7 +147,7 @@ export default function SideBar() {
                     <ThemeToggle />
 
                     {/* exit fullscreen */}
-                    <Button size="sm" variant="outline" onClick={handleToggleToolbar}>
+                    <Button size="sm" variant="outline" onClick={useSettingsStore.getState().toggleToolbar}>
                       <i className="i-ri-fullscreen-exit-line size-5 flex-none" />
                       <span className="ml-2">Exit Fullscreen</span>
                     </Button>

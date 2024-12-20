@@ -1,4 +1,5 @@
 import { EventEmitter } from 'node:events'
+import os from 'node:os'
 import consola from 'consola'
 import { colors } from 'consola/utils'
 import { STATIC_BASE_PATH, STATIC_SERVER_PORT, TEMP_DIR } from '@next-devtools/shared/constants'
@@ -49,7 +50,17 @@ export class Plugin {
           globalThis.__NEXT_DEVTOOLS_RPC__.broadcast.serverReady()
         }, 1000)
 
-        consola.log(colors.magenta(colors.bold(`   🔨 Next Devtools ${process.env.VERSION}`)))
+        const isMac = os.platform() === 'darwin'
+        consola.log(
+          colors.bold(colors.magenta('   🔨 Next Devtools')),
+          colors.dim(' press '),
+          colors.bold(colors.cyan('Shift')),
+          colors.dim('+'),
+          colors.bold(colors.cyan(`${isMac ? 'Option' : 'Alt'}`)),
+          colors.dim('+'),
+          colors.bold(colors.cyan('D')),
+          colors.dim(` in the browser (${process.env.VERSION})`),
+        )
         consola.log('')
         this.running = true
       }

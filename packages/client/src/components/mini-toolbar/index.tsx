@@ -17,7 +17,7 @@ import MemoryUsage from './memory-usage'
 export default function MiniToolbar() {
   const navigate = useNavigate()
   const toolbarPosition = useSettingsStore((state) => state.toolbarPosition)
-  const setToolbarSize = useSettingsStore((state) => state.setToolbarSize)
+  const toggleToolbar = useSettingsStore((state) => state.toggleToolbar)
   const setToolbarPosition = useSettingsStore((state) => state.setToolbarPosition)
   const [positionToggleOpen, setPositionToggleOpen] = React.useState(false)
 
@@ -55,9 +55,7 @@ export default function MiniToolbar() {
         'border-r': isHorizontal,
         'border-t': isVertical,
       })}
-      onClick={() => {
-        setToolbarSize(DEFAULT_TOOLBAR_SIZE)
-      }}
+      onClick={toggleToolbar}
     >
       <i className="i-ri-fullscreen-line size-4 opacity-60" />
     </button>
@@ -100,7 +98,7 @@ export default function MiniToolbar() {
             })}
             onClick={() => {
               navigate('/routes')
-              setToolbarSize(DEFAULT_TOOLBAR_SIZE)
+              toggleToolbar()
             }}
           >
             <i className="i-ri-node-tree size-4 opacity-60" />
@@ -123,7 +121,7 @@ export default function MiniToolbar() {
             })}
             onClick={() => {
               navigate('/routes')
-              setToolbarSize(DEFAULT_TOOLBAR_SIZE)
+              toggleToolbar()
             }}
           >
             <i className="i-ri-box-1-line size-4 opacity-60" />
@@ -146,7 +144,7 @@ export default function MiniToolbar() {
             })}
             onClick={() => {
               navigate('/assets')
-              setToolbarSize(DEFAULT_TOOLBAR_SIZE)
+              toggleToolbar()
             }}
           >
             <i className="i-ri-gallery-line size-4 opacity-60" />
@@ -169,7 +167,7 @@ export default function MiniToolbar() {
             })}
             onClick={() => {
               navigate('/packages')
-              setToolbarSize(DEFAULT_TOOLBAR_SIZE)
+              toggleToolbar()
             }}
           >
             <i className="i-ri-box-3-line size-4 opacity-60" />

@@ -79,6 +79,7 @@ export interface SettingsStoreActions {
   setState: (state: Partial<SettingsStoreState>) => void
   setToolbarSize: (size: number) => void
   setToolbarPosition: (toolbarPosition: ToolbarPosition) => void
+  toggleToolbar: () => void
 }
 
 export type SettingsStore = SettingsStoreState & SettingsStoreActions

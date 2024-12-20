@@ -2,6 +2,7 @@
 
 import { create } from 'zustand'
 import {
+  DEFAULT_TOOLBAR_SIZE,
   MINI_TOOLBAR_SIZE,
   ToolbarDefaultSize,
   ToolbarPosition,
@@ -71,6 +72,27 @@ export const useSettingsStore = create<SettingsStore>()((set, get) => {
       }
 
       setState(settings)
+    },
+
+    toggleToolbar() {
+      const setToolbarSize = get().setToolbarSize
+      let toolbarSize: number
+      switch (get().toolbarPosition) {
+        case ToolbarPosition.Top:
+        case ToolbarPosition.Bottom:
+          toolbarSize = Number(get().toolbarSize!.height)
+          break
+        case ToolbarPosition.Left:
+        case ToolbarPosition.Right:
+          toolbarSize = Number(get().toolbarSize!.width)
+          break
+      }
+
+      if (toolbarSize === MINI_TOOLBAR_SIZE) {
+        setToolbarSize(DEFAULT_TOOLBAR_SIZE)
+      } else {
+        setToolbarSize(MINI_TOOLBAR_SIZE)
+      }
     },
   }
 })
