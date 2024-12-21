@@ -1,10 +1,12 @@
 'use client'
 
-import { Logo, NextLogo, ReactLogo } from '@next-devtools/shared/components'
 import { prettySize } from '@next-devtools/shared/utils'
 import React from 'react'
 import { useTheme } from 'next-themes'
 import { useQuery } from '@tanstack/react-query'
+import ReactLogo from '@/components/react-logo'
+import NextLogo from '@/components/next-logo'
+import Logo from '@/components/logo'
 import { rpcClient } from '@/lib/client'
 import NpmVersionCheck from '@/components/npm-version-check'
 import { BentoCard, BentoGrid } from '@/components/magic/bento-grid'

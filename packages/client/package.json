@@ -79,7 +79,7 @@
     "@types/react-dom": "catalog:react19",
     "@vitejs/plugin-react-swc": "catalog:",
     "autoprefixer": "catalog:",
-    "next": "^15.1.1",
+    "next": "catalog:next15",
     "postcss": "catalog:",
     "tailwindcss": "catalog:",
     "tailwindcss-animate": "catalog:",

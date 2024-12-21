@@ -3,7 +3,7 @@
 import { NavLink } from 'react-router'
 import { useMedia } from 'react-use'
 import { useShallow } from 'zustand/react/shallow'
-import { Logo } from '@next-devtools/shared/components'
+import Logo from '@/components/logo'
 import { cn } from '@/lib/utils'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Button } from '@/components/ui/button'

@@ -79,17 +79,20 @@ export function Globe({ className, config = GLOBE_CONFIG }: { className?: string
     window.addEventListener('resize', onResize)
     onResize()
 
-    const globe = createGlobe(canvasRef.current!, {
-      ...config,
-      width: width * 2,
-      height: width * 2,
-      onRender,
-      dark: theme === 'light' ? 0 : 1,
-      glowColor: theme === 'light' ? [1, 1, 1] : [0.2, 0.2, 0.2],
-    })
+    if (canvasRef.current) {
+      const globe = createGlobe(canvasRef.current!, {
+        ...config,
+        width: width * 2,
+        height: width * 2,
+        onRender,
+        dark: theme === 'light' ? 0 : 1,
+        glowColor: theme === 'light' ? [1, 1, 1] : [0.2, 0.2, 0.2],
+      })
 
-    setTimeout(() => (canvasRef.current!.style.opacity = '1'))
-    return () => globe.destroy()
+      setTimeout(() => (canvasRef.current!.style.opacity = '1'))
+      return () => globe.destroy()
+    }
+    return () => {}
   }, [theme])
 
   return (

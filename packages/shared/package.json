@@ -21,16 +21,6 @@
     "dist"
   ],
   "exports": {
-    "./components": {
-      "require": {
-        "types": "./dist/cjs/components.d.ts",
-        "default": "./dist/cjs/components.js"
-      },
-      "import": {
-        "types": "./dist/es/components.d.mts",
-        "default": "./dist/es/components.mjs"
-      }
-    },
     "./constants": {
       "require": {
         "types": "./dist/cjs/constants.d.ts",

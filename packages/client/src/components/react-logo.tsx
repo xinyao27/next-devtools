@@ -6,12 +6,11 @@ import type { SVGProps } from 'react'
 interface Props extends SVGProps<SVGSVGElement> {
   theme?: 'light' | 'dark'
 }
-export function ReactLogo({ theme = 'dark', ...props }: Props) {
+export default function ReactLogo({ theme = 'dark', ...props }: Props) {
   const fill = useMemo(() => (theme === 'dark' ? '#fff' : '#000'), [theme])
 
   return (
     <svg
-      suppressHydrationWarning
       fill={fill}
       height="100%"
       viewBox="-10.5 -9.45 21 18.9"

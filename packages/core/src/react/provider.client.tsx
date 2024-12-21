@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Toolbar } from '@next-devtools/client'
+import { renderToolbar } from '@next-devtools/client'
 import { usePathname, useRouter } from 'next/navigation'
 import { getSEOMetadata } from '../features/seo'
 import type { NextDevtoolsContextValue } from '@next-devtools/shared/context'
@@ -16,6 +16,7 @@ export function NextDevtoolsClientProvider({ children }: NextDevtoolsClientProvi
   const pathname = usePathname()
   const latestPathname = React.useRef(pathname)
   latestPathname.current = pathname
+  const target = React.useRef<HTMLDivElement>(null)
 
   const contextValue = React.useMemo<NextDevtoolsContextValue>(() => {
     return {
@@ -41,10 +42,16 @@ export function NextDevtoolsClientProvider({ children }: NextDevtoolsClientProvi
     }
   }, [])
 
+  React.useEffect(() => {
+    if (isMounted && target.current) {
+      renderToolbar(contextValue, target.current)
+    }
+  }, [isMounted, contextValue])
+
   if (isMounted === true) {
     return (
       <React.Suspense>
-        <Toolbar {...contextValue} />
+        <div ref={target} id="next-devtools-toolbar" style={{ zIndex: 2147483645 }} />
 
         {children}
       </React.Suspense>
