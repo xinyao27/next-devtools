@@ -1,13 +1,13 @@
 import path from 'node:path'
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/index.tsx'),
       name: 'NextDevtoolsClient',
-      fileName: (format) => `client.${format}.js`,
+      fileName: (format) => `next-devtools.${format}.js`,
     },
     rollupOptions: {
       external: ['react', 'react-dom/client', 'next'],
@@ -19,7 +19,13 @@ export default defineConfig({
       },
     },
   },
-  plugins: [react()],
+  plugins: [
+    react({
+      babel: {
+        plugins: ['babel-plugin-react-compiler', {}],
+      },
+    }),
+  ],
   resolve: {
     alias: {
       '@/': `${path.resolve(__dirname, 'src')}/`,
