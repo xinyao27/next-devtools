@@ -20,6 +20,7 @@ export default function Page() {
         columns={columns}
         data={data}
         getDetailsContent={(data) => <SheetDetailsContent data={data} />}
+        getRowId={(row) => row.id}
         getTitle={(data) => data?.url}
         headerExtra={
           <>

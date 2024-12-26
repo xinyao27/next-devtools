@@ -35,6 +35,7 @@ export interface DataTableProps<TData, TValue> {
   getTitle?: (data?: TData) => React.ReactNode
   getDetailsContent?: (data?: TData) => React.ReactNode
   headerExtra?: React.ReactNode
+  getRowId?: (row: TData) => string
 }
 
 function DataTable<TData, TValue>({
@@ -46,6 +47,7 @@ function DataTable<TData, TValue>({
   getTitle,
   getDetailsContent,
   headerExtra,
+  getRowId,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -61,6 +63,7 @@ function DataTable<TData, TValue>({
       columnVisibility,
       rowSelection,
     },
+    getRowId,
     enableMultiRowSelection: false,
     onColumnVisibilityChange: setColumnVisibility,
     onColumnFiltersChange: setColumnFilters,
@@ -189,7 +192,7 @@ function DataTable<TData, TValue>({
         ) : null}
       </div>
 
-      <DataTableSheetDetails table={table} title={getTitle?.(selectedRow?.original)}>
+      <DataTableSheetDetails rowSelection={rowSelection} table={table} title={getTitle?.(selectedRow?.original)}>
         {getDetailsContent?.(selectedRow?.original)}
       </DataTableSheetDetails>
     </>

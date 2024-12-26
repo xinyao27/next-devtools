@@ -119,7 +119,7 @@ export default function Resizable({ children }: { children: React.ReactNode }) {
             opacity: 1,
           }}
           className={cn(
-            'pointer-events-auto fixed -z-10',
+            'pointer-events-auto fixed -z-10 overflow-hidden',
             toolbarPosition === ToolbarPosition.Bottom && 'bottom-0 left-0 right-0 max-h-[90%] min-h-[42px] w-screen',
             toolbarPosition === ToolbarPosition.Top && 'left-0 right-0 top-0 max-h-[90%] min-h-[42px] w-screen',
             toolbarPosition === ToolbarPosition.Left && 'bottom-0 left-0 top-0 h-screen min-w-[42px] max-w-[90%]',

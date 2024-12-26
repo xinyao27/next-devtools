@@ -6,18 +6,27 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Kbd } from '@/components/ui/kbd'
-import type { Table } from '@tanstack/react-table'
+import type { RowSelectionState, Table } from '@tanstack/react-table'
 
 export interface DataTableSheetDetailsProps<TData> {
   table: Table<TData>
   title?: React.ReactNode
   children?: React.ReactNode
+  rowSelection: RowSelectionState
 }
 
-export function DataTableSheetDetails<TData>({ table, title, children }: DataTableSheetDetailsProps<TData>) {
-  const selectedRowKey = Object.keys(table.getState().rowSelection)?.[0] || undefined
+export function DataTableSheetDetails<TData>({
+  table,
+  title,
+  children,
+  rowSelection,
+}: DataTableSheetDetailsProps<TData>) {
+  const selectedRowKey = React.useMemo(() => Object.keys(rowSelection)?.[0] || undefined, [rowSelection])
 
-  const index = table.getCoreRowModel().flatRows.findIndex((row) => row.id === selectedRowKey)
+  const index = React.useMemo(
+    () => table.getCoreRowModel().flatRows.findIndex((row) => row.id === selectedRowKey),
+    [selectedRowKey, table],
+  )
 
   const nextId = React.useMemo(() => table.getCoreRowModel().flatRows[index + 1]?.id, [index, table])
 
