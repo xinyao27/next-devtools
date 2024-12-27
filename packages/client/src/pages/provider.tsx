@@ -12,7 +12,7 @@ import SideBar from '@/components/side-bar'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { Toaster } from '@/components/ui/sonner'
 import { useSettingsStore } from '@/store/settings'
-import { cn, getToolbarRoot } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import { getQueryClient } from '@/lib/client'
 import MiniToolbar from '@/components/mini-toolbar'
 import { useInternalStore } from '@/store/internal'
@@ -78,13 +78,13 @@ function Main({ children }: Props) {
   )
 
   React.useEffect(() => {
-    const root = getToolbarRoot()
+    const root = document.body
     if (!root) return
     root.style.fontSize = `${uiScale}px`
   }, [uiScale])
 
   React.useEffect(() => {
-    const root = getToolbarRoot()
+    const root = document.body
     if (!root || !resolvedTheme) return
     root.classList.remove(resolvedTheme === 'dark' ? 'light' : 'dark')
     root.classList.add(resolvedTheme)

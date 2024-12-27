@@ -31,16 +31,6 @@
         "default": "./dist/es/constants.mjs"
       }
     },
-    "./context": {
-      "require": {
-        "types": "./dist/cjs/context.d.ts",
-        "default": "./dist/cjs/context.js"
-      },
-      "import": {
-        "types": "./dist/es/context.d.mts",
-        "default": "./dist/es/context.mjs"
-      }
-    },
     "./types": {
       "require": {
         "types": "./dist/cjs/types.d.ts",

@@ -1,22 +1,24 @@
 import path from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { CLIENT_BASE_PATH, LOCAL_CLIENT_HMR_PORT, LOCAL_CLIENT_PORT } from '@next-devtools/shared/constants'
 
 export default defineConfig({
+  base: CLIENT_BASE_PATH,
   build: {
-    lib: {
-      entry: path.resolve(__dirname, 'src/index.tsx'),
-      name: 'NextDevtoolsClient',
-      fileName: (format) => `next-devtools.${format}.js`,
-    },
+    target: 'esnext',
+    outDir: '../core/dist/client',
     rollupOptions: {
-      external: ['react', 'react-dom/client', 'next'],
       output: {
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-        },
+        entryFileNames: `[name].js`,
+        assetFileNames: `[name].[ext]`,
       },
+    },
+  },
+  server: {
+    port: LOCAL_CLIENT_PORT,
+    hmr: {
+      port: LOCAL_CLIENT_HMR_PORT,
     },
   },
   plugins: [

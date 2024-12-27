@@ -17,11 +17,7 @@ const TooltipContent = React.forwardRef<
     showArrow?: boolean
   }
 >(({ className, sideOffset = 4, showArrow = true, ...props }, ref) => (
-  <TooltipPrimitive.Portal
-    container={document
-      .querySelector('#next-devtools-toolbar')
-      ?.shadowRoot?.querySelector('#next-devtools-toolbar-wrapper')}
-  >
+  <TooltipPrimitive.Portal>
     <TooltipPrimitive.Content
       ref={ref}
       sideOffset={sideOffset}

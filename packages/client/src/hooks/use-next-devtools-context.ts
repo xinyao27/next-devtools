@@ -1,6 +1,8 @@
 import React from 'react'
-import { NextDevtoolsContext } from '@next-devtools/shared/context'
+import { createFrameMessageClient } from '@next-devtools/shared/utils'
+import type { FrameMessageHandler } from '@next-devtools/shared/utils'
 
 export function useNextDevtoolsContent() {
-  return React.useContext(NextDevtoolsContext)
+  const ref = React.useRef(createFrameMessageClient<FrameMessageHandler>())
+  return ref.current
 }

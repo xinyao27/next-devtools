@@ -4,19 +4,17 @@ import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { cn, formatBytes } from '@/lib/utils'
 import { rpcClient } from '@/lib/client'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 interface MemoryUsageProps {
   className?: string
   isHorizontal: boolean
   isVertical: boolean
-  tooltipSide?: 'top' | 'right' | 'bottom' | 'left'
 }
 
 const REFRESH_INTERVAL = 2000
 const NA = 'N/A'
 
-export default function MemoryUsage({ className, isHorizontal, isVertical, tooltipSide }: MemoryUsageProps) {
+export default function MemoryUsage({ className, isHorizontal, isVertical }: MemoryUsageProps) {
   const { data: nextServerMemoryBytes } = useQuery({
     queryKey: ['getNextServerMemory'],
     queryFn: () => rpcClient.getNextServerMemory(),
@@ -53,30 +51,22 @@ export default function MemoryUsage({ className, isHorizontal, isVertical, toolt
   if (!support) return null
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <button
-          className={cn(className, {
-            'max-w-[230px] border-r': isHorizontal,
-            'max-h-[200px] flex-col items-center border-b': isVertical,
-          })}
-        >
-          <i className="i-ri-cpu-line size-4 opacity-60" />
-          <span className={cn('hidden opacity-60', isHorizontal && 'block')} data-label="Memory">
-            MEM
-          </span>
-          <div className={cn('truncate opacity-70', isVertical && '[writing-mode:vertical-rl]')}>
-            <span className="font-medium">{browserMemory}</span>
-            {' / '}
-            <span className="font-medium">{nextServerMemory}</span>
-          </div>
-        </button>
-      </TooltipTrigger>
-      <TooltipContent side={tooltipSide}>
-        Browser Memory: {browserMemory}
-        <br />
-        Next.js Server Memory: {nextServerMemory}
-      </TooltipContent>
-    </Tooltip>
+    <button
+      title={`Browser Memory: ${browserMemory}\nNext.js Server Memory: ${nextServerMemory}`}
+      className={cn(className, {
+        'max-w-[230px] border-r': isHorizontal,
+        'max-h-[200px] flex-col items-center border-b': isVertical,
+      })}
+    >
+      <i className="i-ri-cpu-line size-4 opacity-60" />
+      <span className={cn('hidden opacity-60', isHorizontal && 'block')} data-label="Memory">
+        MEM
+      </span>
+      <div className={cn('truncate opacity-70', isVertical && '[writing-mode:vertical-rl]')}>
+        <span className="font-medium">{browserMemory}</span>
+        {' / '}
+        <span className="font-medium">{nextServerMemory}</span>
+      </div>
+    </button>
   )
 }

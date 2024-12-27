@@ -2,16 +2,14 @@
 
 import React from 'react'
 import { cn } from '@/lib/utils'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 interface FpsCounterProps {
   className?: string
   isHorizontal: boolean
   isVertical: boolean
-  tooltipSide?: 'top' | 'right' | 'bottom' | 'left'
 }
 
-export default function FpsCounter({ className, isHorizontal, isVertical, tooltipSide }: FpsCounterProps) {
+export default function FpsCounter({ className, isHorizontal, isVertical }: FpsCounterProps) {
   const [fps, setFps] = React.useState<number>(0)
 
   React.useEffect(() => {
@@ -50,24 +48,20 @@ export default function FpsCounter({ className, isHorizontal, isVertical, toolti
   }, [])
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <button
-          className={cn(className, {
-            'border-r': isHorizontal,
-            'flex-col items-center border-b': isVertical,
-          })}
-        >
-          <i className="i-ri-speed-up-line size-4 opacity-60" />
-          <span className={cn('hidden opacity-60', isHorizontal && 'block')} data-label="FPS">
-            FPS
-          </span>
-          <span className="text-nowrap opacity-70">
-            <span className="font-medium">{fps}</span>
-          </span>
-        </button>
-      </TooltipTrigger>
-      <TooltipContent side={tooltipSide}>FPS: {fps}</TooltipContent>
-    </Tooltip>
+    <button
+      title={`FPS: ${fps}`}
+      className={cn(className, {
+        'border-r': isHorizontal,
+        'flex-col items-center border-b': isVertical,
+      })}
+    >
+      <i className="i-ri-speed-up-line size-4 opacity-60" />
+      <span className={cn('hidden opacity-60', isHorizontal && 'block')} data-label="FPS">
+        FPS
+      </span>
+      <span className="text-nowrap opacity-70">
+        <span className="font-medium">{fps}</span>
+      </span>
+    </button>
   )
 }

@@ -1,62 +1,75 @@
 'use client'
 
 import React from 'react'
-import { renderToolbar } from '@next-devtools/client'
 import { usePathname, useRouter } from 'next/navigation'
+import { createFrameMessageHandler } from '@next-devtools/shared/utils'
+import { CLIENT_BASE_PATH } from '@next-devtools/shared/constants'
 import { getSEOMetadata } from '../features/seo'
-import type { NextDevtoolsContextValue } from '@next-devtools/shared/context'
+import { useSettingsStore } from './lib/use-settings-store'
+import { useInternalStore } from './lib/use-internal-store'
+import Resizable from './lib/resizable'
 import type { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+import type { FrameMessageHandler } from '@next-devtools/shared/utils'
 
-interface NextDevtoolsClientProviderProps {
-  children: React.ReactNode
-}
-export function NextDevtoolsClientProvider({ children }: NextDevtoolsClientProviderProps) {
-  const [isMounted, setIsMounted] = React.useState(false)
+export function NextDevtoolsClientProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
   const latestPathname = React.useRef(pathname)
   latestPathname.current = pathname
-  const target = React.useRef<HTMLDivElement>(null)
+  const iframeRef = React.useRef<HTMLIFrameElement>(null)
+  const { serverReady } = useInternalStore()
 
-  const contextValue = React.useMemo<NextDevtoolsContextValue>(() => {
-    return {
+  React.useEffect(() => {
+    const handler: FrameMessageHandler = {
       // routes
-      getRoute: () => latestPathname.current,
-      pushRoute: (href: string, options?: NavigateOptions) => {
+      getRoute: async () => latestPathname.current,
+      pushRoute: async (href: string, options?: NavigateOptions) => {
         router.push(href, options)
       },
-      backRoute: () => {
+      backRoute: async () => {
         router.back()
       },
 
       // seo
       getSEOMetadata,
     }
-  }, [latestPathname])
-
-  React.useEffect(() => {
-    setIsMounted(true)
+    const unsubscribe = createFrameMessageHandler(handler, iframeRef)
 
     return () => {
-      setIsMounted(false)
+      unsubscribe()
+    }
+  }, [iframeRef])
+
+  React.useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.code === 'KeyD' && event.shiftKey && event.altKey) {
+        useSettingsStore.getState().toggleToolbar()
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
     }
   }, [])
 
-  React.useEffect(() => {
-    if (isMounted && target.current) {
-      renderToolbar(contextValue, target.current)
-    }
-  }, [isMounted, contextValue])
+  if (!serverReady) return children
 
-  if (isMounted === true) {
-    return (
-      <React.Suspense>
-        <div ref={target} id="next-devtools-toolbar" style={{ zIndex: 2147483645 }} />
-
-        {children}
-      </React.Suspense>
-    )
-  }
-
-  return children
+  return (
+    <>
+      <Resizable>
+        <iframe
+          ref={iframeRef}
+          src={CLIENT_BASE_PATH}
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'block',
+            pointerEvents: 'auto',
+            border: 'none',
+          }}
+        />
+      </Resizable>
+      {children}
+    </>
+  )
 }
