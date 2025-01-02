@@ -19,8 +19,13 @@ export interface Component extends Asset {
 }
 
 export interface Route {
+  id: number
   route: string
+  name: string
+  parentNode: number | null
   path: string
+  contents: string[]
+  render: 'client' | 'server'
 }
 
 export interface Package {

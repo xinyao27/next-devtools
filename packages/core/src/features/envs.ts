@@ -1,5 +1,4 @@
 import dotenv from 'dotenv'
-import { loadEnvConfig } from '@next/env'
 import { internalStore } from '../store/internal'
 import type { Env, NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
 
@@ -16,7 +15,7 @@ export async function getEnvs() {
     privateEnv: {},
     loadedEnvFiles: [],
   }
-  const nextEnvConfig = loadEnvConfig(root, dev)
+  const nextEnvConfig = await import('@next/env').then((mod) => mod.loadEnvConfig(root, dev))
   Object.keys(nextEnvConfig.combinedEnv).forEach((key) => {
     const value = nextEnvConfig.combinedEnv[key]
     if (typeof value === 'string') {

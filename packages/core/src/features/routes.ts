@@ -1,98 +1,132 @@
-import { join, parse, sep } from 'node:path'
-import fg from 'fast-glob'
+import { join, parse } from 'node:path'
+import fs from 'fs-extra'
 import { internalStore } from '../store/internal'
-import type { NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
+import type { NextDevtoolsServerContext, Route, ServerFunctions } from '@next-devtools/shared/types'
 
-interface Opts {
-  pageExtensions: string[]
-  directory: string
+async function detectClientDirective(filePath: string): Promise<boolean> {
+  try {
+    const content = await fs.readFile(filePath, 'utf-8')
+    const firstLine = content.split('\n')[0].trim()
+    return firstLine === "'use client'" || firstLine === '"use client"' || firstLine === '`use client`'
+  } catch {
+    return false
+  }
 }
 
-function processing(paths: string[], opts: Opts) {
-  return (
-    paths
-      // filter page extensions
-      .filter((file) => opts.pageExtensions.some((ext) => file.endsWith(ext)))
-      // remove duplicates from file extension removal (eg foo.ts and foo.test.ts)
-      .filter((file, idx, array) => array.indexOf(file) === idx)
-      .map((file) => {
-        return {
-          filePath: file,
-          // remove page directory path
-          // remove file extensions (.tsx, .test.tsx)
-          file: file.replace(/(\.\w+)+$/, '').replace(opts.directory, ''),
-        }
-      })
-  )
-}
+async function buildRouteTree(rootDir: string): Promise<Route[]> {
+  let idCounter = 1
+  const nextJsFilePattern = /\.(js|jsx|ts|tsx)$/
 
-export function getApiRoutes(files: string[], opts: Opts) {
-  const paths = processing(files, opts)
-  return paths
-    .filter(({ file }) => file.startsWith('api'))
-    .map(({ file, filePath }) => ({ file: file.endsWith('/route') ? file.replace(/\/route$/, '') : file, filePath }))
-}
+  const treeNodes: Route[] = [
+    {
+      id: 0,
+      route: '/',
+      name: parse(rootDir).base,
+      parentNode: null,
+      path: rootDir,
+      contents: [],
+      render: 'server',
+    },
+  ]
 
-export function getAppRoutes(files: string[], opts: Opts) {
-  const paths = processing(files, opts)
-  return paths
-    .filter(({ file }) => parse(file).name === 'page')
-    .map(({ file, filePath }) => ({
-      file: file
-        .split(sep)
-        .filter((segment) => !(segment.startsWith('(') && segment.endsWith(')')))
-        .filter((file) => parse(file).name !== 'page')
-        .join(sep),
-      filePath,
-    }))
-    .map(({ file, filePath }) => ({ file: file === '' ? '/' : `/${file}`, filePath }))
-}
+  // Constants for file patterns
+  const NEXT_ROUTE_FILE_PATTERN = /^(page|layout|template|route|loading|error|not-found)\.(js|jsx|ts|tsx)$/
+  const IGNORED_DIRECTORIES = new Set(['.', '..', 'node_modules'])
 
-export function getPageRoutes(files: string[], opts: Opts) {
-  const NEXTJS_NON_ROUTABLE = ['/_app', '/_document', '/_error', '/middleware']
-  const paths = processing(files, opts)
-  return paths
-    .map(({ file, filePath }) => {
-      file = file.replace(/index$/, '')
-      file = file.endsWith('/') && file.length > 2 ? file.slice(0, -1) : file
-      file = `/${file}`
-      return {
-        file,
-        filePath,
+  // Helper function to check if a file is a Next.js route file
+  function isNextRouteFile(fileName: string): boolean {
+    return nextJsFilePattern.test(fileName) && NEXT_ROUTE_FILE_PATTERN.test(fileName)
+  }
+
+  // Helper function to check if directory or its children contain route files
+  async function hasRouteFiles(directory: string): Promise<boolean> {
+    const items = await fs.readdir(directory, { withFileTypes: true })
+
+    // Check if current directory has any route files
+    if (items.some((item) => !item.isDirectory() && isNextRouteFile(item.name))) {
+      return true
+    }
+
+    // Recursively check subdirectories
+    for (const item of items) {
+      if (
+        item.isDirectory() &&
+        !IGNORED_DIRECTORIES.has(item.name) &&
+        (await hasRouteFiles(join(directory, item.name)))
+      ) {
+        return true
       }
-    })
-    .filter(({ file }) => !NEXTJS_NON_ROUTABLE.includes(file))
-    .filter(({ file }) => !file.includes('/api/'))
+    }
+
+    return false
+  }
+
+  // Create a new route node for the tree
+  function createRouteNode(path: string, name: string, parentId: number, parentNode?: Route): Route {
+    return {
+      id: idCounter++,
+      route: `${parentNode?.id === 0 ? '' : parentNode?.route}/${name}`,
+      name,
+      parentNode: parentId,
+      path,
+      contents: [],
+      render: 'server',
+    }
+  }
+
+  async function scanDirectoryContents(dir: string, parentId: number): Promise<void> {
+    const entities = await fs.readdir(dir, { withFileTypes: true })
+
+    for (const entity of entities) {
+      if (entity.name.startsWith('.') || entity.name === 'node_modules') continue
+
+      const fullPath = join(dir, entity.name)
+      const parentNode = treeNodes.find((node) => node.id === parentId)
+
+      if (entity.isDirectory()) {
+        await handleDirectory(entity, fullPath, parentId, parentNode)
+      } else if (isNextRouteFile(entity.name)) {
+        await handleRouteFile(entity.name, fullPath, parentId)
+      }
+    }
+  }
+
+  // Handle directory processing
+  async function handleDirectory(
+    entity: fs.Dirent,
+    fullPath: string,
+    parentId: number,
+    parentNode?: Route,
+  ): Promise<void> {
+    const isValidRoute = parentId === 0 || (await hasRouteFiles(fullPath))
+
+    if (isValidRoute) {
+      const newNode = createRouteNode(fullPath, entity.name, parentId, parentNode)
+      treeNodes.push(newNode)
+      await scanDirectoryContents(fullPath, newNode.id)
+    }
+  }
+
+  // Handle route file processing
+  async function handleRouteFile(fileName: string, fullPath: string, parentId: number): Promise<void> {
+    treeNodes[parentId].contents.push(fileName)
+    if (await detectClientDirective(fullPath)) {
+      treeNodes[parentId].render = 'client'
+    }
+  }
+
+  await scanDirectoryContents(rootDir, 0)
+  return treeNodes
 }
 
 export async function getRoutes() {
   const { isApp, isPages, routePath } = internalStore.getState()
 
-  const pageExtensions = ['tsx', 'ts', 'jsx', 'js']
-  const files = await fg(['**/*.(tsx|js|jsx)'], {
-    cwd: routePath,
-    onlyFiles: true,
-    ignore: ['**/node_modules/**', '**/dist/**'],
-  })
-  const routes = (isApp ? getAppRoutes : isPages ? getPageRoutes : getAppRoutes)(files, {
-    pageExtensions,
-    directory: routePath,
-  })
-  const apiRoutes = getApiRoutes(files, {
-    pageExtensions,
-    directory: routePath,
-  })
+  const routes = await buildRouteTree(routePath)
 
   const result = {
     type: isApp ? 'app' : isPages ? 'pages' : 'app',
-    routes: routes.map((route) => ({
-      path: join(routePath, route.filePath),
-      route: route.file,
-    })),
-    apiRoutes: apiRoutes.map((route) => ({
-      path: join(routePath, route.filePath),
-      route: route.file,
-    })),
+    routes,
   } as const
 
   return result

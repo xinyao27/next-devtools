@@ -520,6 +520,9 @@ importers:
       '@tanstack/react-virtual':
         specifier: 'catalog:'
         version: 3.11.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@xyflow/react':
+        specifier: ^12.3.6
+        version: 12.3.6(@types/react@18.3.14)(immer@10.1.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       birpc:
         specifier: 'catalog:'
         version: 0.2.19
@@ -538,6 +541,9 @@ importers:
       date-fns:
         specifier: 'catalog:'
         version: 4.1.0
+      elkjs:
+        specifier: ^0.9.3
+        version: 0.9.3
       es-toolkit:
         specifier: 'catalog:'
         version: 1.30.1
@@ -759,7 +765,7 @@ importers:
         version: 18.3.14
       next:
         specifier: catalog:next15
-        version: 15.1.1(@babel/core@7.26.0)(babel-plugin-react-compiler@19.0.0-beta-201e55d-20241215)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 15.1.1(@babel/core@7.23.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       schema-dts:
         specifier: 'catalog:'
         version: 1.1.2(typescript@5.7.2)
@@ -813,7 +819,7 @@ importers:
         version: 4.0.0
       next:
         specifier: catalog:next15
-        version: 15.1.1(@babel/core@7.26.0)(babel-plugin-react-compiler@19.0.0-beta-201e55d-20241215)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 15.1.1(@babel/core@7.23.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react:
         specifier: catalog:react19
         version: 19.0.0
@@ -3279,6 +3285,15 @@ packages:
   '@xtuc/long@4.2.2':
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
 
+  '@xyflow/react@12.3.6':
+    resolution: {integrity: sha512-9GS+cz8hDZahpvTrVCmySAEgKUL8oN4b2q1DluHrKtkqhAMWfH2s7kblhbM4Y4Y4SUnH2lt4drXKZ/4/Lot/2Q==}
+    peerDependencies:
+      react: '>=17'
+      react-dom: '>=17'
+
+  '@xyflow/system@0.0.47':
+    resolution: {integrity: sha512-aUXJPIvsCFxGX70ccRG8LPsR+A8ExYXfh/noYNpqn8udKerrLdSHxMG2VsvUrQ1PGex10fOpbJwFU4A+I/Xv8w==}
+
   '@xystack/style-guide@0.2.5':
     resolution: {integrity: sha512-qtts+hdGPKCfomeBzbXRAgTO/wt7N9kg8XWz8tvrWm+qy5iupShjWoPDpzXEs32Sa25OZrmpDfK+WrSafqJqEQ==}
     engines: {node: '>=18'}
@@ -3664,6 +3679,9 @@ packages:
 
   class-variance-authority@0.7.1:
     resolution: {integrity: sha512-Ka+9Trutv7G8M6WT6SeiRWz792K5qEqIGEGzXKhAE6xOWAY6pPH8U+9IY3oCMv6kqTmLsv7Xh/2w2RigkePMsg==}
+
+  classcat@5.0.5:
+    resolution: {integrity: sha512-JhZUT7JFcQy/EzW605k/ktHtncoo9vnyW/2GspNYwFlN1C/WmjuV/xtS04e9SOkL2sTdw0VAZ2UGCcQ9lR6p6w==}
 
   clean-css@5.3.3:
     resolution: {integrity: sha512-D5J+kHaVb/wKSFcyyV75uCn8fiY4sV38XJoe4CUyGQ+mOU/fMVYUdH1hJC+CJQ5uY3EnW27SbJYS4X8BiLrAFg==}
@@ -4353,6 +4371,9 @@ packages:
 
   electron-to-chromium@1.5.62:
     resolution: {integrity: sha512-t8c+zLmJHa9dJy96yBZRXGQYoiCEnHYgFwn1asvSPZSUdVxnB62A4RASd7k41ytG3ErFBA0TpHlKg9D9SQBmLg==}
+
+  elkjs@0.9.3:
+    resolution: {integrity: sha512-f/ZeWvW/BCXbhGEf1Ujp29EASo/lk1FDnETgNKwJrsVvGZhUWCZyg3xLJjAsxfOmt8KjswHmI5EwCQcPMpOYhQ==}
 
   emoji-regex-xs@1.0.0:
     resolution: {integrity: sha512-LRlerrMYoIDrT6jgpeZ2YYl/L8EulRTt5hQcYjy5AInh7HWXKimpqx68aknBFpGL2+/IcogTcaydJEgaTmOpDg==}
@@ -8432,6 +8453,21 @@ packages:
   zod@3.24.1:
     resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
 
+  zustand@4.5.5:
+    resolution: {integrity: sha512-+0PALYNJNgK6hldkgDq2vLrw5f6g/jCInz52n9RTpropGgeAf/ioFUCdtsjCqu4gNhW9D01rUQBROoRjdzyn2Q==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      '@types/react': '>=16.8'
+      immer: '>=9.0.6'
+      react: '>=16.8'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      immer:
+        optional: true
+      react:
+        optional: true
+
   zustand@5.0.2:
     resolution: {integrity: sha512-8qNdnJVJlHlrKXi50LDqqUNmUbuBjoKLrYQBnoChIbVph7vni+sY+YpvdjXG9YLd/Bxr6scMcR+rm5H3aSqPaw==}
     engines: {node: '>=12.20.0'}
@@ -10837,6 +10873,27 @@ snapshots:
 
   '@xtuc/long@4.2.2': {}
 
+  '@xyflow/react@12.3.6(@types/react@18.3.14)(immer@10.1.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@xyflow/system': 0.0.47
+      classcat: 5.0.5
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+      zustand: 4.5.5(@types/react@18.3.14)(immer@10.1.1)(react@19.0.0)
+    transitivePeerDependencies:
+      - '@types/react'
+      - immer
+
+  '@xyflow/system@0.0.47':
+    dependencies:
+      '@types/d3-drag': 3.0.7
+      '@types/d3-selection': 3.0.11
+      '@types/d3-transition': 3.0.9
+      '@types/d3-zoom': 3.0.8
+      d3-drag: 3.0.0
+      d3-selection: 3.0.0
+      d3-zoom: 3.0.0
+
   '@xystack/style-guide@0.2.5(eslint@9.17.0(jiti@2.4.1))(prettier@3.4.2)(typescript@5.7.2)':
     dependencies:
       '@antfu/ni': 0.21.12
@@ -11328,6 +11385,8 @@ snapshots:
   class-variance-authority@0.7.1:
     dependencies:
       clsx: 2.1.1
+
+  classcat@5.0.5: {}
 
   clean-css@5.3.3:
     dependencies:
@@ -12056,6 +12115,8 @@ snapshots:
   eastasianwidth@0.2.0: {}
 
   electron-to-chromium@1.5.62: {}
+
+  elkjs@0.9.3: {}
 
   emoji-regex-xs@1.0.0: {}
 
@@ -17156,6 +17217,14 @@ snapshots:
   zod@3.22.4: {}
 
   zod@3.24.1: {}
+
+  zustand@4.5.5(@types/react@18.3.14)(immer@10.1.1)(react@19.0.0):
+    dependencies:
+      use-sync-external-store: 1.2.2(react@19.0.0)
+    optionalDependencies:
+      '@types/react': 18.3.14
+      immer: 10.1.1
+      react: 19.0.0
 
   zustand@5.0.2(@types/react@18.3.14)(immer@10.1.1)(react@19.0.0)(use-sync-external-store@1.2.2(react@19.0.0)):
     optionalDependencies:

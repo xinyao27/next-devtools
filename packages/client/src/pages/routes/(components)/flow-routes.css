@@ -1,0 +1,54 @@
+.react-flow__node {
+  @apply rounded-sm border shadow bg-zinc-100 hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800 transition-colors duration-200;
+}
+
+.react-flow__node.selectable:focus,
+.react-flow__node.selectable:focus:active,
+.react-flow__node.selectable:hover,
+.react-flow__node.draggable:hover,
+.react-flow__node.selectable.selected {
+  @apply bg-zinc-100 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 shadow-md;
+}
+
+.react-flow__node-group {
+  @apply bg-primary;
+}
+
+.react-flow__edge.selectable:hover .react-flow__edge-path,
+.react-flow__edge.selectable.selected .react-flow__edge-path {
+  @apply stroke-primary;
+}
+
+.react-flow__handle {
+  @apply border border-primary bg-zinc-100 dark:bg-zinc-900 size-2 rounded-full opacity-0;
+}
+
+.react-flow__node.selectable:hover .react-flow__handle,
+.react-flow__node.draggable:hover .react-flow__handle,
+.react-flow__node.selectable.selected .react-flow__handle {
+  @apply opacity-100;
+}
+
+.react-flow__handle.connectionindicator:hover {
+  pointer-events: all;
+  @apply border-primary bg-primary;
+}
+
+.react-flow__handle.connectionindicator:focus,
+.react-flow__handle.connectingfrom,
+.react-flow__handle.connectingto {
+  @apply border-primary bg-primary;
+}
+
+.react-flow__node-resizer {
+  border-radius: 0;
+  border: none;
+}
+
+.react-flow__resize-control.handle {
+  @apply bg-primary border-primary rounded-none w-5 h-5;
+}
+
+.react-flow__attribution {
+  @apply hidden;
+}

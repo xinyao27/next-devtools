@@ -77,7 +77,6 @@ export interface ServerFunctions {
   getRoutes: () => Promise<{
     type: 'app' | 'pages'
     routes: Route[]
-    apiRoutes: Route[]
   }>
 
   // service
