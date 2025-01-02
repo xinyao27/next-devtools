@@ -90,6 +90,10 @@ function Main({ children }: Props) {
     root.classList.add(resolvedTheme)
   }, [resolvedTheme])
 
+  React.useEffect(() => {
+    useSettingsStore.getState().setup()
+  }, [])
+
   if (!serverReady) return null
   if (toolbarStatus === 'hide') return null
   if (toolbarStatus === 'mini') return <MiniToolbar />
