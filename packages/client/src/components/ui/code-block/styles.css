@@ -2,12 +2,12 @@
   /**
     * sugar-high colors
     */
-  --sh-class: #ed9cc2;
-  --sh-property: #ed9cc2;
-  --sh-entity: #c391e6;
-  --sh-keyword: #f47067;
-  --sh-string: #a3a3a3;
-  --sh-jsxliterals: #a3a3a3;
+  --sh-class: #a3a3a3;
+  --sh-property: #ffc799;
+  --sh-entity: #ffc799;
+  --sh-keyword: #ffc799;
+  --sh-string: #00a99a;
+  --sh-jsxliterals: #ffc799;
   --sh-sign: #a3a3a3;
   --sh-comment: #a3a3a3;
   --sh-identifier: #a3a3a3;

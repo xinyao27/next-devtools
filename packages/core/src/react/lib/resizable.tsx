@@ -58,10 +58,10 @@ const handleStyles: Record<string, Record<string, React.CSSProperties>> = {
       transition: 'all 200ms ease',
     },
     hover: {
-      backgroundColor: '#c391e6',
+      backgroundColor: '#ffc799',
     },
     resizing: {
-      backgroundColor: '#c391e6',
+      backgroundColor: '#ffc799',
     },
   },
   [ToolbarPosition.Top]: {
