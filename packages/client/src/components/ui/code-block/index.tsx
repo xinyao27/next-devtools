@@ -1,7 +1,7 @@
 'use client'
 
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { useCallback, useMemo, useRef, useState } from 'react'
+import * as React from 'react'
 import { useCopyToClipboard } from 'react-use'
 import { generate, tokenize } from 'sugar-high'
 
@@ -32,17 +32,17 @@ const SingleCodeBlock = ({
   showLanguage = false,
   ...rest
 }: Omit<CodeProps, 'codes'>) => {
-  const parentRef = useRef<HTMLPreElement>(null)
-  const [copied, setCopied] = useState(false)
+  const parentRef = React.useRef<HTMLPreElement>(null)
+  const [copied, setCopied] = React.useState(false)
   const [, copyToClipboard] = useCopyToClipboard()
-  const handleCopy = useCallback((code: string) => {
+  const handleCopy = React.useCallback((code: string) => {
     setCopied(true)
     setTimeout(() => setCopied(false), 3000)
     copyToClipboard(code)
   }, [])
-  const match = useMemo(() => /language-(?<lang>\w+)/.exec(className || ''), [className])
-  const lang = useMemo(() => language || match?.[1], [language, match?.[1]])
-  const lines = useMemo(() => generate(tokenize(code ?? '')), [code, match])
+  const match = React.useMemo(() => /language-(?<lang>\w+)/.exec(className || ''), [className])
+  const lang = React.useMemo(() => language || match?.[1], [language, match?.[1]])
+  const lines = React.useMemo(() => generate(tokenize(code ?? '')), [code, match])
   const rowVirtualizer = useVirtualizer({
     count: lines.length,
     estimateSize: () => 20,
@@ -81,11 +81,7 @@ const SingleCodeBlock = ({
                 <child.tagName
                   className={child.properties.className}
                   key={index}
-                  style={child.properties.style.split(';').reduce((acc: any, curr: string) => {
-                    const [key, value] = curr.split(':')
-                    acc[key] = value
-                    return acc
-                  }, {} as any)}
+                  style={child.properties.style}
                 >
                   {child.children[0].value}
                 </child.tagName>
@@ -134,8 +130,9 @@ const SingleCodeBlock = ({
 
 const CodeBlock = (props: CodeProps) => {
   const { codes, ...rest } = props
+
   const multipleCodes = codes && codes.length > 1
-  const [selected, setSelected] = useState<string>(codes?.[0].label ?? '')
+  const [selected, setSelected] = React.useState<string>(codes?.[0].label ?? '')
 
   if (multipleCodes) {
     return (
@@ -169,7 +166,7 @@ const CodeBlock = (props: CodeProps) => {
     )
   }
 
-  return <SingleCodeBlock {...props} />
+  return <SingleCodeBlock {...rest} />
 }
 
 export default CodeBlock
