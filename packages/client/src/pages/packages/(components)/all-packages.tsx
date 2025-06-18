@@ -1,16 +1,23 @@
 'use client'
 
-import React from 'react'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import PackageItem from './package-item'
 import type { Package } from '@next-devtools/shared/types'
+
+import React from 'react'
+
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+
+import PackageItem from './package-item'
 
 interface Props {
   data?: Package[]
 }
 export default function AllPackages({ data }: Props) {
   return (
-    <Accordion collapsible defaultValue="all-packages" type="single">
+    <Accordion
+      collapsible
+      defaultValue="all-packages"
+      type="single"
+    >
       <AccordionItem value="all-packages">
         <AccordionTrigger>
           <div className="flex items-center gap-2">
@@ -23,7 +30,12 @@ export default function AllPackages({ data }: Props) {
         </AccordionTrigger>
         <AccordionContent>
           <div className="grid grid-cols-1 gap-4 py-2 sm:grid-cols-2 xl:grid-cols-5">
-            {data?.map((pkg) => <PackageItem key={`${pkg.type}-${pkg.name}@${pkg.version}`} data={pkg} />)}
+            {data?.map((pkg) => (
+              <PackageItem
+                data={pkg}
+                key={`${pkg.type}-${pkg.name}@${pkg.version}`}
+              />
+            ))}
           </div>
         </AccordionContent>
       </AccordionItem>

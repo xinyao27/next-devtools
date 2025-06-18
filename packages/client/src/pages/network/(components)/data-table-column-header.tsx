@@ -1,5 +1,6 @@
-import { cn } from '@/lib/utils'
 import type { Column } from '@tanstack/react-table'
+
+import { cn } from '@/lib/utils'
 
 interface DataTableColumnHeaderProps<TData, TValue> extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   column: Column<TData, TValue>
@@ -7,9 +8,9 @@ interface DataTableColumnHeaderProps<TData, TValue> extends React.ButtonHTMLAttr
 }
 
 export function DataTableColumnHeader<TData, TValue>({
+  className,
   column,
   title,
-  className,
   ...props
 }: DataTableColumnHeaderProps<TData, TValue>) {
   return (

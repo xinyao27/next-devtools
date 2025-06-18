@@ -1,8 +1,10 @@
+// eslint-disable-next-line @eslint-community/eslint-comments/disable-enable-pair
 /* eslint-disable no-console */
+import type { Stripe } from 'stripe'
+
 import { NextResponse } from 'next/server'
 
 import { stripe } from '@/lib/stripe'
-import type { Stripe } from 'stripe'
 
 export async function POST(req: Request) {
   let event: Stripe.Event

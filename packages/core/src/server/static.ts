@@ -1,9 +1,10 @@
+import type { NextDevtoolsServerContext } from '@next-devtools/shared/types'
+
+import { TEMP_DIR } from '@next-devtools/shared/constants'
+import fs from 'fs-extra'
 import http from 'node:http'
 import path from 'node:path'
-import fs from 'fs-extra'
 import sirv from 'sirv'
-import { TEMP_DIR } from '@next-devtools/shared/constants'
-import type { NextDevtoolsServerContext } from '@next-devtools/shared/types'
 
 export async function createStaticServer(ctx: NextDevtoolsServerContext) {
   const dir = path.join(ctx.context.dir, TEMP_DIR)

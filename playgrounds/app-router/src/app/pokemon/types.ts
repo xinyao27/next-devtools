@@ -4,28 +4,28 @@ export interface Pokemon {
 }
 
 export interface PokemonDetail {
-  id: number
-  name: string
-  sprites: {
-    front_default: string
-    back_default: string
-  }
-  height: number
-  weight: number
-  types: Array<{
-    type: {
-      name: string
-    }
-  }>
   abilities: Array<{
     ability: {
       name: string
     }
   }>
+  height: number
+  id: number
+  name: string
+  sprites: {
+    back_default: string
+    front_default: string
+  }
   stats: Array<{
     base_stat: number
     stat: {
       name: string
     }
   }>
+  types: Array<{
+    type: {
+      name: string
+    }
+  }>
+  weight: number
 }

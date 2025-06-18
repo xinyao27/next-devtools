@@ -1,25 +1,21 @@
 import * as React from 'react'
+
 import { cn } from '@/lib/utils'
 
-const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
-  ({ className, type, ...props }, ref) => {
-    return (
-      <input
-        ref={ref}
-        type={type}
-        className={cn(
-          'border-input bg-background text-foreground placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:ring-ring/20 flex h-9 w-full rounded-lg border px-3 py-2 text-sm shadow-sm shadow-black/5 transition-shadow focus-visible:outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50',
-          type === 'search' &&
-            '[&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none',
-          type === 'file' &&
-            'text-muted-foreground/70 file:border-input file:text-foreground p-0 pr-3 italic file:me-3 file:h-full file:border-0 file:border-r file:border-solid file:bg-transparent file:px-3 file:text-sm file:font-medium file:not-italic',
-          className,
-        )}
-        {...props}
-      />
-    )
-  },
-)
-Input.displayName = 'Input'
+function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
+  return (
+    <input
+      className={cn(
+        'file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input shadow-xs flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base outline-none transition-[color,box-shadow] file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
+        'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
+        'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
+        className,
+      )}
+      data-slot="input"
+      type={type}
+      {...props}
+    />
+  )
+}
 
 export { Input }

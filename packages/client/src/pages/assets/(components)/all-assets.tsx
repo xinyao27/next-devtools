@@ -1,32 +1,55 @@
 'use client'
 
-import React, { useMemo } from 'react'
-import { format, formatDistanceToNow } from 'date-fns'
-import { useQuery } from '@tanstack/react-query'
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
-import { Separator } from '@/components/ui/separator'
-import OpenInVscode from '@/components/open-in-editor'
-import CopyToClipboard from '@/components/copy-to-clipboard'
-import { formatBytes } from '@/lib/utils'
-import { rpcClient } from '@/lib/client'
-import { Skeleton } from '@/components/ui/skeleton'
 import type { Asset } from '@next-devtools/shared/types'
+
+import { useQuery } from '@tanstack/react-query'
+import { format, formatDistanceToNow } from 'date-fns'
+import React, { useMemo } from 'react'
+
+import CopyToClipboard from '@/components/copy-to-clipboard'
+import OpenInVscode from '@/components/open-in-editor'
+import { Separator } from '@/components/ui/separator'
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
+import { Skeleton } from '@/components/ui/skeleton'
+import { rpcClient } from '@/lib/client'
+import { formatBytes } from '@/lib/utils'
 
 interface AssetProps {
   data: Asset
 }
+interface Props {
+  data?: Asset[]
+}
+
+export default function AllAssets({ data }: Props) {
+  return (
+    <div className="grid grid-cols-3 p-4 sm:grid-cols-4 lg:grid-cols-6 2xl:grid-cols-8">
+      {data?.map((asset) => (
+        <AssetComponent
+          data={asset}
+          key={asset.file}
+        />
+      ))}
+    </div>
+  )
+}
 function AssetComponent({ data }: AssetProps) {
   const { data: assetInfo, isLoading } = useQuery({
-    queryKey: ['getStaticAssetInfo', data.filePath],
     queryFn: () => rpcClient.getStaticAssetInfo(data.filePath),
+    queryKey: ['getStaticAssetInfo', data.filePath],
   })
 
   const previewElement = useMemo(
     () =>
       isLoading ? (
-        <Skeleton style={{ width: 32, height: 32 }} />
+        <Skeleton style={{ height: 32, width: 32 }} />
       ) : (
-        <img alt={data.file} height={32} src={assetInfo!} width={32} />
+        <img
+          alt={data.file}
+          height={32}
+          src={assetInfo!}
+          width={32}
+        />
       ),
     [data, assetInfo, isLoading],
   )
@@ -94,16 +117,5 @@ function AssetComponent({ data }: AssetProps) {
         </SheetHeader>
       </SheetContent>
     </Sheet>
-  )
-}
-
-interface Props {
-  data?: Asset[]
-}
-export default function AllAssets({ data }: Props) {
-  return (
-    <div className="grid grid-cols-3 p-4 sm:grid-cols-4 lg:grid-cols-6 2xl:grid-cols-8">
-      {data?.map((asset) => <AssetComponent key={asset.file} data={asset} />)}
-    </div>
   )
 }

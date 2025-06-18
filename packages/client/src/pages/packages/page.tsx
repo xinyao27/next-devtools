@@ -1,15 +1,17 @@
 'use client'
 
-import React from 'react'
 import { useQuery } from '@tanstack/react-query'
+import React from 'react'
+
 import useSearchElement from '@/hooks/use-search-element'
 import { rpcClient } from '@/lib/client'
+
 import AllPackages from './(components)/all-packages'
 
 export default function Page() {
   const { data } = useQuery({
-    queryKey: ['getPackages'],
     queryFn: () => rpcClient.getPackages(),
+    queryKey: ['getPackages'],
   })
   const { element, filteredData } = useSearchElement(data, (item, searchText) =>
     item?.name?.toLowerCase().includes(searchText.toLowerCase()),

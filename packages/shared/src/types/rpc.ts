@@ -1,136 +1,137 @@
 import type { Difference } from 'microdiff'
-import type { InternalStoreState } from './internal'
-import type { NetworkStoreState } from './network'
-import type { Editor, SettingsStoreState } from './settings'
-import type { Asset, Component, Env, Package, Route } from './features'
 import type { NextConfig, WebpackConfigContext } from 'next/dist/server/config-shared'
 import type { WebpackOptionsNormalized } from 'webpack'
 
-export interface WebpackContext extends WebpackConfigContext {
-  staticServerPort: number
-  runtime: 'node' | 'edge' | 'browser'
-  nextConfig: NextConfig
+import type { Asset, Component, Env, Package, Route } from './features'
+import type { InternalStoreState } from './internal'
+import type { NetworkStoreState } from './network'
+import type { Editor, SettingsStoreState } from './settings'
+
+export interface ClientFunctions {
+  onNetworkUpdate: (diff: Difference[]) => void
+
+  onSettingsStoreUpdate: (settings: Partial<SettingsStoreState>) => void
+  onTerminalWrite: (data: { data: string; id: string }) => void
+  serverReady: () => void
 }
 
 export interface NextDevtoolsServerContext {
-  options: WebpackOptionsNormalized
   context: WebpackContext
+  options: WebpackOptionsNormalized
 }
 
 export interface ServerFunctions {
-  ping: () => string
+  checkPackageVersion: (
+    name: string,
+    current?: string,
+  ) => Promise<null | {
+    current: string
+    isOutdated: boolean
+    latest: null | string
+    name: string
+    npmData: Record<string, any>
+  }>
 
-  // assets
-  getStaticAssets: () => Promise<Asset[]>
-  getStaticAssetInfo: (path: string) => Promise<string>
-
+  executeCommand: (
+    input: { args?: string[]; command: string; options?: { onExit?: (code: number) => void } } & {
+      description?: string
+      icon: string
+      id: string
+      name: string
+    },
+  ) => Promise<void>
   // components
   getComponents: () => Promise<Component[]>
-
-  // editor
-  openInEditor: (opts: {
-    path: string
-    line?: number | string
-    column?: number | string
-    editor?: Editor
-  }) => Promise<void>
 
   // envs
   getEnvs: () => Promise<Env>
 
-  // memory
-  getNextServerMemory: () => Promise<NodeJS.MemoryUsage>
+  getInternalStore: () => Promise<InternalStoreState>
 
   // network
   getNetworkRequests: () => Promise<NetworkStoreState['requests']>
 
-  // npm
-  runAnalyzeBuild: () => Promise<void>
+  // memory
+  getNextServerMemory: () => Promise<NodeJS.MemoryUsage>
 
   // overview
   getOverviewData: () => Promise<{
-    version: string
+    assets: Asset[]
+    components: Component[]
     nextVersion: string
+    packages: Package[]
     reactVersion: string
     routes: Route[]
-    components: Component[]
-    assets: Asset[]
-    packages: Package[]
+    version: string
   }>
+
+  getPackageInfo: (name: string, github?: boolean) => Promise<Record<string, any>>
 
   // packages
   getPackages: () => Promise<Package[]>
-  getPackageInfo: (name: string, github?: boolean) => Promise<Record<string, any>>
-  checkPackageVersion: (
-    name: string,
-    current?: string,
-  ) => Promise<{
-    name: string
-    current: string
-    latest: string | null
-    isOutdated: boolean
-    npmData: Record<string, any>
-  } | null>
-  updatePackageVersion: (name: string, options?: Record<string, any>) => Promise<void>
 
   // routes
   getRoutes: () => Promise<{
-    type: 'app' | 'pages'
     routes: Route[]
+    type: 'app' | 'pages'
   }>
-
-  // service
-  restartProject: () => Promise<void>
-
-  // store
-  setSettingsStore: (settings: Partial<SettingsStoreState>) => Promise<void>
   getSettingsStore: () => Promise<SettingsStoreState>
-  getInternalStore: () => Promise<InternalStoreState>
+  getStaticAssetInfo: (path: string) => Promise<string>
+  // assets
+  getStaticAssets: () => Promise<Asset[]>
+
+  getTerminal: (id: string) => Promise<
+    | undefined
+    | {
+        buffer?: string | Uint8Array
+        description?: string
+        icon: string
+        id: string
+        name: string
+      }
+  >
 
   // terminal
   getTerminals: () => Promise<
     {
-      id: string
-      name: string
+      buffer?: string | Uint8Array
       description?: string
       icon: string
-      buffer?: string | Uint8Array
+      id: string
+      name: string
     }[]
   >
-  getTerminal: (id: string) => Promise<
-    | {
-        id: string
-        name: string
-        description?: string
-        icon: string
-        buffer?: string | Uint8Array
-      }
-    | undefined
-  >
-  runTerminalAction: (id: string, action: 'restart' | 'clear' | 'terminate') => Promise<boolean>
-  executeCommand: (
-    input: { command: string; args?: string[]; options?: { onExit?: (code: number) => void } } & {
-      id: string
-      name: string
-      description?: string
-      icon: string
-    },
-  ) => Promise<void>
+
+  // editor
+  openInEditor: (opts: {
+    column?: number | string
+    editor?: Editor
+    line?: number | string
+    path: string
+  }) => Promise<void>
+  ping: () => string
+  // service
+  restartProject: () => Promise<void>
+
+  // npm
+  runAnalyzeBuild: () => Promise<void>
+  runTerminalAction: (id: string, action: 'clear' | 'restart' | 'terminate') => Promise<boolean>
+  // store
+  setSettingsStore: (settings: Partial<SettingsStoreState>) => Promise<void>
+  updatePackageVersion: (name: string, options?: Record<string, any>) => Promise<void>
 }
 
-export interface ClientFunctions {
-  serverReady: () => void
-
-  onNetworkUpdate: (diff: Difference[]) => void
-  onTerminalWrite: (data: { id: string; data: string }) => void
-  onSettingsStoreUpdate: (settings: Partial<SettingsStoreState>) => void
+export interface WebpackContext extends WebpackConfigContext {
+  nextConfig: NextConfig
+  runtime: 'browser' | 'edge' | 'node'
+  staticServerPort: number
 }
 
 export const WS_SERVER_EVENT_NAME = 'next:devtools:rpc:server'
 export const WS_CLIENT_TO_SERVER_EVENT_NAME = 'next:devtools:rpc:client_to_server'
 export const WS_PROVIDER_TO_SERVER_EVENT_NAME = 'next:devtools:rpc:provider_to_server'
 export interface RpcMessage {
+  event: typeof WS_CLIENT_TO_SERVER_EVENT_NAME | typeof WS_PROVIDER_TO_SERVER_EVENT_NAME | typeof WS_SERVER_EVENT_NAME
   id: string
-  event: typeof WS_SERVER_EVENT_NAME | typeof WS_CLIENT_TO_SERVER_EVENT_NAME | typeof WS_PROVIDER_TO_SERVER_EVENT_NAME
   payload: any
 }

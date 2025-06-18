@@ -1,21 +1,23 @@
 'use client'
 
-import React from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Skeleton } from '@/components/ui/skeleton'
-import { rpcClient } from '@/lib/client'
+import React from 'react'
+
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { rpcClient } from '@/lib/client'
+
 import AllRoutes from './(components)/all-routes'
 import CurrentRoute from './(components)/current-route'
 import FlowRoutes from './(components)/flow-routes'
 
 export default function Page() {
   const { data, isLoading } = useQuery({
-    queryKey: ['getRoutes'],
     queryFn: () => rpcClient.getRoutes(),
+    queryKey: ['getRoutes'],
   })
-  const [view, setView] = React.useState<'routes' | 'flow'>('routes')
+  const [view, setView] = React.useState<'flow' | 'routes'>('routes')
 
   return (
     <div className="flex h-full flex-col">
@@ -24,7 +26,11 @@ export default function Page() {
           view === 'routes' ? (
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button size="icon" variant="ghost" onClick={() => setView('flow')}>
+                <Button
+                  onClick={() => setView('flow')}
+                  size="icon"
+                  variant="ghost"
+                >
                   <i className="i-ri-flow-chart size-4" />
                 </Button>
               </TooltipTrigger>
@@ -35,7 +41,11 @@ export default function Page() {
           ) : (
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button size="icon" variant="ghost" onClick={() => setView('routes')}>
+                <Button
+                  onClick={() => setView('routes')}
+                  size="icon"
+                  variant="ghost"
+                >
                   <i className="i-ri-node-tree size-4" />
                 </Button>
               </TooltipTrigger>

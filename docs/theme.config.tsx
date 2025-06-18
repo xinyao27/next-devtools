@@ -1,11 +1,12 @@
-import React from 'react'
-import { type DocsThemeConfig, Link } from 'nextra-theme-docs'
+import type { DocsThemeConfig } from 'nextra-theme-docs'
+
 import { useRouter } from 'next/router'
+import { Link } from 'nextra-theme-docs'
+import React from 'react'
+
 import Logo from './components/logo'
 
 const config: DocsThemeConfig = {
-  logo: <Logo className="w-36 text-white" />,
-  project: { link: 'https://github.com/xinyao27/next-devtools' },
   chat: { icon: <i className="i-ri-twitter-x-fill block size-6" />, link: 'https://x.com/xinyao27' },
   docsRepositoryBase: 'https://github.com/xinyao27/next-devtools/blob/main/docs',
   footer: {
@@ -17,7 +18,12 @@ const config: DocsThemeConfig = {
           </Link>
           <div className="opacity-50">
             Published under{' '}
-            <a className="underline" href="https://github.com/xinyao27/next-devtools" rel="noreferrer" target="_blank">
+            <a
+              className="underline"
+              href="https://github.com/xinyao27/next-devtools"
+              rel="noreferrer"
+              target="_blank"
+            >
               MIT License
             </a>
           </div>
@@ -25,7 +31,9 @@ const config: DocsThemeConfig = {
       </div>
     ),
   },
+  logo: <Logo className="w-36 text-white" />,
   nextThemes: { defaultTheme: 'dark' },
+  project: { link: 'https://github.com/xinyao27/next-devtools' },
   themeSwitch: { component: null },
   useNextSeoProps: () => {
     const { asPath } = useRouter()

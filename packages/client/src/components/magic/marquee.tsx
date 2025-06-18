@@ -1,32 +1,32 @@
 import { cn } from '@/lib/utils'
 
 interface MarqueeProps {
-  className?: string
-  reverse?: boolean
-  pauseOnHover?: boolean
-  children?: React.ReactNode
-  vertical?: boolean
-  repeat?: number
   [key: string]: any
+  children?: React.ReactNode
+  className?: string
+  pauseOnHover?: boolean
+  repeat?: number
+  reverse?: boolean
+  vertical?: boolean
 }
 
 export function Marquee({
-  className,
-  reverse,
-  pauseOnHover = false,
   children,
-  vertical = false,
+  className,
+  pauseOnHover = false,
   repeat = 4,
+  reverse,
+  vertical = false,
   ...props
 }: MarqueeProps) {
   return (
     <div
       {...props}
       className={cn(
-        'group flex overflow-hidden p-2 [--duration:40s] [--gap:1rem] [gap:var(--gap)]',
+        'gap-(--gap) group flex overflow-hidden p-2 [--duration:40s] [--gap:1rem]',
         {
-          'flex-row': !vertical,
           'flex-col': vertical,
+          'flex-row': !vertical,
         },
         className,
       )}
@@ -35,13 +35,13 @@ export function Marquee({
         .fill(0)
         .map((_, i) => (
           <div
-            key={i}
-            className={cn('flex shrink-0 justify-around [gap:var(--gap)]', {
-              'animate-marquee flex-row': !vertical,
-              'animate-marquee-vertical flex-col': vertical,
-              'group-hover:[animation-play-state:paused]': pauseOnHover,
+            className={cn('gap-(--gap) flex shrink-0 justify-around', {
               '[animation-direction:reverse]': reverse,
+              'animate-marquee-vertical flex-col': vertical,
+              'animate-marquee flex-row': !vertical,
+              'group-hover:[animation-play-state:paused]': pauseOnHover,
             })}
+            key={i}
           >
             {children}
           </div>
@@ -50,15 +50,15 @@ export function Marquee({
   )
 }
 
-export function MarqueeItem({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+export function MarqueeItem({ children, className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
-        'w-50 relative flex cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-xl border p-4 [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)]',
+        'w-50 mask-[linear-gradient(to_top,transparent_10%,#000_100%)] relative flex cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-xl border p-4',
         // light styles
-        'border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]',
+        'bg-gray-950/1 border-gray-950/10 hover:bg-gray-950/5',
         // dark styles
-        'dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]',
+        'dark:border-gray-50/10 dark:bg-gray-50/10 dark:hover:bg-gray-50/15',
         className,
       )}
       {...props}

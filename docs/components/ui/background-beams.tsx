@@ -1,6 +1,7 @@
 'use client'
-import React from 'react'
 import { motion } from 'motion/react'
+import React from 'react'
+
 import { cn } from '@/utils/cn'
 
 export function BackgroundBeams({ className }: { className?: string }) {
@@ -80,8 +81,8 @@ export function BackgroundBeams({ className }: { className?: string }) {
 
         {paths.map((path, index) => (
           <motion.path
-            key={index}
             d={path}
+            key={index}
             stroke={`url(#linearGradient-${index})`}
             strokeOpacity="0.4"
             strokeWidth="0.5"
@@ -90,29 +91,39 @@ export function BackgroundBeams({ className }: { className?: string }) {
         <defs>
           {paths.map((_, index) => (
             <motion.linearGradient
-              key={`gradient-${index}`}
-              id={`linearGradient-${index}`}
-              x1="100%"
-              x2="100%"
-              y1="100%"
-              y2="100%"
               animate={{
                 x1: ['0%', '100%'],
                 x2: ['0%', '95%'],
                 y1: ['0%', '100%'],
                 y2: ['0%', `${93 + Math.random() * 8}%`],
               }}
+              id={`linearGradient-${index}`}
+              key={`gradient-${index}`}
               transition={{
+                delay: Math.random() * 10,
                 duration: Math.random() * 10 + 10,
                 ease: 'easeInOut',
                 repeat: Number.POSITIVE_INFINITY,
-                delay: Math.random() * 10,
               }}
+              x1="100%"
+              x2="100%"
+              y1="100%"
+              y2="100%"
             >
-              <stop stopColor="#18CCFC" stopOpacity="0" />
+              <stop
+                stopColor="#18CCFC"
+                stopOpacity="0"
+              />
               <stop stopColor="#18CCFC" />
-              <stop offset="32.5%" stopColor="#6344F5" />
-              <stop offset="100%" stopColor="#AE48FF" stopOpacity="0" />
+              <stop
+                offset="32.5%"
+                stopColor="#6344F5"
+              />
+              <stop
+                offset="100%"
+                stopColor="#AE48FF"
+                stopOpacity="0"
+              />
             </motion.linearGradient>
           ))}
 
@@ -124,9 +135,19 @@ export function BackgroundBeams({ className }: { className?: string }) {
             id="paint0_radial_242_278"
             r="1"
           >
-            <stop offset="0.0666667" stopColor="var(--neutral-300)" />
-            <stop offset="0.243243" stopColor="var(--neutral-300)" />
-            <stop offset="0.43594" stopColor="white" stopOpacity="0" />
+            <stop
+              offset="0.0666667"
+              stopColor="var(--neutral-300)"
+            />
+            <stop
+              offset="0.243243"
+              stopColor="var(--neutral-300)"
+            />
+            <stop
+              offset="0.43594"
+              stopColor="white"
+              stopOpacity="0"
+            />
           </radialGradient>
         </defs>
       </svg>

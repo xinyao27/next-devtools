@@ -8,55 +8,55 @@ const IMAGE_URL = 'https://nextjs.org/static/blog/next-15-1/twitter-card.png'
 
 export function generateMetadata(): Metadata {
   return {
-    title: TITLE,
-    description: DESCRIPTION,
-
+    // Other
+    alternates: {
+      canonical: `${BASE_URL}/blog/next-15`,
+    },
     // Basic metadata
     authors: [{ name: 'Delba de Oliveira' }, { name: 'Jimmy Lai' }, { name: 'Rich Haines' }],
 
-    // OpenGraph
-    openGraph: {
-      title: TITLE,
-      siteName: 'OG siteName',
-      description: DESCRIPTION,
-      url: `${BASE_URL}/blog/next-15-1`,
-      images: [
-        {
-          url: IMAGE_URL,
-        },
-      ],
-      type: 'article',
-      publishedTime: '2024-12-10T20:00:00.000Z',
-    },
-
-    // Twitter
-    twitter: {
-      card: 'summary_large_image',
-      title: TITLE,
-      description: DESCRIPTION,
-      images: [
-        {
-          url: IMAGE_URL,
-          alt: 'Next.js 15',
-        },
-        {
-          url: IMAGE_URL,
-          alt: 'Next.js 15 - 2',
-        },
-      ],
-    },
+    description: DESCRIPTION,
 
     // facebook
     facebook: {
       appId: '12345678',
     },
 
-    // Other
-    alternates: {
-      canonical: `${BASE_URL}/blog/next-15`,
-    },
     icons: {
       icon: 'https://nextjs.org/favicon.ico',
+    },
+
+    // OpenGraph
+    openGraph: {
+      description: DESCRIPTION,
+      images: [
+        {
+          url: IMAGE_URL,
+        },
+      ],
+      publishedTime: '2024-12-10T20:00:00.000Z',
+      siteName: 'OG siteName',
+      title: TITLE,
+      type: 'article',
+      url: `${BASE_URL}/blog/next-15-1`,
+    },
+
+    title: TITLE,
+    // Twitter
+    twitter: {
+      card: 'summary_large_image',
+      description: DESCRIPTION,
+      images: [
+        {
+          alt: 'Next.js 15',
+          url: IMAGE_URL,
+        },
+        {
+          alt: 'Next.js 15 - 2',
+          url: IMAGE_URL,
+        },
+      ],
+      title: TITLE,
     },
   }
 }
@@ -65,24 +65,30 @@ export default function Page() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: TITLE,
-    image: IMAGE_URL,
     description: DESCRIPTION,
+    image: IMAGE_URL,
+    name: TITLE,
   }
   const jsonLd2 = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: TITLE + 1111,
-    image: IMAGE_URL,
     description: DESCRIPTION,
+    image: IMAGE_URL,
+    name: TITLE + 1111,
   }
 
   return (
     <div>
       <h1>h1Tag</h1>
       Next.js 15
-      <script dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} type="application/ld+json" />
-      <script dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd2) }} type="application/ld+json" />
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        type="application/ld+json"
+      />
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd2) }}
+        type="application/ld+json"
+      />
     </div>
   )
 }

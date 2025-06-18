@@ -8,7 +8,11 @@ export default function Login() {
       <h1>Login</h1>
 
       <div>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input
+          onChange={(e) => setEmail(e.target.value)}
+          type="email"
+          value={email}
+        />
 
         <button
           onClick={() => {

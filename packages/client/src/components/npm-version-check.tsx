@@ -1,38 +1,40 @@
-import { toast } from 'sonner'
-import { useNavigate } from 'react-router'
 import { useQuery } from '@tanstack/react-query'
+import { useNavigate } from 'react-router'
+import { toast } from 'sonner'
+
 import { rpcClient } from '@/lib/client'
+
 import { Badge } from './ui/badge'
 
 interface NpmVersionCheckProps {
+  options?: any
   packageName: string
-  version?: string
   showVersion?: boolean
   showVersionPrefix?: boolean
-  options?: any
+  version?: string
 }
 export default function NpmVersionCheck({
+  options,
   packageName,
-  version,
   showVersion = true,
   showVersionPrefix = true,
-  options,
+  version,
 }: NpmVersionCheckProps) {
   const navigate = useNavigate()
   const { data } = useQuery({
-    queryKey: ['checkPackageVersion', packageName, version],
     queryFn: () => rpcClient.checkPackageVersion(packageName, version),
+    queryKey: ['checkPackageVersion', packageName, version],
   })
 
   async function handleUpdate() {
     if (data?.isOutdated) {
       await rpcClient.updatePackageVersion(packageName, options)
       toast(`Package ${packageName} is updating...`, {
-        description: 'You can jump to the terminal page to check the update progress.',
         action: {
           label: 'Navigate',
           onClick: () => navigate('/terminal'),
         },
+        description: 'You can jump to the terminal page to check the update progress.',
       })
     }
   }
@@ -46,7 +48,11 @@ export default function NpmVersionCheck({
         </code>
       ) : null}
       {data?.latest ? (
-        <Badge className="cursor-pointer" variant="secondary" onClick={handleUpdate}>
+        <Badge
+          className="cursor-pointer"
+          onClick={handleUpdate}
+          variant="secondary"
+        >
           {data.isOutdated ? 'updates available' : 'latest'}
         </Badge>
       ) : null}

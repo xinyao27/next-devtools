@@ -1,16 +1,19 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { useEvent } from 'react-use'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
-import { useEvent } from 'react-use'
-import { getQueryClient, rpcClient } from '@/lib/client'
+
 import { Button } from '@/components/ui/button'
+import { getQueryClient, rpcClient } from '@/lib/client'
+
 import 'xterm/css/xterm.css'
+
 import { useTerminalStore } from '@/store/terminal'
 
 interface TerminalViewProps {
-  id: string | null
+  id: null | string
 }
 const runTerminalAction = rpcClient.runTerminalAction
 export default function TerminalView(props: TerminalViewProps) {
@@ -28,8 +31,8 @@ export default function TerminalView(props: TerminalViewProps) {
 
   useEffect(() => {
     termRef.current = new Terminal({
-      convertEol: true,
       cols: 80,
+      convertEol: true,
       screenReaderMode: true,
     })
     fitAddonRef.current = new FitAddon()
@@ -71,15 +74,33 @@ export default function TerminalView(props: TerminalViewProps) {
 
   return (
     <>
-      <div ref={containerRef} className="h-full w-full overflow-hidden bg-black p-2" />
+      <div
+        className="h-full w-full overflow-hidden bg-black p-2"
+        ref={containerRef}
+      />
       <div className="space-x-1 border-t p-2">
-        <Button size="icon" title="Clear" variant="ghost" onClick={handleClear}>
+        <Button
+          onClick={handleClear}
+          size="icon"
+          title="Clear"
+          variant="ghost"
+        >
           <i className="i-ri-delete-bin-line" />
         </Button>
-        <Button size="icon" title="Restart" variant="ghost" onClick={handleRestart}>
+        <Button
+          onClick={handleRestart}
+          size="icon"
+          title="Restart"
+          variant="ghost"
+        >
           <i className="i-ri-restart-line" />
         </Button>
-        <Button size="icon" title="Terminate" variant="ghost" onClick={handleTerminate}>
+        <Button
+          onClick={handleTerminate}
+          size="icon"
+          title="Terminate"
+          variant="ghost"
+        >
           <i className="i-ri-delete-back-2-line" />
         </Button>
       </div>

@@ -1,20 +1,21 @@
-import React from 'react'
 import { useQuery } from '@tanstack/react-query'
+import React from 'react'
+
 import { Input } from '@/components/ui/input'
+import { useNextDevtoolsContent } from '@/hooks/use-next-devtools-context'
 import { getQueryClient } from '@/lib/client'
 import { cn } from '@/lib/utils'
-import { useNextDevtoolsContent } from '@/hooks/use-next-devtools-context'
 
 interface CurrentRouteProps {
-  className?: string
   actions?: React.ReactNode
+  className?: string
 }
 
-export default function CurrentRoute({ className, actions }: CurrentRouteProps) {
+export default function CurrentRoute({ actions, className }: CurrentRouteProps) {
   const { getRoute, pushRoute } = useNextDevtoolsContent()
   const { data } = useQuery({
-    queryKey: ['getRoute'],
     queryFn: () => getRoute(),
+    queryKey: ['getRoute'],
   })
   const [currentRoute, setCurrentRoute] = React.useState(data || '')
 
@@ -43,13 +44,13 @@ export default function CurrentRoute({ className, actions }: CurrentRouteProps) 
       </div>
       <div className="flex items-center gap-2">
         <Input
-          value={currentRoute}
           onChange={(e) => setCurrentRoute(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               handleNavigate(currentRoute)
             }
           }}
+          value={currentRoute}
         />
         {actions}
       </div>

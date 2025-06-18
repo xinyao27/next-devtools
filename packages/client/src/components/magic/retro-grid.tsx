@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils'
 
-export function RetroGrid({ className, angle = 65 }: { className?: string; angle?: number }) {
+export function RetroGrid({ angle = 65, className }: { angle?: number; className?: string }) {
   return (
     <div
-      className={cn('pointer-events-none absolute size-full overflow-hidden opacity-50 [perspective:200px]', className)}
+      className={cn('perspective-[200px] pointer-events-none absolute size-full overflow-hidden opacity-50', className)}
       style={{ '--grid-angle': `${angle}deg` } as React.CSSProperties}
     >
       {/* Grid */}
@@ -12,19 +12,19 @@ export function RetroGrid({ className, angle = 65 }: { className?: string; angle
           className={cn(
             'animate-grid',
 
-            '[background-repeat:repeat] [background-size:60px_60px] [height:300vh] [inset:0%_0px] [margin-left:-50%] [transform-origin:100%_0_0] [width:600vw]',
+            'bg-size-[60px_60px] inset-[0%_0px] ml-[-50%] h-[300vh] w-[600vw] origin-[100%_0_0] bg-repeat',
 
             // Light Styles
-            '[background-image:linear-gradient(to_right,rgba(0,0,0,0.3)_1px,transparent_0),linear-gradient(to_bottom,rgba(0,0,0,0.3)_1px,transparent_0)]',
+            'bg-[linear-gradient(to_right,rgba(0,0,0,0.3)_1px,transparent_0),linear-gradient(to_bottom,rgba(0,0,0,0.3)_1px,transparent_0)]',
 
             // Dark styles
-            'dark:[background-image:linear-gradient(to_right,rgba(255,255,255,0.3)_1px,transparent_0),linear-gradient(to_bottom,rgba(255,255,255,0.3)_1px,transparent_0)]',
+            'dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.3)_1px,transparent_0),linear-gradient(to_bottom,rgba(255,255,255,0.3)_1px,transparent_0)]',
           )}
         />
       </div>
 
       {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent to-90% dark:from-black" />
+      <div className="bg-linear-to-t absolute inset-0 from-white to-transparent to-90% dark:from-black" />
     </div>
   )
 }

@@ -44,9 +44,6 @@
         "default": "./dist/es/plugin.mjs"
       }
     },
-    "./types": {
-      "types": "./dist/types.d.ts"
-    },
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -67,7 +64,7 @@
     "birpc": "catalog:",
     "consola": "catalog:",
     "dotenv": "catalog:",
-    "es-toolkit": "^1.30.1",
+    "es-toolkit": "^1.39.3",
     "execa": "catalog:",
     "fast-glob": "catalog:",
     "fast-npm-meta": "catalog:",

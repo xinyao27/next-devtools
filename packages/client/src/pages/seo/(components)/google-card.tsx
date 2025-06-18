@@ -1,6 +1,7 @@
-import React from 'react'
-import { formatDistanceToNow } from 'date-fns'
 import type { SEOMetadata } from '@next-devtools/shared/types'
+
+import { formatDistanceToNow } from 'date-fns'
+import React from 'react'
 
 interface GoogleCardProps {
   data?: SEOMetadata
@@ -42,7 +43,10 @@ const GoogleCard = ({ data }: GoogleCardProps) => {
         <div className="flex items-center gap-3">
           <div className="flex size-[26px] items-center justify-center rounded-full border border-[#dadce0] bg-[#f1f3f4]">
             {icon ? (
-              <img className="block size-[18px]" src={icon} />
+              <img
+                className="block size-[18px]"
+                src={icon}
+              />
             ) : (
               <svg
                 className="size-[18px] fill-current text-[#5e5e5e]"

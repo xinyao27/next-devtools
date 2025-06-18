@@ -1,6 +1,8 @@
-import dotenv from 'dotenv'
-import { internalStore } from '../store/internal'
 import type { Env, NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
+
+import dotenv from 'dotenv'
+
+import { internalStore } from '../store/internal'
 
 /**
  * Get all envs including .env, .env.local, .env.[mode], .env.[mode].local and next.config.js -> env
@@ -8,12 +10,12 @@ import type { Env, NextDevtoolsServerContext, ServerFunctions } from '@next-devt
  * @returns
  */
 export async function getEnvs() {
-  const { root, dev } = internalStore.getState()
+  const { dev, root } = internalStore.getState()
 
   const result: Env = {
-    publicEnv: {},
-    privateEnv: {},
     loadedEnvFiles: [],
+    privateEnv: {},
+    publicEnv: {},
   }
   const nextEnvConfig = await import('@next/env').then((mod) => mod.loadEnvConfig(root, dev))
   Object.keys(nextEnvConfig.combinedEnv).forEach((key) => {

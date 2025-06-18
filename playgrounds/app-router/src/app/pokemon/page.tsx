@@ -1,6 +1,8 @@
 import Link from 'next/link'
-import { PokemonDetails } from './pokemon-details'
+
 import type { Pokemon, PokemonDetail } from './types'
+
+import { PokemonDetails } from './pokemon-details'
 
 export default async function Page({ searchParams }: { searchParams: { page?: string } }) {
   const page = Number((await searchParams).page) || 1
@@ -10,7 +12,7 @@ export default async function Page({ searchParams }: { searchParams: { page?: st
   const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`, {
     cache: 'force-cache',
   })
-  const { results, count } = await response.json()
+  const { count, results } = await response.json()
 
   const pokemonDetails = await Promise.all(
     results.map(async (pokemon: Pokemon) => {
@@ -27,7 +29,10 @@ export default async function Page({ searchParams }: { searchParams: { page?: st
         <h1 className="text-2xl font-bold">Pokemon</h1>
         <div className="flex justify-center gap-2">
           {page > 1 && (
-            <Link className="rounded border px-4 py-2 hover:bg-gray-100" href={`/pokemon?page=${page - 1}`}>
+            <Link
+              className="rounded border px-4 py-2 hover:bg-gray-100"
+              href={`/pokemon?page=${page - 1}`}
+            >
               {'<'}
             </Link>
           )}
@@ -35,7 +40,10 @@ export default async function Page({ searchParams }: { searchParams: { page?: st
             {page} / {totalPages}
           </span>
           {page < totalPages && (
-            <Link className="rounded border px-4 py-2 hover:bg-gray-100" href={`/pokemon?page=${page + 1}`}>
+            <Link
+              className="rounded border px-4 py-2 hover:bg-gray-100"
+              href={`/pokemon?page=${page + 1}`}
+            >
               {'>'}
             </Link>
           )}
@@ -44,7 +52,10 @@ export default async function Page({ searchParams }: { searchParams: { page?: st
 
       <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {pokemonDetails.map((pokemon: PokemonDetail) => (
-          <PokemonDetails key={pokemon.name} pokemon={pokemon} />
+          <PokemonDetails
+            key={pokemon.name}
+            pokemon={pokemon}
+          />
         ))}
       </div>
     </div>

@@ -1,12 +1,14 @@
-import fs from 'node:fs/promises'
-import { join, resolve } from 'node:path'
-import fg from 'fast-glob'
-import { internalStore } from '../store/internal'
-import { settingsStore } from '../store/settings'
+import type { Component, NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
+import type { Config, NodePath } from 'react-docgen'
 import type Documentation from 'react-docgen/dist/Documentation'
 import type { ComponentNode } from 'react-docgen/dist/resolver'
-import type { Config, NodePath } from 'react-docgen'
-import type { Component, NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
+
+import fg from 'fast-glob'
+import fs from 'node:fs/promises'
+import { join, resolve } from 'node:path'
+
+import { internalStore } from '../store/internal'
+import { settingsStore } from '../store/settings'
 
 type Plugins = NonNullable<NonNullable<NonNullable<Config['babelOptions']>['parserOpts']>['plugins']>
 const defaultPlugins: Plugins = [
@@ -58,8 +60,8 @@ export async function getComponents() {
     const componentPath = join(root, componentDirectory)
     const files = await fg(['**/*.(tsx|js|jsx)'], {
       cwd: componentPath,
-      onlyFiles: true,
       ignore: ['**/node_modules/**', '**/dist/**'],
+      onlyFiles: true,
     })
     return (
       await Promise.all(
@@ -70,8 +72,6 @@ export async function getComponents() {
             const stat = await fs.lstat(filePath)
             const raw = await fs.readFile(filePath, 'utf-8')
             const documentations = parse(raw, {
-              resolver,
-              handlers: [displayNameHandler],
               babelOptions: {
                 babelrc: false,
                 babelrcRoots: false,
@@ -81,16 +81,18 @@ export async function getComponents() {
                   plugins: [...defaultPlugins],
                 },
               },
+              handlers: [displayNameHandler],
+              resolver,
             })
             return {
+              documentations,
               file,
               filePath,
-              publicPath,
-              type: 'component',
-              size: stat.size,
               mtime: stat.mtimeMs,
+              publicPath,
+              size: stat.size,
 
-              documentations,
+              type: 'component',
             }
           } catch (error) {
             console.error(file, error)

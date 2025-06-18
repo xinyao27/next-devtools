@@ -5,13 +5,13 @@ const FRAME_SOURCE = 'next-devtools-frame'
 export type FrameMessageFunctions = Record<string, (...args: any[]) => any>
 export function createFrameMessageHandler(fns: FrameMessageFunctions, ref: React.RefObject<HTMLIFrameElement>) {
   const handler = async (event: MessageEvent) => {
-    const { type, payload, source, timestamp } = event.data
+    const { payload, source, timestamp, type } = event.data
     if (source !== CLIENT_SOURCE) return
     if (!type || !payload || !timestamp) return
     if (type in fns) {
       const result = await fns[type](...(payload || []))
       if (ref.current) {
-        const message = { source: FRAME_SOURCE, type, payload: result, timestamp }
+        const message = { payload: result, source: FRAME_SOURCE, timestamp, type }
         ref.current.contentWindow?.postMessage(message, '*')
       }
       return result
@@ -27,6 +27,14 @@ export function createFrameMessageHandler(fns: FrameMessageFunctions, ref: React
   return unsubscribe
 }
 const blackList = ['$$typeof']
+export interface FrameMessageHandler extends FrameMessageFunctions {
+  backRoute: (href: string) => Promise<void>
+  // routes
+  getRoute: () => Promise<string>
+  // seo
+  getSEOMetadata: (route?: string) => Promise<SEOMetadata>
+  pushRoute: (href: string) => Promise<void>
+}
 export function createFrameMessageClient<T extends FrameMessageFunctions>() {
   const client = new Proxy({} as T, {
     get(_, type: string) {
@@ -34,21 +42,13 @@ export function createFrameMessageClient<T extends FrameMessageFunctions>() {
       return (...args: any[]) =>
         new Promise((resolve) => {
           const timestamp = new Date().getDate()
-          parent.postMessage({ source: CLIENT_SOURCE, type, payload: args, timestamp }, '*')
+          parent.postMessage({ payload: args, source: CLIENT_SOURCE, timestamp, type }, '*')
           window.addEventListener('message', (event) => {
-            const { type: eventType, payload, timestamp: eventTimestamp } = event.data
+            const { payload, timestamp: eventTimestamp, type: eventType } = event.data
             if (eventType === type && eventTimestamp === timestamp) resolve(payload)
           })
         })
     },
   }) as T
   return client
-}
-export interface FrameMessageHandler extends FrameMessageFunctions {
-  // routes
-  getRoute: () => Promise<string>
-  pushRoute: (href: string) => Promise<void>
-  backRoute: (href: string) => Promise<void>
-  // seo
-  getSEOMetadata: (route?: string) => Promise<SEOMetadata>
 }

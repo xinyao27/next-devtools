@@ -1,15 +1,17 @@
 'use client'
 
-import React from 'react'
+import type { Route } from '@next-devtools/shared/types'
+
 import { useQuery } from '@tanstack/react-query'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { getQueryClient } from '@/lib/client'
-import { cn } from '@/lib/utils'
-import { Badge } from '@/components/ui/badge'
+import React from 'react'
+
 import Line from '@/components/line'
 import OpenInEditor from '@/components/open-in-editor'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import { Badge } from '@/components/ui/badge'
 import { useNextDevtoolsContent } from '@/hooks/use-next-devtools-context'
-import type { Route } from '@next-devtools/shared/types'
+import { getQueryClient } from '@/lib/client'
+import { cn } from '@/lib/utils'
 
 interface Props {
   data?: Route[]
@@ -17,8 +19,8 @@ interface Props {
 export default function AllRoutes({ data }: Props) {
   const { getRoute, pushRoute } = useNextDevtoolsContent()
   const { data: currentRoute } = useQuery({
-    queryKey: ['getRoute'],
     queryFn: () => getRoute(),
+    queryKey: ['getRoute'],
   })
 
   const handleClick = (route: Route) => {
@@ -30,7 +32,11 @@ export default function AllRoutes({ data }: Props) {
   }
 
   return (
-    <Accordion collapsible defaultValue="all-routes" type="single">
+    <Accordion
+      collapsible
+      defaultValue="all-routes"
+      type="single"
+    >
       <AccordionItem value="all-routes">
         <AccordionTrigger>
           <div className="flex items-center gap-2">
@@ -48,13 +54,16 @@ export default function AllRoutes({ data }: Props) {
               return (
                 <Line key={route.path}>
                   <div className="w-16">{active ? <Badge variant="secondary">active</Badge> : null}</div>
-                  <OpenInEditor disableLine value={route.path}>
+                  <OpenInEditor
+                    disableLine
+                    value={route.path}
+                  >
                     <div
-                      className={cn('opacity-50 transition hover:opacity-75', { '!opacity-100': active })}
-                      title={`Navigate to ${route.route}`}
+                      className={cn('opacity-50 transition hover:opacity-75', { 'opacity-100!': active })}
                       onClick={() => {
                         handleClick(route)
                       }}
+                      title={`Navigate to ${route.route}`}
                     >
                       <code>{route.route}</code>
                     </div>

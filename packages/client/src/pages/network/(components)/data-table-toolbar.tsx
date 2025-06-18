@@ -1,44 +1,46 @@
 'use client'
 
+import type { Table } from '@tanstack/react-table'
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { DataTableViewOptions } from './data-table-view-options'
+
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
-import type { Table } from '@tanstack/react-table'
+import { DataTableViewOptions } from './data-table-view-options'
 
 const methods = [
   {
-    value: 'GET',
     label: 'GET',
+    value: 'GET',
   },
   {
-    value: 'POST',
     label: 'POST',
+    value: 'POST',
   },
   {
-    value: 'PUT',
     label: 'PUT',
+    value: 'PUT',
   },
   {
-    value: 'DELETE',
     label: 'DELETE',
+    value: 'DELETE',
   },
   {
-    value: 'PATCH',
     label: 'PATCH',
+    value: 'PATCH',
   },
   {
-    value: 'OPTIONS',
     label: 'OPTIONS',
+    value: 'OPTIONS',
   },
 ]
 
 interface DataTableToolbarProps<TData> {
-  table: Table<TData>
   extra?: React.ReactNode
+  table: Table<TData>
 }
 
-export function DataTableToolbar<TData>({ table, extra }: DataTableToolbarProps<TData>) {
+export function DataTableToolbar<TData>({ extra, table }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
 
   return (
@@ -46,17 +48,25 @@ export function DataTableToolbar<TData>({ table, extra }: DataTableToolbarProps<
       <div className="flex flex-1 items-center space-x-2">
         <Input
           className="min-w-[250px] max-w-[400px]"
+          onChange={(event) => table.getColumn('url')?.setFilterValue(event.target.value)}
           placeholder="Search..."
           prefix={<i className="i-ri-search-line text-muted-foreground size-4" />}
           value={(table.getColumn('url')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('url')?.setFilterValue(event.target.value)}
         />
         {table.getColumn('method') && (
-          <DataTableFacetedFilter column={table.getColumn('method')} options={methods} title="Method" />
+          <DataTableFacetedFilter
+            column={table.getColumn('method')}
+            options={methods}
+            title="Method"
+          />
         )}
         <DataTableViewOptions table={table} />
         {isFiltered ? (
-          <Button size="sm" variant="outline" onClick={() => table.resetColumnFilters()}>
+          <Button
+            onClick={() => table.resetColumnFilters()}
+            size="sm"
+            variant="outline"
+          >
             <i className="i-ri-close-line mr-1 size-4" />
             Reset
           </Button>

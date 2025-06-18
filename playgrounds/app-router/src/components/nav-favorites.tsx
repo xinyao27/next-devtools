@@ -23,9 +23,9 @@ export function NavFavorites({
   favorites,
 }: {
   favorites: {
+    emoji: string
     name: string
     url: string
-    emoji: string
   }[]
 }) {
   const { isMobile } = useSidebar()
@@ -37,7 +37,10 @@ export function NavFavorites({
         {favorites.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
-              <a href={item.url} title={item.name}>
+              <a
+                href={item.url}
+                title={item.name}
+              >
                 <span>{item.emoji}</span>
                 <span>{item.name}</span>
               </a>

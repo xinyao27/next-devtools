@@ -1,21 +1,22 @@
 import { ip } from 'address'
+
 import { clientDir } from '../dirs'
-import { executeCommand } from '../features/terminal'
 import { setupService } from '../features/service'
+import { executeCommand } from '../features/terminal'
 import { isDev } from '../utils'
 
 export async function createLocalService() {
   setupService()
 
-  const terminalOptions = { id: 'devtools:local-service', name: 'Local Service', icon: 'i-ri-service-line' }
+  const terminalOptions = { icon: 'i-ri-service-line', id: 'devtools:local-service', name: 'Local Service' }
 
   let __process: any
   if (isDev) {
     const localClientHost = ip('lo') || 'localhost'
     __process = await executeCommand(
       {
-        command: 'npx',
         args: ['vite', '--host', localClientHost],
+        command: 'npx',
         options: {
           cwd: clientDir,
         },
@@ -25,8 +26,8 @@ export async function createLocalService() {
   } else {
     __process = await executeCommand(
       {
-        command: 'node',
         args: ['index.js'], // TODO: fix
+        command: 'node',
         options: {
           cwd: clientDir,
         },

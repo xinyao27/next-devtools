@@ -1,5 +1,14 @@
 'use client'
 
+import type {
+  ColumnDef,
+  ColumnFiltersState,
+  Row,
+  RowSelectionState,
+  SortingState,
+  VisibilityState,
+} from '@tanstack/react-table'
+
 import {
   flexRender,
   getCoreRowModel,
@@ -10,18 +19,12 @@ import {
 } from '@tanstack/react-table'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import * as React from 'react'
+
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
+
 import { DataTableSheetDetails } from './data-table-sheet-details'
 import { DataTableToolbar } from './data-table-toolbar'
-import type {
-  ColumnDef,
-  ColumnFiltersState,
-  Row,
-  RowSelectionState,
-  SortingState,
-  VisibilityState,
-} from '@tanstack/react-table'
 
 const ROW_HEIGHT = 36
 const OVERSCAN = 10
@@ -30,24 +33,24 @@ export interface DataTableProps<TData, TValue> {
   className?: string
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  isLoading?: boolean
-  isFetching?: boolean
-  getTitle?: (data?: TData) => React.ReactNode
   getDetailsContent?: (data?: TData) => React.ReactNode
-  headerExtra?: React.ReactNode
   getRowId?: (row: TData) => string
+  getTitle?: (data?: TData) => React.ReactNode
+  headerExtra?: React.ReactNode
+  isFetching?: boolean
+  isLoading?: boolean
 }
 
 function DataTable<TData, TValue>({
   className,
   columns,
   data,
-  isLoading,
-  isFetching,
-  getTitle,
   getDetailsContent,
-  headerExtra,
   getRowId,
+  getTitle,
+  headerExtra,
+  isFetching,
+  isLoading,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -55,24 +58,24 @@ function DataTable<TData, TValue>({
   const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({})
 
   const table = useReactTable({
-    data,
     columns,
-    state: {
-      columnFilters,
-      sorting,
-      columnVisibility,
-      rowSelection,
-    },
-    getRowId,
+    data,
     enableMultiRowSelection: false,
-    onColumnVisibilityChange: setColumnVisibility,
+    getCoreRowModel: getCoreRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getRowId,
+    getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
+    state: {
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+      sorting,
+    },
   })
   const tableContainerRef = React.useRef<HTMLDivElement>(null)
   const rows = table.getRowModel().rows
@@ -99,13 +102,22 @@ function DataTable<TData, TValue>({
 
   return (
     <>
-      <DataTableToolbar extra={headerExtra} table={table} />
+      <DataTableToolbar
+        extra={headerExtra}
+        table={table}
+      />
 
-      <div ref={tableContainerRef} className={cn('relative overflow-auto', className)}>
+      <div
+        className={cn('relative overflow-auto', className)}
+        ref={tableContainerRef}
+      >
         <Table className="grid">
           <TableHeader className="bg-background sticky top-0 z-10 grid shadow-sm">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="flex w-full hover:bg-transparent">
+              <TableRow
+                className="flex w-full hover:bg-transparent"
+                key={headerGroup.id}
+              >
                 {headerGroup.headers.map((header) => {
                   const column = columns.find((c) => c.id === header.id)
                   const defSize = column?.size
@@ -114,12 +126,12 @@ function DataTable<TData, TValue>({
 
                   return (
                     <TableHead
-                      key={header.id}
                       className="relative flex items-center"
                       colSpan={header.colSpan}
+                      key={header.id}
                       style={{
-                        width,
                         flexGrow,
+                        width,
                       }}
                     >
                       {header.isPlaceholder ? null : (
@@ -144,19 +156,19 @@ function DataTable<TData, TValue>({
                   const row = rows[virtualRow.index] as Row<TData>
                   return (
                     <TableRow
-                      key={row.id}
-                      ref={(node) => rowVirtualizer.measureElement(node)}
                       className={cn('absolute flex w-full cursor-default', virtualRow.index % 2 && 'bg-muted')}
                       data-index={virtualRow.index}
                       data-state={row.getIsSelected() && 'selected'}
-                      style={{
-                        height: ROW_HEIGHT,
-                        transform: `translateY(${virtualRow.start}px)`, // this should always be a `style` as it changes on scroll
-                      }}
+                      key={row.id}
                       onClick={() => {
                         React.startTransition(() => {
                           row.toggleSelected()
                         })
+                      }}
+                      ref={(node) => rowVirtualizer.measureElement(node)}
+                      style={{
+                        height: ROW_HEIGHT,
+                        transform: `translateY(${virtualRow.start}px)`, // this should always be a `style` as it changes on scroll
                       }}
                     >
                       {row.getVisibleCells().map((cell) => {
@@ -167,11 +179,11 @@ function DataTable<TData, TValue>({
 
                         return (
                           <TableCell
-                            key={cell.id}
                             className="flex"
+                            key={cell.id}
                             style={{
-                              width,
                               flexGrow,
+                              width,
                             }}
                           >
                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -192,7 +204,11 @@ function DataTable<TData, TValue>({
         ) : null}
       </div>
 
-      <DataTableSheetDetails rowSelection={rowSelection} table={table} title={getTitle?.(selectedRow?.original)}>
+      <DataTableSheetDetails
+        rowSelection={rowSelection}
+        table={table}
+        title={getTitle?.(selectedRow?.original)}
+      >
         {getDetailsContent?.(selectedRow?.original)}
       </DataTableSheetDetails>
     </>

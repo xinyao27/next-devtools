@@ -1,6 +1,7 @@
 import { useShallow } from 'zustand/react/shallow'
-import { useSettingsStore } from '@/store/settings'
+
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { useSettingsStore } from '@/store/settings'
 
 export default function SideBarCollapsed() {
   const sidebarCollapsed = useSettingsStore(useShallow((state) => state.sidebarCollapsed))
@@ -15,10 +16,10 @@ export default function SideBarCollapsed() {
       <div className="rounded border p-4">
         <ToggleGroup
           className="inline-flex gap-0 -space-x-px rounded shadow-sm shadow-black/5 rtl:space-x-reverse"
+          onValueChange={handleChange}
           type="single"
           value={sidebarCollapsed ? 'collapsed' : 'expanded'}
           variant="outline"
-          onValueChange={handleChange}
         >
           <ToggleGroupItem
             className="rounded-none shadow-none first:rounded-s last:rounded-e focus-visible:z-10"

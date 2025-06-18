@@ -1,25 +1,27 @@
 'use client'
 
-import * as React from 'react'
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet'
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import { Kbd } from '@/components/ui/kbd'
 import type { RowSelectionState, Table } from '@tanstack/react-table'
 
+import * as React from 'react'
+
+import { Button } from '@/components/ui/button'
+import { Kbd } from '@/components/ui/kbd'
+import { Separator } from '@/components/ui/separator'
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+
 export interface DataTableSheetDetailsProps<TData> {
-  table: Table<TData>
-  title?: React.ReactNode
   children?: React.ReactNode
   rowSelection: RowSelectionState
+  table: Table<TData>
+  title?: React.ReactNode
 }
 
 export function DataTableSheetDetails<TData>({
-  table,
-  title,
   children,
   rowSelection,
+  table,
+  title,
 }: DataTableSheetDetailsProps<TData>) {
   const selectedRowKey = React.useMemo(() => Object.keys(rowSelection)?.[0] || undefined, [rowSelection])
 
@@ -59,7 +61,10 @@ export function DataTableSheetDetails<TData>({
   }, [selectedRowKey, onNext, onPrev])
 
   return (
-    <Sheet open={!!selectedRowKey} onOpenChange={() => table.toggleAllRowsSelected(false)}>
+    <Sheet
+      onOpenChange={() => table.toggleAllRowsSelected(false)}
+      open={!!selectedRowKey}
+    >
       <SheetContent className="overflow-y-auto p-0 sm:max-w-md">
         <SheetHeader className="bg-background sticky top-0 z-10 border-b p-4">
           <div className="flex items-center justify-between gap-2">
@@ -67,7 +72,13 @@ export function DataTableSheetDetails<TData>({
             <div className="flex h-7 items-center gap-1">
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button className="h-7 w-7" disabled={!prevId} size="icon" variant="ghost" onClick={onPrev}>
+                  <Button
+                    className="h-7 w-7"
+                    disabled={!prevId}
+                    onClick={onPrev}
+                    size="icon"
+                    variant="ghost"
+                  >
                     <i className="i-ri-arrow-up-s-line h-5 w-5" />
                     <span className="sr-only">Previous</span>
                   </Button>
@@ -80,7 +91,13 @@ export function DataTableSheetDetails<TData>({
               </Tooltip>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button className="h-7 w-7" disabled={!nextId} size="icon" variant="ghost" onClick={onNext}>
+                  <Button
+                    className="h-7 w-7"
+                    disabled={!nextId}
+                    onClick={onNext}
+                    size="icon"
+                    variant="ghost"
+                  >
                     <i className="i-ri-arrow-down-s-line h-5 w-5" />
                     <span className="sr-only">Next</span>
                   </Button>
@@ -91,9 +108,19 @@ export function DataTableSheetDetails<TData>({
                   </p>
                 </TooltipContent>
               </Tooltip>
-              <Separator className="mx-1" orientation="vertical" />
-              <SheetClose asChild autoFocus={true}>
-                <Button className="h-7 w-7" size="icon" variant="ghost">
+              <Separator
+                className="mx-1"
+                orientation="vertical"
+              />
+              <SheetClose
+                asChild
+                autoFocus={true}
+              >
+                <Button
+                  className="h-7 w-7"
+                  size="icon"
+                  variant="ghost"
+                >
                   <i className="i-ri-close-line h-5 w-5" />
                   <span className="sr-only">Close</span>
                 </Button>

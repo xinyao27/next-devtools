@@ -1,25 +1,23 @@
+import type { ReactNode } from 'react'
+
 import cn from 'clsx'
 import { motion } from 'motion/react'
 import Link from 'next/link'
+
 import styles from './styles.module.css'
-import type { ReactNode } from 'react'
 
 interface Props {
-  large?: boolean
   centered?: boolean
-  lightOnly?: boolean
+  children: ReactNode
   className?: string
   href?: string
   index: number
-  children: ReactNode
+  large?: boolean
+  lightOnly?: boolean
 }
-export function Feature({ large, centered, children, lightOnly, className, href, index, ...props }: Props) {
+export function Feature({ centered, children, className, href, index, large, lightOnly, ...props }: Props) {
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      transition={{ duration: Math.min(0.25 + index * 0.2, 0.8) }}
-      viewport={{ once: true, margin: '-20px' }}
-      whileInView={{ opacity: 1 }}
       className={cn(
         styles.feature,
         large && styles.large,
@@ -27,11 +25,19 @@ export function Feature({ large, centered, children, lightOnly, className, href,
         lightOnly && styles['light-only'],
         className,
       )}
+      initial={{ opacity: 0 }}
+      transition={{ duration: Math.min(0.25 + index * 0.2, 0.8) }}
+      viewport={{ margin: '-20px', once: true }}
+      whileInView={{ opacity: 1 }}
       {...props}
     >
       {children}
       {href ? (
-        <Link className={styles.link} href={href} target="_blank">
+        <Link
+          className={styles.link}
+          href={href}
+          target="_blank"
+        >
           <i className="i-ri-arrow-right-s-line size-4" />
         </Link>
       ) : null}

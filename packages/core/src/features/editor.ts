@@ -1,16 +1,18 @@
-import { Editor, editorCommands } from '@next-devtools/shared/types'
-import { settingsStore } from '../store/settings'
-import { executeCommand } from './terminal'
 import type { NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
 
+import { Editor, editorCommands } from '@next-devtools/shared/types'
+
+import { settingsStore } from '../store/settings'
+import { executeCommand } from './terminal'
+
 interface OpenInEditorOptions {
-  path: string
-  line?: number | string
   column?: number | string
   editor?: Editor
+  line?: number | string
+  path: string
 }
 
-export async function openInEditor({ path, line, column, editor }: OpenInEditorOptions) {
+export async function openInEditor({ column, editor, line, path }: OpenInEditorOptions) {
   if (!path) throw new Error('Path is required')
 
   editor = editor ?? settingsStore.getState().editor
@@ -18,11 +20,11 @@ export async function openInEditor({ path, line, column, editor }: OpenInEditorO
   // verify editor is valid
   if (!Object.values(Editor).includes(editor)) throw new Error(`Invalid editor: ${editor}`)
 
-  const terminalOptions = { id: 'devtools:open-in-editor', name: 'Open in Editor', icon: 'i-ri-file-code-line' }
+  const terminalOptions = { icon: 'i-ri-file-code-line', id: 'devtools:open-in-editor', name: 'Open in Editor' }
   if (line !== undefined && column !== undefined) {
-    executeCommand({ command: editorCommands[editor], args: ['-g', `${path}:${line}:${column}`] }, terminalOptions)
+    executeCommand({ args: ['-g', `${path}:${line}:${column}`], command: editorCommands[editor] }, terminalOptions)
   } else {
-    executeCommand({ command: editorCommands[editor], args: [path] }, terminalOptions)
+    executeCommand({ args: [path], command: editorCommands[editor] }, terminalOptions)
   }
 }
 

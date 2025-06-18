@@ -1,17 +1,19 @@
-import { detectPackageManager } from 'nypm'
-import { executeCommand } from './terminal'
-import { restartProject } from './service'
 import type { NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
 
-export type NpmCommandType = 'install' | 'uninstall' | 'update'
+import { detectPackageManager } from 'nypm'
+
+import { restartProject } from './service'
+import { executeCommand } from './terminal'
+
 export interface NpmCommandOptions {
+  cwd: string
   dev?: boolean
   global?: boolean
-  cwd: string
 }
+export type NpmCommandType = 'install' | 'uninstall' | 'update'
 export async function getNpmCommand(command: NpmCommandType, packageName: string, options: NpmCommandOptions) {
   const isInstalledGlobally = (await import('is-installed-globally')).default
-  const { dev = true, global = packageName === process.env.PACKAGE_NAME && isInstalledGlobally, cwd } = options
+  const { cwd, dev = true, global = packageName === process.env.PACKAGE_NAME && isInstalledGlobally } = options
   const agent = await detectPackageManager(cwd)
 
   const name = agent?.name || 'npm'
@@ -44,13 +46,13 @@ export async function runNpmCommand(command: NpmCommandType, packageName: string
 
   executeCommand(
     {
-      command: args[0],
       args: args.slice(1),
+      command: args[0],
     },
     {
+      icon: 'i-ri-npmjs-fill',
       id: processId,
       name: `${command} ${packageName}`,
-      icon: 'i-ri-npmjs-fill',
     },
   )
 
@@ -64,22 +66,22 @@ export function setupNpmRpc({ context }: NextDevtoolsServerContext) {
     runAnalyzeBuild: async () => {
       await executeCommand(
         {
-          command: 'npx',
           args: [`next`, `build`],
+          command: 'npx',
           options: {
+            cwd: context.dir,
             env: {
               ANALYZE: 'true',
             },
-            cwd: context.dir,
             onExit: () => {
               restartProject()
             },
           },
         },
         {
+          icon: 'i-ri-pie-chart-box-line',
           id: `devtools:build`,
           name: `next build`,
-          icon: 'i-ri-pie-chart-box-line',
         },
       )
     },

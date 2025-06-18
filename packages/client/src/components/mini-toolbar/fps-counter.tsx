@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+
 import { cn } from '@/lib/utils'
 
 interface FpsCounterProps {
@@ -49,14 +50,17 @@ export default function FpsCounter({ className, isHorizontal, isVertical }: FpsC
 
   return (
     <button
-      title={`FPS: ${fps}`}
       className={cn(className, {
         'border-r': isHorizontal,
         'flex-col items-center border-b': isVertical,
       })}
+      title={`FPS: ${fps}`}
     >
       <i className="i-ri-speed-up-line size-4 opacity-60" />
-      <span className={cn('hidden opacity-60', isHorizontal && 'block')} data-label="FPS">
+      <span
+        className={cn('hidden opacity-60', isHorizontal && 'block')}
+        data-label="FPS"
+      >
         FPS
       </span>
       <span className="text-nowrap opacity-70">

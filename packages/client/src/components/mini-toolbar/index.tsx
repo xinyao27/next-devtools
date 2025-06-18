@@ -1,15 +1,17 @@
 'use client'
 
-import React from 'react'
-import { useQuery } from '@tanstack/react-query'
 import { ToolbarPosition } from '@next-devtools/shared/types'
+import { useQuery } from '@tanstack/react-query'
+import React from 'react'
 import { useNavigate } from 'react-router'
+
 import Logo from '@/components/logo'
-import { rpcClient } from '@/lib/client'
-import { useSettingsStore } from '@/store/settings'
-import { cn } from '@/lib/utils'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import { rpcClient } from '@/lib/client'
+import { cn } from '@/lib/utils'
+import { useSettingsStore } from '@/store/settings'
+
 import FpsCounter from './fps-counter'
 import MemoryUsage from './memory-usage'
 
@@ -32,15 +34,15 @@ export default function MiniToolbar() {
   )
 
   const { data } = useQuery({
-    queryKey: ['getOverviewData'],
     queryFn: () => rpcClient?.getOverviewData(),
+    queryKey: ['getOverviewData'],
   })
 
   const logoElement = (
     <div
       className={cn('bg-sidebar sticky left-0 top-0 z-10 flex items-center justify-center gap-1', {
-        'h-full border-l px-4': isHorizontal,
         'border-b py-3': isVertical,
+        'h-full border-l px-4': isHorizontal,
       })}
     >
       <Logo className="size-5" />
@@ -49,12 +51,12 @@ export default function MiniToolbar() {
   )
   const toggleFullscreenElement = (
     <button
-      title="Fullscreen"
       className={cn(buttonClass, 'bg-sidebar', {
         'border-r': isHorizontal,
         'border-t': isVertical,
       })}
       onClick={toggleToolbar}
+      title="Fullscreen"
     >
       <i className="i-ri-fullscreen-line size-4 opacity-60" />
     </button>
@@ -62,7 +64,7 @@ export default function MiniToolbar() {
 
   return (
     <ScrollArea
-      className={cn('bg-sidebar relative whitespace-nowrap [&>div>div]:!block [&>div>div]:size-full', {
+      className={cn('bg-sidebar [&>div>div]:block! relative whitespace-nowrap [&>div>div]:size-full', {
         'h-full': isHorizontal,
         'size-full': isVertical,
       })}
@@ -82,14 +84,21 @@ export default function MiniToolbar() {
           })}
         >
           {/* FPS */}
-          <FpsCounter className={buttonClass} isHorizontal={isHorizontal} isVertical={isVertical} />
+          <FpsCounter
+            className={buttonClass}
+            isHorizontal={isHorizontal}
+            isVertical={isVertical}
+          />
 
           {/* Memory Usage */}
-          <MemoryUsage className={buttonClass} isHorizontal={isHorizontal} isVertical={isVertical} />
+          <MemoryUsage
+            className={buttonClass}
+            isHorizontal={isHorizontal}
+            isVertical={isVertical}
+          />
 
           {/* routes */}
           <button
-            title={`${data?.routes.length ?? 0} Routes`}
             className={cn(buttonClass, {
               'border-r': isHorizontal,
               'flex-col items-center border-b': isVertical,
@@ -98,9 +107,13 @@ export default function MiniToolbar() {
               navigate('/routes')
               toggleToolbar()
             }}
+            title={`${data?.routes.length ?? 0} Routes`}
           >
             <i className="i-ri-node-tree size-4 opacity-60" />
-            <span className={cn('hidden opacity-60', isHorizontal && 'block')} data-label="ROUTES">
+            <span
+              className={cn('hidden opacity-60', isHorizontal && 'block')}
+              data-label="ROUTES"
+            >
               ROUTES
             </span>
             <span className="text-nowrap opacity-70">
@@ -111,7 +124,6 @@ export default function MiniToolbar() {
 
           {/* components */}
           <button
-            title={`${data?.components.length ?? 0} Components`}
             className={cn(buttonClass, {
               'border-r': isHorizontal,
               'flex-col items-center border-b': isVertical,
@@ -120,9 +132,13 @@ export default function MiniToolbar() {
               navigate('/routes')
               toggleToolbar()
             }}
+            title={`${data?.components.length ?? 0} Components`}
           >
             <i className="i-ri-box-1-line size-4 opacity-60" />
-            <span className={cn('hidden opacity-60', isHorizontal && 'block')} data-label="COMPONENTS">
+            <span
+              className={cn('hidden opacity-60', isHorizontal && 'block')}
+              data-label="COMPONENTS"
+            >
               COMPONENTS
             </span>
             <span className="text-nowrap opacity-70">
@@ -133,7 +149,6 @@ export default function MiniToolbar() {
 
           {/* assets */}
           <button
-            title={`${data?.assets.length ?? 0} Assets`}
             className={cn(buttonClass, {
               'border-r': isHorizontal,
               'flex-col items-center border-b': isVertical,
@@ -142,9 +157,13 @@ export default function MiniToolbar() {
               navigate('/assets')
               toggleToolbar()
             }}
+            title={`${data?.assets.length ?? 0} Assets`}
           >
             <i className="i-ri-gallery-line size-4 opacity-60" />
-            <span className={cn('hidden opacity-60', isHorizontal && 'block')} data-label="ASSETS">
+            <span
+              className={cn('hidden opacity-60', isHorizontal && 'block')}
+              data-label="ASSETS"
+            >
               ASSETS
             </span>
             <span className="text-nowrap opacity-70">
@@ -156,7 +175,6 @@ export default function MiniToolbar() {
           {/* packages */}
 
           <button
-            title={`${data?.packages.length ?? 0} Packages`}
             className={cn(buttonClass, {
               'border-r': isHorizontal,
               'flex-col items-center border-b': isVertical,
@@ -165,9 +183,13 @@ export default function MiniToolbar() {
               navigate('/packages')
               toggleToolbar()
             }}
+            title={`${data?.packages.length ?? 0} Packages`}
           >
             <i className="i-ri-box-3-line size-4 opacity-60" />
-            <span className={cn('hidden opacity-60', isHorizontal && 'block')} data-label="PACKAGES">
+            <span
+              className={cn('hidden opacity-60', isHorizontal && 'block')}
+              data-label="PACKAGES"
+            >
               PACKAGES
             </span>
             <span className="text-nowrap opacity-70">
@@ -179,26 +201,26 @@ export default function MiniToolbar() {
 
         <div
           className={cn('sticky z-10 flex', {
-            'right-0 h-full flex-row items-center': isHorizontal,
             'bottom-0 w-full flex-col justify-center': isVertical,
+            'right-0 h-full flex-row items-center': isHorizontal,
           })}
         >
           {/* switch toolbar position */}
           <Collapsible
-            open={positionToggleOpen}
             className={cn('flex h-full', {
               'h-full flex-row-reverse items-center': isHorizontal,
               'w-full flex-col-reverse justify-center': isVertical,
             })}
             onOpenChange={setPositionToggleOpen}
+            open={positionToggleOpen}
           >
             <CollapsibleTrigger asChild>
               <button
-                title="Switch Toolbar Position"
                 className={cn(buttonClass, 'transition-transform duration-200 [&[data-state=open]>i]:rotate-180', {
                   'border-l': isHorizontal,
                   'border-t': isVertical,
                 })}
+                title="Switch Toolbar Position"
               >
                 {isHorizontal ? (
                   <i className="i-ri-arrow-left-s-line size-4 opacity-60" />
@@ -220,7 +242,6 @@ export default function MiniToolbar() {
                 })}
               >
                 <button
-                  title="Top"
                   className={cn(buttonClass, {
                     'h-full border-l': isHorizontal,
                     'w-full border-t': isVertical,
@@ -229,12 +250,12 @@ export default function MiniToolbar() {
                     setToolbarPosition(ToolbarPosition.Top)
                     setPositionToggleOpen(false)
                   }}
+                  title="Top"
                 >
                   <i className="i-ri-layout-top-2-line size-4 opacity-60" />
                 </button>
 
                 <button
-                  title="Bottom"
                   className={cn(buttonClass, {
                     'border-l': isHorizontal,
                     'border-t': isVertical,
@@ -243,12 +264,12 @@ export default function MiniToolbar() {
                     setToolbarPosition(ToolbarPosition.Bottom)
                     setPositionToggleOpen(false)
                   }}
+                  title="Bottom"
                 >
                   <i className="i-ri-layout-bottom-2-line size-4 opacity-60" />
                 </button>
 
                 <button
-                  title="Left"
                   className={cn(buttonClass, {
                     'border-l': isHorizontal,
                     'border-t': isVertical,
@@ -257,12 +278,12 @@ export default function MiniToolbar() {
                     setToolbarPosition(ToolbarPosition.Left)
                     setPositionToggleOpen(false)
                   }}
+                  title="Left"
                 >
                   <i className="i-ri-layout-left-2-line size-4 opacity-60" />
                 </button>
 
                 <button
-                  title="Right"
                   className={cn(buttonClass, {
                     'border-l': isHorizontal,
                     'border-t': isVertical,
@@ -271,6 +292,7 @@ export default function MiniToolbar() {
                     setToolbarPosition(ToolbarPosition.Right)
                     setPositionToggleOpen(false)
                   }}
+                  title="Right"
                 >
                   <i className="i-ri-layout-right-2-line size-4 opacity-60" />
                 </button>

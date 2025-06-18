@@ -1,22 +1,23 @@
 'use client'
 
 import React from 'react'
+
+import Actions from './(components)/actions'
+import Directory from './(components)/directory'
+import Editor from './(components)/editor'
+import SideBarCollapsed from './(components)/sidebar-collapsed'
 import Theme from './(components)/theme'
 import ToolbarPosition from './(components)/toolbar-position'
 import UIScale from './(components)/ui-scale'
-import SideBarCollapsed from './(components)/sidebar-collapsed'
-import Editor from './(components)/editor'
-import Directory from './(components)/directory'
-import Actions from './(components)/actions'
 
 const sections = [
-  { id: 'theme', label: 'Theme', component: Theme },
-  { id: 'toolbar-position', label: 'Toolbar Position', component: ToolbarPosition },
-  { id: 'ui-scale', label: 'UI Scale', component: UIScale },
-  { id: 'sidebar-collapsed', label: 'Sidebar Collapsed', component: SideBarCollapsed },
-  { id: 'editor', label: 'Editor', component: Editor },
-  { id: 'directory', label: 'Directory', component: Directory },
-  { id: 'actions', label: 'Actions', component: Actions },
+  { component: Theme, id: 'theme', label: 'Theme' },
+  { component: ToolbarPosition, id: 'toolbar-position', label: 'Toolbar Position' },
+  { component: UIScale, id: 'ui-scale', label: 'UI Scale' },
+  { component: SideBarCollapsed, id: 'sidebar-collapsed', label: 'Sidebar Collapsed' },
+  { component: Editor, id: 'editor', label: 'Editor' },
+  { component: Directory, id: 'directory', label: 'Directory' },
+  { component: Actions, id: 'actions', label: 'Actions' },
 ]
 
 export default function Page() {

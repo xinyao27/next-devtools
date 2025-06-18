@@ -1,26 +1,50 @@
 'use client'
 
-import * as React from 'react'
+import type { StripeError } from '@stripe/stripe-js'
+
 import { Elements, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js'
-import { formatAmountForDisplay } from '@/utils/stripe-helpers'
+import * as React from 'react'
+
+import { createPaymentIntent } from '@/app/stripe/actions/stripe'
 import * as config from '@/config'
 import getStripe from '@/utils/get-stripejs'
-import { createPaymentIntent } from '@/app/stripe/actions/stripe'
-import StripeTestCards from './StripeTestCards'
+import { formatAmountForDisplay } from '@/utils/stripe-helpers'
+
 import CustomDonationInput from './CustomDonationInput'
-import type { StripeError } from '@stripe/stripe-js'
+import StripeTestCards from './StripeTestCards'
+
+export default function ElementsForm(): JSX.Element {
+  return (
+    <Elements
+      options={{
+        amount: Math.round(config.MAX_AMOUNT / config.AMOUNT_STEP),
+        appearance: {
+          variables: {
+            colorIcon: '#6772e5',
+            fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+          },
+        },
+        currency: config.CURRENCY,
+        mode: 'payment',
+      }}
+      stripe={getStripe()}
+    >
+      <CheckoutForm />
+    </Elements>
+  )
+}
 
 function CheckoutForm(): JSX.Element {
   const [input, setInput] = React.useState<{
-    customDonation: number
     cardholderName: string
+    customDonation: number
   }>({
-    customDonation: Math.round(config.MAX_AMOUNT / config.AMOUNT_STEP),
     cardholderName: '',
+    customDonation: Math.round(config.MAX_AMOUNT / config.AMOUNT_STEP),
   })
   const [paymentType, setPaymentType] = React.useState<string>('')
   const [payment, setPayment] = React.useState<{
-    status: 'initial' | 'processing' | 'error'
+    status: 'error' | 'initial' | 'processing'
   }>({ status: 'initial' })
   const [errorMessage, setErrorMessage] = React.useState<string>('')
 
@@ -29,17 +53,6 @@ function CheckoutForm(): JSX.Element {
 
   const PaymentStatus = ({ status }: { status: string }) => {
     switch (status) {
-      case 'processing':
-      case 'requires_payment_method':
-      case 'requires_confirmation':
-        return <h2>Processing...</h2>
-
-      case 'requires_action':
-        return <h2>Authenticating...</h2>
-
-      case 'succeeded':
-        return <h2>Payment Succeeded 🥳</h2>
-
       case 'error':
         return (
           <>
@@ -47,6 +60,18 @@ function CheckoutForm(): JSX.Element {
             <p className="error-message">{errorMessage}</p>
           </>
         )
+      case 'processing':
+      case 'requires_confirmation':
+        break
+
+      case 'requires_action':
+        return <h2>Authenticating...</h2>
+
+      case 'requires_payment_method':
+        return <h2>Processing...</h2>
+
+      case 'succeeded':
+        return <h2>Payment Succeeded 🥳</h2>
 
       default:
         return null
@@ -85,16 +110,16 @@ function CheckoutForm(): JSX.Element {
 
       // Use your card Element with other Stripe.js APIs
       const { error: confirmError } = await stripe!.confirmPayment({
-        elements,
         clientSecret,
         confirmParams: {
-          return_url: `${window.location.origin}/stripe/donate-with-elements/result`,
           payment_method_data: {
             billing_details: {
               name: input.cardholderName,
             },
           },
+          return_url: `${window.location.origin}/stripe/donate-with-elements/result`,
         },
+        elements,
       })
 
       if (confirmError) {
@@ -118,21 +143,21 @@ function CheckoutForm(): JSX.Element {
           max={config.MAX_AMOUNT}
           min={config.MIN_AMOUNT}
           name="customDonation"
+          onChange={handleInputChange}
           step={config.AMOUNT_STEP}
           value={input.customDonation}
-          onChange={handleInputChange}
         />
         <StripeTestCards />
         <fieldset className="elements-style">
           <legend>Your payment details:</legend>
           {paymentType === 'card' ? (
             <input
-              required
               className="elements-style"
               name="cardholderName"
-              placeholder="Cardholder name"
-              type="Text"
               onChange={handleInputChange}
+              placeholder="Cardholder name"
+              required
+              type="Text"
             />
           ) : null}
           <div className="FormRow elements-style">
@@ -145,7 +170,7 @@ function CheckoutForm(): JSX.Element {
         </fieldset>
         <button
           className="elements-style-background"
-          disabled={!['initial', 'succeeded', 'error'].includes(payment.status) || !stripe}
+          disabled={!['error', 'initial', 'succeeded'].includes(payment.status) || !stripe}
           type="submit"
         >
           Donate {formatAmountForDisplay(input.customDonation, config.CURRENCY)}
@@ -153,26 +178,5 @@ function CheckoutForm(): JSX.Element {
       </form>
       <PaymentStatus status={payment.status} />
     </>
-  )
-}
-
-export default function ElementsForm(): JSX.Element {
-  return (
-    <Elements
-      stripe={getStripe()}
-      options={{
-        appearance: {
-          variables: {
-            colorIcon: '#6772e5',
-            fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
-          },
-        },
-        currency: config.CURRENCY,
-        mode: 'payment',
-        amount: Math.round(config.MAX_AMOUNT / config.AMOUNT_STEP),
-      }}
-    >
-      <CheckoutForm />
-    </Elements>
   )
 }

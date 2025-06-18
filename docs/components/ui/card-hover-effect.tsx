@@ -1,10 +1,12 @@
+import type { ReactNode } from 'react'
+
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 import { useState } from 'react'
-import { cn } from '@/utils/cn'
-import type { ReactNode } from 'react'
 
-export function Card({ className, children }: { className?: string; children: React.ReactNode }) {
+import { cn } from '@/utils/cn'
+
+export function Card({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <div
       className={cn(
@@ -18,51 +20,51 @@ export function Card({ className, children }: { className?: string; children: Re
     </div>
   )
 }
-export function CardTitle({ className, children }: { className?: string; children: React.ReactNode }) {
-  return <h4 className={cn('mt-4 font-bold tracking-wide text-zinc-100', className)}>{children}</h4>
-}
-export function CardDescription({ className, children }: { className?: string; children: React.ReactNode }) {
+export function CardDescription({ children, className }: { children: React.ReactNode; className?: string }) {
   return <p className={cn('mt-2 text-sm leading-relaxed tracking-wide text-zinc-400', className)}>{children}</p>
+}
+export function CardTitle({ children, className }: { children: React.ReactNode; className?: string }) {
+  return <h4 className={cn('mt-4 font-bold tracking-wide text-zinc-100', className)}>{children}</h4>
 }
 
 export function HoverEffect({
-  items,
   className,
+  items,
 }: {
+  className?: string
   items: {
-    title: ReactNode
     description: ReactNode
     icon: ReactNode
     link: string
+    title: ReactNode
   }[]
-  className?: string
 }) {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
 
   return (
     <div className={cn('grid grid-cols-1 py-10 md:grid-cols-2 lg:grid-cols-3', className)}>
       {items.map((item, idx) => (
         <Link
-          key={item?.link}
           className="group relative block h-full w-full p-2"
           href={item?.link}
+          key={item?.link}
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="absolute inset-0 block h-full w-full rounded-3xl bg-neutral-200/10 dark:bg-slate-800/[0.8]"
-                initial={{ opacity: 0 }}
-                layoutId="hoverBackground"
                 animate={{
                   opacity: 1,
                   transition: { duration: 0.15 },
                 }}
+                className="absolute inset-0 block h-full w-full rounded-3xl bg-neutral-200/10 dark:bg-slate-800/[0.8]"
                 exit={{
                   opacity: 0,
-                  transition: { duration: 0.15, delay: 0.2 },
+                  transition: { delay: 0.2, duration: 0.15 },
                 }}
+                initial={{ opacity: 0 }}
+                layoutId="hoverBackground"
               />
             )}
           </AnimatePresence>

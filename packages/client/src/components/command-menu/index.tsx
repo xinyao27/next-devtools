@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {
   CommandDialog,
   CommandEmpty,
@@ -23,7 +24,10 @@ export default function CommandMenu() {
   }, [])
 
   return (
-    <CommandDialog open={open} onOpenChange={setOpen}>
+    <CommandDialog
+      onOpenChange={setOpen}
+      open={open}
+    >
       <CommandInput placeholder="Type a command or search..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>

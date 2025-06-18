@@ -1,9 +1,17 @@
+/* eslint-disable @eslint-community/eslint-comments/disable-enable-pair */
+/* eslint-disable no-invalid-this */
 /* eslint-disable no-var, vars-on-top */
 
-import { networkStore } from './store/network'
 import type { ClientFunctions, NetworkMethod, NetworkRequest, ServerFunctions } from '@next-devtools/shared/types'
 import type { BirpcGroup } from 'birpc'
 import type { EventEmitter } from 'node:events'
+
+import { networkStore } from './store/network'
+
+declare global {
+  var __NEXT_DEVTOOLS_EE__: EventEmitter
+  var __NEXT_DEVTOOLS_RPC__: BirpcGroup<ClientFunctions, ServerFunctions>
+}
 
 export function getGlobalThis() {
   return globalThis
@@ -11,22 +19,28 @@ export function getGlobalThis() {
 
 export const isDev = process.env.NODE_ENV === 'development'
 
-declare global {
-  var __NEXT_DEVTOOLS_EE__: EventEmitter
-  var __NEXT_DEVTOOLS_RPC__: BirpcGroup<ClientFunctions, ServerFunctions>
-}
-
 export function getFetchHeaders() {
   return {
     'x-next-devtools-version': process.env.VERSION!,
   }
 }
 
+export function isNextDevToolsRequest(headers?: HeadersInit) {
+  if (!headers) return false
+  const nextDevtoolsHeader = getFetchHeaders()
+  if (!nextDevtoolsHeader) return false
+  for (const [key, value] of Object.entries(nextDevtoolsHeader)) {
+    if ((headers as Record<string, string>)[key] !== value) return false
+  }
+
+  return true
+}
+
 export function patchFetch(original: typeof globalThis.fetch) {
   // @ts-expect-error: If the fetch is already patched, return the original
   if (original.__nextDevtoolsPatched) return original
 
-  const patched = function (resource: URL | RequestInfo, options?: RequestInit) {
+  const patched = function (resource: RequestInfo | URL, options?: RequestInit) {
     if (isNextDevToolsRequest(options?.headers)) {
       return Reflect.apply(original, this, [resource, options])
     }
@@ -37,15 +51,15 @@ export function patchFetch(original: typeof globalThis.fetch) {
     const method = (options?.method || 'GET') as NetworkMethod
     const headers = options?.headers || {}
     const networkRequest: NetworkRequest = {
-      id,
-      url: urlString,
-      method,
-      status: 0,
-      startTime,
-      endTime: 0,
-      size: 0,
-      headers,
       body: null,
+      endTime: 0,
+      headers,
+      id,
+      method,
+      size: 0,
+      startTime,
+      status: 0,
+      url: urlString,
     }
     networkStore.getState().add(id, networkRequest)
 
@@ -75,18 +89,7 @@ export function patchFetch(original: typeof globalThis.fetch) {
   return patched
 }
 
-export function isNextDevToolsRequest(headers?: HeadersInit) {
-  if (!headers) return false
-  const nextDevtoolsHeader = getFetchHeaders()
-  if (!nextDevtoolsHeader) return false
-  for (const [key, value] of Object.entries(nextDevtoolsHeader)) {
-    if ((headers as Record<string, string>)[key] !== value) return false
-  }
-
-  return true
-}
-
-export const customFetch = (url: URL | RequestInfo, options?: RequestInit) => {
+export const customFetch = (url: RequestInfo | URL, options?: RequestInit) => {
   const headers = {
     ...options?.headers,
     ...getFetchHeaders(),

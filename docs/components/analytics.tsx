@@ -6,7 +6,12 @@ export default function Analytics() {
     <>
       <VercelAnalytics />
       {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID ? (
-        <Script async defer data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID} src="/u/script.js" />
+        <Script
+          async
+          data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+          defer
+          src="/u/script.js"
+        />
       ) : null}
     </>
   )

@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { useNavigate } from 'react-router'
+
 import useConnect from '@/hooks/use-connect'
 
 export default function Page() {

@@ -1,6 +1,9 @@
 'use client'
 
+import type { Table } from '@tanstack/react-table'
+
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
+
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -9,7 +12,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
-import type { Table } from '@tanstack/react-table'
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
@@ -19,12 +21,18 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size="sm" variant="outline">
+        <Button
+          size="sm"
+          variant="outline"
+        >
           <i className="i-ri-equalizer-2-line mr-1 size-4" />
           View
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[150px]">
+      <DropdownMenuContent
+        align="end"
+        className="w-[150px]"
+      >
         <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
@@ -33,9 +41,9 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
           .map((column) => {
             return (
               <DropdownMenuCheckboxItem
-                key={column.id}
                 checked={column.getIsVisible()}
                 className="capitalize"
+                key={column.id}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
                 {column.id}

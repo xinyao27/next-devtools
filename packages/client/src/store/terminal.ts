@@ -3,28 +3,26 @@
 import { create } from 'zustand'
 
 interface Terminal {
-  id: string
-  name: string
+  buffer?: string | Uint8Array
   description?: string
   icon: string
-  buffer?: string | Uint8Array
+  id: string
+  name: string
+}
+
+type TerminalStore = TerminalStoreActions & TerminalStoreState
+
+interface TerminalStoreActions {
+  onTerminalWrite: (data: { data: string; id: string }) => void
 }
 
 interface TerminalStoreState {
+  currentId: null | string
   terminals: Terminal[]
-  currentId: string | null
 }
-
-interface TerminalStoreActions {
-  onTerminalWrite: (data: { id: string; data: string }) => void
-}
-
-type TerminalStore = TerminalStoreState & TerminalStoreActions
 
 export const useTerminalStore = create<TerminalStore>((set) => ({
-  terminals: [],
   currentId: null,
-
   onTerminalWrite: (data) => {
     set((state) => {
       const terminals = structuredClone(state.terminals)
@@ -35,4 +33,6 @@ export const useTerminalStore = create<TerminalStore>((set) => ({
       return { terminals }
     })
   },
+
+  terminals: [],
 }))

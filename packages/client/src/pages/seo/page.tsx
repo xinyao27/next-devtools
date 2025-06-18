@@ -1,43 +1,45 @@
 'use client'
 
-import React from 'react'
 import { useQuery } from '@tanstack/react-query'
+import React from 'react'
 import { useLocalStorage } from 'react-use'
-import { Skeleton } from '@/components/ui/skeleton'
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
+
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useNextDevtoolsContent } from '@/hooks/use-next-devtools-context'
+import { cn } from '@/lib/utils'
+
 import CurrentRoute from '../routes/(components)/current-route'
-import XCard from './(components)/x-card'
-import GoogleCard from './(components)/google-card'
 import FacebookCard from './(components)/facebook-card'
+import GoogleCard from './(components)/google-card'
 import OpenGraphTable from './(components)/open-graph-table'
+import XCard from './(components)/x-card'
 
 const PLATFORMS = [
   {
+    icon: <i className="i-ri-google-fill size-5" />,
     label: 'Google',
     value: 'google',
-    icon: <i className="i-ri-google-fill size-5" />,
   },
   {
+    icon: <i className="i-ri-twitter-x-line size-5" />,
     label: 'X',
     value: 'x',
-    icon: <i className="i-ri-twitter-x-line size-5" />,
   },
   {
+    icon: <i className="i-ri-facebook-fill size-5" />,
     label: 'Facebook',
     value: 'facebook',
-    icon: <i className="i-ri-facebook-fill size-5" />,
   },
 ] as const
 
 export default function Page() {
-  const { getSEOMetadata, getRoute } = useNextDevtoolsContent()
+  const { getRoute, getSEOMetadata } = useNextDevtoolsContent()
   const { data: currentRoute } = useQuery({
-    queryKey: ['getRoute'],
     queryFn: () => getRoute(),
+    queryKey: ['getRoute'],
   })
   const [direction, setDirection] = useLocalStorage<'horizontal' | 'vertical'>(
     'NEXT_DEVTOOLS_SEO_LAYOUT_DIRECTION',
@@ -52,8 +54,8 @@ export default function Page() {
     isLoading: isLoadingSEOMetadata,
     refetch: refetchSEOMetadata,
   } = useQuery({
-    queryKey: ['getSEOMetadata', currentRoute],
     queryFn: () => getSEOMetadata(currentRoute),
+    queryKey: ['getSEOMetadata', currentRoute],
   })
 
   return (
@@ -62,20 +64,27 @@ export default function Page() {
       className="size-full"
       direction={direction ?? 'horizontal'}
     >
-      <ResizablePanel maxSize={80} minSize={20}>
+      <ResizablePanel
+        maxSize={80}
+        minSize={20}
+      >
         <div className="size-full overflow-y-auto">
           <CurrentRoute
-            className="bg-background/80 sticky top-0 z-10 backdrop-blur"
             actions={
               <>
-                <Button className="size-9" size="icon" variant="ghost" onClick={() => refetchSEOMetadata()}>
+                <Button
+                  className="size-9"
+                  onClick={() => refetchSEOMetadata()}
+                  size="icon"
+                  variant="ghost"
+                >
                   <i className="i-ri-refresh-line size-5" />
                 </Button>
                 <Button
                   className="size-9"
+                  onClick={() => setDirection(direction === 'horizontal' ? 'vertical' : 'horizontal')}
                   size="icon"
                   variant="ghost"
-                  onClick={() => setDirection(direction === 'horizontal' ? 'vertical' : 'horizontal')}
                 >
                   <i
                     className={cn(
@@ -86,6 +95,7 @@ export default function Page() {
                 </Button>
               </>
             }
+            className="bg-background/80 sticky top-0 z-10 backdrop-blur"
           />
           {isLoadingSEOMetadata ? (
             <div>
@@ -127,7 +137,10 @@ export default function Page() {
 
       <ResizableHandle withHandle />
 
-      <ResizablePanel maxSize={80} minSize={20}>
+      <ResizablePanel
+        maxSize={80}
+        minSize={20}
+      >
         <div
           className={cn('flex size-full items-center justify-center overflow-auto', {
             'bg-black': platform === 'x',
@@ -135,17 +148,17 @@ export default function Page() {
           })}
         >
           <Tabs
-            orientation={direction}
-            value={platform}
             className={cn('flex gap-8', {
               'flex-col': direction === 'horizontal',
             })}
             onValueChange={(v) => setPlatform(v as (typeof PLATFORMS)[number]['value'])}
+            orientation={direction}
+            value={platform}
           >
             <div
               className={cn('flex items-center justify-center', {
-                'w-[600px]': direction === 'horizontal',
                 '-ml-12': direction === 'vertical',
+                'w-[600px]': direction === 'horizontal',
               })}
             >
               <TabsList
@@ -154,7 +167,10 @@ export default function Page() {
                 })}
               >
                 {PLATFORMS.map((platform) => (
-                  <TabsTrigger key={platform.value} value={platform.value}>
+                  <TabsTrigger
+                    key={platform.value}
+                    value={platform.value}
+                  >
                     {platform.icon}
                   </TabsTrigger>
                 ))}
@@ -169,7 +185,10 @@ export default function Page() {
               {PLATFORMS.map((platform) => {
                 if (platform.value === 'google') {
                   return (
-                    <TabsContent key={platform.value} value={platform.value}>
+                    <TabsContent
+                      key={platform.value}
+                      value={platform.value}
+                    >
                       <div className="flex size-full items-center justify-center">
                         <GoogleCard data={seoMetadata} />
                       </div>
@@ -177,7 +196,10 @@ export default function Page() {
                   )
                 } else if (platform.value === 'x') {
                   return (
-                    <TabsContent key={platform.value} value={platform.value}>
+                    <TabsContent
+                      key={platform.value}
+                      value={platform.value}
+                    >
                       <div className="flex size-full items-center justify-center">
                         <XCard data={seoMetadata} />
                       </div>
@@ -185,7 +207,10 @@ export default function Page() {
                   )
                 } else if (platform.value === 'facebook') {
                   return (
-                    <TabsContent key={platform.value} value={platform.value}>
+                    <TabsContent
+                      key={platform.value}
+                      value={platform.value}
+                    >
                       <div className="flex size-full items-center justify-center">
                         <FacebookCard data={seoMetadata} />
                       </div>

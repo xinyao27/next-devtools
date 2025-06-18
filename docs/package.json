@@ -8,7 +8,7 @@
     "docs:build": "next build"
   },
   "dependencies": {
-    "@vercel/analytics": "^1.4.1",
+    "@vercel/analytics": "^1.5.0",
     "clsx": "catalog:",
     "motion": "catalog:",
     "next": "catalog:next14",

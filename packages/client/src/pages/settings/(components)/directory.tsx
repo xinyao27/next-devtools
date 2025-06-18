@@ -1,17 +1,18 @@
+import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import { useShallow } from 'zustand/react/shallow'
-import { useQuery } from '@tanstack/react-query'
-import { useSettingsStore } from '@/store/settings'
+
 import { Input } from '@/components/ui/input'
-import { rpcClient } from '@/lib/client'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { rpcClient } from '@/lib/client'
+import { useSettingsStore } from '@/store/settings'
 
 export default function Directory() {
   const componentDirectory = useSettingsStore(useShallow((state) => state.componentDirectory))
   const setSettings = useSettingsStore((state) => state.setState)
   const { data: internalStore } = useQuery({
-    queryKey: ['getInternalStore'],
     queryFn: () => rpcClient.getInternalStore(),
+    queryKey: ['getInternalStore'],
   })
   const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSettings({ componentDirectory: event.target.value })
@@ -35,10 +36,10 @@ export default function Directory() {
           <div className="col-span-8">
             <Input
               className="-ms-px rounded-s-none shadow-none"
+              onChange={handleValueChange}
               placeholder="/src/components"
               type="text"
               value={componentDirectory ?? ''}
-              onChange={handleValueChange}
             />
           </div>
         </div>

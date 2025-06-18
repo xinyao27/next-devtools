@@ -1,7 +1,3 @@
-export function removeVersionPrefix(version: string) {
-  return version.replace(/^[<=>^~]*\s*/, '')
-}
-
 export function prettySize(size: number) {
   const sizes = ['Bytes', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB']
   let i = 0
@@ -10,6 +6,10 @@ export function prettySize(size: number) {
     i++
   }
   return `${size.toFixed(2)} ${sizes[i]}`
+}
+
+export function removeVersionPrefix(version: string) {
+  return version.replace(/^[<=>^~]*\s*/, '')
 }
 
 export const noop = () => {}

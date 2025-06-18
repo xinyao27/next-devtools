@@ -1,10 +1,13 @@
 'use client'
 
-import React from 'react'
-import { type Component } from '@next-devtools/shared/types'
+import type { Component } from '@next-devtools/shared/types'
+
 import { prettySize } from '@next-devtools/shared/utils'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import React from 'react'
+
 import OpenInEditor from '@/components/open-in-editor'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+
 import TagComponent from './tag-component'
 
 interface Props {
@@ -16,7 +19,10 @@ export default function AllComponents({ data }: Props) {
       {data?.map((component) => {
         const key = component.publicPath || component.filePath || component.file
         return (
-          <AccordionItem key={key} value={key}>
+          <AccordionItem
+            key={key}
+            value={key}
+          >
             <AccordionTrigger className="py-2">
               <div className="flex flex-1 items-center gap-2">
                 <div className="flex-1 truncate text-left [direction:rtl]">{key}</div>
@@ -25,7 +31,10 @@ export default function AllComponents({ data }: Props) {
             </AccordionTrigger>
             <AccordionContent>
               <div className="py-2">
-                <OpenInEditor className="flex flex-wrap gap-2" value={component.filePath}>
+                <OpenInEditor
+                  className="flex flex-wrap gap-2"
+                  value={component.filePath}
+                >
                   {component.documentations.map((doc) => (
                     <TagComponent key={doc.displayName}>{doc.displayName}</TagComponent>
                   ))}

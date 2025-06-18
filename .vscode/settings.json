@@ -1,7 +1,7 @@
 {
   "eslint.useFlatConfig": true,
   "prettier.enable": false,
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "never"
@@ -11,17 +11,14 @@
     "javascriptreact",
     "typescript",
     "typescriptreact",
-    "vue",
     "html",
-    "markdown",
     "json",
+    "json5",
     "jsonc",
-    "astro",
-    "css",
-    "less",
-    "scss",
-    "pcss",
-    "postcss"
+    "yaml",
+    "toml",
+    "xml"
   ],
-  "html.format.enable": false
+  "html.format.enable": false,
+  "eslint.runtime": "node"
 }

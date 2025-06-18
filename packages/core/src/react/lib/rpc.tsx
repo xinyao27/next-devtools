@@ -1,20 +1,22 @@
 'use client'
 
+import type { ClientFunctions, RpcMessage, ServerFunctions } from '@next-devtools/shared/types'
+
 import { RPC_SERVER_PORT } from '@next-devtools/shared/constants'
 import { WS_CLIENT_TO_SERVER_EVENT_NAME, WS_SERVER_EVENT_NAME } from '@next-devtools/shared/types'
 import { createBirpc } from 'birpc'
-import { useSettingsStore } from './use-settings-store'
+
 import { useInternalStore } from './use-internal-store'
-import type { ClientFunctions, RpcMessage, ServerFunctions } from '@next-devtools/shared/types'
+import { useSettingsStore } from './use-settings-store'
 
 const clientFunctions: ClientFunctions = {
-  serverReady: () => {
-    useInternalStore.getState().setup()
-  },
   onNetworkUpdate: () => {},
-  onTerminalWrite: () => {},
   onSettingsStoreUpdate: (state) => {
     useSettingsStore.setState(state)
+  },
+  onTerminalWrite: () => {},
+  serverReady: () => {
+    useInternalStore.getState().setup()
   },
 }
 export function getRpcClient() {
@@ -23,14 +25,7 @@ export function getRpcClient() {
   const _protocol = window.location.protocol === 'https:' ? 'wss' : 'ws'
   const ws = new WebSocket(`${_protocol}://${_ip}:${RPC_SERVER_PORT}`)
   const rpc = createBirpc<ServerFunctions, ClientFunctions>(clientFunctions, {
-    post: (data) =>
-      ws.send(
-        JSON.stringify({
-          id: crypto.randomUUID(),
-          event: WS_CLIENT_TO_SERVER_EVENT_NAME,
-          payload: data,
-        }),
-      ),
+    deserialize: JSON.parse,
     on: (fn) => {
       ws.addEventListener('message', (e) => {
         const message = JSON.parse(e.data) as RpcMessage
@@ -39,8 +34,15 @@ export function getRpcClient() {
         }
       })
     },
+    post: (data) =>
+      ws.send(
+        JSON.stringify({
+          event: WS_CLIENT_TO_SERVER_EVENT_NAME,
+          id: crypto.randomUUID(),
+          payload: data,
+        }),
+      ),
     serialize: JSON.stringify,
-    deserialize: JSON.parse,
   })
   return rpc
 }

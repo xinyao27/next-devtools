@@ -1,11 +1,14 @@
 'use client'
 
-import { useMemo, useState } from 'react'
-import { useNavigate } from 'react-router'
 import { STATIC_BASE_PATH } from '@next-devtools/shared/constants'
 import { useQuery } from '@tanstack/react-query'
+import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router'
+
 import { Button } from '@/components/ui/button'
 import CodeBlock from '@/components/ui/code-block'
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
+import { Separator } from '@/components/ui/separator'
 import {
   Sheet,
   SheetClose,
@@ -16,15 +19,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
 import { rpcClient } from '@/lib/client'
-import { Separator } from '@/components/ui/separator'
 
 export default function Page() {
   const navigate = useNavigate()
   const { data: internalStore } = useQuery({
-    queryKey: ['getInternalStore'],
     queryFn: () => rpcClient.getInternalStore(),
+    queryKey: ['getInternalStore'],
   })
   const [selectedTab, setSelectedTab] = useState('client')
   const analyzeDir = useMemo(() => {
@@ -39,10 +40,16 @@ export default function Page() {
   return (
     <div className="h-full">
       <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel className="space-y-4 p-4" defaultSize={20}>
+        <ResizablePanel
+          className="space-y-4 p-4"
+          defaultSize={20}
+        >
           <Sheet>
             <SheetTrigger asChild>
-              <Button className="w-full" variant="secondary">
+              <Button
+                className="w-full"
+                variant="secondary"
+              >
                 <i className="i-ri-pie-chart-box-line mr-2" />
                 Start a new build
               </Button>
@@ -68,7 +75,10 @@ export default function Page() {
                   <Button variant="outline">Cancel</Button>
                 </SheetClose>
                 <SheetClose asChild>
-                  <Button variant="default" onClick={handleBuild}>
+                  <Button
+                    onClick={handleBuild}
+                    variant="default"
+                  >
                     Build
                   </Button>
                 </SheetClose>
@@ -79,20 +89,35 @@ export default function Page() {
           <Separator />
 
           <div className="flex flex-col gap-1">
-            <Button variant={selectedTab === 'client' ? 'default' : 'ghost'} onClick={() => setSelectedTab('client')}>
+            <Button
+              onClick={() => setSelectedTab('client')}
+              variant={selectedTab === 'client' ? 'default' : 'ghost'}
+            >
               Client
             </Button>
-            <Button variant={selectedTab === 'edge' ? 'default' : 'ghost'} onClick={() => setSelectedTab('edge')}>
+            <Button
+              onClick={() => setSelectedTab('edge')}
+              variant={selectedTab === 'edge' ? 'default' : 'ghost'}
+            >
               Edge
             </Button>
-            <Button variant={selectedTab === 'nodejs' ? 'default' : 'ghost'} onClick={() => setSelectedTab('nodejs')}>
+            <Button
+              onClick={() => setSelectedTab('nodejs')}
+              variant={selectedTab === 'nodejs' ? 'default' : 'ghost'}
+            >
               Nodejs
             </Button>
           </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel className="dark:bg-grid-small-white/[0.3] bg-grid-small-black/[0.1]" defaultSize={80}>
-          <iframe className="h-full w-full border-none" src={analyzeDir} />
+        <ResizablePanel
+          className="dark:bg-grid-small-white/[0.3] bg-grid-small-black/[0.1]"
+          defaultSize={80}
+        >
+          <iframe
+            className="h-full w-full border-none"
+            src={analyzeDir}
+          />
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>

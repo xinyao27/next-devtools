@@ -1,31 +1,37 @@
+import type { NextDevtoolsServerContext, Package, ServerFunctions } from '@next-devtools/shared/types'
+
+import { getLatestVersion } from 'fast-npm-meta'
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import semver from 'semver'
-import { getLatestVersion } from 'fast-npm-meta'
+
 import { internalStore } from '../store/internal'
 import { customFetch, getFetchHeaders } from '../utils'
 import { runNpmCommand } from './npm'
-import type { NextDevtoolsServerContext, Package, ServerFunctions } from '@next-devtools/shared/types'
 
-export async function getPackages() {
-  const root = internalStore.getState().root
-  const pkgPath = resolve(root, 'package.json')
-  const data = JSON.parse(await readFile(pkgPath, 'utf-8').catch(() => '{}'))
-  const packages: Package[] = []
-
-  for (const type of ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies']) {
-    const dep = data[type]
-    if (!dep) continue
-
-    for (const name in dep) {
-      if (name !== process.env.PACKAGE_NAME) {
-        const version = dep[name]
-        packages.push({ name, version, type })
-      }
-    }
+export async function checkPackageVersion(name: string, current?: string) {
+  if (!current) {
+    const pkg = (await getPackages()).find((v) => v.name === name)
+    if (!pkg) return null
+    current = pkg.version
   }
+  if (!current) return null
+  current = semver.clean(current)!
+  if (typeof current !== 'string') return null
 
-  return packages
+  const npmData = await getPackageInfo(name)
+  const { version: latest } = await getLatestVersion(name, {
+    fetch: customFetch,
+  })
+  const isOutdated = !!latest && latest !== current && semver.lt(current, latest)
+
+  return {
+    current,
+    isOutdated,
+    latest,
+    name,
+    npmData,
+  }
 }
 
 export async function getPackageInfo(name: string, github = true) {
@@ -51,36 +57,32 @@ export async function getPackageInfo(name: string, github = true) {
   return npmData
 }
 
-export async function checkPackageVersion(name: string, current?: string) {
-  if (!current) {
-    const pkg = (await getPackages()).find((v) => v.name === name)
-    if (!pkg) return null
-    current = pkg.version
-  }
-  if (!current) return null
-  current = semver.clean(current)!
-  if (typeof current !== 'string') return null
+export async function getPackages() {
+  const root = internalStore.getState().root
+  const pkgPath = resolve(root, 'package.json')
+  const data = JSON.parse(await readFile(pkgPath, 'utf-8').catch(() => '{}'))
+  const packages: Package[] = []
 
-  const npmData = await getPackageInfo(name)
-  const { version: latest } = await getLatestVersion(name, {
-    fetch: customFetch,
-  })
-  const isOutdated = !!latest && latest !== current && semver.lt(current, latest)
+  for (const type of ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies']) {
+    const dep = data[type]
+    if (!dep) continue
 
-  return {
-    name,
-    current,
-    latest,
-    isOutdated,
-    npmData,
+    for (const name in dep) {
+      if (name !== process.env.PACKAGE_NAME) {
+        const version = dep[name]
+        packages.push({ name, type, version })
+      }
+    }
   }
+
+  return packages
 }
 
 export function setupPackagesRpc(_: NextDevtoolsServerContext) {
   return {
-    getPackages,
-    getPackageInfo,
     checkPackageVersion,
+    getPackageInfo,
+    getPackages,
     updatePackageVersion: async (name, options) => {
       const root = internalStore.getState().root
       await runNpmCommand('update', name, { cwd: root, ...options })

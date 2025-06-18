@@ -1,3 +1,5 @@
+@reference "../../../globals.css";
+
 .react-flow__node {
   @apply rounded-sm border shadow bg-zinc-100 hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800 transition-colors duration-200;
 }

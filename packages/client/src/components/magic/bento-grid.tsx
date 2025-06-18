@@ -1,22 +1,24 @@
-import { Link } from 'react-router'
-import { cn } from '@/lib/utils'
 import type { ReactNode } from 'react'
+
+import { Link } from 'react-router'
+
+import { cn } from '@/lib/utils'
 
 const BentoGrid = ({ children, className }: { children: ReactNode; className?: string }) => {
   return <div className={cn('grid w-full auto-rows-[240px] grid-cols-12 gap-4', className)}>{children}</div>
 }
 
 export interface BentoCardProps {
-  name: string
-  className?: string
   background?: ReactNode
-  Icon: ReactNode
+  className?: string
+  cta: ReactNode
   description: ReactNode
   href: string
-  cta: ReactNode
+  Icon: ReactNode
+  name: string
 }
 
-const BentoCard = ({ name, className, background, Icon, description, href, cta }: BentoCardProps) => (
+const BentoCard = ({ background, className, cta, description, href, Icon, name }: BentoCardProps) => (
   <div
     className={cn(
       'group relative col-span-1 flex transform-gpu overflow-hidden rounded border border-zinc-100 bg-white shadow-sm dark:border-zinc-800 dark:bg-black',
@@ -45,7 +47,7 @@ const BentoCard = ({ name, className, background, Icon, description, href, cta }
         {cta}
         <i className="i-ri-arrow-right-line ml-2 size-4" />
       </div>
-      <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/[.03] group-hover:dark:bg-neutral-800/10" />
+      <div className="group-hover:bg-black/3 pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:dark:bg-neutral-800/10" />
     </Link>
   </div>
 )

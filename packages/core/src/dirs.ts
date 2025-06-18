@@ -1,4 +1,5 @@
 import { resolve } from 'node:path'
+
 import { isDev } from './utils'
 
 export const packageDir = resolve(__dirname, '../../..')

@@ -1,10 +1,12 @@
 'use client'
 
-import React from 'react'
-import { useTheme } from 'next-themes'
-import ReactJson from '@microlink/react-json-view'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import type { Env } from '@next-devtools/shared/types'
+
+import ReactJson from '@microlink/react-json-view'
+import { useTheme } from 'next-themes'
+import React from 'react'
+
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 
 import './react-json-view.css'
 
@@ -15,7 +17,10 @@ export default function AllEnvs({ data }: Props) {
   const { theme } = useTheme()
 
   return (
-    <Accordion defaultValue={['public-envs']} type="multiple">
+    <Accordion
+      defaultValue={['public-envs']}
+      type="multiple"
+    >
       <AccordionItem value="public-envs">
         <AccordionTrigger>
           <div className="flex items-center gap-2">

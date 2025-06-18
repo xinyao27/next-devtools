@@ -1,24 +1,23 @@
 'use server'
 
-import { headers } from 'next/headers'
-import { CURRENCY } from '@/config'
-import { formatAmountForStripe } from '@/utils/stripe-helpers'
-import { stripe } from '@/lib/stripe'
 import type { Stripe } from 'stripe'
+
+import { headers } from 'next/headers'
+
+import { CURRENCY } from '@/config'
+import { stripe } from '@/lib/stripe'
+import { formatAmountForStripe } from '@/utils/stripe-helpers'
 
 export async function createCheckoutSession(
   data: FormData,
-): Promise<{ client_secret: string | null; url: string | null }> {
+): Promise<{ client_secret: null | string; url: null | string }> {
   const ui_mode = data.get('uiMode') as Stripe.Checkout.SessionCreateParams.UiMode
 
   const origin: string = (await headers()).get('origin') as string
 
   const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create({
-    mode: 'payment',
-    submit_type: 'donate',
     line_items: [
       {
-        quantity: 1,
         price_data: {
           currency: CURRENCY,
           product_data: {
@@ -26,11 +25,14 @@ export async function createCheckoutSession(
           },
           unit_amount: formatAmountForStripe(Number(data.get('customDonation') as string), CURRENCY),
         },
+        quantity: 1,
       },
     ],
+    mode: 'payment',
+    submit_type: 'donate',
     ...(ui_mode === 'hosted' && {
-      success_url: `${origin}/stripe/donate-with-checkout/result?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/stripe/donate-with-checkout`,
+      success_url: `${origin}/stripe/donate-with-checkout/result?session_id={CHECKOUT_SESSION_ID}`,
     }),
     ...(ui_mode === 'embedded' && {
       return_url: `${origin}/stripe/donate-with-embedded-checkout/result?session_id={CHECKOUT_SESSION_ID}`,

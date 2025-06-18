@@ -2,15 +2,16 @@
 
 import { motion } from 'motion/react'
 import React from 'react'
+
 import { cn } from '@/lib/utils'
 
 const pathVariants = {
-  initial: { strokeDashoffset: 800, strokeDasharray: '50 800' },
   animate: {
-    strokeDashoffset: 0,
-    strokeDasharray: '20 800',
     opacity: [0, 1, 1, 0],
+    strokeDasharray: '20 800',
+    strokeDashoffset: 0,
   },
+  initial: { strokeDasharray: '50 800', strokeDashoffset: 800 },
 }
 
 const SVG = ({
@@ -79,44 +80,44 @@ const SVG = ({
     >
       {paths.map((path, idx) => (
         <motion.path
-          key={`path-first-${idx}`}
           animate="animate"
           d={path}
           initial="initial"
+          key={`path-first-${idx}`}
           stroke={colors[idx]}
           strokeLinecap="round"
           strokeWidth="2.3"
-          variants={pathVariants}
           transition={{
+            delay: Math.floor(Math.random() * 10),
             duration: svgOptions?.duration || 10,
             ease: 'linear',
             repeat: Infinity,
-            repeatType: 'loop',
-            delay: Math.floor(Math.random() * 10),
             repeatDelay: Math.floor(Math.random() * 10 + 2),
+            repeatType: 'loop',
           }}
+          variants={pathVariants}
         />
       ))}
 
       {/* duplicate for more paths */}
       {paths.map((path, idx) => (
         <motion.path
-          key={`path-second-${idx}`}
           animate="animate"
           d={path}
           initial="initial"
+          key={`path-second-${idx}`}
           stroke={colors[idx]}
           strokeLinecap="round"
           strokeWidth="2.3"
-          variants={pathVariants}
           transition={{
+            delay: Math.floor(Math.random() * 10),
             duration: svgOptions?.duration || 10,
             ease: 'linear',
             repeat: Infinity,
-            repeatType: 'loop',
-            delay: Math.floor(Math.random() * 10),
             repeatDelay: Math.floor(Math.random() * 10 + 2),
+            repeatType: 'loop',
           }}
+          variants={pathVariants}
         />
       ))}
     </motion.svg>

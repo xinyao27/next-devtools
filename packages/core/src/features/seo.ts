@@ -1,8 +1,8 @@
 // browser-only
 
-import type { WithContext } from 'schema-dts'
 import type { SEOMetadata } from '@next-devtools/shared/types'
 import type { Facebook } from 'next/dist/lib/metadata/types/extra-types'
+import type { WithContext } from 'schema-dts'
 
 export function getSEOMetadata(route?: string): Promise<SEOMetadata> {
   return new Promise<SEOMetadata>((resolve) => {

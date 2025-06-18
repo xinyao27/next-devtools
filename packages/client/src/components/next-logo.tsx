@@ -1,20 +1,29 @@
 'use client'
 
-import { useMemo } from 'react'
 import type { SVGProps } from 'react'
 
+import { useMemo } from 'react'
+
 interface Props extends SVGProps<SVGSVGElement> {
-  mode?: 'full' | 'small'
-  theme?: 'light' | 'dark'
   fill?: string
+  mode?: 'full' | 'small'
+  theme?: 'dark' | 'light'
 }
-export default function NextLogo({ mode = 'full', theme = 'dark', fill: fillProp, ...props }: Props) {
+export default function NextLogo({ fill: fillProp, mode = 'full', theme = 'dark', ...props }: Props) {
   const fill = useMemo(() => fillProp || (theme === 'dark' ? '#fff' : '#000'), [theme, fillProp])
 
   if (mode === 'small') {
     return (
-      <svg aria-label="Next.js logotype" role="img" viewBox="0 0 330 79" {...props}>
-        <path d="M261.919 0.0330722H330.547V12.7H303.323V79.339H289.71V12.7H261.919V0.0330722Z" fill={fill} />
+      <svg
+        aria-label="Next.js logotype"
+        role="img"
+        viewBox="0 0 330 79"
+        {...props}
+      >
+        <path
+          d="M261.919 0.0330722H330.547V12.7H303.323V79.339H289.71V12.7H261.919V0.0330722Z"
+          fill={fill}
+        />
         <path
           d="M149.052 0.0330722V12.7H94.0421V33.0772H138.281V45.7441H94.0421V66.6721H149.052V79.339H80.43V12.7H80.4243V0.0330722H149.052Z"
           fill={fill}
@@ -23,7 +32,10 @@ export default function NextLogo({ mode = 'full', theme = 'dark', fill: fillProp
           d="M183.32 0.0661486H165.506L229.312 79.3721H247.178L215.271 39.7464L247.127 0.126654L229.312 0.154184L206.352 28.6697L183.32 0.0661486Z"
           fill={fill}
         />
-        <path d="M201.6 56.7148L192.679 45.6229L165.455 79.4326H183.32L201.6 56.7148Z" fill={fill} />
+        <path
+          d="M201.6 56.7148L192.679 45.6229L165.455 79.4326H183.32L201.6 56.7148Z"
+          fill={fill}
+        />
         <path
           clipRule="evenodd"
           d="M80.907 79.339L17.0151 0H0V79.3059H13.6121V16.9516L63.8067 79.339H80.907Z"
@@ -34,8 +46,16 @@ export default function NextLogo({ mode = 'full', theme = 'dark', fill: fillProp
     )
   }
   return (
-    <svg aria-label="Next.js logotype" role="img" viewBox="0 0 394 79" {...props}>
-      <path d="M261.919 0.0330722H330.547V12.7H303.323V79.339H289.71V12.7H261.919V0.0330722Z" fill={fill} />
+    <svg
+      aria-label="Next.js logotype"
+      role="img"
+      viewBox="0 0 394 79"
+      {...props}
+    >
+      <path
+        d="M261.919 0.0330722H330.547V12.7H303.323V79.339H289.71V12.7H261.919V0.0330722Z"
+        fill={fill}
+      />
       <path
         d="M149.052 0.0330722V12.7H94.0421V33.0772H138.281V45.7441H94.0421V66.6721H149.052V79.339H80.43V12.7H80.4243V0.0330722H149.052Z"
         fill={fill}
@@ -44,7 +64,10 @@ export default function NextLogo({ mode = 'full', theme = 'dark', fill: fillProp
         d="M183.32 0.0661486H165.506L229.312 79.3721H247.178L215.271 39.7464L247.127 0.126654L229.312 0.154184L206.352 28.6697L183.32 0.0661486Z"
         fill={fill}
       />
-      <path d="M201.6 56.7148L192.679 45.6229L165.455 79.4326H183.32L201.6 56.7148Z" fill={fill} />
+      <path
+        d="M201.6 56.7148L192.679 45.6229L165.455 79.4326H183.32L201.6 56.7148Z"
+        fill={fill}
+      />
       <path
         clipRule="evenodd"
         d="M80.907 79.339L17.0151 0H0V79.3059H13.6121V16.9516L63.8067 79.339H80.907Z"

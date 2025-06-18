@@ -1,32 +1,33 @@
 'use client'
 
-import { useCallback, useMemo, useRef, useState } from 'react'
-import { generate, tokenize } from 'sugar-high'
 import { useVirtualizer } from '@tanstack/react-virtual'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { useCopyToClipboard } from 'react-use'
+import { generate, tokenize } from 'sugar-high'
+
 import { cn } from '@/lib/utils'
+
 import { Button } from '../button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../tabs'
-
 import './styles.css'
 
 export interface CodeProps {
+  className?: string
   code?: string
   codes?: {
-    label: string
     code: string
+    label: string
   }[]
-  className?: string
-  language?: string
   fileName?: string
+  language?: string
   lineNumbers?: boolean
   showLanguage?: boolean
 }
 const SingleCodeBlock = ({
-  code,
   className,
-  language,
+  code,
   fileName,
+  language,
   lineNumbers = false,
   showLanguage = false,
   ...rest
@@ -44,12 +45,15 @@ const SingleCodeBlock = ({
   const lines = useMemo(() => generate(tokenize(code ?? '')), [code, match])
   const rowVirtualizer = useVirtualizer({
     count: lines.length,
-    getScrollElement: () => parentRef.current,
     estimateSize: () => 20,
+    getScrollElement: () => parentRef.current,
     overscan: 5,
   })
   const node = (
-    <pre ref={parentRef} className="max-h-96 w-full overflow-auto whitespace-pre p-4">
+    <pre
+      className="max-h-96 w-full overflow-auto whitespace-pre p-4"
+      ref={parentRef}
+    >
       <code
         {...rest}
         className={cn('relative block [overflow-wrap:break-word]', className)}
@@ -62,21 +66,21 @@ const SingleCodeBlock = ({
           const LineTag = line.tagName as any
           return (
             <LineTag
-              key={virtualRow.index}
               className={cn(line.properties.className, lineNumbers && 'sh__line-number')}
+              key={virtualRow.index}
               style={{
+                height: `${virtualRow.size}px`,
+                left: 0,
                 position: 'absolute',
                 top: 0,
-                left: 0,
-                width: '100%',
-                height: `${virtualRow.size}px`,
                 transform: `translateY(${virtualRow.start}px)`,
+                width: '100%',
               }}
             >
               {line.children.map((child: any, index: number) => (
                 <child.tagName
-                  key={index}
                   className={child.properties.className}
+                  key={index}
                   style={child.properties.style.split(';').reduce((acc: any, curr: string) => {
                     const [key, value] = curr.split(':')
                     acc[key] = value
@@ -95,14 +99,14 @@ const SingleCodeBlock = ({
 
   const copyNode = (
     <Button
-      disabled={!code}
-      size="icon"
-      variant="secondary"
       className={cn(
         'absolute right-2 top-2 z-10 opacity-0 transition-all duration-300 ease-in-out',
         code && 'group-hover:opacity-100',
       )}
+      disabled={!code}
       onClick={() => handleCopy(code!)}
+      size="icon"
+      variant="secondary"
     >
       {copied ? (
         <i className="i-ri-check-line size-4 text-green-500" />
@@ -135,17 +139,30 @@ const CodeBlock = (props: CodeProps) => {
 
   if (multipleCodes) {
     return (
-      <Tabs className="w-full space-y-0" defaultValue={selected} onValueChange={setSelected}>
+      <Tabs
+        className="w-full space-y-0"
+        defaultValue={selected}
+        onValueChange={setSelected}
+      >
         <TabsList className="w-full justify-start border-b-transparent">
           {codes.map((code) => (
-            <TabsTrigger key={code.label} value={code.label}>
+            <TabsTrigger
+              key={code.label}
+              value={code.label}
+            >
               {code.label}
             </TabsTrigger>
           ))}
         </TabsList>
         {codes.map((code) => (
-          <TabsContent key={code.label} value={code.label}>
-            <SingleCodeBlock code={code.code} {...rest} />
+          <TabsContent
+            key={code.label}
+            value={code.label}
+          >
+            <SingleCodeBlock
+              code={code.code}
+              {...rest}
+            />
           </TabsContent>
         ))}
       </Tabs>

@@ -1,7 +1,10 @@
-import React from 'react'
-import { Handle, type Node, type NodeProps, Position } from '@xyflow/react'
-import OpenInEditor from '@/components/open-in-editor'
 import type { Route } from '@next-devtools/shared/types'
+import type { Node, NodeProps } from '@xyflow/react'
+
+import { Handle, Position } from '@xyflow/react'
+import React from 'react'
+
+import OpenInEditor from '@/components/open-in-editor'
 
 export type TreeNodeType = Node<Route & { [key: string]: any }, 'tree'>
 
@@ -14,7 +17,11 @@ export const TreeNode = React.memo(({ data }: NodeProps<TreeNodeType>) => {
         {data.contents.map((content) => {
           const path = `${data.path}/${content}`
           return (
-            <OpenInEditor key={content} className="flex items-center gap-2" value={path}>
+            <OpenInEditor
+              className="flex items-center gap-2"
+              key={content}
+              value={path}
+            >
               <div>{content}</div>
             </OpenInEditor>
           )
@@ -33,8 +40,14 @@ export const TreeNode = React.memo(({ data }: NodeProps<TreeNodeType>) => {
         <div className="text-muted-foreground px-4 text-sm capitalize">{data.render}</div>
       </div>
 
-      <Handle position={Position.Top} type="target" />
-      <Handle position={Position.Bottom} type="source" />
+      <Handle
+        position={Position.Top}
+        type="target"
+      />
+      <Handle
+        position={Position.Bottom}
+        type="source"
+      />
     </div>
   )
 })

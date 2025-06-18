@@ -2,7 +2,7 @@
   "name": "@next-devtools/monorepo",
   "version": "0.3.0-beta.3",
   "private": true,
-  "packageManager": "pnpm@9.15.0",
+  "packageManager": "pnpm@10.11.1",
   "type": "module",
   "license": "MIT",
   "author": {
@@ -46,6 +46,11 @@
     "taze": "catalog:",
     "turbo": "catalog:",
     "typescript": "catalog:"
+  },
+  "pnpm": {
+    "overrides": {
+      "vite": "npm:rolldown-vite@latest"
+    }
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"

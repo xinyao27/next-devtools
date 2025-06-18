@@ -2,57 +2,57 @@
 
 import React from 'react'
 
-interface SharedProps {
-  maxHeight?: number
-  maxWidth?: number
-  minHeight?: number
-  minWidth?: number
-  lockHorizontal?: boolean
-  lockVertical?: boolean
-  onResize?: (values: MoveValues) => void
-  onDragEnd?: (values: MoveValues) => void
-  onDragStart?: (values: MoveValues) => void
-  disabled?: boolean
-  maintainAspectRatio?: boolean
+enum EndEvent {
+  MouseUp = 'mouseup',
+  TouchEnd = 'touchend',
 }
-
-export interface ResizableProps extends SharedProps {
-  interval?: number
-  initialHeight?: number | string
-  initialWidth?: number | string
-}
-
-export interface ResizeHandleProps extends SharedProps {
-  parent?: React.RefObject<HTMLElement>
-  interval?: number
-  reverse?: boolean
-}
-
-export interface MoveValues {
-  newHeight: number
-  heightDiff: number
-  newWidth: number
-  widthDiff: number
-}
-
-type HandleMouseMove = (startHeight: number, startY: number, startWidth: number, startX: number) => (e: Event) => void
-
-type HandleTouchMove = (startHeight: number, startY: number, startWidth: number, startX: number) => (e: Event) => void
 
 enum MoveEvent {
   MouseMove = 'mousemove',
   TouchMove = 'touchmove',
 }
 
-enum EndEvent {
-  MouseUp = 'mouseup',
-  TouchEnd = 'touchend',
+export interface MoveValues {
+  heightDiff: number
+  newHeight: number
+  newWidth: number
+  widthDiff: number
+}
+
+export interface ResizableProps extends SharedProps {
+  initialHeight?: number | string
+  initialWidth?: number | string
+  interval?: number
+}
+
+export interface ResizeHandleProps extends SharedProps {
+  interval?: number
+  parent?: React.RefObject<HTMLElement>
+  reverse?: boolean
+}
+
+type HandleMouseMove = (startHeight: number, startY: number, startWidth: number, startX: number) => (e: Event) => void
+
+type HandleTouchMove = (startHeight: number, startY: number, startWidth: number, startX: number) => (e: Event) => void
+
+interface SharedProps {
+  disabled?: boolean
+  lockHorizontal?: boolean
+  lockVertical?: boolean
+  maintainAspectRatio?: boolean
+  maxHeight?: number
+  maxWidth?: number
+  minHeight?: number
+  minWidth?: number
+  onDragEnd?: (values: MoveValues) => void
+  onDragStart?: (values: MoveValues) => void
+  onResize?: (values: MoveValues) => void
 }
 
 const defaultProps: ResizableProps = {
-  interval: 1,
   initialHeight: 100,
   initialWidth: 100,
+  interval: 1,
   lockHorizontal: false,
   lockVertical: false,
 }
@@ -101,20 +101,20 @@ export const useResizable = (options: ResizableProps) => {
       handleProps = {}
     }
     const {
-      parent = parentRef,
+      disabled = false,
       interval = 1,
-      maxHeight = Number.MAX_SAFE_INTEGER,
-      maxWidth = Number.MAX_SAFE_INTEGER,
-      reverse,
       lockHorizontal,
       lockVertical,
-      onResize,
-      onDragEnd,
-      onDragStart,
+      maintainAspectRatio = false,
+      maxHeight = Number.MAX_SAFE_INTEGER,
+      maxWidth = Number.MAX_SAFE_INTEGER,
       minHeight = 0,
       minWidth = 0,
-      disabled = false,
-      maintainAspectRatio = false,
+      onDragEnd,
+      onDragStart,
+      onResize,
+      parent = parentRef,
+      reverse,
     } = { ...props, ...handleProps }
 
     const handleMove = (
@@ -179,8 +179,8 @@ export const useResizable = (options: ResizableProps) => {
 
       if (onResize) {
         onResize({
-          newHeight: roundedHeight,
           heightDiff: roundedHeight - currentHeight,
+          newHeight: roundedHeight,
           newWidth: roundedWidth,
           widthDiff: roundedWidth - currentWidth,
         })
@@ -214,8 +214,8 @@ export const useResizable = (options: ResizableProps) => {
           const currentWidth = parent?.current?.clientWidth || 0
           const currentHeight = parent?.current?.clientHeight || 0
           onDragEnd({
-            newHeight: currentHeight,
             heightDiff: currentHeight - startHeight,
+            newHeight: currentHeight,
             newWidth: currentWidth,
             widthDiff: currentWidth - startWidth,
           })
@@ -237,13 +237,13 @@ export const useResizable = (options: ResizableProps) => {
       let moveEvent = null
       let endEvent = null
       if (e.type === 'mousedown') {
-        const { clientY, clientX } = e as React.MouseEvent
+        const { clientX, clientY } = e as React.MouseEvent
         moveHandler = handleMouseMove(startHeight, clientY, startWidth, clientX)
         moveEvent = MoveEvent.MouseMove
         endEvent = EndEvent.MouseUp
       } else if (e.type === 'touchstart') {
         const { touches } = e as React.TouchEvent
-        const { clientY, clientX } = touches[0]
+        const { clientX, clientY } = touches[0]
         moveHandler = handleTouchMove(startHeight, clientY, startWidth, clientX)
         moveEvent = MoveEvent.TouchMove
         endEvent = EndEvent.TouchEnd
@@ -253,8 +253,8 @@ export const useResizable = (options: ResizableProps) => {
 
       if (onDragStart) {
         onDragStart({
-          newHeight: startHeight,
           heightDiff: 0,
+          newHeight: startHeight,
           newWidth: startWidth,
           widthDiff: 0,
         })
@@ -293,9 +293,9 @@ export const useResizable = (options: ResizableProps) => {
   }
 
   return {
-    rootRef: parentRef,
-    getRootProps,
     getHandleProps,
+    getRootProps,
+    rootRef: parentRef,
     size: { height, width },
   }
 }

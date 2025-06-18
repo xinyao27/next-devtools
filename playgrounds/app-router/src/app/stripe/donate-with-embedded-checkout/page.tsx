@@ -1,5 +1,6 @@
-import CheckoutForm from '@/app/stripe/components/CheckoutForm'
 import type { Metadata } from 'next'
+
+import CheckoutForm from '@/app/stripe/components/CheckoutForm'
 
 export const metadata: Metadata = {
   title: 'Donate with embedded Checkout | Next.js + TypeScript Example',

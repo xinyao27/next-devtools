@@ -2,7 +2,11 @@ export default function StripeTestCards(): JSX.Element {
   return (
     <div className="test-card-notice">
       Use any of the{' '}
-      <a href="https://stripe.com/docs/testing#cards" rel="noopener noreferrer" target="_blank">
+      <a
+        href="https://stripe.com/docs/testing#cards"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
         Stripe test cards
       </a>{' '}
       for this demo, e.g.{' '}

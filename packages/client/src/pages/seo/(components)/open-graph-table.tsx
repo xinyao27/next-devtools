@@ -1,118 +1,120 @@
-import React from 'react'
-import { cn } from '@/lib/utils'
 import type { SEOMetadata } from '@next-devtools/shared/types'
+
+import React from 'react'
+
+import { cn } from '@/lib/utils'
 
 // from https://github.com/nuxt/devtools
 export const ogTags = [
   {
-    name: 'title',
-    docs: 'https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title',
     description: 'A concise and descriptive title for the browser that accurately summarizes the content of the page.',
+    docs: 'https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title',
+    name: 'title',
   },
   {
-    name: 'description',
     description:
       'A one to two sentence summary for search engines that includes relevant keywords to improve visibility in search results.',
+    name: 'description',
   },
   {
-    name: 'icon',
     description:
       'A small image that appears in the browser tab and bookmark menu to help users easily identify the page.',
+    name: 'icon',
   },
   {
-    name: 'lang',
     description: 'The primary language of the page to help search engines and browsers understand the content.',
+    name: 'lang',
   },
   {
-    name: 'og:title',
-    docs: 'https://ogp.me/#metadata',
     description: 'A title for the link preview used by social media platforms.',
+    docs: 'https://ogp.me/#metadata',
+    name: 'og:title',
   },
   {
-    name: 'og:description',
-    docs: 'https://ogp.me/#metadata',
     description: 'A description for the link preview used by social media platforms.',
+    docs: 'https://ogp.me/#metadata',
+    name: 'og:description',
   },
   {
-    name: 'og:image',
-    docs: 'https://ogp.me/#metadata',
     description: 'An image for the link preview used by social media platforms.',
+    docs: 'https://ogp.me/#metadata',
+    name: 'og:image',
   },
   {
-    name: 'og:url',
-    docs: 'https://ogp.me/#metadata',
     description:
       'A canonical URL for the link preview used to specify the preferred URL to display in search engine results and social media previews when multiple URLs may point to the same page.',
+    docs: 'https://ogp.me/#metadata',
+    name: 'og:url',
   },
   {
-    name: 'twitter:title',
-    docs: 'https://developer.x.com/en/docs/x-for-websites/cards/overview/abouts-cards',
     description: 'A title for the Twitter card used to provide a preview of the content shared on the page.',
+    docs: 'https://developer.x.com/en/docs/x-for-websites/cards/overview/abouts-cards',
+    name: 'twitter:title',
   },
   {
-    name: 'twitter:description',
-    docs: 'https://developer.x.com/en/docs/x-for-websites/cards/overview/abouts-cards',
     description: 'A description for the Twitter card used to provide a preview of the content shared on the page.',
+    docs: 'https://developer.x.com/en/docs/x-for-websites/cards/overview/abouts-cards',
+    name: 'twitter:description',
   },
   {
-    name: 'twitter:image',
-    docs: 'https://developer.x.com/en/docs/x-for-websites/cards/overview/abouts-cards',
     description: 'An image for the Twitter card used to provide a preview of the content shared on the page.',
+    docs: 'https://developer.x.com/en/docs/x-for-websites/cards/overview/abouts-cards',
+    name: 'twitter:image',
   },
   {
-    name: 'twitter:card',
-    docs: 'https://developer.x.com/en/docs/x-for-websites/cards/overview/abouts-cards',
     description:
       'The type of Twitter card to use, which determines the type of card to display in link previews on Twitter.',
+    docs: 'https://developer.x.com/en/docs/x-for-websites/cards/overview/abouts-cards',
+    name: 'twitter:card',
   },
 ]
 interface Row {
-  id: string
   content: (data: SEOMetadata) => React.ReactNode
+  id: string
 }
 const rows: Row[] = [
   // HTML Meta Tags
   {
-    id: 'title',
     content: (data) => data.title as string,
+    id: 'title',
   },
   {
-    id: 'description',
     content: (data) => data.description as string,
+    id: 'description',
   },
   // og
   {
-    id: 'og:url',
     content: (data) => data.openGraph?.url,
+    id: 'og:url',
   },
   {
-    id: 'og:title',
     content: (data) => data.openGraph?.title as string,
+    id: 'og:title',
   },
   {
-    id: 'og:description',
     content: (data) => data.openGraph?.description as string,
+    id: 'og:description',
   },
   {
-    id: 'og:image',
     content: (data) => (data.openGraph?.images as any[])?.[0]?.url,
+    id: 'og:image',
   },
   // twitter
   {
-    id: 'twitter:card',
     content: (data) => (data.twitter as any)?.card,
+    id: 'twitter:card',
   },
   {
-    id: 'twitter:title',
     content: (data) => data.twitter?.title,
+    id: 'twitter:title',
   },
   {
-    id: 'twitter:description',
     content: (data) => data.twitter?.description,
+    id: 'twitter:description',
   },
   {
-    id: 'twitter:image',
     content: (data) => (data.twitter as any)?.images?.[0]?.url,
+    id: 'twitter:image',
   },
 ]
 
@@ -132,12 +134,12 @@ const OpenGraphTable = ({ data }: OpenGraphTableProps) => {
 
         return (
           <div
-            key={row.id}
             className={cn(
               'flex items-center justify-between border-b text-sm',
               !content && 'flex-col items-start',
               index === rows.length - 1 && 'border-b-0',
             )}
+            key={row.id}
           >
             <dt
               className={cn(

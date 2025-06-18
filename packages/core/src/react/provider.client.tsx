@@ -1,15 +1,17 @@
 'use client'
 
-import React from 'react'
-import { usePathname, useRouter } from 'next/navigation'
-import { createFrameMessageHandler } from '@next-devtools/shared/utils'
-import { CLIENT_BASE_PATH } from '@next-devtools/shared/constants'
-import { getSEOMetadata } from '../features/seo'
-import { useSettingsStore } from './lib/use-settings-store'
-import { useInternalStore } from './lib/use-internal-store'
-import Resizable from './lib/resizable'
-import type { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import type { FrameMessageHandler } from '@next-devtools/shared/utils'
+import type { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+
+import { CLIENT_BASE_PATH } from '@next-devtools/shared/constants'
+import { createFrameMessageHandler } from '@next-devtools/shared/utils'
+import { usePathname, useRouter } from 'next/navigation'
+import React from 'react'
+
+import { getSEOMetadata } from '../features/seo'
+import Resizable from './lib/resizable'
+import { useInternalStore } from './lib/use-internal-store'
+import { useSettingsStore } from './lib/use-settings-store'
 
 export function NextDevtoolsClientProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
@@ -21,17 +23,17 @@ export function NextDevtoolsClientProvider({ children }: { children: React.React
 
   React.useEffect(() => {
     const handler: FrameMessageHandler = {
-      // routes
-      getRoute: async () => latestPathname.current,
-      pushRoute: async (href: string, options?: NavigateOptions) => {
-        router.push(href, options)
-      },
       backRoute: async () => {
         router.back()
       },
-
+      // routes
+      getRoute: async () => latestPathname.current,
       // seo
       getSEOMetadata,
+
+      pushRoute: async (href: string, options?: NavigateOptions) => {
+        router.push(href, options)
+      },
     }
     const unsubscribe = createFrameMessageHandler(handler, iframeRef)
 
@@ -61,11 +63,11 @@ export function NextDevtoolsClientProvider({ children }: { children: React.React
           ref={iframeRef}
           src={CLIENT_BASE_PATH}
           style={{
-            width: '100%',
-            height: '100%',
-            display: 'block',
-            pointerEvents: 'auto',
             border: 'none',
+            display: 'block',
+            height: '100%',
+            pointerEvents: 'auto',
+            width: '100%',
           }}
         />
       </Resizable>

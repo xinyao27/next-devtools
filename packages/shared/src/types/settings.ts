@@ -1,27 +1,27 @@
 import { z } from 'zod'
 
 export enum Editor {
-  VSCode = 'vscode',
   Cursor = 'cursor',
+  VSCode = 'vscode',
   Windsurf = 'windsurf',
 }
 
 export const editorCommands = {
-  [Editor.VSCode]: 'code',
   [Editor.Cursor]: 'cursor',
+  [Editor.VSCode]: 'code',
   [Editor.Windsurf]: 'windsurf',
 }
 
 export enum ToolbarPosition {
-  Top = 'top',
   Bottom = 'bottom',
   Left = 'left',
   Right = 'right',
+  Top = 'top',
 }
 
 export interface ToolbarSize {
-  width: number | string
   height: number | string
+  width: number | string
 }
 
 export const DEFAULT_TOOLBAR_SIZE = 770
@@ -29,70 +29,70 @@ export const TOOLBAR_MIN_SIZE = 100
 export const MINI_TOOLBAR_SIZE = 45
 
 export const ToolbarDefaultSize: Record<ToolbarPosition, ToolbarSize> = {
-  [ToolbarPosition.Top]: {
-    width: '100%',
-    height: DEFAULT_TOOLBAR_SIZE,
-  },
   [ToolbarPosition.Bottom]: {
-    width: '100%',
     height: DEFAULT_TOOLBAR_SIZE,
+    width: '100%',
   },
   [ToolbarPosition.Left]: {
-    width: DEFAULT_TOOLBAR_SIZE,
     height: '100%',
+    width: DEFAULT_TOOLBAR_SIZE,
   },
   [ToolbarPosition.Right]: {
-    width: DEFAULT_TOOLBAR_SIZE,
     height: '100%',
+    width: DEFAULT_TOOLBAR_SIZE,
+  },
+  [ToolbarPosition.Top]: {
+    height: DEFAULT_TOOLBAR_SIZE,
+    width: '100%',
   },
 }
 
 export const settingsStoreDefaultState: SettingsStoreState = {
+  componentDirectory: '/src/components',
+  editor: Editor.VSCode,
   sidebarCollapsed: undefined,
   toolbarPosition: ToolbarPosition.Bottom,
   toolbarSize: {
-    width: '100%',
     height: MINI_TOOLBAR_SIZE,
+    width: '100%',
   },
   uiScale: 15,
-  editor: Editor.VSCode,
-  componentDirectory: '/src/components',
 }
 
 export const settingsSchema = z.object({
+  componentDirectory: z.string().optional().default('/src/components'),
+  editor: z.nativeEnum(Editor).optional().default(Editor.VSCode),
   sidebarCollapsed: z.boolean().optional(),
-  uiScale: z.number().optional().default(15),
   toolbarPosition: z.nativeEnum(ToolbarPosition).optional().default(ToolbarPosition.Bottom),
   toolbarSize: z
     .object({
-      width: z.number().or(z.string()).default('100%'),
       height: z.number().or(z.string()).default(MINI_TOOLBAR_SIZE),
+      width: z.number().or(z.string()).default('100%'),
     })
     .optional(),
-  editor: z.nativeEnum(Editor).optional().default(Editor.VSCode),
-  componentDirectory: z.string().optional().default('/src/components'),
+  uiScale: z.number().optional().default(15),
 })
-export type SettingsStoreState = z.infer<typeof settingsSchema>
+export type SettingsStore = SettingsStoreActions & SettingsStoreState
 
 export interface SettingsStoreActions {
-  setup: (options?: any) => void
   setState: (state: Partial<SettingsStoreState>) => void
-  setToolbarSize: (size: number) => void
   setToolbarPosition: (toolbarPosition: ToolbarPosition) => void
+  setToolbarSize: (size: number) => void
+  setup: (options?: any) => void
   toggleToolbar: () => void
 }
 
-export type SettingsStore = SettingsStoreState & SettingsStoreActions
+export type SettingsStoreState = z.infer<typeof settingsSchema>
 
-export type ToolbarStatus = 'hide' | 'mini' | 'full'
+export type ToolbarStatus = 'full' | 'hide' | 'mini'
 
 export function getToolbarStatusBySize(size: ToolbarSize | undefined, position: ToolbarPosition): ToolbarStatus {
   if (!size) return 'hide'
 
   let value = 0
   switch (position) {
-    case ToolbarPosition.Top:
     case ToolbarPosition.Bottom:
+    case ToolbarPosition.Top:
       value = Number(size.height)
       break
     case ToolbarPosition.Left:

@@ -1,5 +1,6 @@
-import diff from 'microdiff'
 import type { Difference } from 'microdiff'
+
+import diff from 'microdiff'
 
 export { diff }
 export type { Difference }
@@ -17,16 +18,15 @@ export function diffApply<T = any>(data: T, differences: Difference[]): T {
     const lastKey = difference.path[lastIndex]
 
     switch (difference.type) {
-      case 'CREATE': {
-        current[lastKey] = difference.value
-        break
-      }
       case 'CHANGE': {
         current[lastKey] = difference.value
         break
       }
+      case 'CREATE': {
+        current[lastKey] = difference.value
+        break
+      }
       case 'REMOVE': {
-        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete current[lastKey]
         break
       }

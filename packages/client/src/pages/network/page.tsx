@@ -1,12 +1,15 @@
 'use client'
 
-import { useMemo } from 'react'
-import { useNetworkStore } from '@/store/network'
-import { Button } from '@/components/ui/button'
-import DataTable from './(components)/data-table'
-import { columns } from './(components)/columns'
-import { SheetDetailsContent } from './(components)/sheet-details-content'
 import type { NetworkRequest } from '@next-devtools/shared/types'
+
+import { useMemo } from 'react'
+
+import { Button } from '@/components/ui/button'
+import { useNetworkStore } from '@/store/network'
+
+import { columns } from './(components)/columns'
+import DataTable from './(components)/data-table'
+import { SheetDetailsContent } from './(components)/sheet-details-content'
 
 export default function Page() {
   const requests = useNetworkStore((state) => state.requests)
@@ -25,7 +28,12 @@ export default function Page() {
         headerExtra={
           <>
             {data.length > 0 ? (
-              <Button className="group size-6" size="icon" variant="secondary" onClick={() => clear()}>
+              <Button
+                className="group size-6"
+                onClick={() => clear()}
+                size="icon"
+                variant="secondary"
+              >
                 <i className="i-ri-delete-bin-line text-muted-foreground group-hover:text-foreground size-4 transition-colors duration-200" />
               </Button>
             ) : null}

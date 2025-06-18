@@ -1,17 +1,18 @@
 'use client'
 
-import { RouterProvider, createBrowserRouter } from 'react-router'
 import { CLIENT_BASE_PATH } from '@next-devtools/shared/constants'
-import Provider from './pages/provider'
-import Error from './pages/error'
-import HomePage from './pages/page'
+import { createBrowserRouter, RouterProvider } from 'react-router'
+
 import AssetsPage from './pages/assets/page'
 import BundleAnalyzerPage from './pages/bundle-analyzer/page'
 import ComponentsPage from './pages/components/page'
 import EnvsPage from './pages/envs/page'
+import Error from './pages/error'
 import NetworkPage from './pages/network/page'
 import OverviewPage from './pages/overview/page'
 import PackagesPage from './pages/packages/page'
+import HomePage from './pages/page'
+import Provider from './pages/provider'
 import RoutesPage from './pages/routes/page'
 import SEOPage from './pages/seo/page'
 import SettingsPage from './pages/settings/page'
@@ -20,23 +21,23 @@ import TerminalPage from './pages/terminal/page'
 export const routes = createBrowserRouter(
   [
     {
-      path: `/`,
+      children: [
+        { Component: HomePage, index: true },
+        { Component: AssetsPage, path: 'assets' },
+        { Component: BundleAnalyzerPage, path: 'bundle-analyzer' },
+        { Component: ComponentsPage, path: 'components' },
+        { Component: EnvsPage, path: 'envs' },
+        { Component: NetworkPage, path: 'network' },
+        { Component: OverviewPage, path: 'overview' },
+        { Component: PackagesPage, path: 'packages' },
+        { Component: RoutesPage, path: 'routes' },
+        { Component: SEOPage, path: 'seo' },
+        { Component: SettingsPage, path: 'settings' },
+        { Component: TerminalPage, path: 'terminal' },
+      ],
       Component: Provider,
       ErrorBoundary: Error,
-      children: [
-        { index: true, Component: HomePage },
-        { path: 'assets', Component: AssetsPage },
-        { path: 'bundle-analyzer', Component: BundleAnalyzerPage },
-        { path: 'components', Component: ComponentsPage },
-        { path: 'envs', Component: EnvsPage },
-        { path: 'network', Component: NetworkPage },
-        { path: 'overview', Component: OverviewPage },
-        { path: 'packages', Component: PackagesPage },
-        { path: 'routes', Component: RoutesPage },
-        { path: 'seo', Component: SEOPage },
-        { path: 'settings', Component: SettingsPage },
-        { path: 'terminal', Component: TerminalPage },
-      ],
+      path: `/`,
     },
   ],
   {

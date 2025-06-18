@@ -1,5 +1,6 @@
 import { Panel, useReactFlow } from '@xyflow/react'
 import { useRef, useState } from 'react'
+
 import { Button } from '@/components/ui/button'
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
 }
 
 export function FlowControls({ containerRef, onLayout }: Props) {
-  const { zoomIn, zoomOut, getZoom, fitView } = useReactFlow()
+  const { fitView, getZoom, zoomIn, zoomOut } = useReactFlow()
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [zoomLevel, setZoomLevel] = useState(getZoom() * 100)
   const [showZoomLevel, setShowZoomLevel] = useState(false)
@@ -54,39 +55,54 @@ export function FlowControls({ containerRef, onLayout }: Props) {
         <div className="flex items-center -space-x-px">
           <Button
             className="rounded-none shadow-none first:rounded-s-lg last:rounded-e-lg focus-visible:z-10"
+            onClick={handleFullscreen}
             size="icon"
             variant="outline"
-            onClick={handleFullscreen}
           >
             {isFullscreen ? (
-              <i aria-hidden="true" className="i-ri-fullscreen-exit-line size-4" />
+              <i
+                aria-hidden="true"
+                className="i-ri-fullscreen-exit-line size-4"
+              />
             ) : (
-              <i aria-hidden="true" className="i-ri-fullscreen-line size-4" />
+              <i
+                aria-hidden="true"
+                className="i-ri-fullscreen-line size-4"
+              />
             )}
           </Button>
           <Button
             className="rounded-none shadow-none first:rounded-s-lg last:rounded-e-lg focus-visible:z-10"
-            size="icon"
-            variant="outline"
             onClick={handleZoomIn}
+            size="icon"
+            variant="outline"
           >
-            <i aria-hidden="true" className="i-ri-zoom-in-line size-4" />
+            <i
+              aria-hidden="true"
+              className="i-ri-zoom-in-line size-4"
+            />
           </Button>
           <Button
             className="rounded-none shadow-none first:rounded-s-lg last:rounded-e-lg focus-visible:z-10"
-            size="icon"
-            variant="outline"
             onClick={handleZoomOut}
+            size="icon"
+            variant="outline"
           >
-            <i aria-hidden="true" className="i-ri-zoom-out-line size-4" />
+            <i
+              aria-hidden="true"
+              className="i-ri-zoom-out-line size-4"
+            />
           </Button>
           <Button
             className="rounded-none shadow-none first:rounded-s-lg last:rounded-e-lg focus-visible:z-10"
+            onClick={onLayout}
             size="icon"
             variant="outline"
-            onClick={onLayout}
           >
-            <i aria-hidden="true" className="i-ri-home-line size-4" />
+            <i
+              aria-hidden="true"
+              className="i-ri-home-line size-4"
+            />
           </Button>
         </div>
 

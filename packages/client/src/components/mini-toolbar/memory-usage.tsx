@@ -1,9 +1,10 @@
 'use client'
 
-import React from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { cn, formatBytes } from '@/lib/utils'
+import React from 'react'
+
 import { rpcClient } from '@/lib/client'
+import { cn, formatBytes } from '@/lib/utils'
 
 interface MemoryUsageProps {
   className?: string
@@ -16,8 +17,8 @@ const NA = 'N/A'
 
 export default function MemoryUsage({ className, isHorizontal, isVertical }: MemoryUsageProps) {
   const { data: nextServerMemoryBytes } = useQuery({
-    queryKey: ['getNextServerMemory'],
     queryFn: () => rpcClient.getNextServerMemory(),
+    queryKey: ['getNextServerMemory'],
     refetchInterval: REFRESH_INTERVAL,
   })
   const nextServerMemory = React.useMemo(() => {
@@ -52,14 +53,17 @@ export default function MemoryUsage({ className, isHorizontal, isVertical }: Mem
 
   return (
     <button
-      title={`Browser Memory: ${browserMemory}\nNext.js Server Memory: ${nextServerMemory}`}
       className={cn(className, {
-        'max-w-[230px] border-r': isHorizontal,
         'max-h-[200px] flex-col items-center border-b': isVertical,
+        'max-w-[230px] border-r': isHorizontal,
       })}
+      title={`Browser Memory: ${browserMemory}\nNext.js Server Memory: ${nextServerMemory}`}
     >
       <i className="i-ri-cpu-line size-4 opacity-60" />
-      <span className={cn('hidden opacity-60', isHorizontal && 'block')} data-label="Memory">
+      <span
+        className={cn('hidden opacity-60', isHorizontal && 'block')}
+        data-label="Memory"
+      >
         MEM
       </span>
       <div className={cn('truncate opacity-70', isVertical && '[writing-mode:vertical-rl]')}>

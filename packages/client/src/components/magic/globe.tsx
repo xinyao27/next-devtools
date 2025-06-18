@@ -1,26 +1,23 @@
 'use client'
 
-import createGlobe from 'cobe'
-import { useCallback, useEffect, useRef, useState } from 'react'
-
-import { useTheme } from 'next-themes'
-import { cn } from '@/lib/utils'
 import type { COBEOptions } from 'cobe'
 
+import createGlobe from 'cobe'
+import { useTheme } from 'next-themes'
+import { useCallback, useEffect, useRef, useState } from 'react'
+
+import { cn } from '@/lib/utils'
+
 const GLOBE_CONFIG: COBEOptions = {
-  width: 800,
-  height: 800,
-  onRender: () => {},
-  devicePixelRatio: 2,
-  phi: 0,
-  theta: 0.3,
-  dark: typeof window !== 'undefined' && localStorage.theme === 'light' ? 0 : 1,
-  diffuse: 0.4,
-  mapSamples: 16000,
-  mapBrightness: 1.2,
   baseColor: [1, 1, 1],
-  markerColor: [255 / 255, 199 / 255, 153 / 255], // #ffc799
+  dark: typeof window !== 'undefined' && localStorage.theme === 'light' ? 0 : 1,
+  devicePixelRatio: 2,
+  diffuse: 0.4,
   glowColor: [1, 1, 1],
+  height: 800,
+  mapBrightness: 1.2,
+  mapSamples: 16000,
+  markerColor: [255 / 255, 199 / 255, 153 / 255], // #ffc799
   markers: [
     { location: [14.5995, 120.9842], size: 0.03 },
     { location: [19.076, 72.8777], size: 0.1 },
@@ -33,6 +30,10 @@ const GLOBE_CONFIG: COBEOptions = {
     { location: [34.6937, 135.5022], size: 0.05 },
     { location: [41.0082, 28.9784], size: 0.06 },
   ],
+  onRender: () => {},
+  phi: 0,
+  theta: 0.3,
+  width: 800,
 }
 
 export function Globe({ className, config = GLOBE_CONFIG }: { className?: string; config?: COBEOptions }) {
@@ -82,11 +83,11 @@ export function Globe({ className, config = GLOBE_CONFIG }: { className?: string
     if (canvasRef.current) {
       const globe = createGlobe(canvasRef.current!, {
         ...config,
-        width: width * 2,
-        height: width * 2,
-        onRender,
         dark: theme === 'light' ? 0 : 1,
         glowColor: theme === 'light' ? [1, 1, 1] : [0.2, 0.2, 0.2],
+        height: width * 2,
+        onRender,
+        width: width * 2,
       })
 
       setTimeout(() => (canvasRef.current!.style.opacity = '1'))
@@ -96,15 +97,15 @@ export function Globe({ className, config = GLOBE_CONFIG }: { className?: string
   }, [theme])
 
   return (
-    <div className={cn('absolute inset-0 mx-auto aspect-[1/1] w-full max-w-[600px]', className)}>
+    <div className={cn('absolute inset-0 mx-auto aspect-square w-full max-w-[600px]', className)}>
       <canvas
-        ref={canvasRef}
-        className={cn('size-full opacity-0 transition-opacity duration-500 [contain:layout_paint_size]')}
+        className={cn('contain-[layout_paint_size] size-full opacity-0 transition-opacity duration-500')}
         onMouseMove={(e) => updateMovement(e.clientX)}
         onPointerDown={(e) => updatePointerInteraction(e.clientX - pointerInteractionMovement.current)}
         onPointerOut={() => updatePointerInteraction(null)}
         onPointerUp={() => updatePointerInteraction(null)}
         onTouchMove={(e) => e.touches[0] && updateMovement(e.touches[0].clientX)}
+        ref={canvasRef}
       />
     </div>
   )

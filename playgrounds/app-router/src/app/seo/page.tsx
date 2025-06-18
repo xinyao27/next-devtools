@@ -8,62 +8,62 @@ const DEFAULT_IMAGE = `/banner.jpg`
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: SITE_NAME,
-    description: SITE_DESC,
-    keywords: ['chicken farming', 'organic gardening', 'sustainable living', 'backyard gardens'],
+    alternates: {
+      canonical: BASE_URL,
+    },
     authors: [{ name: 'Garden Paradise LLC' }],
-    themeColor: '#4ade80',
+    description: SITE_DESC,
+    icons: {
+      apple: '/icon.png',
+      icon: '/favicon.ico',
+    },
+    keywords: ['chicken farming', 'organic gardening', 'sustainable living', 'backyard gardens'],
 
     // Open Graph
     openGraph: {
-      type: 'website',
-      url: BASE_URL,
-      title: SITE_NAME,
       description: SITE_DESC,
-      siteName: SITE_NAME,
       images: [
         {
+          alt: 'Chicken Garden Paradise Banner',
+          height: 630,
           url: DEFAULT_IMAGE,
           width: 1200,
-          height: 630,
-          alt: 'Chicken Garden Paradise Banner',
         },
         'https://picsum.photos/300/200',
       ],
       locale: 'en_US',
-    },
-
-    // Twitter
-    twitter: {
-      card: 'summary',
+      siteName: SITE_NAME,
       title: SITE_NAME,
-      description: SITE_DESC,
-      // images: [DEFAULT_IMAGE],
-      creator: '@ChickenGarden',
+      type: 'website',
+      url: BASE_URL,
     },
 
     // other
     robots: {
-      index: true,
       follow: true,
       googleBot: {
-        index: true,
         follow: true,
-        'max-video-preview': -1,
+        index: true,
         'max-image-preview': 'large',
         'max-snippet': -1,
+        'max-video-preview': -1,
       },
+      index: true,
+    },
+
+    themeColor: '#4ade80',
+    title: SITE_NAME,
+    // Twitter
+    twitter: {
+      card: 'summary',
+      // images: [DEFAULT_IMAGE],
+      creator: '@ChickenGarden',
+      description: SITE_DESC,
+      title: SITE_NAME,
     },
     viewport: {
-      width: 'device-width',
       initialScale: 1,
-    },
-    icons: {
-      icon: '/favicon.ico',
-      apple: '/icon.png',
-    },
-    alternates: {
-      canonical: BASE_URL,
+      width: 'device-width',
     },
   }
 }

@@ -1,18 +1,19 @@
-import { join, resolve } from 'node:path'
-import { createStore } from 'zustand/vanilla'
-import fs from 'fs-extra'
 import type { InternalStore, NextDevtoolsServerContext } from '@next-devtools/shared/types'
 
+import fs from 'fs-extra'
+import { join, resolve } from 'node:path'
+import { createStore } from 'zustand/vanilla'
+
 export const internalStore = createStore<InternalStore>()((set) => ({
-  root: '',
-  isSrcDirectory: false,
   codeRoot: '',
-  pkgPath: undefined,
-  publicPath: undefined,
+  dev: false,
   isApp: false,
   isPages: false,
+  isSrcDirectory: false,
+  pkgPath: undefined,
+  publicPath: undefined,
+  root: '',
   routePath: '',
-  dev: false,
 
   setup: (ctx: NextDevtoolsServerContext) => {
     const root = ctx.options.context!
@@ -29,15 +30,15 @@ export const internalStore = createStore<InternalStore>()((set) => ({
     const dev = ctx.context.dev
 
     set({
-      root,
-      isSrcDirectory,
       codeRoot,
-      pkgPath,
-      publicPath,
+      dev,
       isApp,
       isPages,
+      isSrcDirectory,
+      pkgPath,
+      publicPath,
+      root,
       routePath,
-      dev,
     })
   },
 }))

@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import localFont from 'next/font/local'
+import Image from 'next/image'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -15,11 +15,18 @@ const geistMono = localFont({
 export default function Home() {
   return (
     <div
-      className={`${geistSans.variable} ${geistMono.variable} grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20`}
+      className={`${geistSans.variable} ${geistMono.variable} font-(family-name:--font-geist-sans) grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 sm:p-20`}
     >
       <main className="row-start-2 flex flex-col items-center gap-8 sm:items-start">
-        <Image priority alt="Next.js logo" className="dark:invert" height={38} src="/next.svg" width={180} />
-        <ol className="list-inside list-decimal text-center font-[family-name:var(--font-geist-mono)] text-sm sm:text-left">
+        <Image
+          alt="Next.js logo"
+          className="dark:invert"
+          height={38}
+          priority
+          src="/next.svg"
+          width={180}
+        />
+        <ol className="font-(family-name:--font-geist-mono) list-inside list-decimal text-center text-sm sm:text-left">
           <li className="mb-2">
             Get started by editing{' '}
             <code className="rounded bg-black/[.05] px-1 py-0.5 font-semibold dark:bg-white/[.06]">
@@ -37,7 +44,13 @@ export default function Home() {
             rel="noopener noreferrer"
             target="_blank"
           >
-            <Image alt="Vercel logomark" className="dark:invert" height={20} src="/vercel.svg" width={20} />
+            <Image
+              alt="Vercel logomark"
+              className="dark:invert"
+              height={20}
+              src="/vercel.svg"
+              width={20}
+            />
             Deploy now
           </a>
           <a
@@ -57,7 +70,13 @@ export default function Home() {
           rel="noopener noreferrer"
           target="_blank"
         >
-          <Image aria-hidden alt="File icon" height={16} src="/file.svg" width={16} />
+          <Image
+            alt="File icon"
+            aria-hidden
+            height={16}
+            src="/file.svg"
+            width={16}
+          />
           Learn
         </a>
         <a
@@ -66,7 +85,13 @@ export default function Home() {
           rel="noopener noreferrer"
           target="_blank"
         >
-          <Image aria-hidden alt="Window icon" height={16} src="/window.svg" width={16} />
+          <Image
+            alt="Window icon"
+            aria-hidden
+            height={16}
+            src="/window.svg"
+            width={16}
+          />
           Examples
         </a>
         <a
@@ -75,7 +100,13 @@ export default function Home() {
           rel="noopener noreferrer"
           target="_blank"
         >
-          <Image aria-hidden alt="Globe icon" height={16} src="/globe.svg" width={16} />
+          <Image
+            alt="Globe icon"
+            aria-hidden
+            height={16}
+            src="/globe.svg"
+            width={16}
+          />
           Go to nextjs.org →
         </a>
       </footer>

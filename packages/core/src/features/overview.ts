@@ -1,9 +1,11 @@
+import type { NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
+
 import { removeVersionPrefix } from '@next-devtools/shared/utils'
-import { getRoutes } from './routes'
+
+import { getStaticAssets } from './assets'
 import { getComponents } from './components'
 import { getPackages } from './packages'
-import { getStaticAssets } from './assets'
-import type { NextDevtoolsServerContext, ServerFunctions } from '@next-devtools/shared/types'
+import { getRoutes } from './routes'
 
 export async function getOverviewData() {
   const version = process.env.VERSION!
@@ -17,13 +19,13 @@ export async function getOverviewData() {
   const assets = await getStaticAssets()
 
   return {
-    version,
+    assets,
+    components,
     nextVersion,
+    packages,
     reactVersion,
     routes,
-    components,
-    assets,
-    packages,
+    version,
   }
 }
 

@@ -1,16 +1,27 @@
-import { join, parse } from 'node:path'
-import fs from 'fs-extra'
-import { internalStore } from '../store/internal'
 import type { NextDevtoolsServerContext, Route, ServerFunctions } from '@next-devtools/shared/types'
 
-async function detectClientDirective(filePath: string): Promise<boolean> {
-  try {
-    const content = await fs.readFile(filePath, 'utf-8')
-    const firstLine = content.split('\n')[0].trim()
-    return firstLine === "'use client'" || firstLine === '"use client"' || firstLine === '`use client`'
-  } catch {
-    return false
-  }
+import fs from 'fs-extra'
+import { join, parse } from 'node:path'
+
+import { internalStore } from '../store/internal'
+
+export async function getRoutes() {
+  const { isApp, isPages, routePath } = internalStore.getState()
+
+  const routes = await buildRouteTree(routePath)
+
+  const result = {
+    routes,
+    type: isApp ? 'app' : isPages ? 'pages' : 'app',
+  } as const
+
+  return result
+}
+
+export function setupRoutesRpc(_: NextDevtoolsServerContext) {
+  return {
+    getRoutes,
+  } satisfies Partial<ServerFunctions>
 }
 
 async function buildRouteTree(rootDir: string): Promise<Route[]> {
@@ -19,13 +30,13 @@ async function buildRouteTree(rootDir: string): Promise<Route[]> {
 
   const treeNodes: Route[] = [
     {
+      contents: [],
       id: 0,
-      route: '/',
       name: parse(rootDir).base,
       parentNode: null,
       path: rootDir,
-      contents: [],
       render: 'server',
+      route: '/',
     },
   ]
 
@@ -64,13 +75,13 @@ async function buildRouteTree(rootDir: string): Promise<Route[]> {
   // Create a new route node for the tree
   function createRouteNode(path: string, name: string, parentId: number, parentNode?: Route): Route {
     return {
+      contents: [],
       id: idCounter++,
-      route: `${parentNode?.id === 0 ? '' : parentNode?.route}/${name}`,
       name,
       parentNode: parentId,
       path,
-      contents: [],
       render: 'server',
+      route: `${parentNode?.id === 0 ? '' : parentNode?.route}/${name}`,
     }
   }
 
@@ -119,21 +130,12 @@ async function buildRouteTree(rootDir: string): Promise<Route[]> {
   return treeNodes
 }
 
-export async function getRoutes() {
-  const { isApp, isPages, routePath } = internalStore.getState()
-
-  const routes = await buildRouteTree(routePath)
-
-  const result = {
-    type: isApp ? 'app' : isPages ? 'pages' : 'app',
-    routes,
-  } as const
-
-  return result
-}
-
-export function setupRoutesRpc(_: NextDevtoolsServerContext) {
-  return {
-    getRoutes,
-  } satisfies Partial<ServerFunctions>
+async function detectClientDirective(filePath: string): Promise<boolean> {
+  try {
+    const content = await fs.readFile(filePath, 'utf-8')
+    const firstLine = content.split('\n')[0].trim()
+    return firstLine === "'use client'" || firstLine === '"use client"' || firstLine === '`use client`'
+  } catch {
+    return false
+  }
 }

@@ -1,4 +1,4 @@
-const { iconsPlugin, getIconCollections } = require('@egoist/tailwindcss-icons')
+const { getIconCollections, iconsPlugin } = require('@egoist/tailwindcss-icons')
 const { default: flattenColorPalette } = require('tailwindcss/lib/util/flattenColorPalette')
 
 /** @type {import('tailwindcss').Config} */
@@ -10,6 +10,11 @@ module.exports = {
     // Or if using `src` directory:
     './src/**/*.{js,jsx,ts,tsx,md,mdx}',
     './theme.config.tsx',
+  ],
+  plugins: [
+    iconsPlugin({ collections: getIconCollections(['ri']) }),
+    require('@tailwindcss/aspect-ratio'),
+    addVariablesForColors,
   ],
   theme: {
     extend: {
@@ -28,11 +33,6 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    iconsPlugin({ collections: getIconCollections(['ri']) }),
-    require('@tailwindcss/aspect-ratio'),
-    addVariablesForColors,
-  ],
 }
 
 function addVariablesForColors({ addBase, theme }) {

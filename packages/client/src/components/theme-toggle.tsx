@@ -1,17 +1,22 @@
 'use client'
 
-import * as React from 'react'
 import { useTheme } from 'next-themes'
+import * as React from 'react'
+
 import { Button } from '@/components/ui/button'
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
+  const { setTheme, theme } = useTheme()
   function handleToggleTheme() {
     theme === 'dark' ? setTheme('light') : setTheme('dark')
   }
 
   return (
-    <Button size="sm" variant="outline" onClick={handleToggleTheme}>
+    <Button
+      onClick={handleToggleTheme}
+      size="sm"
+      variant="outline"
+    >
       {theme === 'dark' ? (
         <i className="i-ri-sun-line size-5 flex-none" />
       ) : (

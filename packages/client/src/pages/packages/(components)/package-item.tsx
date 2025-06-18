@@ -1,11 +1,13 @@
-import { useQuery } from '@tanstack/react-query'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { buttonVariants } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
-import { cn } from '@/lib/utils'
-import { rpcClient } from '@/lib/client'
-import NpmVersionCheck from '@/components/npm-version-check'
 import type { Package } from '@next-devtools/shared/types'
+
+import { useQuery } from '@tanstack/react-query'
+
+import NpmVersionCheck from '@/components/npm-version-check'
+import { buttonVariants } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
+import { rpcClient } from '@/lib/client'
+import { cn } from '@/lib/utils'
 
 interface Props {
   data: Package
@@ -13,8 +15,8 @@ interface Props {
 export default function PackageItem({ data }: Props) {
   const npmBase = 'https://www.npmjs.com/package/'
   const { data: packageInfo, isLoading } = useQuery({
-    queryKey: ['getPackageInfo', data.name],
     queryFn: () => rpcClient.getPackageInfo(data.name),
+    queryKey: ['getPackageInfo', data.name],
   })
 
   return (
@@ -25,7 +27,11 @@ export default function PackageItem({ data }: Props) {
             {!data.name ? (
               <Skeleton className="h-4" />
             ) : (
-              <a className="hover:underline" href={npmBase + data.name} target="_blank">
+              <a
+                className="hover:underline"
+                href={npmBase + data.name}
+                target="_blank"
+              >
                 {data.name}
               </a>
             )}

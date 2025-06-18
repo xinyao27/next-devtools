@@ -1,7 +1,8 @@
 'use client'
 
-import { create } from 'zustand'
 import type { NetworkStore, NetworkStoreState } from '@next-devtools/shared/types'
+
+import { create } from 'zustand'
 
 const defaultState: NetworkStoreState = {
   requests: {},
@@ -9,11 +10,11 @@ const defaultState: NetworkStoreState = {
 export const useNetworkStore = create<NetworkStore>()((set) => ({
   ...defaultState,
 
-  setup: () => {},
   add: () => {},
-  update: () => {},
-  remove: () => {},
   clear: () => {
     set(useNetworkStore.getInitialState())
   },
+  remove: () => {},
+  setup: () => {},
+  update: () => {},
 }))

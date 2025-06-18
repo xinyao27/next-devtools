@@ -1,5 +1,6 @@
-import Link from 'next/link'
 import type { Metadata } from 'next'
+
+import Link from 'next/link'
 
 import './styles.css'
 
@@ -32,7 +33,10 @@ export default function RootLayout({ children }: LayoutProps) {
         <div className="container">
           <header>
             <div className="header-content">
-              <Link className="logo" href="/">
+              <Link
+                className="logo"
+                href="/"
+              >
                 <img src="/logo.png" />
               </Link>
               <h1>
@@ -47,7 +51,11 @@ export default function RootLayout({ children }: LayoutProps) {
         <div className="banner">
           <span>
             This is a{' '}
-            <a href="https://github.com/stripe-samples" rel="noopener noreferrer" target="_blank">
+            <a
+              href="https://github.com/stripe-samples"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               Stripe Sample
             </a>
             .{' View code on '}

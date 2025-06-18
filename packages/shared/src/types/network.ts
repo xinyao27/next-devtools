@@ -1,32 +1,32 @@
-export type NetworkId = string
-
-export type NetworkMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEAD' | 'TRACE' | 'CONNECT'
+export interface NetworkActions {
+  add: (id: NetworkId, request: NetworkRequest) => void
+  clear: () => void
+  remove: (id: NetworkId) => void
+  setup: () => void
+  update: (id: NetworkId, request: Partial<NetworkRequest>) => void
+}
 
 export type NetworkHeaders = HeadersInit
 
+export type NetworkId = string
+
+export type NetworkMethod = 'CONNECT' | 'DELETE' | 'GET' | 'HEAD' | 'OPTIONS' | 'PATCH' | 'POST' | 'PUT' | 'TRACE'
+
 export interface NetworkRequest {
+  body: null | string
+  endTime: number
+  headers: NetworkHeaders
   id: NetworkId
-  url: string
   method: NetworkMethod
+  size: number
+  startTime: number
   status: number
   statusText?: string
-  startTime: number
-  endTime: number
-  size: number
-  headers: NetworkHeaders
-  body: string | null
+  url: string
 }
+
+export type NetworkStore = NetworkActions & NetworkStoreState
 
 export interface NetworkStoreState {
   requests: Record<NetworkId, NetworkRequest>
 }
-
-export interface NetworkActions {
-  setup: () => void
-  add: (id: NetworkId, request: NetworkRequest) => void
-  update: (id: NetworkId, request: Partial<NetworkRequest>) => void
-  remove: (id: NetworkId) => void
-  clear: () => void
-}
-
-export type NetworkStore = NetworkStoreState & NetworkActions

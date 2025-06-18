@@ -1,7 +1,9 @@
+import type { SEOMetadata } from '@next-devtools/shared/types'
+
 // Learn more about the [X Card markup reference](https://developer.x.com/en/docs/x-for-websites/cards/overview/markup).
 import React from 'react'
+
 import { cn } from '@/lib/utils'
-import type { SEOMetadata } from '@next-devtools/shared/types'
 
 interface XCardProps {
   data?: SEOMetadata
@@ -50,13 +52,25 @@ const XCard = ({ data }: XCardProps) => {
         >
           {image ? (
             type === 'summary_large_image' ? (
-              <img alt={image?.alt} className="block size-full object-cover" src={image?.url} />
+              <img
+                alt={image?.alt}
+                className="block size-full object-cover"
+                src={image?.url}
+              />
             ) : (
-              <img alt={image?.alt} className="block size-full object-cover" src={image?.url} />
+              <img
+                alt={image?.alt}
+                className="block size-full object-cover"
+                src={image?.url}
+              />
             )
           ) : (
             <div className="flex size-full items-center justify-center bg-[#16181c]">
-              <svg aria-hidden="true" className="h-[30px] fill-current text-[#71767b]" viewBox="0 0 24 24">
+              <svg
+                aria-hidden="true"
+                className="h-[30px] fill-current text-[#71767b]"
+                viewBox="0 0 24 24"
+              >
                 <g>
                   <path d="M1.998 5.5c0-1.38 1.119-2.5 2.5-2.5h15c1.381 0 2.5 1.12 2.5 2.5v13c0 1.38-1.119 2.5-2.5 2.5h-15c-1.381 0-2.5-1.12-2.5-2.5v-13zm2.5-.5c-.276 0-.5.22-.5.5v13c0 .28.224.5.5.5h15c.276 0 .5-.22.5-.5v-13c0-.28-.224-.5-.5-.5h-15zM6 7h6v6H6V7zm2 2v2h2V9H8zm10 0h-4V7h4v2zm0 4h-4v-2h4v2zm-.002 4h-12v-2h12v2z" />
                 </g>

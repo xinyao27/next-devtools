@@ -1,12 +1,13 @@
 import React from 'react'
 import { useCopyToClipboard } from 'react-use'
+
 import { useToast } from '@/components/ui/use-toast'
 
 interface Props {
-  value?: string
   children?: React.ReactNode
+  value?: string
 }
-export default function CopyToClipboard({ value, children }: Props) {
+export default function CopyToClipboard({ children, value }: Props) {
   const { toast } = useToast()
   const [state, copy] = useCopyToClipboard()
   const [copied, setCopied] = React.useState(false)
@@ -16,9 +17,9 @@ export default function CopyToClipboard({ value, children }: Props) {
 
       copy(text)
       toast({
-        variant: state.error ? 'destructive' : 'default',
-        title: state.error ? 'Failed to copy !' : 'Copied !',
         description: state.error ? state.error.message : text,
+        title: state.error ? 'Failed to copy !' : 'Copied !',
+        variant: state.error ? 'destructive' : 'default',
       })
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
@@ -31,8 +32,8 @@ export default function CopyToClipboard({ value, children }: Props) {
       {children}
       <button
         className="hover:text-primary hidden items-center opacity-50 transition hover:opacity-100 group-hover:flex"
-        title="Copy to clipboard"
         onClick={() => handleCopy(value)}
+        title="Copy to clipboard"
       >
         {copied ? (
           state.error ? (

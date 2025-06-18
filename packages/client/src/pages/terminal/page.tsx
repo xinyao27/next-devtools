@@ -1,11 +1,13 @@
 'use client'
 
-import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
+
+import { Button } from '@/components/ui/button'
 import { getQueryClient, rpcClient } from '@/lib/client'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
 import { useTerminalStore } from '@/store/terminal'
+
 import TerminalView from './(components)/terminal-view'
 
 const setCurrentId = (id: string) => useTerminalStore.setState({ currentId: id })
@@ -13,8 +15,8 @@ const setCurrentId = (id: string) => useTerminalStore.setState({ currentId: id }
 const runTerminalAction = rpcClient.runTerminalAction
 export default function Page() {
   const { data, isLoading } = useQuery({
-    queryKey: ['getTerminals'],
     queryFn: () => rpcClient.getTerminals(),
+    queryKey: ['getTerminals'],
   })
   const currentId = useTerminalStore((state) => state.currentId)
 
@@ -57,25 +59,25 @@ export default function Page() {
       <div className="flex items-center border-b">
         {data?.map((terminal) => (
           <div
-            key={terminal.id}
-            role="button"
             className={cn('bg-secondary flex items-center gap-2 border-r px-3 py-1 transition-colors', {
               'bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white': terminal.id === currentId,
             })}
+            key={terminal.id}
             onClick={() => {
               setCurrentId(terminal.id)
             }}
+            role="button"
           >
             <i className={terminal.icon} />
             {terminal.name}
 
             <Button
               className="scale-90"
-              size="icon"
-              variant="ghost"
               onClick={() => {
                 handleRunTerminalAction(terminal.id, 'terminate')
               }}
+              size="icon"
+              variant="ghost"
             >
               <i className="i-ri-close-line text-lg" />
             </Button>
