@@ -17,7 +17,7 @@
     --popover-foreground: hsl(240 10% 3.9%);
     /* #ffc799 */
     --primary: hsl(27 100% 80%);
-    --primary-foreground: hsl(0 0% 98%);
+    --primary-foreground: hsl(0, 0%, 0%);
     --secondary: hsl(240 4.8% 95.9%);
     --secondary-foreground: hsl(240 5.9% 10%);
     --muted: hsl(240 4.8% 95.9%);
@@ -40,7 +40,7 @@
     --popover-foreground: hsl(0 0% 98%);
     /* #ffc799 */
     --primary: hsl(27 100% 80%);
-    --primary-foreground: hsl(0 0% 98%);
+    --primary-foreground: hsl(0, 0%, 0%);
     --secondary: hsl(240 3.7% 15.9%);
     --secondary-foreground: hsl(0 0% 98%);
     --muted: hsl(240 5.9% 10%);
@@ -103,52 +103,52 @@
   --animate-spotlight: spotlight 2s ease .75s 1 forwards;
 
   /* Keyframes */
-  --keyframes-accordion-down: {
+  @keyframes accordion-down {
     from {
       height: 0;
     }
     to {
       height: var(--radix-accordion-content-height);
     }
-  };
+  }
 
-  --keyframes-accordion-up: {
+  @keyframes accordion-up {
     from {
       height: var(--radix-accordion-content-height);
     }
     to {
       height: 0;
     }
-  };
+  }
 
-  --keyframes-grid: {
+  @keyframes grid {
     0% {
       transform: translateY(-50%);
     }
     100% {
       transform: translateY(0);
     }
-  };
+  }
 
-  --keyframes-marquee: {
+  @keyframes marquee {
     from {
       transform: translateX(0);
     }
     to {
       transform: translateX(calc(-100% - var(--gap)));
     }
-  };
+  }
 
-  --keyframes-marquee-vertical: {
+  @keyframes marquee-vertical {
     from {
       transform: translateY(0);
     }
     to {
       transform: translateY(calc(-100% - var(--gap)));
     }
-  };
+  }
 
-  --keyframes-meteor: {
+  @keyframes meteor {
     0% {
       opacity: 1;
       transform: rotate(215deg) translateX(0);
@@ -160,27 +160,27 @@
       opacity: 0;
       transform: rotate(215deg) translateX(-500px);
     }
-  };
+  }
 
-  --keyframes-orbit: {
+  @keyframes orbit {
     0% {
       transform: rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg);
     }
     100% {
       transform: rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg);
     }
-  };
+  }
 
-  --keyframes-spotlight: {
+  @keyframes spotlight {
     0% {
       opacity: 0;
       transform: translate(-72%, -62%) scale(0.5);
     }
     100% {
       opacity: 1;
-      transform: translate(-50%,-40%) scale(1);
+      transform: translate(-50%, -40%) scale(1);
     }
-  };
+  }
 }
 
 @layer base {
@@ -199,3 +199,4 @@
     @apply h-full;
   }
 }
+

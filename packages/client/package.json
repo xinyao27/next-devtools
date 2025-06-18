@@ -42,7 +42,7 @@
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-table": "catalog:",
     "@tanstack/react-virtual": "catalog:",
-    "@xyflow/react": "^12.6.4",
+    "@xyflow/react": "catalog:",
     "birpc": "catalog:",
     "class-variance-authority": "catalog:",
     "clsx": "catalog:",
