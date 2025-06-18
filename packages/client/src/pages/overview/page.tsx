@@ -11,17 +11,15 @@ import Logo from '@/components/logo'
 import { BentoCard, BentoGrid } from '@/components/magicui/bento-grid'
 import { Globe } from '@/components/magicui/globe'
 import { Marquee, MarqueeItem } from '@/components/magicui/marquee'
-import { Meteors } from '@/components/magicui/meteors'
-import { OrbitingCircles } from '@/components/magicui/orbiting-circles'
 import { RetroGrid } from '@/components/magicui/retro-grid'
+import { AnimatedSpan, Terminal, TypingAnimation } from '@/components/magicui/terminal'
 import NextLogo from '@/components/next-logo'
 import NpmVersionCheck from '@/components/npm-version-check'
 import ReactLogo from '@/components/react-logo'
 import { Button } from '@/components/ui/button'
+import { SmoothCursor } from '@/components/ui/smooth-cursor'
 import { rpcClient } from '@/lib/client'
 import { cn } from '@/lib/utils'
-
-import AssetsImage from './(components)/assets-image'
 
 export default function Page() {
   const { theme } = useTheme()
@@ -34,7 +32,7 @@ export default function Page() {
     return [
       {
         background: (
-          <Globe className="md:left-30 mask-[linear-gradient(to_top,transparent_30%,#000_100%)] absolute top-0 mx-auto h-[500px] w-[500px] transition-all duration-300 group-hover:scale-105 sm:left-10" />
+          <Globe className="md:left-30 mask-[linear-gradient(to_top,transparent_30%,#000_100%)] absolute top-0 mx-auto size-[500px] transition-all group-hover:scale-105 sm:left-10" />
         ),
         className: 'md:col-span-5',
         cta: 'Visit',
@@ -54,7 +52,7 @@ export default function Page() {
         name: 'Next',
       },
       {
-        background: <Meteors />,
+        background: null,
         className: 'md:col-span-4',
         cta: 'Visit',
         description: (
@@ -68,8 +66,35 @@ export default function Page() {
         name: 'React',
       },
       {
-        background: <RetroGrid className="absolute -top-12 h-[200px]" />,
-        className: 'md:col-span-3',
+        background: (
+          <Terminal className="absolute inset-x-0 top-0 size-[500px] max-w-full opacity-80 group-hover:opacity-50">
+            <TypingAnimation>&gt; ls</TypingAnimation>
+
+            {data?.routes.slice(1, 5).map((route, index) => (
+              <AnimatedSpan
+                delay={index * 1000}
+                key={route.route}
+              >
+                <span className="truncate-left text-primary w-full">
+                  <span>✔ {route.route}</span>
+                </span>
+              </AnimatedSpan>
+            ))}
+            <AnimatedSpan delay={4000}>
+              <span className="truncate-left text-primary w-full">
+                <span>✔ ...</span>
+              </span>
+            </AnimatedSpan>
+
+            <TypingAnimation
+              className="text-muted-foreground"
+              delay={5000}
+            >
+              Get all routes!
+            </TypingAnimation>
+          </Terminal>
+        ),
+        className: 'md:col-span-3 text-right',
         cta: '',
         description: <span>{data?.routes.length} routes</span>,
         href: '/routes',
@@ -101,35 +126,7 @@ export default function Page() {
         name: 'Components',
       },
       {
-        background: (
-          <div className="mask-[linear-gradient(to_top,transparent_30%,#000_100%)] absolute -right-10 -top-20 flex h-[300px] w-full items-center justify-center overflow-hidden">
-            {/* Inner Circles */}
-            {data?.assets.slice(0, data.assets.length / 2).map((asset, index) => (
-              <OrbitingCircles
-                className="size-[30px] border-none bg-transparent"
-                delay={index * 10}
-                duration={20}
-                key={asset.filePath}
-                radius={60}
-              >
-                <AssetsImage data={asset} />
-              </OrbitingCircles>
-            ))}
-            {/* Outer Circles */}
-            {data?.assets.slice(data.assets.length / 2).map((asset, index) => (
-              <OrbitingCircles
-                className="size-[30px] border-none bg-transparent"
-                delay={index * 10}
-                duration={20}
-                key={asset.filePath}
-                radius={100}
-                reverse
-              >
-                <AssetsImage data={asset} />
-              </OrbitingCircles>
-            ))}
-          </div>
-        ),
+        background: null,
         className: 'md:col-span-4',
         cta: '',
         description: <span>{data?.assets.length} assets</span>,
@@ -169,6 +166,8 @@ export default function Page() {
 
   return (
     <div className="h-full p-4">
+      <SmoothCursor />
+
       <section className="mt-12 flex w-full flex-col items-center justify-center space-y-8">
         <Logo className="size-16 text-zinc-800/90 dark:text-white" />
 

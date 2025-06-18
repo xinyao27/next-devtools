@@ -96,7 +96,7 @@ const SingleCodeBlock = ({
   const copyNode = (
     <Button
       className={cn(
-        'absolute right-2 top-2 z-10 opacity-0 transition-all duration-300 ease-in-out',
+        'absolute right-2 top-2 z-10 opacity-0 transition-all ease-in-out',
         code && 'group-hover:opacity-100',
       )}
       disabled={!code}
@@ -118,7 +118,7 @@ const SingleCodeBlock = ({
         <span className="text-muted-foreground absolute left-2 top-1 z-10 select-none text-xs">{fileName}</span>
       ) : null}
       {lang && showLanguage ? (
-        <span className="text-muted-foreground absolute right-2 top-1 z-10 text-xs opacity-100 transition-all duration-300 ease-in-out group-hover:opacity-0">
+        <span className="text-muted-foreground absolute right-2 top-1 z-10 text-xs opacity-100 transition-all ease-in-out group-hover:opacity-0">
           {lang}
         </span>
       ) : null}

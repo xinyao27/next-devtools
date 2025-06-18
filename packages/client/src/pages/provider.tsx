@@ -107,7 +107,7 @@ function Main({ children }: Props) {
   return (
     <main
       className={cn(
-        'bg-sidebar grid h-full grid-cols-[3rem_1fr] overflow-hidden backdrop-blur-md transition-all duration-300 md:grid-cols-[12rem_1fr]',
+        'bg-sidebar grid h-full grid-cols-[3rem_1fr] overflow-hidden backdrop-blur-md transition-all md:grid-cols-[12rem_1fr]',
         {
           'grid-cols-[3rem_1fr]!': sidebarCollapsed === true,
           'grid-cols-[12rem_1fr]!': sidebarCollapsed === false,
