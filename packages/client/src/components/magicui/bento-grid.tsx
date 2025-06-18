@@ -30,7 +30,7 @@ const BentoCard = ({ background, className, cta, description, href, Icon, name }
       target={href.startsWith('http') ? '_blank' : '_self'}
       to={href}
     >
-      <div className="relative flex flex-1">{background}</div>
+      <div className="z-9 relative flex flex-1">{background}</div>
       <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6 transition-all">
         <div className="w-full">
           <span className="group-hover:text-primary inline-block size-12 origin-left transform-gpu text-neutral-700 transition-all ease-in-out group-hover:scale-125">

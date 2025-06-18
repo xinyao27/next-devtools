@@ -131,7 +131,7 @@ export default function Page() {
       },
       {
         background: (
-          <div className="absolute top-4 flex w-full justify-center">
+          <div className="absolute top-4 flex w-full justify-center opacity-80 transition-all group-hover:opacity-50">
             <Testimonials
               testimonials={
                 data?.assets.slice(0, 6).map((asset) => ({

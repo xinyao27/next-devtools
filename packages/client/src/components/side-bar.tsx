@@ -136,9 +136,9 @@ export default function SideBar() {
               </PopoverTrigger>
               <PopoverContent
                 align="end"
-                className="p-0"
+                className="w-[300px] p-0 md:w-[450px]"
               >
-                <div className="flex w-[300px] flex-col gap-2 px-4 py-3 md:w-[450px]">
+                <div className="flex flex-col gap-2 px-4 py-3">
                   <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
                     {/* toggle sidebar */}
                     <Button
@@ -152,7 +152,7 @@ export default function SideBar() {
                           '!i-ri-sidebar-unfold-line': !!sidebarCollapsed,
                         })}
                       />
-                      <span className="ml-2">{sidebarCollapsed ? 'Expand' : 'Collapse'} Sidebar</span>
+                      <span className="ml-2">{sidebarCollapsed ? 'Expand' : 'Collapse'}</span>
                     </Button>
 
                     {/* theme toggle */}
@@ -165,7 +165,7 @@ export default function SideBar() {
                       variant="outline"
                     >
                       <i className="i-ri-fullscreen-exit-line size-5 flex-none" />
-                      <span className="ml-2">Exit Fullscreen</span>
+                      <span className="ml-2">Minimize</span>
                     </Button>
                   </div>
 
