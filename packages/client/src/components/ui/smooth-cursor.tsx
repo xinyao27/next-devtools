@@ -92,7 +92,7 @@ export function SmoothCursor({
     damping: 45,
     mass: 1,
     restDelta: 0.001,
-    stiffness: 400,
+    stiffness: 500,
   },
 }: SmoothCursorProps) {
   const lastMousePos = React.useRef<Position>({ x: 0, y: 0 })

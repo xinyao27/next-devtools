@@ -15,7 +15,7 @@ export interface BentoCardProps {
   description: ReactNode
   href: string
   Icon: ReactNode
-  name: string
+  name?: string
 }
 
 const BentoCard = ({ background, className, cta, description, href, Icon, name }: BentoCardProps) => (
@@ -32,10 +32,12 @@ const BentoCard = ({ background, className, cta, description, href, Icon, name }
     >
       <div className="relative flex flex-1">{background}</div>
       <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6 transition-all">
-        <div className="group-hover:text-primary h-12 w-full origin-right transform-gpu text-neutral-700 transition-all ease-in-out group-hover:scale-125">
-          {Icon}
+        <div className="w-full">
+          <span className="group-hover:text-primary inline-block size-12 origin-left transform-gpu text-neutral-700 transition-all ease-in-out group-hover:scale-125">
+            {Icon}
+          </span>
         </div>
-        <h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">{name}</h3>
+        {name ? <h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">{name}</h3> : null}
         <div className="max-w-lg text-neutral-400">{description}</div>
       </div>
 

@@ -1,13 +1,15 @@
 'use client'
 
-import type { SVGProps } from 'react'
+import type { ImgHTMLAttributes, SVGProps } from 'react'
 
 import { useMemo } from 'react'
+
+import UWU from '@/assets/uwu.webp'
 
 interface Props extends SVGProps<SVGSVGElement> {
   theme?: 'dark' | 'light'
 }
-export default function ReactLogo({ theme = 'dark', ...props }: Props) {
+export function ReactLogo({ theme = 'dark', ...props }: Props) {
   const fill = useMemo(() => (theme === 'dark' ? '#fff' : '#000'), [theme])
 
   return (
@@ -46,5 +48,15 @@ export default function ReactLogo({ theme = 'dark', ...props }: Props) {
         />
       </g>
     </svg>
+  )
+}
+
+export function UwuLogo(props: ImgHTMLAttributes<HTMLImageElement>) {
+  return (
+    <img
+      alt="uwu"
+      src={UWU}
+      {...props}
+    />
   )
 }

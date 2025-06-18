@@ -13,9 +13,10 @@ import { Globe } from '@/components/magicui/globe'
 import { Marquee, MarqueeItem } from '@/components/magicui/marquee'
 import { RetroGrid } from '@/components/magicui/retro-grid'
 import { AnimatedSpan, Terminal, TypingAnimation } from '@/components/magicui/terminal'
+import { Testimonials } from '@/components/magicui/testimonials'
 import NextLogo from '@/components/next-logo'
 import NpmVersionCheck from '@/components/npm-version-check'
-import ReactLogo from '@/components/react-logo'
+import { UwuLogo } from '@/components/react-logo'
 import { Button } from '@/components/ui/button'
 import { SmoothCursor } from '@/components/ui/smooth-cursor'
 import { rpcClient } from '@/lib/client'
@@ -45,11 +46,10 @@ export default function Page() {
         href: 'https://nextjs.org',
         Icon: (
           <NextLogo
-            className="h-6"
+            className="mt-5 h-6"
             theme={theme as 'dark' | 'light'}
           />
         ),
-        name: 'Next',
       },
       {
         background: null,
@@ -62,8 +62,7 @@ export default function Page() {
           />
         ),
         href: 'https://react.dev',
-        Icon: <ReactLogo className="w-8" />,
-        name: 'React',
+        Icon: <UwuLogo className="-ml-2 w-24 max-w-32" />,
       },
       {
         background: (
@@ -106,9 +105,14 @@ export default function Page() {
           <Marquee pauseOnHover>
             {data?.components.map((component) => (
               <MarqueeItem key={component.filePath}>
-                <div className="flex items-center gap-1">
-                  <i className={cn(component.type === 'component' ? 'i-ri-box-1-line' : 'i-ri-gallery-line')} />
-                  {component.file}
+                <div className="flex flex-1 items-center gap-1 overflow-hidden">
+                  <i
+                    className={cn(
+                      component.type === 'component' ? 'i-ri-box-1-line' : 'i-ri-gallery-line',
+                      'size-4 shrink-0',
+                    )}
+                  />
+                  <span className="truncate">{component.file}</span>
                 </div>
 
                 <div>
@@ -126,7 +130,18 @@ export default function Page() {
         name: 'Components',
       },
       {
-        background: null,
+        background: (
+          <div className="absolute top-4 flex w-full justify-center">
+            <Testimonials
+              testimonials={
+                data?.assets.slice(0, 6).map((asset) => ({
+                  name: asset.filePath,
+                  src: asset.filePath,
+                })) || []
+              }
+            />
+          </div>
+        ),
         className: 'md:col-span-4',
         cta: '',
         description: <span>{data?.assets.length} assets</span>,
@@ -142,9 +157,9 @@ export default function Page() {
           >
             {data?.packages.map((pkg) => (
               <MarqueeItem key={`${pkg.name}@${pkg.version}-${pkg.type}`}>
-                <div className="flex items-center gap-1">
-                  <i className="i-ri-box-3-line" />
-                  {pkg.name}
+                <div className="flex flex-1 items-center gap-1 overflow-hidden">
+                  <i className="i-ri-box-3-line size-4 shrink-0" />
+                  <span className="truncate">{pkg.name}</span>
                 </div>
 
                 <div>

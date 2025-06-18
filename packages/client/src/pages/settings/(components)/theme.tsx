@@ -33,7 +33,7 @@ export default function Theme() {
                 />
                 <img
                   alt={item.label}
-                  className="border-input peer-focus-visible:outline-ring/70 peer-data-[state=checked]:border-ring peer-data-[state=checked]:bg-accent peer-data-disabled:cursor-not-allowed peer-data-disabled:opacity-50 relative cursor-pointer overflow-hidden rounded-lg border shadow-sm shadow-black/5 outline-offset-2 transition-colors peer-focus-visible:outline peer-focus-visible:outline-2"
+                  className="border-input peer-focus-visible:outline-ring/70 peer-data-[state=checked]:border-ring peer-data-[state=checked]:bg-accent peer-data-disabled:cursor-not-allowed peer-data-disabled:opacity-50 relative cursor-pointer overflow-hidden rounded-lg border shadow-sm shadow-black/5 outline-offset-2 transition-colors peer-focus-visible:outline"
                   height={70}
                   src={item.image}
                   width={88}
