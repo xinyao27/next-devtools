@@ -17,7 +17,7 @@ function Accordion({ ...props }: React.ComponentProps<typeof AccordionPrimitive.
 function AccordionContent({ children, className, ...props }: React.ComponentProps<typeof AccordionPrimitive.Content>) {
   return (
     <AccordionPrimitive.Content
-      className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm"
+      className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden px-4 text-sm"
       data-slot="accordion-content"
       {...props}
     >
@@ -41,7 +41,7 @@ function AccordionTrigger({ children, className, ...props }: React.ComponentProp
     <AccordionPrimitive.Header className="flex">
       <AccordionPrimitive.Trigger
         className={cn(
-          'focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium outline-none transition-all hover:underline focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>i]:rotate-180',
+          'focus-visible:border-ring focus-visible:ring-ring/50 text-foreground/80 hover:text-foreground flex flex-1 cursor-pointer items-start justify-between gap-4 rounded-md p-4 text-left text-sm font-medium outline-none transition-all focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>i]:rotate-180',
           className,
         )}
         data-slot="accordion-trigger"
