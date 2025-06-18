@@ -43,7 +43,7 @@ const BentoCard = ({ background, className, cta, description, href, Icon, name }
 
       <div
         className={cn(
-          'pointer-events-none absolute bottom-0 right-0 flex translate-y-10 transform-gpu flex-row items-center p-6 opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100',
+          'z-11 pointer-events-none absolute bottom-0 right-0 flex translate-y-10 transform-gpu flex-row items-center p-6 opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100',
         )}
       >
         {cta}
