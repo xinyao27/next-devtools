@@ -1,4 +1,26 @@
+# Changelog
 
+# [0.3.0-beta.4](https://github.com/xinyao27/next-devtools/compare/v0.3.0-beta.3...v0.3.0-beta.4) (2025-06-20)
+
+
+### Bug Fixes
+
+* code-block render error ([5275ed9](https://github.com/xinyao27/next-devtools/commit/5275ed9d6fd7459353d1b794d63b47eaa8660bb3))
+* initialize setup in Provider component ([d694b88](https://github.com/xinyao27/next-devtools/commit/d694b88a5441c86916afdc966aca4c85bb166180))
+
+
+### Features
+
+* add UWU logo and testimonials component ([773ff4c](https://github.com/xinyao27/next-devtools/commit/773ff4cb15901bb237c0b6c1b8aa5090c474cb02))
+* back to iframe ([cd33e3f](https://github.com/xinyao27/next-devtools/commit/cd33e3f3d641eb2e4c8c4326b4a6a59923f74650))
+* basic routes flow ([1d46587](https://github.com/xinyao27/next-devtools/commit/1d46587c582044de248e2f3c029ab88ce79e2946))
+* enhance data table functionality with row selection and improve resizable component styling ([dc2bc3a](https://github.com/xinyao27/next-devtools/commit/dc2bc3ad62b39d5a29a8dd927a8de40d6849bdff))
+* enhance mini-toolbar with tooltips and refactor sidebar component for improved responsiveness ([21c3cb5](https://github.com/xinyao27/next-devtools/commit/21c3cb596bf4bf5ba2ff6b75bccede8de1281796))
+* enhance UI components with scrollbar styling and consistent icon sizing ([70390a7](https://github.com/xinyao27/next-devtools/commit/70390a743a595c9ea62d4420694f2415e8d24049))
+* implement toolbar toggle functionality and enhance keyboard shortcuts for Next Devtools ([334478f](https://github.com/xinyao27/next-devtools/commit/334478ff437d406186ec6c7e35c03dfff046eea8))
+* posthog ([18fb0da](https://github.com/xinyao27/next-devtools/commit/18fb0da3d331436827a4d02bed37af4209a1a4d4))
+* update deps ([6f3de10](https://github.com/xinyao27/next-devtools/commit/6f3de108d1b00ddbb75982aa0ad336db1fdafbbc))
+* use react compiler ([603e464](https://github.com/xinyao27/next-devtools/commit/603e464dc001daa82b1e8798911554862c1c4067))
 
 # [0.3.0-beta.3](https://github.com/xinyao27/next-devtools/compare/v0.3.0-beta.2...v0.3.0-beta.3) (2024-12-20)
 
